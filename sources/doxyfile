@@ -1,0 +1,30 @@
+# Doxyfile 1.5.9
+
+DOXYFILE_ENCODING      = UTF-8
+WARN_IF_UNDOCUMENTED   = NO
+RECURSIVE              = YES
+
+PROJECT_NAME           = Open-Graphtheory.org
+OUTPUT_DIRECTORY       = ../doxygen
+OUTPUT_LANGUAGE        = English
+INPUT                  = programs examples opengt
+INPUT_ENCODING         = UTF-8
+FILE_PATTERNS          = *.cpp *.h
+
+TAB_SIZE               = 4
+IMAGE_PATH             = ../doxygen/images
+ALPHABETICAL_INDEX     = YES
+COLS_IN_ALPHA_INDEX    = 3
+
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+HTML_FILE_EXTENSION    = .html
+HTML_HEADER            = ../template_head.html
+HTML_FOOTER            = ../template_foot.html
+
+GENERATE_LATEX         = YES
+LATEX_OUTPUT           = latex
+LATEX_CMD_NAME         = latex
+MAKEINDEX_CMD_NAME     = makeindex
+
+HAVE_DOT               = YES
