@@ -158,6 +158,9 @@
 	// Basic infos about the graph
 	// ===========================
 
+	/// \defgroup basictests ''Testing basic properties''
+	// @{
+
 	/// \brief Test whether the EdgeIterator points to a loop
 	bool Graph::EdgeIterator::IsLoop() {
 		return (*it)->IncidentVertices.size() == 1;
@@ -232,7 +235,7 @@
 		return HasHyperedges() || HasHyperarcs();
 	}
 
-
+	// @}
 
 	// ===================
 	// Vertex Manipulation
@@ -663,33 +666,43 @@
 
 
 
-	// ==========================================
-	// Creating Iterators for the sets of a Graph
-	// ==========================================
+	
+	/// \defgroup iteratorcreation ''Creating Iterators''
+	// @{
 
+	/// \defgroup graphsetiterators ''Creating Iterators for the sets of a Graph''
+	// @{
+
+
+	/// \brief <i>begin</i>-Iterator for the set of all vertices in the graph
 	Graph::VertexIterator Graph::BeginVertices() {
 		if(Vertices.empty())
 			return EndVertices();
 		return VertexIterator(this, (*Vertices.begin())->ID, &Vertices, Vertices.begin());
 	}
+	/// \brief <i>end</i>-Iterator for the set of all vertices in the graph
 	Graph::VertexIterator Graph::EndVertices() {
 		return VertexIterator(this, -1, &Vertices, Vertices.end());
 	}
 
+	/// \brief <i>begin</i>-Iterator for the set of all edges in the graph
 	Graph::EdgeIterator Graph::BeginEdges() {
 		if(Edges.empty())
 			return EndEdges();
 		return EdgeIterator(this, (*Edges.begin())->ID, &Edges, Edges.begin());
 	}
+	/// \brief <i>end</i>-Iterator for the set of all edges in the graph
 	Graph::EdgeIterator Graph::EndEdges() {
 		return EdgeIterator(this, -1, &Edges, Edges.end());
 	}
 
+	/// \brief <i>begin</i>-Iterator for the set of all arcs in the graph
 	Graph::ArcIterator Graph::BeginArcs() {
 		if(Arcs.empty())
 			return EndArcs();
 		return ArcIterator(this, (*Arcs.begin())->ID, &Arcs, Arcs.begin());
 	}
+	/// \brief <i>end</i>-Iterator for the set of all arcs in the graph
 	Graph::ArcIterator Graph::EndArcs() {
 		return ArcIterator(this, -1, &Arcs, Arcs.end());
 	}
@@ -713,11 +726,10 @@
 		return ArcIterator(this, i->second->ID, &Arcs, Arcs.find(i->second));
 	}
 
-	
+	// @}
 
-	// ===========================================
-	// Creating Iterators for the sets of a Vertex
-	// ===========================================
+	/// \defgroup vertexsetiterators ''Creating Iterators for the sets of a Vertex''
+	// @{
 
 	Graph::VertexIterator Graph::VertexIterator::BeginAdjacentVertices() {
 		if((*it)->AdjacentVertices.empty())
@@ -819,62 +831,73 @@
 		return ArcIterator((*it)->Owner, -1, &(i->second), i->second.end());
 	}
 
+	// @}
 
+	/// \defgroup edgesetiterators ''Creating Iterators for the sets of an Edge''
+	// @{
 
-	// ==========================================
-	// Creating Iterators for the sets of an Edge
-	// ==========================================
-
+	/// \brief <i>begin</i>-Iterator for the set of incident vertices of an edge
 	Graph::VertexIterator Graph::EdgeIterator::BeginIncidentVertices() {
 		if((*it)->IncidentVertices.empty())
 			return EndIncidentVertices();
 		return VertexIterator((*it)->Owner, (*((*it)->IncidentVertices.begin()))->ID, &(*it)->IncidentVertices, (*it)->IncidentVertices.begin());
 	}
+	/// \brief <i>end</i>-Iterator for the set of incident vertices of an edge
 	Graph::VertexIterator Graph::EdgeIterator::EndIncidentVertices() {
 		return VertexIterator((*it)->Owner, -1, &(*it)->IncidentVertices, (*it)->IncidentVertices.end());
 	}
 
+	/// \brief Iterator for the first incident vertex of an edge (meant for regular edges, but works on hyperedges, too)
 	Graph::VertexIterator Graph::EdgeIterator::First() {
 		return BeginIncidentVertices();
 	}
+	/// \brief Iterator for the second incident vertex of an edge (meant for regular edges, but works on hyperedges, too)
 	Graph::VertexIterator Graph::EdgeIterator::Second() {
 		Graph::VertexIterator result = First();
 		if((*it)->IncidentVertices.size() > 1)
 			result++;
 		return result;
 	}
+	
+	// @}
 
+	/// \defgroup arcsetiterators ''Creating Iterators for the sets of an Arc''
+	// @{
 
-
-	// =========================================
-	// Creating Iterators for the sets of an Arc
-	// =========================================
-
+	/// \brief <i>begin</i>-Iterator for the set of positive incident vertices (<i>to</i>-vertices) of an arc
 	Graph::VertexIterator Graph::ArcIterator::BeginPositiveIncidentVertices() {
 		if((*it)->PositiveIncidentVertices.empty())
 			return EndPositiveIncidentVertices();
 		return VertexIterator((*it)->Owner, (*((*it)->PositiveIncidentVertices.begin()))->ID, &(*it)->PositiveIncidentVertices, (*it)->PositiveIncidentVertices.begin());
 	}
+	/// \brief <i>end</i>-Iterator for the set of positive incident vertices (<i>to</i>-vertices) of an arc
 	Graph::VertexIterator Graph::ArcIterator::EndPositiveIncidentVertices() {
 		return VertexIterator((*it)->Owner, -1, &(*it)->PositiveIncidentVertices, (*it)->PositiveIncidentVertices.end());
 	}
+
+	/// \brief <i>begin</i>-Iterator for the set of negative incident vertices (<i>from</i>-vertices) of an arc
 	Graph::VertexIterator Graph::ArcIterator::BeginNegativeIncidentVertices() {
 		if((*it)->NegativeIncidentVertices.empty())
 			return EndNegativeIncidentVertices();
 		return VertexIterator((*it)->Owner, (*((*it)->NegativeIncidentVertices.begin()))->ID, &(*it)->NegativeIncidentVertices, (*it)->NegativeIncidentVertices.begin());
 	}
+	/// \brief <i>end</i>-Iterator for the set of negative incident vertices (<i>from</i>-vertices) of an arc
 	Graph::VertexIterator Graph::ArcIterator::EndNegativeIncidentVertices() {
 		return VertexIterator((*it)->Owner, -1, &(*it)->NegativeIncidentVertices, (*it)->NegativeIncidentVertices.end());
 	}
 
+	/// \brief Iterator for the first negative incident vertex of an arc (meant for regular arcs, but works on hyperarcs, too)
 	Graph::VertexIterator Graph::ArcIterator::From() {
 		return BeginNegativeIncidentVertices();
 	}
+	/// \brief Iterator for the first positive incident vertex of an arc (meant for regular arcs, but works on hyperarcs, too)
 	Graph::VertexIterator Graph::ArcIterator::To() {
 		return BeginPositiveIncidentVertices();
 	}
+
+	// @}
 	
-	
+	// @}
 
 	/// \defgroup accessors ''Accessor-Methods''
 	// @{

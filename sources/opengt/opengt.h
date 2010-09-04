@@ -27,6 +27,8 @@
 	iterators must be instantiated in methods of the iterators, not in methods
 		of the actual objects
 	operator-> operator* must go (no access to actual objects!)
+	loops in exporters
+	multiplicity -> distinguish loops from half edges
 
 	changes must invalidate iterators
 	thread-safety

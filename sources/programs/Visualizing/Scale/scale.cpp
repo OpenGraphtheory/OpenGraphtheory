@@ -1,17 +1,4 @@
 #include "../../opengt/opengt.h"
-#include "../../opengt/export/mpost.cpp"
-#include "../../opengt/export/svg.cpp"
-#include "../../opengt/export/gastex.cpp"
-//#include "../../opengt/export/latex.cpp"
-#include "../../opengt/export/vrmlgraph.cpp"
-#include "../../opengt/export/tgf.cpp"
-#include "../../opengt/export/tei.cpp"
-#include "../../opengt/export/gml.cpp"
-//#include "../../opengt/export/rgml.cpp"
-#include "../../opengt/export/xgmml.cpp"
-#include "../../opengt/export/dot.cpp"
-#include "../../opengt/export/graphml.cpp"
-#include "../../opengt/export/gxl.cpp"
 #include <iostream>
 #include <fstream>
 #include <stdio.h>
@@ -21,7 +8,7 @@ void usage(char* argv0);
 int main(int argc, char** argv) {
 	try {
 		Graph G;
-		
+
 		/// select input source
 		if(!isatty(fileno(stdin)))
 			cin >> G;
@@ -40,18 +27,18 @@ int main(int argc, char** argv) {
 		} else {
 			os = &cout;
 		}
-		
+
 		/// export
 		string format = (argc > 1) ? argv[1] : "--help";
 
 		*os << "\n";
 		if(format == "") {
-			usage(argv[0]);
-		} else if(format == "mpost") {
-			ExportToMPOST(G, *os);
-		} else if(format == "svg") {
-			ExportToSVG(G, *os);
-		} else if(format == "gastex") {
+			// cant happen, just for commenting convenience
+//		} else if(format == "mpost") { // todo
+//			ExportToMPOST(G, *os);
+//		} else if(format == "svg") { // todo
+//			ExportToSVG(G, *os);
+		} else if(format == "gastex") { // todo
 			ExportToGASTEX(G, *os);
 //		} else if(format == "latex") { // todo
 //			ExportToLATEX(G, *os);
@@ -61,7 +48,7 @@ int main(int argc, char** argv) {
 			ExportToTGF(G, *os);
 		} else if(format == "tei") {
 			ExportToTEI(G, *os);
-		} else if(format == "gml") { 
+		} else if(format == "gml") {
 			ExportToGML(G, *os);
 //		} else if(format == "rgml") { // todo
 //			ExportToRGML(G, *os);
@@ -69,15 +56,15 @@ int main(int argc, char** argv) {
 			ExportToXGMML(G, *os);
 		} else if(format == "dot") {
 			ExportToDOT(G, *os);
-		} else if(format == "graphml") {
+		} else if(format == "graphml") { // todo
 			ExportToGRAPHML(G, *os);
-		} else if(format == "gxl") {
+		} else if(format == "gxl") { // todo
 			ExportToGXL(G, *os);
 		} else {
 			usage(argv[0]);
 		}
 		*os << "\n";
-		
+
 		if(mustdelete)
 			delete os;
 	}
@@ -92,8 +79,8 @@ int main(int argc, char** argv) {
 void usage(char* argv0) {
 	cerr << "usage: " << argv0 << " format [sourcefile] [destinationfile]\n"
 	     << "     where format can be\n"
-	     << "          mpost      metapost\n"
-	     << "          svg        scalable vector graphics\n"
+//	     << "          mpost      metapost\n"
+//	     << "          svg        scalable vector graphics\n"
 	     << "          gastex     latex package \"gastex\", see also jastex\n"
 //	     << "          latex      native LaTeX drawing routines\n\n"
 
