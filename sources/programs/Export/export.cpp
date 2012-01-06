@@ -7,7 +7,7 @@
 #include "../../opengt/export/tgf.cpp"
 #include "../../opengt/export/tei.cpp"
 #include "../../opengt/export/gml.cpp"
-//#include "../../opengt/export/rgml.cpp"
+#include "../../opengt/export/rgml.cpp"
 #include "../../opengt/export/xgmml.cpp"
 #include "../../opengt/export/dot.cpp"
 #include "../../opengt/export/graphml.cpp"
@@ -63,8 +63,8 @@ int main(int argc, char** argv) {
 			ExportToTEI(G, *os);
 		} else if(format == "gml") { 
 			ExportToGML(G, *os);
-//		} else if(format == "rgml") { // todo
-//			ExportToRGML(G, *os);
+		} else if(format == "rgml") {
+			ExportToRGML(G, *os);
 		} else if(format == "xgmml") {
 			ExportToXGMML(G, *os);
 		} else if(format == "dot") {
@@ -101,7 +101,7 @@ void usage(char* argv0) {
 	     << "          tgf        trivial graph format\n"
 	     << "          tei        text encoding initiative\n"
 	     << "          gml        graph modeling language\n"
-//	     << "          rgml       resource description framework (RDF) graph modeling language\n"
+	     << "          rgml       resource description framework (RDF) graph modeling language\n"
 	     << "          xgmml      extensible graph markup and modeling language\n"
 	     << "          dot        graphviz fileformat\n"
 	     << "          graphml    \n"

@@ -23,28 +23,28 @@ void ExportToSVG(Graph& G, ostream& os) {
 	os << "     xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n";
 	os << "     xmlns:ev=\"http://www.w3.org/2001/xml-events\"\n";
 	os << "     version=\"1.1\" baseProfile=\"full\"\n";
-	os << "     width=\"" << << "mm\" height=\"" << << "mm\"\n";
+	//os << "     width=\"" << << "mm\" height=\"" << << "mm\"\n";
 	os << "     viewBox=\"" << minx << " " << miny << " " << maxx << " " << maxy<< "\">\n\n";
 
 	os << "<!-- www.Open-Graphtheory.org -->\n\n";
 
 	/// draw vertices
 	for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++) {
-		os << "\t<circle cx=\"" << v.GetX() << "\" cy=\"" << v.GetY() << "\" r=\"" << 2*v.GetWeight() << "\"/>\n";
-		os << "\t<text />\n";
+		os << "  <circle cx=\"" << v.GetX() << "\" cy=\"" << v.GetY() << "\" r=\"" << 2*v.GetWeight() << "\"/>\n";
+		os << "  <text />\n";
 	}
 
 	/// draw edges
 	for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
-		os << "\t<line x1=\"" << << "\" y1=\"" << << "\" x2=\"" << << "\" y2=\"" << 
+		os << "  <line x1=\"" << e.First().GetX() << "\" y1=\"" << e.First().GetY()
+		   << "\" x2=\"" << e.Second().GetX() << "\" y2=\"" << e.Second().GetY()
 		   << "\" stroke-width=\"" << e.GetWeight() << "px\"/>\n";
-		label.ulft(btex "<< e.GetLabel() << " etex, (z"<<e.First().GetID()<<"+z"<<e.Second().GetID()<<")/2);\n";
 
 	/// draw arcs
-	for(Graph::ArcIterator a = G.BeginArcs(); a != G.EndArcs(); a++) {
-		os << "  drawarrow z"<< a.From().GetID() <<" -- z"<< a.To().GetID() <<";\n";
-		os << "label.ulft(btex "<< a.GetLabel() << " etex, (z" << a.From().GetID() << "+z" << a.To().GetID() << ")/2);\n";
-	}
+	for(Graph::ArcIterator a = G.BeginArcs(); a != G.EndArcs(); a++)
+		os << "  <line x1=\"" << a.From().GetX() << "\" y1=\"" << a.From().GetY()
+		   << "\" x2=\"" << a.To().GetX() << "\" y2=\"" << a.To().GetY()
+		   << "\" stroke-width=\"" << a.GetWeight() << "px\"/>\n";
 
 	/// footer
 	os << "</svg>\n";
