@@ -9,7 +9,7 @@ void ExportToDOT(Graph& G, ostream& os) {
 	/// write vertices
 	for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++) {
 		os << "\tv" << v.GetID() << " [ label=\"" << v.GetLabel() << "\", "
-		   << "pos=" << v.GetX() << ";" << v.GetY() << " ];\n";
+		   << "pos=\"" << v.GetX() << "," << v.GetY() << "\" ];\n";
 	}
 
 	/// write edges
