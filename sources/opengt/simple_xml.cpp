@@ -5,32 +5,41 @@
 	#include "simple_xml.h"
 
 
-	XML::~XML() {
-		for(vector<XML_Element*>::iterator it = children.begin(); it != children.end(); it++)
+	XML::~XML()
+	{
+		for(list<XML_Element*>::iterator it = children.begin(); it != children.end(); it++)
 			delete(*it);
 	}
 
-	void XML::WriteToStream(ostream& os, int level) const {
+	void XML::WriteToStream(ostream& os, int level) const
+	{
 		os << string(level,'\t');
 		os << '<' << name;
-		for(vector<pair<string,string> >::const_iterator it = attributes.begin(); it != attributes.end(); it++)
+		for(list<pair<string,string> >::const_iterator it = attributes.begin(); it != attributes.end(); it++)
 			os << ' ' << it->first << "=\"" << it->second << '\"';
-		if(children.size() <= 0) {
+		if(children.size() <= 0)
+		{
 			os << " />\n";
-		} else {
+		}
+		else
+		{
 			os << ">\n";
-			for(vector<XML_Element*>::const_iterator it = children.begin(); it != children.end(); it++)
+			for(list<XML_Element*>::const_iterator it = children.begin(); it != children.end(); it++)
 				(*it)->WriteToStream(os, level+1);
 			os << string(level,'\t') << "</" << name << ">\n";
 		}
 	}
 
-	vector<XML*> XML::FindChildren(string named) const {
-		vector<XML*> result;
-		for(vector<XML_Element*>::const_iterator i = children.begin(); i != children.end(); i++) {
+	list<XML*> XML::FindChildren(string named) const
+	{
+		list<XML*> result;
+		for(list<XML_Element*>::const_iterator i = children.begin(); i != children.end(); i++)
+		{
 			XML* c = dynamic_cast<XML*>(*i);
-			if(c != NULL) { // if instance of class XML_Element
-				if(c->name == named) {
+			if(c != NULL) // if instance of class XML_Element
+			{
+				if(c->name == named)
+				{
 					result.push_back(c);
 				}
 			}
@@ -38,14 +47,16 @@
 		return result;
 	}
 
-	string XML::GetAttribute(string propname, string def) const {
-		for(vector<pair<string,string> >::const_iterator i = attributes.begin(); i != attributes.end(); i++)
+	string XML::GetAttribute(string propname, string def) const
+	{
+		for(list<pair<string,string> >::const_iterator i = attributes.begin(); i != attributes.end(); i++)
 			if(i->first == propname)
 				return i->second;
 		return def;
 	}
 
-	int XML::GetAttributeAsInt(string propname, int def) const {
+	int XML::GetAttributeAsInt(string propname, int def) const
+	{
 			stringstream s, t;
 			s << def;
 			t << GetAttribute(propname, s.str());
@@ -53,7 +64,9 @@
 			t >> result;
 			return result;
 	}
-	float XML::GetAttributeAsFloat(string propname, float def) const {
+
+	float XML::GetAttributeAsFloat(string propname, float def) const
+	{
 			stringstream s, t;
 			s << def;
 			t << GetAttribute(propname, s.str());
@@ -65,10 +78,12 @@
 
 
 
-	void XML_Comment::WriteToStream(ostream& os, int level) const {
+	void XML_Comment::WriteToStream(ostream& os, int level) const
+	{
 		if(text.size() <= 0)
 			return;
-		if(text.size() == 1) {
+		if(text.size() == 1)
+		{
 			os << string(level,'\t') << "<!-- " << text[0] << "-->\n";
 			return;
 		}
@@ -82,15 +97,17 @@
 
 
 
-	void XML_Text::WriteToStream(ostream& os, int level) const {
-		for(vector<string>::const_iterator it = text.begin(); it != text.end(); it++)
+	void XML_Text::WriteToStream(ostream& os, int level) const
+	{
+		for(list<string>::const_iterator it = text.begin(); it != text.end(); it++)
 			os << string(level,'\t') << (*it) << '\n';
 	}
 
 
 
-	ostream& operator << (ostream& os, const XML& xml) {
-		for(vector<XML_Element*>::const_iterator it = xml.children.begin(); it != xml.children.end(); it++)
+	ostream& operator << (ostream& os, const XML& xml)
+	{
+		for(list<XML_Element*>::const_iterator it = xml.children.begin(); it != xml.children.end(); it++)
 			(*it)->WriteToStream(os,0);
 		return os;
 	}
@@ -102,13 +119,14 @@
 	inline string uppercase(string);
 	int LevenshteinDistance(string,string);
 
-	istream& operator >> (istream& is, XML& xml) {
+	istream& operator >> (istream& is, XML& xml)
+	{
 		XML* current = &xml;
 		XML* temp;
 		char nextchar;
 		string str, ustr;
 		bool empty = false;
-		int MinLevenshteinDistance,TempLevenshteinDistance; XML* MinLevenshteinNode;
+		unsigned int MinLevenshteinDistance,TempLevenshteinDistance; XML* MinLevenshteinNode;
 
 		scanning_for_tag:
 			empty = false;
@@ -118,13 +136,18 @@
 
 		inside_tag:
 			nextchar = skip_while(is," \t\n<", '/');
-			if(nextchar == '/') {
+			if(nextchar == '/')
+			{
 				is.get();
 				goto closing_tag;
-			} else if(nextchar == '!') {
+			}
+			else if(nextchar == '!')
+			{
 				is.get();
 				goto reading_comment;
-			} else if(nextchar == '?') { // XML header
+			}
+			else if(nextchar == '?') // XML header
+			{
 				skip_until(is, ">", "", '>');
 				goto scanning_for_tag;
 			}
@@ -136,16 +159,21 @@
 
 		reading_attributes:
 			nextchar = skip_while(is," \t\n",'>');
-			if(nextchar == '>') {
+			if(nextchar == '>')
+			{
 				is.get();
-				if(empty) {
+				if(empty)
+				{
 					current = current->parent;
 					if(current->parent == NULL)
 						return is;
 				}
+
 				goto scanning_for_tag;
 			}
-			if(nextchar == '/') {
+
+			if(nextchar == '/')
+			{
 				is.get();
 				empty=true;
 				goto reading_attributes;
@@ -159,43 +187,59 @@
 			goto reading_attributes;
 
 		reading_text:
+
 			current->children.push_back(new XML_Text);
-			do {
+			do
+			{
 				str = read_until(is, "\n", "<>");
 				static_cast<XML_Text*>(current->children.back())->text.push_back(str);
 				nextchar = skip_while(is, "\t ", '<');
+
 			} while(nextchar != '<');
+
 			goto inside_tag;
 
 		reading_comment:
+
 			if(is.peek() != '-') {cerr << "Simple XML Parser: found <! that doesn\'t start a comment\n"; goto inside_tag;}
 			is.get();
 			if(is.peek() != '-') {cerr << "Simple XML Parser: found <!- that doesn\'t start a comment\n"; goto inside_tag;}
 			is.get();
 			current->children.push_back(new XML_Comment);
-			do {
+
+			do
+			{
 				skip_while(is, "\t ", '>');
 				str = "";
-				while(true) {
+				while(true)
+				{
 					str += read_until(is, "", "\n-<>");
 					if(is.peek() == '\n')
 						break;
- 					else if(is.peek() == -1) {
+ 					else if(is.peek() == -1)
+ 					{
 						cerr << "Simple XML Parser: unexpected end of input-stream\n";
 						static_cast<XML_Comment*>(current->children.back())->text.push_back(str);
 						goto scanning_for_tag;
-					} else if(is.peek() == '>') {
+					}
+					else if(is.peek() == '>')
+					{
 						cerr << "Simple XML Parser: comments must be ended by --> and not by a single >\n";
 						break;
-					} else if(is.peek() == '<') {
+					}
+					else if(is.peek() == '<')
+					{
 						cerr << "Simple XML Parser: misplaced < inside a comment\n";
 						break;
 					}
+
 					is.get(); // take away the -
-					if(is.peek() != '-') {
+					if(is.peek() != '-')
+					{
 						str += "-";
 						continue;
 					}
+
 					is.get(); // take away the -
 					while(is.peek() == '-') // more than 2 '-': append them to str
 						str += string(1,is.get());
@@ -207,16 +251,21 @@
 
 				static_cast<XML_Comment*>(current->children.back())->text.push_back(str);
 				nextchar = is.peek();
+
 			} while(nextchar != '>');
+
 			is.get();
 			goto scanning_for_tag;
 
 		closing_tag:
 			str = read_until(is, "", "> \t\n");
 			skip_until(is, ">", "<", '>');
-			if(str == current->name) {
+			if(str == current->name)
+			{
 				current = current->parent;
-			} else {
+			}
+			else
+			{
 
 				// maybe the tag closes a higher level - eg <a><b></a>
 				ustr = uppercase(str);
@@ -232,14 +281,18 @@
 				// maybe the tag is misspelled eg <a><foo><c></BOO></a>
 				MinLevenshteinDistance = LevenshteinDistance(ustr, uppercase(current->name));
 				MinLevenshteinNode = current;
-				for(temp = current; temp->parent != NULL; temp = temp->parent) {
+				for(temp = current; temp->parent != NULL; temp = temp->parent)
+				{
 					TempLevenshteinDistance = LevenshteinDistance(ustr, uppercase(temp->name));
-					if(TempLevenshteinDistance < MinLevenshteinDistance) {
+					if(TempLevenshteinDistance < MinLevenshteinDistance)
+					{
 						MinLevenshteinDistance = TempLevenshteinDistance;
 						MinLevenshteinNode = temp;
 					}
 				}
-				if(MinLevenshteinDistance <= max(str.size(),MinLevenshteinNode->name.size())/3) {
+
+				if(MinLevenshteinDistance <= max(str.size(),MinLevenshteinNode->name.size())/3)
+				{
 					temp = MinLevenshteinNode;
 					goto set_current_to_temp_parent;
 				} // if Levenshtein-Distance > 33% of word-length, don't suspect it to belong together
@@ -266,75 +319,97 @@
 	}
 
 
-	inline char skip_until(istream &is, string expected_end, string error_chars, char eof_result) {
+	inline char skip_until(istream &is, string expected_end, string error_chars, char eof_result)
+	{
 		char read;
 		int exp = expected_end.size()-1;
 		int err = error_chars.size()-1;
 
-		while(true) {
+		while(true)
+		{
 			if(is.peek() == -1)
 				return eof_result;
+
 			read = is.get();
 			for(int i = exp; i >= 0; --i)
 				if(expected_end[i] == read)
 					return read;
+
 			for(int i = err; i >= 0; --i)
-				if(error_chars[i] == read) {
+			{
+                if(error_chars[i] == read)
+				{
 					is.unget();
 					return read;
 				}
+			}
 		}
 	}
-	inline string read_until(istream& is, string expected_end, string error_chars) {
+
+	inline string read_until(istream& is, string expected_end, string error_chars)
+	{
 		string result;
 		char read;
 		int exp = expected_end.size()-1;
 		int err = error_chars.size()-1;
 
-		while(true) {
+		while(true)
+		{
 			if(is.peek() == -1)
 				return result;
+
 			read = is.get();
 			for(int i = exp; i >= 0; --i)
 				if(expected_end[i] == read)
 					return result;
+
 			for(int i = err; i >= 0; --i)
-				if(error_chars[i] == read) {
+			{
+				if(error_chars[i] == read)
+				{
 					is.unget();
 					return result;
 				}
+			}
 			result += read;
 		}
 	}
-	inline char skip_while(istream &is, string skip, char eof_result) {
+
+	inline char skip_while(istream &is, string skip, char eof_result)
+	{
 		char read;
 		int s = skip.size()-1;
 
 		back:
 			if(is.peek() == -1)
 				return eof_result;
+
 			read = is.get();
 			for(int i = s; i >= 0; --i)
 				if(skip[i] == read)
 					goto back;
+
 		is.unget();
 		return read;
 	}
-	inline string uppercase(string str) {
+
+	inline string uppercase(string str)
+	{
 		for(int i = str.size()-1; i >= 0; --i)
 			if(str[i] >= 'a' && str[i] <='z')
 				str[i] += 'A'-'a';
 		return str;
 	}
 
-	int LevenshteinDistance(string s, string t) {
+	int LevenshteinDistance(string s, string t)
+	{
 		vector<vector<int> > d(s.size(), vector<int>(t.size(),0));
-		for(int i = 0; i < s.size(); i++)
+		for(unsigned int i = 0; i < s.size(); i++)
 			d[i][0] = i;
-		for(int j = 0; j < t.size(); j++)
+		for(unsigned int j = 0; j < t.size(); j++)
 			d[0][j] = j;
-		for(int i = 1; i < s.size(); i++)
-			for(int j = 1; j < t.size(); j++)
+		for(unsigned int i = 1; i < s.size(); i++)
+			for(unsigned int j = 1; j < t.size(); j++)
 				d[i][j] = min(d[i-1][j  ] + 1,    // insertion
 				          min(d[i]  [j-1] + 1,    // deletion
 				              d[i-1][j-1] + (s[i] != t[j]))); // substitution
