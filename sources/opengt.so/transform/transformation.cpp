@@ -66,6 +66,10 @@ namespace OpenGraphtheory
                                      "for rotating the graph (parameter 2 and 3 to set the center of the rotation)",
                                      1, 3,
                                      TransformRotate);
+            result["springembed"] = Transformer("springembed",
+                                     "assigns coordinates to vertices, using the spring-embedding technique",
+                                     0,0,
+                                     TransformSpringEmbed);
             result["aspectscale"] = Transformer("",
                                      "for a transformation of the graph",
                                      1, 1,

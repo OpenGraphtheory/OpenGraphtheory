@@ -3,8 +3,10 @@
 #include <math.h>
 #include <stdlib.h> // for random numbers
 #include "../opengt.h"
+#include "../visualize/GraphWindow.h"
 using namespace std;
 using namespace OpenGraphtheory;
+using namespace OpenGraphtheory::Visualization;
 
 namespace OpenGraphtheory
 {
@@ -21,7 +23,7 @@ namespace OpenGraphtheory
         float delta       =    0.005;  // scaling factor to make the movement more smooth
         float threshold   =    3;    // stop if this no vertex moves more than this far
 
-        int update_interval = 20;
+        int update_interval = 50;
         long usleep_after_update = 41666; //83333;
 
 
@@ -70,7 +72,7 @@ namespace OpenGraphtheory
         // -----------------------------------------------------------------------------
 
 
-        void SpringEmbed(Graph& G, void MovementStepCallback(Graph& G))
+        void SpringEmbed(Graph& G, GraphWindow* display)
         {
             vector<pair<float,float> > tractions;
 
@@ -87,6 +89,7 @@ namespace OpenGraphtheory
             }
 
             float max_movement;
+            int updates = 0;
             do
             {
                 // compute movement
@@ -122,8 +125,23 @@ namespace OpenGraphtheory
                     a.SetY( max(0.0f, min( height, a.GetY() + delta * tractions[i].second ) ) );
                 }
 
+                if(display != NULL)
+                    if(++updates > update_interval)
+                    {
+                        display->Update();
+                        usleep(usleep_after_update);
+                        updates = 0;
+                    }
             }
             while(max_movement > threshold*threshold);
+        }
+
+        void TransformSpringEmbed(Graph& G, list<float> parameters)
+        {
+            GraphWindow win(800,600,&G);
+            win.Update();
+            SpringEmbed(G, &win);
+            win.WaitUntilClosed();
         }
 
 

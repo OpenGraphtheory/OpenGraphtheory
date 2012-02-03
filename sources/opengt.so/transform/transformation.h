@@ -31,6 +31,7 @@ namespace OpenGraphtheory
         void TransformRotate(Graph& G, list<float> parameter);
         void TransformShift(Graph& G, list<float> parameter);
         void TransformScale(Graph& G, list<float> parameter);
+        void TransformSpringEmbed(Graph& G, list<float> parameter);
         void TransformScalePreservingAspect(Graph& G, list<float> parameter);
 
         void TransformLinear(Graph& G, list<float> parameter);
