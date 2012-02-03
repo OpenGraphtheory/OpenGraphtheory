@@ -49,8 +49,8 @@
 	<File name="generate/complete.cpp" open="0" top="0" tabpos="6">
 		<Cursor position="257" topLine="3" />
 	</File>
-	<File name="generate/generate.cpp" open="1" top="0" tabpos="4">
-		<Cursor position="3178" topLine="61" />
+	<File name="generate/generate.cpp" open="0" top="0" tabpos="4">
+		<Cursor position="3178" topLine="29" />
 	</File>
 	<File name="generate/generate.h" open="0" top="0" tabpos="3">
 		<Cursor position="0" topLine="9" />
@@ -88,10 +88,22 @@
 	<File name="simple_xml.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="771" topLine="23" />
 	</File>
-	<File name="transform/transformation.cpp" open="1" top="1" tabpos="3">
-		<Cursor position="2053" topLine="197" />
+	<File name="transform/spring_embedder.cpp" open="1" top="0" tabpos="4">
+		<Cursor position="4803" topLine="0" />
 	</File>
-	<File name="transform/transformation.h" open="1" top="0" tabpos="2">
-		<Cursor position="1292" topLine="2" />
+	<File name="transform/transformation.cpp" open="1" top="0" tabpos="2">
+		<Cursor position="11" topLine="0" />
+	</File>
+	<File name="transform/transformation.h" open="1" top="1" tabpos="1">
+		<Cursor position="1292" topLine="0" />
+	</File>
+	<File name="visualize/DisplayWindow.h" open="0" top="0" tabpos="0">
+		<Cursor position="25355" topLine="747" />
+	</File>
+	<File name="visualize/display.cpp" open="1" top="0" tabpos="5">
+		<Cursor position="456" topLine="3" />
+	</File>
+	<File name="visualize/vector2d.h" open="0" top="0" tabpos="0">
+		<Cursor position="2451" topLine="88" />
 	</File>
 </CodeBlocks_layout_file>

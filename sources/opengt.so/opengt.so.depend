@@ -1,1 +1,173 @@
 # depslib dependency file v1.0
+1328001976 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/algorithms/clique/clique.cpp
+
+1328002104 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/algorithms/vertexcover/vertexcover.cpp
+	"../../opengt.h"
+
+1327508409 /home/viktor/Programming/OpenGraphtheory/opengt.so/opengt.h
+	<list>
+	<set>
+	<map>
+	<string>
+	<iostream>
+	<fstream>
+	"simple_xml.h"
+
+1327506154 /home/viktor/Programming/OpenGraphtheory/opengt.so/simple_xml.h
+	<iostream>
+	<sstream>
+	<vector>
+	<list>
+
+1327674428 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/export/dot.cpp
+	<iostream>
+	"../opengt.h"
+
+1328013057 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/export/export.cpp
+	<iostream>
+	<fstream>
+	<sstream>
+	<string>
+	<list>
+	"../opengt.h"
+	"export.h"
+
+1328006349 /home/viktor/Programming/OpenGraphtheory/opengt.so/export/export.h
+	<string>
+	"../opengt.h"
+
+1327674642 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/export/gastex.cpp
+	<iostream>
+	"../opengt.h"
+
+1327674745 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/export/gml.cpp
+	<iostream>
+	"../opengt.h"
+
+1327675135 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/export/graphml.cpp
+	<iostream>
+	"../opengt.h"
+
+1327675839 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/export/mpost.cpp
+	<iostream>
+	"../opengt.h"
+
+1327676046 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/export/rgml.cpp
+	<iostream>
+	"../opengt.h"
+
+1327676187 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/export/svg.cpp
+	<iostream>
+	"../opengt.h"
+
+1327676298 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/export/tei.cpp
+	<iostream>
+	"../opengt.h"
+
+1327674334 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/export/tgf.cpp
+	<iostream>
+	"../opengt.h"
+
+1327676309 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/export/vrmlgraph.cpp
+	<iostream>
+	"../opengt.h"
+
+1327676381 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/export/xgmml.cpp
+	<iostream>
+	"../opengt.h"
+
+1328017217 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/generate/circle.cpp
+	<list>
+	<cmath>
+	"../opengt.h"
+
+1328018671 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/generate/complete.cpp
+	<cmath>
+	<list>
+	"../opengt.h"
+
+1328103833 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/generate/generate.cpp
+	<sstream>
+	<map>
+	<list>
+	"../opengt.h"
+	"generate.h"
+
+1328095720 /home/viktor/Programming/OpenGraphtheory/opengt.so/generate/generate.h
+	<list>
+	<string>
+	"../opengt.h"
+
+1328020827 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/generate/grid.cpp
+	<list>
+	"../opengt.h"
+
+1328016019 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/generate/path.cpp
+	<list>
+	"../opengt.h"
+
+1328089861 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/generate/random.cpp
+	"../opengt.h"
+	<stdlib.h>
+	<time.h>
+	<vector>
+	<set>
+
+1328017203 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/generate/star.cpp
+	<list>
+	<cmath>
+	"../opengt.h"
+
+1328095586 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/import/import.cpp
+	<iostream>
+	<fstream>
+	<string>
+	"../opengt.h"
+	"import.h"
+
+1328105022 /home/viktor/Programming/OpenGraphtheory/opengt.so/import/import.h
+	<string>
+	"../opengt.h"
+
+1328102982 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/import/tgf.cpp
+	<iostream>
+	<sstream>
+	<string>
+	"../opengt.h"
+
+1328102405 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/opengt.cpp
+	"opengt.h"
+
+1327680614 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/processing/components.cpp
+	<set>
+	<queue>
+	"../opengt.h"
+
+1328026326 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/simple_xml.cpp
+	"simple_xml.h"
+
+1326096804 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/thread.cpp
+	"thread.h"
+
+1325852039 /home/viktor/Programming/OpenGraphtheory/opengt.so/thread.h
+	<pthread.h>
+	<windows.h>
+	<process.h>
+	<stdint.h>
+
+1328264481 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/transform/spring_embedder.cpp
+	<iostream>
+	<math.h>
+	<stdlib.h>
+	"../opengt.h"
+
+1328264783 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/transform/transformation.cpp
+	<math.h>
+	"transformation.h"
+	"../../opengt.so/opengt.h"
+	<list>
+
+1328112209 /home/viktor/Programming/OpenGraphtheory/opengt.so/transform/transformation.h
+	<list>
+	"../opengt.h"
+

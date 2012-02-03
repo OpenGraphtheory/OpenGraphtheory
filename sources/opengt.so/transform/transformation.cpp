@@ -1,4 +1,5 @@
 
+#include <math.h>
 #include "transformation.h"
 #include "../../opengt.so/opengt.h"
 #include <list>
@@ -15,7 +16,7 @@ namespace OpenGraphtheory
 
         }
 
-        Transformer::Transformer(string name, string description, int MinParameterCount, int MaxParameterCount, void TransformerFunction(Graph& G, list<int> parameter))
+        Transformer::Transformer(string name, string description, int MinParameterCount, int MaxParameterCount, void TransformerFunction(Graph& G, list<float> parameter))
         {
             this->name = name;
             this->description = description;
@@ -26,7 +27,7 @@ namespace OpenGraphtheory
 
 
 
-        void Transformer::Transform(Graph& G, list<int> parameter)
+        void Transformer::Transform(Graph& G, list<float> parameter)
         {
             if(MinParamCount > 0 && (((int)parameter.size()) < MinParamCount))
             {
@@ -45,7 +46,7 @@ namespace OpenGraphtheory
 
 
 
-        map<string, Transformer> Transformer::GetTransformers()()
+        map<string, Transformer> Transformer::GetTransformers()
         {
             map<string, Transformer> result;
 
@@ -68,13 +69,13 @@ namespace OpenGraphtheory
             result["aspectscale"] = Transformer("",
                                      "for a transformation of the graph",
                                      1, 1,
-                                     Transform);
+                                     TransformScalePreservingAspect);
 
             return result;
         }
 
 
-        void Transformer::Transformt(Graph& G, list<int> parameter, string transformer)
+        void Transformer::Transform(Graph& G, list<float> parameter, string transformer)
         {
             map<string, Transformer> Transformers = GetTransformers();
             if(Transformers.find(transformer) == Transformers.end())
@@ -155,7 +156,7 @@ namespace OpenGraphtheory
             */
         }
 
-        void TransformScalePreservingAspect()(Graph& G, list<float> parameters)
+        void TransformScalePreservingAspect(Graph& G, list<float> parameters)
         {
             float width=parameters.front();
             parameters.pop_front();
@@ -191,7 +192,7 @@ namespace OpenGraphtheory
         }
 
 
-        void TransformShift()(Graph& G, list<float> parameters)
+        void TransformShift(Graph& G, list<float> parameters)
         {
             float x = parameters.front();
             parameters.pop_front();
@@ -206,7 +207,7 @@ namespace OpenGraphtheory
         //    x' = x*cos a + y*sin a,
         //    y' = − x*sin a + y*cos a,
         // additional parameters define the center of the rotation
-        void TransformRotate()(Graph& G, list<float> parameters)
+        void TransformRotate(Graph& G, list<float> parameters)
         {
             float angle=parameters.front();
             float xshift = 0;
