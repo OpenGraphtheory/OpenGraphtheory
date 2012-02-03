@@ -33,17 +33,6 @@ int main(int argc, char** argv)
         map<string, ImportFilter> Filters = ImportFilter::GetImportFilters();
 		if(Filters.find(format) != Filters.end())
 		{
-		    /*
-		    /// select input source
-            if(!isatty(fileno(stdin)))
-                G = Filters[format].Import(cin);
-            else
-                if(argc > 2)
-                    G = Filters[format].Import(argv[2]);
-                else
-                    throw "no input source specified";
-            */
-
             if(argc > 2)
                 G = Filters[format].Import(argv[2]);
             else
