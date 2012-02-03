@@ -16,7 +16,7 @@
 					<Add directory="/home/viktor/.lib" />
 				</Compiler>
 				<Linker>
-					<Add option="-lpthread -lopengtdbg" />
+					<Add option="-lopengtdbg" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -30,7 +30,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add option="-lpthread -lopengt" />
+					<Add option="-lopengt" />
 				</Linker>
 			</Target>
 		</Build>
@@ -38,7 +38,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="main.cpp" />
+		<Unit filename="import.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />

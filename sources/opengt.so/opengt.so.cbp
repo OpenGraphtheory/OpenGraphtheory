@@ -18,7 +18,7 @@
 					<Add option="-g" />
 				</Compiler>
 				<Linker>
-					<Add option="-lpthread" />
+					<Add option="-lpthread -lX11" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -33,7 +33,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add option="-lpthread" />
+					<Add option="-lpthread -lX11" />
 				</Linker>
 			</Target>
 		</Build>
@@ -143,10 +143,19 @@
 		<Unit filename="transform/transformation.h">
 			<Option virtualFolder="transform/Headers/" />
 		</Unit>
+		<Unit filename="visualize/DisplayWindow.cpp">
+			<Option virtualFolder="visualize/Sources/" />
+		</Unit>
 		<Unit filename="visualize/DisplayWindow.h">
 			<Option virtualFolder="visualize/Headers/" />
 		</Unit>
-		<Unit filename="visualize/display.cpp">
+		<Unit filename="visualize/GraphWindow.cpp">
+			<Option virtualFolder="visualize/Sources/" />
+		</Unit>
+		<Unit filename="visualize/GraphWindow.h">
+			<Option virtualFolder="visualize/Headers/" />
+		</Unit>
+		<Unit filename="visualize/vector2d.cpp">
 			<Option virtualFolder="visualize/Sources/" />
 		</Unit>
 		<Unit filename="visualize/vector2d.h">
