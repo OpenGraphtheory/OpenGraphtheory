@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gxl SYSTEM "http://www.gupro.de/GXL/gxl-1.0.dtd">
+<!-- www.Open-Graphtheory.org -->
+<gxl xmlns:xlink="http://www.w3.org/1999/xlink">
+  <graph id="134529480" edgeids="true" edgemode="defaultundirected" hypergraph="false">
+    <node id="v1">
+      <attr name="name">
+        <string></string>
+      </attr>
+      <attr name="x">
+        <float>0</float>
+      </attr>
+      <attr name="y">
+        <float>0</float>
+      </attr>
+      <attr name="weight">
+        <float>0</float>
+      </attr>
+    </node>
+    <node id="v2">
+      <attr name="name">
+        <string></string>
+      </attr>
+      <attr name="x">
+        <float>0</float>
+      </attr>
+      <attr name="y">
+        <float>25</float>
+      </attr>
+      <attr name="weight">
+        <float>0</float>
+      </attr>
+    </node>
+    <node id="v3">
+      <attr name="name">
+        <string></string>
+      </attr>
+      <attr name="x">
+        <float>0</float>
+      </attr>
+      <attr name="y">
+        <float>50</float>
+      </attr>
+      <attr name="weight">
+        <float>0</float>
+      </attr>
+    </node>
+    <node id="v4">
+      <attr name="name">
+        <string></string>
+      </attr>
+      <attr name="x">
+        <float>25</float>
+      </attr>
+      <attr name="y">
+        <float>0</float>
+      </attr>
+      <attr name="weight">
+        <float>0</float>
+      </attr>
+    </node>
+    <node id="v5">
+      <attr name="name">
+        <string></string>
+      </attr>
+      <attr name="x">
+        <float>25</float>
+      </attr>
+      <attr name="y">
+        <float>25</float>
+      </attr>
+      <attr name="weight">
+        <float>0</float>
+      </attr>
+    </node>
+    <node id="v6">
+      <attr name="name">
+        <string></string>
+      </attr>
+      <attr name="x">
+        <float>25</float>
+      </attr>
+      <attr name="y">
+        <float>50</float>
+      </attr>
+      <attr name="weight">
+        <float>0</float>
+      </attr>
+    </node>
+    <node id="v7">
+      <attr name="name">
+        <string></string>
+      </attr>
+      <attr name="x">
+        <float>50</float>
+      </attr>
+      <attr name="y">
+        <float>0</float>
+      </attr>
+      <attr name="weight">
+        <float>0</float>
+      </attr>
+    </node>
+    <node id="v8">
+      <attr name="name">
+        <string></string>
+      </attr>
+      <attr name="x">
+        <float>50</float>
+      </attr>
+      <attr name="y">
+        <float>25</float>
+      </attr>
+      <attr name="weight">
+        <float>0</float>
+      </attr>
+    </node>
+    <node id="v9">
+      <attr name="name">
+        <string></string>
+      </attr>
+      <attr name="x">
+        <float>50</float>
+      </attr>
+      <attr name="y">
+        <float>50</float>
+      </attr>
+      <attr name="weight">
+        <float>0</float>
+      </attr>
+    </node>
+    <edge id="e1" from="v1" to="v2" isdirected="false">
+      <attr name="name">
+        <string></string>
+      </attr>
+      <attr name="weight">
+        <float>1</float>
+      </attr>
+    </edge>
+    <edge id="e2" from="v2" to="v3" isdirected="false">
+      <attr name="name">
+        <string></string>
+      </attr>
+      <attr name="weight">
+        <float>1</float>
+      </attr>
+    </edge>
+    <edge id="e3" from="v1" to="v4" isdirected="false">
+      <attr name="name">
+        <string></string>
+      </attr>
+      <attr name="weight">
+        <float>1</float>
+      </attr>
+    </edge>
+    <edge id="e4" from="v4" to="v5" isdirected="false">
+      <attr name="name">
+        <string></string>
+      </attr>
+      <attr name="weight">
+        <float>1</float>
+      </attr>
+    </edge>
+    <edge id="e5" from="v2" to="v5" isdirected="false">
+      <attr name="name">
+        <string></string>
+      </attr>
+      <attr name="weight">
+        <float>1</float>
+      </attr>
+    </edge>
+    <edge id="e6" from="v5" to="v6" isdirected="false">
+      <attr name="name">
+        <string></string>
+      </attr>
+      <attr name="weight">
+        <float>1</float>
+      </attr>
+    </edge>
+    <edge id="e7" from="v3" to="v6" isdirected="false">
+      <attr name="name">
+        <string></string>
+      </attr>
+      <attr name="weight">
+        <float>1</float>
+      </attr>
+    </edge>
+    <edge id="e8" from="v4" to="v7" isdirected="false">
+      <attr name="name">
+        <string></string>
+      </attr>
+      <attr name="weight">
+        <float>1</float>
+      </attr>
+    </edge>
+    <edge id="e9" from="v7" to="v8" isdirected="false">
+      <attr name="name">
+        <string></string>
+      </attr>
+      <attr name="weight">
+        <float>1</float>
+      </attr>
+    </edge>
+    <edge id="e10" from="v5" to="v8" isdirected="false">
+      <attr name="name">
+        <string></string>
+      </attr>
+      <attr name="weight">
+        <float>1</float>
+      </attr>
+    </edge>
+    <edge id="e11" from="v8" to="v9" isdirected="false">
+      <attr name="name">
+        <string></string>
+      </attr>
+      <attr name="weight">
+        <float>1</float>
+      </attr>
+    </edge>
+    <edge id="e12" from="v6" to="v9" isdirected="false">
+      <attr name="name">
+        <string></string>
+      </attr>
+      <attr name="weight">
+        <float>1</float>
+      </attr>
+    </edge>
+  </graph>
+</gxl>

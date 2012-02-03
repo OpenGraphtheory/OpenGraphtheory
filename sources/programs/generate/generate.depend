@@ -1,0 +1,29 @@
+# depslib dependency file v1.0
+1328103305 source:/home/viktor/Programming/OpenGraphtheory/programs/generate/main.cpp
+	<iostream>
+	<list>
+	<string>
+	<stdlib.h>
+	"../../opengt.so/opengt.h"
+	"../../opengt.so/generate/generate.h"
+
+1327508409 /home/viktor/Programming/OpenGraphtheory/opengt.so/opengt.h
+	<list>
+	<set>
+	<map>
+	<string>
+	<iostream>
+	<fstream>
+	"simple_xml.h"
+
+1327506154 /home/viktor/Programming/OpenGraphtheory/opengt.so/simple_xml.h
+	<iostream>
+	<sstream>
+	<vector>
+	<list>
+
+1328095720 /home/viktor/Programming/OpenGraphtheory/opengt.so/generate/generate.h
+	<list>
+	<string>
+	"../opengt.h"
+
