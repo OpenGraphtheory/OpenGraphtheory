@@ -171,3 +171,29 @@
 	<list>
 	"../opengt.h"
 
+1328275079 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/visualize/vector2d.cpp
+	<math.h>
+	"vector2d.h"
+
+1328275092 /home/viktor/Programming/OpenGraphtheory/opengt.so/visualize/vector2d.h
+
+1328276246 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/visualize/DisplayWindow.cpp
+	"DisplayWindow.h"
+	"DisplayWindow.h"
+
+1328276152 /home/viktor/Programming/OpenGraphtheory/opengt.so/visualize/DisplayWindow.h
+	<iostream>
+	<X11/Xlib.h>
+	<X11/Xutil.h>
+	<semaphore.h>
+	<pthread.h>
+	"vector2d.h"
+
+1328280330 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/visualize/GraphWindow.cpp
+	"GraphWindow.h"
+	"../opengt.h"
+
+1328280284 /home/viktor/Programming/OpenGraphtheory/opengt.so/visualize/GraphWindow.h
+	"DisplayWindow.h"
+	"../opengt.h"
+
