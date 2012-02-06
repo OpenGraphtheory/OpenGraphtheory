@@ -16,19 +16,23 @@ namespace OpenGraphtheory
         float width       =  800;
         float height      =  600;
 
-        float c_repel     =    1;    // force with which vertices push each other off
-        float c_spring    =    1;  // force with which adjacent vertices attract each other
+        float c_repel     =    0.02;    // force with which vertices push each other off
+        float c_spring    =    2;  // force with which adjacent vertices attract each other
                                      // must not be 0 (or division by zero error will happen)
         float unstressed_spring_length = 100; // if distance < this, then no more force between them
-        float delta       =    0.005;  // scaling factor to make the movement more smooth
-        float threshold   =    3;    // stop if this no vertex moves more than this far
+        float delta       =    0.5;  // scaling factor to make the movement more smooth
+        float threshold   =    5;    // stop if this no vertex moves more than this far
 
-        int update_interval = 50;
-        long usleep_after_update = 41666; //83333;
+        int update_interval = 1;
+        long usleep_after_update = 250000; //41666; //83333;
 
 
         // -----------------------------------------------------------------------------
 
+        float vector_distance(pair<float,float> a, pair<float,float> b)
+        {
+            return sqrt((b.first-a.first)*(b.first-a.first)+(b.second-a.second)*(b.second-a.second));
+        }
 
         pair<float,float> coulomb(float x1, float y1, float x2, float y2)
         {
@@ -41,9 +45,10 @@ namespace OpenGraphtheory
             if(distance*distance < 0.001)
                 return pair<float,float>(0,0);
             distance /= unstressed_spring_length;
+
             float xe = (x2-x1)/distance;
             float ye = (y2-y1)/distance;
-            float factor = c_repel / (distance*distance);
+            float factor = 10 * c_repel / (distance*distance);
             return pair<float,float>(factor*xe, factor*ye);
         }
 
@@ -52,10 +57,14 @@ namespace OpenGraphtheory
             // hooke's law:
             // attraction force of a spring is proportional to distance
 
-            float distance = sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));
+            float distance = vector_distance(pair<float,float>(x1,y1), pair<float,float>(x2,y2));
             float xe = (x1-x2)/distance;
             float ye = (y1-y2)/distance;
-            float factor = c_spring * (distance-unstressed_spring_length);
+            // (xe,ye) is normalized vector between the two points
+
+            float factor = 0;
+            if(distance > unstressed_spring_length)
+                factor = c_spring * (distance/unstressed_spring_length);
             return pair<float,float>(factor*xe, factor*ye);
         }
 
@@ -68,6 +77,7 @@ namespace OpenGraphtheory
         {
             return pair<float,float>(a.first-b.first, a.second-b.second);
         }
+
 
         // -----------------------------------------------------------------------------
 
@@ -104,9 +114,11 @@ namespace OpenGraphtheory
                     {
                         if(b==a)
                             continue;
-                        // force on a by vertex b
 
-                        traction = vector_add(traction, coulomb(a.GetX(), a.GetY(), b.GetX(), b.GetY()));
+                        // force on a by vertex b
+                        vector_distance(pair<float,float>(a.GetX(), a.GetY()), pair<float,float>(b.GetX(), b.GetY()));
+                            traction = vector_subtract(traction, coulomb(a.GetX(), a.GetY(), b.GetX(), b.GetY()));
+
                         if(a.Adjacent(b))
                             traction = vector_subtract(traction, hooke(a.GetX(), a.GetY(), b.GetX(), b.GetY()));
                     }
@@ -138,7 +150,7 @@ namespace OpenGraphtheory
 
         void TransformSpringEmbed(Graph& G, list<float> parameters)
         {
-            GraphWindow win(800,600,&G);
+            GraphWindow win(width,height,&G);
             win.Update();
             SpringEmbed(G, &win);
             win.WaitUntilClosed();

@@ -88,8 +88,8 @@
 	<File name="simple_xml.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="771" topLine="23" />
 	</File>
-	<File name="transform/spring_embedder.cpp" open="1" top="1" tabpos="3">
-		<Cursor position="5462" topLine="118" />
+	<File name="transform/spring_embedder.cpp" open="1" top="1" tabpos="2">
+		<Cursor position="4696" topLine="97" />
 	</File>
 	<File name="transform/transformation.cpp" open="1" top="0" tabpos="1">
 		<Cursor position="2428" topLine="48" />
@@ -106,7 +106,7 @@
 	<File name="visualize/GraphWindow.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="562" topLine="0" />
 	</File>
-	<File name="visualize/GraphWindow.h" open="1" top="0" tabpos="4">
+	<File name="visualize/GraphWindow.h" open="1" top="0" tabpos="3">
 		<Cursor position="908" topLine="0" />
 	</File>
 	<File name="visualize/vector2d.cpp" open="0" top="0" tabpos="0">
