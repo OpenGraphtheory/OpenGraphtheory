@@ -81,6 +81,7 @@ namespace OpenGraphtheory
         void SpringEmbed(Graph& G, GraphWindow* display)
         {
             vector<pair<float,float> > tractions;
+            unstressed_spring_length = sqrt(width * height / G.NumberOfVertices()) / 2;
 
             // init
             srand ( time(NULL) );
