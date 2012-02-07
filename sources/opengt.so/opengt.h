@@ -88,6 +88,7 @@
 				string GetLabel() const;
 				void SetLabel(string label);
 				int NumberOfVertices() const;
+				int NumberOfEdges() const;
 
 				bool IsUndirected();
 				bool IsDirected();

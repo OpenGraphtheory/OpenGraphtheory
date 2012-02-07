@@ -17,11 +17,11 @@ namespace OpenGraphtheory
         float height      =  600;
 
         float c_repel     =    0.02;    // force with which vertices push each other off
-        float c_spring    =    2;  // force with which adjacent vertices attract each other
+        float c_spring    =    3;  // force with which adjacent vertices attract each other
                                      // must not be 0 (or division by zero error will happen)
         float unstressed_spring_length = 100; // if distance < this, then no more force between them
-        float delta       =    0.05;  // scaling factor to make the movement more smooth
-        float threshold   =    3;    // stop if no vertex moves more than this far
+        float delta       =    1;  // scaling factor to make the movement more smooth
+        float movement_threshold   =    3;    // stop if no vertex moves more than this far
 
         // -----------------------------------------------------------------------------
 
@@ -81,9 +81,6 @@ namespace OpenGraphtheory
         void SpringEmbed(Graph& G, GraphWindow* display)
         {
             vector<pair<float,float> > tractions;
-            //timespec SleepTime;
-            //SleepTime.tv_sec = 0;
-            //SleepTime.tv_nsec = nanosleep_after_update;
 
             // init
             srand ( time(NULL) );
@@ -98,6 +95,7 @@ namespace OpenGraphtheory
             }
 
             float max_movement;
+            movement_threshold = 1;
             do
             {
                 // compute movement
@@ -122,23 +120,26 @@ namespace OpenGraphtheory
                     }
 
                     tractions[i] = traction;
-                    // for the loop-condition
-                    //if(traction.first*traction.first + traction.second*traction.second > max_movement)
-                        max_movement += traction.first*traction.first + traction.second*traction.second;
                 }
 
                 // execute movement
                 Graph::VertexIterator a = G.BeginVertices();
                 for(int i = 0; a != G.EndVertices(); a++, i++)
                 {
-                    a.SetX( max(0.0f, min( width,  a.GetX() + delta * tractions[i].first ) ) );
-                    a.SetY( max(0.0f, min( height, a.GetY() + delta * tractions[i].second ) ) );
+                    float NewX = max(0.0f, min( width,  a.GetX() + delta * tractions[i].first ) );
+                    float NewY = max(0.0f, min( height, a.GetY() + delta * tractions[i].second ) );
+
+                    // for the loop-condition
+                    max_movement = max(max_movement, (a.GetX()-NewX)*(a.GetX()-NewX) + (a.GetY()-NewY)*(a.GetY()-NewY));
+
+                    a.SetX( NewX );
+                    a.SetY( NewY );
                 }
 
                 if(display != NULL)
                     display->Update();
             }
-            while(max_movement > threshold*threshold);
+            while(max_movement > movement_threshold);
         }
 
         void TransformSpringEmbed(Graph& G, list<float> parameters)

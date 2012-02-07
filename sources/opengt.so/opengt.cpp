@@ -50,7 +50,15 @@ namespace OpenGraphtheory
 			operator=(G);
 		}
 
+        int Graph::NumberOfVertices() const
+        {
+            return Vertices.size();
+        }
 
+        int Graph::NumberOfEdges() const
+        {
+            return Edges.size();
+        }
 
         /// \brief Operator to copy a graph
         void Graph::operator=(const Graph& G)
