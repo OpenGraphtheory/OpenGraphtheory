@@ -20,12 +20,8 @@ namespace OpenGraphtheory
         float c_spring    =    2;  // force with which adjacent vertices attract each other
                                      // must not be 0 (or division by zero error will happen)
         float unstressed_spring_length = 100; // if distance < this, then no more force between them
-        float delta       =    0.5;  // scaling factor to make the movement more smooth
-        float threshold   =    5;    // stop if this no vertex moves more than this far
-
-        int update_interval = 1;
-        long usleep_after_update = 250000; //41666; //83333;
-
+        float delta       =    0.05;  // scaling factor to make the movement more smooth
+        float threshold   =    3;    // stop if no vertex moves more than this far
 
         // -----------------------------------------------------------------------------
 
@@ -85,6 +81,9 @@ namespace OpenGraphtheory
         void SpringEmbed(Graph& G, GraphWindow* display)
         {
             vector<pair<float,float> > tractions;
+            //timespec SleepTime;
+            //SleepTime.tv_sec = 0;
+            //SleepTime.tv_nsec = nanosleep_after_update;
 
             // init
             srand ( time(NULL) );
@@ -99,7 +98,6 @@ namespace OpenGraphtheory
             }
 
             float max_movement;
-            int updates = 0;
             do
             {
                 // compute movement
@@ -125,8 +123,8 @@ namespace OpenGraphtheory
 
                     tractions[i] = traction;
                     // for the loop-condition
-                    if(traction.first*traction.first + traction.second*traction.second > max_movement)
-                        max_movement = traction.first*traction.first + traction.second*traction.second;
+                    //if(traction.first*traction.first + traction.second*traction.second > max_movement)
+                        max_movement += traction.first*traction.first + traction.second*traction.second;
                 }
 
                 // execute movement
@@ -138,12 +136,7 @@ namespace OpenGraphtheory
                 }
 
                 if(display != NULL)
-                    if(++updates > update_interval)
-                    {
-                        display->Update();
-                        usleep(usleep_after_update);
-                        updates = 0;
-                    }
+                    display->Update();
             }
             while(max_movement > threshold*threshold);
         }
@@ -153,7 +146,7 @@ namespace OpenGraphtheory
             GraphWindow win(width,height,&G);
             win.Update();
             SpringEmbed(G, &win);
-            win.WaitUntilClosed();
+            //win.WaitUntilClosed();
         }
 
 

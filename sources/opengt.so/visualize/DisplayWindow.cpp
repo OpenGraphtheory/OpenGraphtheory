@@ -123,6 +123,7 @@ namespace OpenGraphtheory
 
       	Atom wm_delete_window=None;
 
+        map<Display*, DisplayWindow*> WindowRegister;
 
         DisplayWindow::DisplayWindow(int Width, int Height, string Caption, string IconPath)
         {
@@ -141,6 +142,7 @@ namespace OpenGraphtheory
             OnKeyDown = NULL;
             OnKeyUp = NULL;
             OnClose = NULL;
+            OnError = NULL;
 
             // init semaphores
             Close = false;
@@ -149,9 +151,12 @@ namespace OpenGraphtheory
             sem_init(&UpdateSemaphore, 0, 1);
 
             // create window
+            XInitThreads();
             XServer = XOpenDisplay (NULL);
             if (XServer == NULL)
                 throw "Connection to X-Server failed!";
+            WindowRegister[XServer] = this;
+            XSetErrorHandler(XServerErrorHandler);
 
             Screen = XDefaultScreen (XServer);
             cmap = XDefaultColormap (XServer, Screen);
@@ -203,7 +208,7 @@ namespace OpenGraphtheory
             sem_wait(&pWin->QuittingSemaphore);
             timespec SleepTime;
             SleepTime.tv_sec = 0;
-            SleepTime.tv_nsec =  10000000; //  1/20 seconds
+            SleepTime.tv_nsec =  10000000; //  1/100 seconds
                             // 1000000000 = 1 second
             while(true)
             {
@@ -217,18 +222,49 @@ namespace OpenGraphtheory
             sem_post(&pWin->MainSemaphore);
             sem_post(&pWin->QuittingSemaphore);
 
+            pWin->CloseWindow();
             return NULL;
         }
 
+
+        void DisplayWindow::Flush()
+        {
+            ProcessEvents();
+
+            sem_wait(&MainSemaphore);
+            sem_wait(&UpdateSemaphore);
+            if(!Close)
+                XCopyArea(XServer, PaintBuffer, WinBackup, WinBackupGraphicContext, 0,0,width,height,0,0);
+            sem_post(&UpdateSemaphore);
+            sem_post(&MainSemaphore);
+            Update();
+        }
+
+
+        void DisplayWindow::Update()
+        {
+            sem_wait(&UpdateSemaphore);
+            if(!Close)
+            {
+                XCopyArea(XServer, WinBackup, Win, WinGraphicContext, 0,0,width,height,0,0);
+                XFlush(XServer);
+            }
+            sem_post(&UpdateSemaphore);
+        }
+
+
         void DisplayWindow::ProcessEvents()
         {
+            sem_wait(&MainSemaphore);
             static XEvent xev;
+            XFlush (XServer);
             for(int num_events = XPending(XServer); num_events > 0; --num_events)
             {
                 XNextEvent (XServer, &xev);
                 //if(xev.window == Win)
                     ProcessEvent (xev);
             }
+            sem_post(&MainSemaphore);
         }
 
         void DisplayWindow::ProcessEvent (XEvent report)
@@ -323,10 +359,36 @@ namespace OpenGraphtheory
 
         // -----------------------------------------------------------------------------
 
+        int XServerErrorHandler(Display* XServer, XErrorEvent* error)
+        {
+            char buffer[256];
+            XGetErrorText(XServer, error->error_code, buffer, 256);
+
+            map<Display*, DisplayWindow*>::iterator win = WindowRegister.find(XServer);
+            if(win != WindowRegister.end())
+            {
+                DisplayWindow* Window = win->second;
+                void (*Handler)(string ErrorText) = Window->OnError;
+
+                if(Handler != NULL)
+                {
+                    Handler(string(buffer));
+                    return 0;
+                }
+                else
+                    cerr << "X11 Error: " << buffer << endl;
+            }
+            else
+                cerr << "X11 Error: " << buffer << endl;
+
+            return 1;
+        }
+
 
         DisplayWindow::~DisplayWindow()
         {
             CloseWindow();
+            WindowRegister.erase(XServer);
 
             if( pthread_join(Thread,NULL))
                 throw "error joining thread\n";
@@ -690,26 +752,6 @@ namespace OpenGraphtheory
             Flush();
         }
 
-
-
-        void DisplayWindow::Flush()
-        {
-            sem_wait(&MainSemaphore);
-            sem_wait(&UpdateSemaphore);
-            if(!Close)
-                XCopyArea(XServer, PaintBuffer, WinBackup, WinBackupGraphicContext, 0,0,width,height,0,0);
-            sem_post(&UpdateSemaphore);
-            sem_post(&MainSemaphore);
-            Update();
-        }
-
-        void DisplayWindow::Update()
-        {
-            sem_wait(&UpdateSemaphore);
-            if(!Close)
-                XCopyArea(XServer, WinBackup, Win, WinGraphicContext, 0,0,width,height,0,0);
-            sem_post(&UpdateSemaphore);
-        }
 
 
     // ---------------------------------------------------------------------------------

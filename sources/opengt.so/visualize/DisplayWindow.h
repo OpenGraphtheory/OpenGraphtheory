@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <map>
 using namespace std;
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
@@ -18,6 +19,7 @@ namespace OpenGraphtheory
         enum DeadKey {kbShift=1, kbAlt=2, kbCtrl=4 };
 
         void* RunThread(void* WindowHandler);
+        int XServerErrorHandler(Display* XServer, XErrorEvent* error);
 
 
         class DisplayWindow
@@ -111,6 +113,9 @@ namespace OpenGraphtheory
                 void (*OnKeyDown)(int KeyCode, unsigned short DeadKeyStates);
                 void (*OnKeyUp)  (int KeyCode, unsigned short DeadKeyStates);
                 void (*OnClose)(bool& AbortClosing);
+
+                void (*OnError)(string ErrorText);
+
         };
 
 
