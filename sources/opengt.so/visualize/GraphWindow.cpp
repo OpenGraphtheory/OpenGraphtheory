@@ -8,9 +8,14 @@ namespace OpenGraphtheory
     namespace Visualization
     {
 
-        GraphWindow::GraphWindow(int width, int height, Graph* G, string Caption, int gridsize)
+        GraphWindow::GraphWindow(int width, int height, Graph* G, string Caption, int gridsize, bool ZoomToFit)
             : DisplayWindow(width, height, Caption)
         {
+            ModelLeft = 0;
+            ModelTop = 0;
+            ModelWidth = width;
+            ModelHeight = height;
+            this -> ZoomToFit = ZoomToFit;
             Display(G);
         }
 
@@ -25,7 +30,8 @@ namespace OpenGraphtheory
             Clear();
             if(DisplayedGraph != NULL)
             {
-                UpdateModelDimensions();
+                if(ZoomToFit)
+                    UpdateModelDimensions();
 
                 for(Graph::EdgeIterator e = DisplayedGraph->BeginEdges(); e != DisplayedGraph->EndEdges(); e++)
                 {
@@ -45,7 +51,7 @@ namespace OpenGraphtheory
                     float y = v.GetY();
 
                     ModelToScreen(x, y);
-                    FillCircle(x, y, 15);
+                    FillCircle(x, y, 7);
                 }
             }
             Flush();
@@ -89,6 +95,16 @@ namespace OpenGraphtheory
 
             x = (x - ModelLeft) * scale;
             y = (y - ModelTop) * scale;
+        }
+
+        void GraphWindow::ScreenToModel(float &x, float &y)
+        {
+            float scaleX = width / ModelWidth;
+            float scaleY = height / ModelHeight;
+            float scale = scaleX < scaleY ? scaleX : scaleY;
+
+            x = x / scale + ModelLeft;
+            y = y / scale + ModelTop;
         }
 
     }

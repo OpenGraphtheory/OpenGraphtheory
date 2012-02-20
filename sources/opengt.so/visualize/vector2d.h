@@ -15,6 +15,9 @@ namespace OpenGraphtheory
 
                 Vector2D operator+(const Vector2D& Sum) const;
                 Vector2D operator-(const Vector2D& Diff) const;
+                void operator+=(const Vector2D& Sum);
+                void operator-=(const Vector2D& Diff);
+
                 float operator*(const Vector2D& Prod) const; // Euclidian Product
                 Vector2D operator*(float Prod) const;
                 Vector2D operator/(float Div) const;

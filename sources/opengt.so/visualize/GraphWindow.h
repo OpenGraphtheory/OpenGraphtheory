@@ -12,16 +12,18 @@ namespace OpenGraphtheory
         {
             protected:
                 int gridsize;
+                bool ZoomToFit;
                 Graph* DisplayedGraph;
 
                 float ModelLeft, ModelWidth, ModelTop, ModelHeight;
                 void UpdateModelDimensions();
                 void UpdateModelDimensions(float left, float top, float right, float bottom);
                 void ModelToScreen(float &x, float& y);
+                void ScreenToModel(float &x, float& y);
 
             public:
 
-                GraphWindow(int width, int height, Graph* G, string Caption = "http://www.Open-Graphtheory.org", int gridsize = 1);
+                GraphWindow(int width, int height, Graph* G, string Caption = "http://www.Open-Graphtheory.org", int gridsize = 1, bool ZoomToFit = false);
 
                 void Display(Graph* G);
                 void Update();

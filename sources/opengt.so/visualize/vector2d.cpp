@@ -34,6 +34,19 @@ namespace OpenGraphtheory
             return Vector2D(x-Diff.x, y-Diff.y);
         }
 
+        void Vector2D::operator+=(const Vector2D& Sum)
+        {
+            x += Sum.x;
+            y += Sum.y;
+        }
+
+        void Vector2D::operator-=(const Vector2D& Diff)
+        {
+            x -= Diff.x;
+            y -= Diff.y;
+        }
+
+
         float Vector2D::operator*(const Vector2D& Prod) const
         {
             return x*Prod.x + y*Prod.y;

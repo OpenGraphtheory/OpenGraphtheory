@@ -15,63 +15,47 @@ namespace OpenGraphtheory
 
         float width       =  800;
         float height      =  600;
+        int maxiterations =  2500;
 
-        float c_repel     =    0.02;    // force with which vertices push each other off
-        float c_spring    =    3;  // force with which adjacent vertices attract each other
-                                     // must not be 0 (or division by zero error will happen)
+        float c_repel     =    25; // force with which vertices push each other off
+        float c_spring    =    20;  // force with which adjacent vertices attract each other
+                                   // must not be 0 (or division by zero error will happen)
+        float friction    =    0.5;
+
         float unstressed_spring_length = 100; // if distance < this, then no more force between them
-        float delta       =    1;  // scaling factor to make the movement more smooth
-        float movement_threshold   =    3;    // stop if no vertex moves more than this far
+        float delta       =    0.2;  // scaling factor to make the movement more smooth
+        float movement_threshold   =    0.5;    // stop if no vertex moves more than this far
 
         // -----------------------------------------------------------------------------
 
-        float vector_distance(pair<float,float> a, pair<float,float> b)
-        {
-            return sqrt((b.first-a.first)*(b.first-a.first)+(b.second-a.second)*(b.second-a.second));
-        }
-
-        pair<float,float> coulomb(float x1, float y1, float x2, float y2)
+        Vector2D coulomb(Vector2D u, Vector2D v)
         {
             // coulomb's law:
             //                 u-v    c_repel
             // f_repel(u,v) = ----- * -------
             //                |u-v|   |u-v|²
 
-            float distance = sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));
-            if(distance*distance < 0.001)
-                return pair<float,float>(0,0);
-            distance /= unstressed_spring_length;
+            float distance = (u-v).Length() / unstressed_spring_length;
+            if(distance < 0.00001)
+                return u * -1;
+            Vector2D e = (u-v).Normalized();
 
-            float xe = (x2-x1)/distance;
-            float ye = (y2-y1)/distance;
-            float factor = 10 * c_repel / (distance*distance);
-            return pair<float,float>(factor*xe, factor*ye);
+            float factor = c_repel / (distance*distance);
+            return e * factor;
         }
 
-        pair<float,float> hooke(float x1, float y1, float x2, float y2)
+        Vector2D hooke(Vector2D u, Vector2D v)
         {
             // hooke's law:
             // attraction force of a spring is proportional to distance
 
-            float distance = vector_distance(pair<float,float>(x1,y1), pair<float,float>(x2,y2));
-            float xe = (x1-x2)/distance;
-            float ye = (y1-y2)/distance;
-            // (xe,ye) is normalized vector between the two points
+            float distance = (u-v).Length() / unstressed_spring_length;
 
-            float factor = 0;
-            if(distance > unstressed_spring_length)
-                factor = c_spring * (distance/unstressed_spring_length);
-            return pair<float,float>(factor*xe, factor*ye);
-        }
+            Vector2D e = (u-v).Normalized();
+            // e is normalized vector between the two points
 
-        pair<float,float> vector_add(pair<float,float> a, pair<float,float> b)
-        {
-            return pair<float,float>(a.first+b.first, a.second+b.second);
-        }
-
-        pair<float,float> vector_subtract(pair<float,float> a, pair<float,float> b)
-        {
-            return pair<float,float>(a.first-b.first, a.second-b.second);
+            float factor = distance > 1 ? -c_spring * distance : 0;
+            return e * factor;
         }
 
 
@@ -80,7 +64,7 @@ namespace OpenGraphtheory
 
         void SpringEmbed(Graph& G, GraphWindow* display)
         {
-            vector<pair<float,float> > tractions;
+            vector<Vector2D> tractions;
             unstressed_spring_length = sqrt(width * height / G.NumberOfVertices()) / 2;
 
             // init
@@ -92,11 +76,10 @@ namespace OpenGraphtheory
                 a.SetY(rand());
                 a.SetY(a.GetY() - floor(a.GetY()/height)*height);
                 // should make sure that no two vertices have the same position
-                tractions.push_back(pair<float,float>(0,0));
+                tractions.push_back(Vector2D(0,0));
             }
 
             float max_movement;
-            movement_threshold = 1;
             do
             {
                 // compute movement
@@ -104,7 +87,7 @@ namespace OpenGraphtheory
                 int i = 0;
                 for(Graph::VertexIterator a = G.BeginVertices(); a != G.EndVertices(); a++, i++)
                 {
-                    pair<float,float> traction(0,0);
+                    Vector2D traction = tractions[i] * friction;
 
                     // compute forces on a by the other vertices
                     for(Graph::VertexIterator b = G.BeginVertices(); b != G.EndVertices(); b++)
@@ -113,11 +96,9 @@ namespace OpenGraphtheory
                             continue;
 
                         // force on a by vertex b
-                        vector_distance(pair<float,float>(a.GetX(), a.GetY()), pair<float,float>(b.GetX(), b.GetY()));
-                            traction = vector_subtract(traction, coulomb(a.GetX(), a.GetY(), b.GetX(), b.GetY()));
-
+                        traction += coulomb(Vector2D(a.GetX(), a.GetY()), Vector2D(b.GetX(), b.GetY()));
                         if(a.Adjacent(b))
-                            traction = vector_subtract(traction, hooke(a.GetX(), a.GetY(), b.GetX(), b.GetY()));
+                            traction += hooke(Vector2D(a.GetX(), a.GetY()), Vector2D(b.GetX(), b.GetY()));
                     }
 
                     tractions[i] = traction;
@@ -127,8 +108,8 @@ namespace OpenGraphtheory
                 Graph::VertexIterator a = G.BeginVertices();
                 for(int i = 0; a != G.EndVertices(); a++, i++)
                 {
-                    float NewX = max(0.0f, min( width,  a.GetX() + delta * tractions[i].first ) );
-                    float NewY = max(0.0f, min( height, a.GetY() + delta * tractions[i].second ) );
+                    float NewX = max(0.0f, min( width,  a.GetX() + delta * tractions[i].x ) );
+                    float NewY = max(0.0f, min( height, a.GetY() + delta * tractions[i].y ) );
 
                     // for the loop-condition
                     max_movement = max(max_movement, (a.GetX()-NewX)*(a.GetX()-NewX) + (a.GetY()-NewY)*(a.GetY()-NewY));
@@ -140,7 +121,8 @@ namespace OpenGraphtheory
                 if(display != NULL)
                     display->Update();
             }
-            while(max_movement > movement_threshold);
+            while((max_movement > movement_threshold*unstressed_spring_length*delta*delta) && --maxiterations > 0);
+
         }
 
         void TransformSpringEmbed(Graph& G, list<float> parameters)
