@@ -116,6 +116,9 @@
 		<Unit filename="generate/star.cpp">
 			<Option virtualFolder="generate/Sources/" />
 		</Unit>
+		<Unit filename="generate/tree.cpp">
+			<Option virtualFolder="generate/Sources/" />
+		</Unit>
 		<Unit filename="import/import.cpp">
 			<Option virtualFolder="import/Sources/" />
 		</Unit>
