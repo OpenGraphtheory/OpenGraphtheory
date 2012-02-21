@@ -72,6 +72,10 @@ namespace OpenGraphtheory
                                      "To generate a grid-graph",
                                      2, 2,
                                      GenerateGrid);
+            result["tree"] = Generator("tree",
+                                     "To generate a tree",
+                                     0, -1,
+                                     GenerateTree);
             result["random"] = Generator("random",
                                      "To generate a random graph",
                                      2, 2,

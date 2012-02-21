@@ -33,6 +33,7 @@ namespace OpenGraphtheory
         Graph GeneratePath(list<int> parameter);
         Graph GenerateComplete(list<int> parameter);
         Graph GenerateGrid(list<int> parameter);
+        Graph GenerateTree(list<int> parameter);
         Graph GenerateRandom(list<int> parameter);
     }
 }

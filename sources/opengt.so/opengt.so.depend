@@ -86,14 +86,14 @@
 	<list>
 	"../opengt.h"
 
-1328103833 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/generate/generate.cpp
+1329831340 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/generate/generate.cpp
 	<sstream>
 	<map>
 	<list>
 	"../opengt.h"
 	"generate.h"
 
-1328095720 /home/viktor/Programming/OpenGraphtheory/opengt.so/generate/generate.h
+1329831355 /home/viktor/Programming/OpenGraphtheory/opengt.so/generate/generate.h
 	<list>
 	<string>
 	"../opengt.h"
@@ -135,7 +135,7 @@
 	<string>
 	"../opengt.h"
 
-1329827699 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/opengt.cpp
+1329829796 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/opengt.cpp
 	"opengt.h"
 
 1327680614 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/processing/components.cpp
@@ -212,4 +212,9 @@
 	"../opengt.h"
 	"../visualize/GraphWindow.h"
 	"../visualize/vector3d.h"
+
+1329831297 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/generate/tree.cpp
+	<list>
+	<cmath>
+	"../opengt.h"
 
