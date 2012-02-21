@@ -115,10 +115,11 @@
 
 			/// adding and removing vertices
 			protected:
-				Graph::VertexIterator InternalAddVertex(int x = -1, int y = -1, string label = "", float weight = 0, void* tag = NULL, int ID = -1);
+				Graph::VertexIterator InternalAddVertex(float x = -1, float y = -1, float z = -1, string label = "", float weight = 0, void* tag = NULL, int ID = -1);
 				void RemoveVertex(Graph::Vertex* v, bool RemoveIncidentEdges = true);
 			public:
-				Graph::VertexIterator AddVertex(int x = -1, int y = -1, string label = "", float weight = 0, void* tag = NULL);
+				Graph::VertexIterator AddVertex(float x, float y, string label, float weight = 0, void* tag = NULL);
+				Graph::VertexIterator AddVertex(float x = -1, float y = -1, float z = -1, string label = "", float weight = 0, void* tag = NULL);
 				void RemoveVertex(Graph::VertexIterator v, bool RemoveIncidentEdges = true);
 
 			/// adding and removing edges
@@ -164,7 +165,8 @@
                 private:
                     int ID;
                 protected:
-                    Vertex(Graph* owner, int x = -1, int y = -1, string label = "", float weight = 1, void* tag = NULL);
+                    Vertex(Graph* owner, float x = -1, float y = -1, string label = "", float weight = 1, void* tag = NULL);
+                    Vertex(Graph* owner, float x = -1, float y = -1, float z = -1, string label = "", float weight = 1, void* tag = NULL);
                     Graph* Owner;
 
                     list<Graph::Edge*> IncidentEdges;
@@ -173,6 +175,7 @@
 
                     float X;
                     float Y;
+                    float Z;
                     string Label;
                     float Weight;
                     void* Tag;
@@ -263,6 +266,8 @@
                     void SetX(float X);
                     float GetY() const;
                     void SetY(float Y);
+                    float GetZ() const;
+                    void SetZ(float Z);
                     string GetLabel() const;
                     void SetLabel(string Label);
                     float GetWeight() const;

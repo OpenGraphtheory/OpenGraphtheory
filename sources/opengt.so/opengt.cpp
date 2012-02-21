@@ -12,7 +12,7 @@ namespace OpenGraphtheory
 	// @{
 
 		/// \brief Vertex Constructor (protected, accessible for class "Graph")
-		Graph::Vertex::Vertex(Graph* owner, int x, int y, string label, float weight, void* tag)
+		Graph::Vertex::Vertex(Graph* owner, float x, float y, float z, string label, float weight, void* tag)
 		{
 			Owner = owner;
 			X = x;
@@ -41,7 +41,7 @@ namespace OpenGraphtheory
 		Graph::Graph(int size)
 		{
 			for(int i = 0; i < size; i++)
-				AddVertex(-1, -1, "", 0, 0);
+				AddVertex(-1, -1, -1, "", 0, 0);
 		}
 
 		/// \brief Graph Copy-Constructor
@@ -70,7 +70,7 @@ namespace OpenGraphtheory
 
             /// copy vertices
             for(list<Graph::Vertex*>::const_iterator v = G.Vertices.begin(); v != G.Vertices.end(); v++)
-                InternalAddVertex((*v)->X, (*v)->Y, (*v)->Label, (*v)->Weight, (*v)->Tag, (*v)->ID);
+                InternalAddVertex((*v)->X, (*v)->Y, (*v)->Z, (*v)->Label, (*v)->Weight, (*v)->Tag, (*v)->ID);
 
             /// copy edges
             for(list<Graph::Edge*>::const_iterator e = G.Edges.begin(); e != G.Edges.end(); e++)
@@ -354,9 +354,9 @@ namespace OpenGraphtheory
 
 		/// \brief Internal method: Add a new Vertex to the Graph, ID can be specified
 		/// \return VertexIterator that points to the newly created vertex
-		Graph::VertexIterator Graph::InternalAddVertex(int x, int y, string label, float weight, void* tag, int ID)
+		Graph::VertexIterator Graph::InternalAddVertex(float x, float y, float z, string label, float weight, void* tag, int ID)
 		{
-			Vertex* v = new Vertex(this, x, y, label, weight, tag);
+			Vertex* v = new Vertex(this, x, y, z, label, weight, tag);
 
 			/// Register ID
 			if(ID <= 0)
@@ -372,9 +372,16 @@ namespace OpenGraphtheory
 
 		/// \brief Add a new Vertex to the graph
 		/// \return VertexIterator that points to the newly created instance
-		Graph::VertexIterator Graph::AddVertex(int x, int y, string label, float weight, void* tag)
+		Graph::VertexIterator Graph::AddVertex(float x, float y, string label, float weight, void* tag)
 		{
-			return InternalAddVertex(x,y,label,weight, tag, -1);
+			return InternalAddVertex(x,y,-1,label,weight, tag, -1);
+		}
+
+		/// \brief Add a new Vertex to the graph
+		/// \return VertexIterator that points to the newly created instance
+		Graph::VertexIterator Graph::AddVertex(float x, float y, float z, string label, float weight, void* tag)
+		{
+			return InternalAddVertex(x,y,z,label,weight, tag, -1);
 		}
 
 		/// \brief Internal Method: Remove a vertex from the graph
@@ -1084,6 +1091,19 @@ namespace OpenGraphtheory
 				(*position)->Y = y;
 			}
 
+			/// \brief Accessor-method for reading the Z-coordinate of a vertex
+			float Graph::VertexIterator::GetZ() const
+			{
+				return (*position)->Z;
+			}
+
+			/// \brief Accessor-method for writing the Z-coordinate of a vertex
+			void Graph::VertexIterator::SetZ(float z)
+			{
+				(*position)->Z = z;
+			}
+
+
 			/// \brief Accessor-method for reading the Label of a vertex
 			string Graph::VertexIterator::GetLabel() const
 			{
@@ -1370,6 +1390,10 @@ namespace OpenGraphtheory
 
 				os << ind[3] <<   "<attr name=\"y\">\n";
 				os << ind[4] <<     "<float>" << i.GetY() << "</float>\n";
+				os << ind[3] <<   "</attr>\n";
+
+				os << ind[3] <<   "<attr name=\"z\">\n";
+				os << ind[4] <<     "<float>" << i.GetZ() << "</float>\n";
 				os << ind[3] <<   "</attr>\n";
 
 				os << ind[3] <<   "<attr name=\"weight\">\n";

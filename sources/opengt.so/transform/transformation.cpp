@@ -70,6 +70,10 @@ namespace OpenGraphtheory
                                      "assigns coordinates to vertices, using the spring-embedding technique",
                                      0,0,
                                      TransformSpringEmbed);
+            result["springembed3d"] = Transformer("springembed3d",
+                                     "assigns coordinates to vertices, using the spring-embedding technique in a 3-dimensional space",
+                                     0,0,
+                                     TransformSpringEmbed3D);
             result["aspectscale"] = Transformer("",
                                      "for a transformation of the graph",
                                      1, 1,

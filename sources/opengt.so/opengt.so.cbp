@@ -137,6 +137,9 @@
 		<Unit filename="transform/spring_embedder.cpp">
 			<Option virtualFolder="transform/Sources/" />
 		</Unit>
+		<Unit filename="transform/spring_embedder3d.cpp">
+			<Option virtualFolder="transform/Sources/" />
+		</Unit>
 		<Unit filename="transform/transformation.cpp">
 			<Option virtualFolder="transform/Sources/" />
 		</Unit>
@@ -159,6 +162,12 @@
 			<Option virtualFolder="visualize/Sources/" />
 		</Unit>
 		<Unit filename="visualize/vector2d.h">
+			<Option virtualFolder="visualize/Headers/" />
+		</Unit>
+		<Unit filename="visualize/vector3d.cpp">
+			<Option virtualFolder="visualize/Sources/" />
+		</Unit>
+		<Unit filename="visualize/vector3d.h">
 			<Option virtualFolder="visualize/Headers/" />
 		</Unit>
 		<Extensions>

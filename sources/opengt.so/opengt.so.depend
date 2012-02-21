@@ -4,7 +4,7 @@
 1328002104 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/algorithms/vertexcover/vertexcover.cpp
 	"../../opengt.h"
 
-1328609762 /home/viktor/Programming/OpenGraphtheory/opengt.so/opengt.h
+1329827658 /home/viktor/Programming/OpenGraphtheory/opengt.so/opengt.h
 	<list>
 	<set>
 	<map>
@@ -76,12 +76,12 @@
 	<iostream>
 	"../opengt.h"
 
-1328017217 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/generate/circle.cpp
+1329827308 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/generate/circle.cpp
 	<list>
 	<cmath>
 	"../opengt.h"
 
-1328018671 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/generate/complete.cpp
+1329827317 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/generate/complete.cpp
 	<cmath>
 	<list>
 	"../opengt.h"
@@ -135,7 +135,7 @@
 	<string>
 	"../opengt.h"
 
-1328609773 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/opengt.cpp
+1329827699 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/opengt.cpp
 	"opengt.h"
 
 1327680614 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/processing/components.cpp
@@ -155,7 +155,7 @@
 	<process.h>
 	<stdint.h>
 
-1329751571 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/transform/spring_embedder.cpp
+1329826109 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/transform/spring_embedder.cpp
 	<iostream>
 	<math.h>
 	<stdlib.h>
@@ -177,13 +177,13 @@
 
 1329746256 /home/viktor/Programming/OpenGraphtheory/opengt.so/visualize/vector2d.h
 
-1328286017 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/transform/transformation.cpp
+1329827928 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/transform/transformation.cpp
 	<math.h>
 	"transformation.h"
 	"../../opengt.so/opengt.h"
 	<list>
 
-1328286033 /home/viktor/Programming/OpenGraphtheory/opengt.so/transform/transformation.h
+1329827523 /home/viktor/Programming/OpenGraphtheory/opengt.so/transform/transformation.h
 	<list>
 	"../opengt.h"
 
@@ -198,4 +198,18 @@
 1329746240 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/visualize/vector2d.cpp
 	<math.h>
 	"vector2d.h"
+
+1329826923 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/visualize/vector3d.cpp
+	<math.h>
+	"vector3d.h"
+
+1329826904 /home/viktor/Programming/OpenGraphtheory/opengt.so/visualize/vector3d.h
+
+1329828093 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/transform/spring_embedder3d.cpp
+	<iostream>
+	<math.h>
+	<stdlib.h>
+	"../opengt.h"
+	"../visualize/GraphWindow.h"
+	"../visualize/vector3d.h"
 
