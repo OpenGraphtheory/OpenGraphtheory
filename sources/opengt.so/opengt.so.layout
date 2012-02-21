@@ -43,10 +43,10 @@
 	<File name="export/xgmml.cpp" open="0" top="0" tabpos="7">
 		<Cursor position="1500" topLine="0" />
 	</File>
-	<File name="generate/circle.cpp" open="1" top="0" tabpos="2">
+	<File name="generate/circle.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="449" topLine="0" />
 	</File>
-	<File name="generate/complete.cpp" open="1" top="0" tabpos="3">
+	<File name="generate/complete.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="1443" topLine="31" />
 	</File>
 	<File name="generate/generate.cpp" open="0" top="0" tabpos="4">
@@ -67,8 +67,8 @@
 	<File name="generate/star.cpp" open="0" top="0" tabpos="5">
 		<Cursor position="470" topLine="0" />
 	</File>
-	<File name="generate/tree.cpp" open="1" top="1" tabpos="6">
-		<Cursor position="288" topLine="7" />
+	<File name="generate/tree.cpp" open="0" top="0" tabpos="6">
+		<Cursor position="288" topLine="4" />
 	</File>
 	<File name="import/import.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="5059" topLine="111" />
@@ -92,12 +92,12 @@
 		<Cursor position="771" topLine="23" />
 	</File>
 	<File name="transform/spring_embedder.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="402" topLine="10" />
+		<Cursor position="4855" topLine="106" />
 	</File>
-	<File name="transform/spring_embedder3d.cpp" open="1" top="0" tabpos="4">
-		<Cursor position="1386" topLine="7" />
+	<File name="transform/spring_embedder3d.cpp" open="1" top="1" tabpos="2">
+		<Cursor position="5543" topLine="128" />
 	</File>
-	<File name="transform/transformation.cpp" open="1" top="0" tabpos="5">
+	<File name="transform/transformation.cpp" open="0" top="0" tabpos="5">
 		<Cursor position="3178" topLine="51" />
 	</File>
 	<File name="transform/transformation.h" open="0" top="0" tabpos="1">

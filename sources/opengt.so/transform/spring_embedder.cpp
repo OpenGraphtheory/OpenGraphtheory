@@ -13,9 +13,12 @@ namespace OpenGraphtheory
     namespace Transform
     {
 
-        float width       =  800;
-        float height      =  600;
-        int maxiterations =  1500;
+        float width       =   800;
+        float height      =   600;
+
+        float movement_threshold   =    0.5;    // stop if no vertex moves more than this far
+        int nextincrease  =   300;
+        int iteration     =     0;
 
         float c_repel     =    25; // force with which vertices push each other off
         float c_spring    =    20;  // force with which adjacent vertices attract each other
@@ -24,7 +27,6 @@ namespace OpenGraphtheory
 
         float unstressed_spring_length = 100; // if distance < this, then no more force between them
         float delta       =    0.2;  // scaling factor to make the movement more smooth
-        float movement_threshold   =    0.5;    // stop if no vertex moves more than this far
 
         // -----------------------------------------------------------------------------
 
@@ -80,6 +82,7 @@ namespace OpenGraphtheory
             }
 
             float max_movement;
+            iteration = 0;
             do
             {
                 // compute movement
@@ -120,8 +123,14 @@ namespace OpenGraphtheory
 
                 if(display != NULL)
                     display->Update();
+
+                if(++iteration > nextincrease)
+                {
+                    movement_threshold++;
+                    nextincrease += nextincrease/3;
+                }
             }
-            while((max_movement > movement_threshold*unstressed_spring_length*delta*delta) && --maxiterations > 0);
+            while((max_movement > movement_threshold*unstressed_spring_length));
 
         }
 

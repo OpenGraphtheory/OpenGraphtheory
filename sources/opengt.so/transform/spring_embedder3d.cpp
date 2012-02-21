@@ -30,7 +30,8 @@ namespace OpenGraphtheory
 
         extern float width;
         extern float height;
-        extern int maxiterations;
+        extern int iteration;
+        extern int nextincrease;
         extern float c_repel;
         extern float c_spring;
         extern float friction;
@@ -95,6 +96,7 @@ namespace OpenGraphtheory
             }
 
             float max_movement;
+            iteration = 0;
             do
             {
                 // compute movement
@@ -137,8 +139,14 @@ namespace OpenGraphtheory
 
                 if(display != NULL)
                     display->Update();
+
+                if(++iteration > nextincrease)
+                {
+                    movement_threshold++;
+                    nextincrease += nextincrease / 3;
+                }
             }
-            while((max_movement > movement_threshold*unstressed_spring_length*delta*delta) && --maxiterations > 0);
+            while((max_movement > movement_threshold*unstressed_spring_length));
 
         }
 
