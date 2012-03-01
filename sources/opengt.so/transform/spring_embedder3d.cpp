@@ -143,7 +143,7 @@ namespace OpenGraphtheory
                 if(++iteration > nextincrease)
                 {
                     movement_threshold++;
-                    nextincrease += nextincrease / 3;
+                    nextincrease += nextincrease / 2;
                 }
             }
             while((max_movement > movement_threshold*unstressed_spring_length));

@@ -5,6 +5,27 @@
 	#include "simple_xml.h"
 
 
+    XML_Element::~XML_Element()
+    {
+
+    }
+
+    XML_Comment::~XML_Comment()
+    {
+
+    }
+
+    XML_Text::~XML_Text()
+    {
+
+    }
+
+
+    XML::XML(XML* Parent)
+    {
+        parent = Parent;
+    }
+
 	XML::~XML()
 	{
 		for(list<XML_Element*>::iterator it = children.begin(); it != children.end(); it++)
@@ -75,6 +96,14 @@
 			return result;
 	}
 
+    string XML::InnerText(bool TrimStrings) const
+    {
+        string result;
+        for(list<XML_Element*>::const_iterator i = children.begin(); i != children.end(); i++)
+            result += (*i)->InnerText(TrimStrings);
+        return result;
+    }
+
 
 
 
@@ -93,7 +122,10 @@
 		os << string(level,'\t') << "-->\n";
 	}
 
-
+    string XML_Comment::InnerText(bool TrimStrings) const
+    {
+        return "";
+    }
 
 
 
@@ -102,6 +134,30 @@
 		for(list<string>::const_iterator it = text.begin(); it != text.end(); it++)
 			os << string(level,'\t') << (*it) << '\n';
 	}
+
+    string XML_Text::InnerText(bool TrimStrings) const
+    {
+        string result;
+        for(list<string>::const_iterator i = text.begin(); i != text.end(); i++)
+        {
+            if(TrimStrings)
+            {
+                string temp = *i;
+
+                while(temp.length() > 0 && (temp[0] == ' ' || temp[0] == '\n'))
+                    temp.erase(0,1);
+
+                if(temp.length() > 0)
+                    while(temp[temp.length()-1] == ' ' || temp[temp.length()-1] == '\n')
+                        temp.erase(temp.length()-1);
+
+                result += temp;
+            }
+            else
+                result += *i;
+        }
+        return result;
+    }
 
 
 

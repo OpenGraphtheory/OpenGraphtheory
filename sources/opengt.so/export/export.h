@@ -41,5 +41,6 @@ namespace OpenGraphtheory
         void ExportToVRMLGRAPH(Graph& G, ostream& os);
         void ExportToXGMML(Graph& G, ostream& os);
         void ExportToGXL(Graph& G, ostream& os);
+        void ExportToPOVRAY(Graph& G, ostream& os);
     }
 }

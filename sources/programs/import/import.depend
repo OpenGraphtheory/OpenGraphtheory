@@ -1,1 +1,27 @@
 # depslib dependency file v1.0
+1328282374 source:/home/viktor/Programming/OpenGraphtheory/programs/import/import.cpp
+	<iostream>
+	<fstream>
+	<stdio.h>
+	"../../opengt.so/opengt.h"
+	"../../opengt.so/import/import.h"
+
+1330617047 /home/viktor/Programming/OpenGraphtheory/opengt.so/opengt.h
+	<list>
+	<set>
+	<map>
+	<string>
+	<iostream>
+	<fstream>
+	"simple_xml.h"
+
+1330615749 /home/viktor/Programming/OpenGraphtheory/opengt.so/simple_xml.h
+	<iostream>
+	<sstream>
+	<vector>
+	<list>
+
+1328105022 /home/viktor/Programming/OpenGraphtheory/opengt.so/import/import.h
+	<string>
+	"../opengt.h"
+

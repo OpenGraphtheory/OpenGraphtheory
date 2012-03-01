@@ -58,6 +58,7 @@
 				class EdgeSet;
 				class VertexIterator;
 				class EdgeIterator;
+				class AttributeCollection;
 
 			private:
 				static int Vertex_IDs;
@@ -75,6 +76,7 @@
 				list<Graph::Edge*> Edges;
 				Graph::Vertex* VertexIteratorToPointer(const Graph::VertexIterator& i);
 				Graph::Edge* EdgeIteratorToPointer(const Graph::EdgeIterator& i);
+                AttributeCollection* attributes;
 
 			public:
 				virtual ~Graph();
@@ -82,13 +84,13 @@
 				Graph(const Graph& G);
 				void Clear();
 				void operator=(const Graph& G);
-				void PrintDebugInfo(ostream& os);
 
 				int GetID() const;
 				string GetLabel() const;
 				void SetLabel(string label);
 				int NumberOfVertices() const;
 				int NumberOfEdges() const;
+				AttributeCollection& Attributes();
 
 				bool IsUndirected();
 				bool IsDirected();
@@ -121,6 +123,8 @@
 				Graph::VertexIterator AddVertex(float x, float y, string label, float weight = 0, void* tag = NULL);
 				Graph::VertexIterator AddVertex(float x = -1, float y = -1, float z = -1, string label = "", float weight = 0, void* tag = NULL);
 				void RemoveVertex(Graph::VertexIterator v, bool RemoveIncidentEdges = true);
+				Graph operator-(Graph::VertexIterator v);
+				void operator-=(Graph::VertexIterator v);
 
 			/// adding and removing edges
 			protected:
@@ -142,6 +146,8 @@
 				Graph::EdgeIterator AddDirectedLoop( Graph::VertexIterator v, string label = "", float weight = 1.0, void* tag = NULL);
 				Graph::EdgeIterator AddLooseEdge(string label = "", float weight = 1.0, void* tag = NULL);
 				void RemoveEdge(Graph::EdgeIterator e);
+				Graph operator-(Graph::EdgeIterator v);
+				void operator-=(Graph::EdgeIterator v);
 
 
 			/// streaming
@@ -167,11 +173,14 @@
                 protected:
                     Vertex(Graph* owner, float x = -1, float y = -1, string label = "", float weight = 1, void* tag = NULL);
                     Vertex(Graph* owner, float x = -1, float y = -1, float z = -1, string label = "", float weight = 1, void* tag = NULL);
+                    ~Vertex();
                     Graph* Owner;
 
                     list<Graph::Edge*> IncidentEdges;
                     list<Graph::Edge*> NegativeIncidentEdges;
                     list<Graph::Edge*> PositiveIncidentEdges;
+
+                    AttributeCollection* attributes;
 
                     float X;
                     float Y;
@@ -190,11 +199,14 @@
                     int ID;
                 protected:
                     Edge(Graph* owner, string label, float weight, void* tag);
+                    ~Edge();
                     Graph* Owner;
 
                     list<Graph::Vertex*> IncidentVertices;
                     list<Graph::Vertex*> NegativeIncidentVertices;
                     list<Graph::Vertex*> PositiveIncidentVertices;
+
+                    AttributeCollection* attributes;
 
                     string Label;
                     float Weight;
@@ -255,6 +267,7 @@
                     void operator=(const Graph::VertexIterator& i);
                     ~VertexIterator();
                     void operator++(int);
+                    VertexIterator operator+(int n) const;
                     bool operator==(const Graph::VertexIterator& i) const;
                     bool operator!=(const Graph::VertexIterator& i) const;
                     bool operator<(const Graph::VertexIterator& i) const;
@@ -262,6 +275,7 @@
                     bool operator>(const Graph::VertexIterator& i) const;
                     bool operator>=(const Graph::VertexIterator& i) const;
 
+                    AttributeCollection& Attributes();
                     float GetX() const;
                     void SetX(float X);
                     float GetY() const;
@@ -304,6 +318,7 @@
                     void operator=(const Graph::EdgeIterator& i);
                     ~EdgeIterator();
                     void operator++(int);
+                    EdgeIterator operator+(int n) const;
                     bool operator==(const Graph::EdgeIterator& i) const;
                     bool operator!=(const Graph::EdgeIterator& i) const;
                     bool operator<(const Graph::EdgeIterator& i) const;
@@ -311,6 +326,7 @@
                     bool operator>(const Graph::EdgeIterator& i) const;
                     bool operator>=(const Graph::EdgeIterator& i) const;
 
+                    AttributeCollection& Attributes();
                     string GetLabel() const;
                     void SetLabel(string Label);
                     float GetWeight() const;
@@ -347,7 +363,43 @@
                     void RemoveOutgoingConnection(Graph::VertexIterator v);
                     void RemoveIncomingConnection(Graph::VertexIterator v);
             };
+
+
+            class AttributeCollection
+            {
+                friend class Graph;
+                protected:
+                    bool IsCopy;
+                    map<string, bool> BoolAttributes;
+                    map<string, int> IntAttributes;
+                    map<string, float> FloatAttributes;
+                    map<string, string> StringAttributes;
+
+                    void Set(XML* attr);
+
+                public:
+                    void Clear();
+                    void Unset(string name);
+                    void operator=(const AttributeCollection& attrs);
+
+                    void SetAttribute(string name, bool value);
+                    void SetAttribute(string name, int value);
+                    void SetAttribute(string name, float value);
+                    void SetAttribute(string name, string value);
+                    bool HasBoolAttribute(string name);
+                    bool GetBoolAttribute(string name);
+                    bool HasIntAttribute(string name);
+                    int GetIntAttribute(string name);
+                    bool HasFloatAttribute(string name);
+                    float GetFloatAttribute(string name);
+                    bool HasStringAttribute(string name);
+                    string GetStringAttribute(string name);
+            };
+
 		};
+
+
+
     } // namespace OpenGraphtheory
 
 #endif

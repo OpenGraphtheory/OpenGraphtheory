@@ -126,6 +126,10 @@ namespace OpenGraphtheory
                                      "GraphML",
                                      "http://graphml.graphdrawing.org/",
                                      ExportToGRAPHML);
+            result["povray"] = ExportFilter("povray",
+                                     "POV-Ray",
+                                     "http://en.wikipedia.org/wiki/POV-Ray",
+                                     ExportToPOVRAY);
             result["gxl"] = ExportFilter("gxl",
                                      "Graph eXchange Language",
                                      "http://www.gupro.de/GXL/",

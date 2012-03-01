@@ -14,7 +14,8 @@
 	{
 		public:
 			virtual void WriteToStream(ostream& os, int level) const = 0;
-			virtual ~XML_Element() {}
+			virtual ~XML_Element();
+			virtual string InnerText(bool TrimStrings) const = 0;
 	};
 
 	class XML : public XML_Element
@@ -25,13 +26,14 @@
 			list<XML_Element*> children;
 			XML* parent;
 
-			XML(XML* Parent=NULL) {parent=Parent;}
+			XML(XML* Parent=NULL);
 			~XML();
 			void WriteToStream(ostream&, int level) const;
 			list<XML*> FindChildren(string named) const;
 			string GetAttribute(string propname, string def="") const;
 			int GetAttributeAsInt(string propname, int def=0) const;
 			float GetAttributeAsFloat(string propname, float def=0) const;
+			string InnerText(bool TrimStrings) const;
 	};
 
 	class XML_Comment : public XML_Element
@@ -39,7 +41,8 @@
 		public:
 			vector<string> text;
 			void WriteToStream(ostream& os, int level) const;
-			~XML_Comment(){}
+			~XML_Comment();
+			string InnerText(bool TrimStrings) const;
 	};
 
 	class XML_Text : public XML_Element
@@ -47,7 +50,8 @@
 		public:
 			list<string> text;
 			void WriteToStream(ostream&, int level) const;
-			~XML_Text(){}
+			~XML_Text();
+			string InnerText(bool TrimStrings) const;
 	};
 
 	extern ostream& operator<<(ostream& os, XML& xml);

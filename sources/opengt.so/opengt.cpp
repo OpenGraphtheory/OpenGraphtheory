@@ -1,5 +1,6 @@
 
 #include "opengt.h"
+#include <stdlib.h>
 
 namespace OpenGraphtheory
 {
@@ -14,6 +15,7 @@ namespace OpenGraphtheory
 		/// \brief Vertex Constructor (protected, accessible for class "Graph")
 		Graph::Vertex::Vertex(Graph* owner, float x, float y, float z, string label, float weight, void* tag)
 		{
+		    attributes = new AttributeCollection();
 			Owner = owner;
 			X = x;
 			Y = y;
@@ -21,25 +23,36 @@ namespace OpenGraphtheory
 			Weight = weight;
 			Tag = tag;
 		}
+		Graph::Vertex::~Vertex()
+		{
+		    delete attributes;
+		}
 
 		/// \brief Edge Constructor (protected, accessible for class "Graph")
 		Graph::Edge::Edge(Graph* owner, string label, float weight, void* tag)
 		{
+		    attributes = new AttributeCollection();
 			Owner = owner;
 			Label = label;
 			Weight = weight;
 			Tag = tag;
+		}
+		Graph::Edge::~Edge()
+		{
+		    delete attributes;
 		}
 
 		/// \brief Graph Destructor
 		Graph::~Graph()
 		{
 			Clear();
+			delete attributes;
 		}
 
 		/// \brief Graph Constructor, creates a graph with "size" vertices
 		Graph::Graph(int size)
 		{
+		    attributes = new AttributeCollection();
 			for(int i = 0; i < size; i++)
 				AddVertex(-1, -1, -1, "", 0, 0);
 		}
@@ -47,6 +60,7 @@ namespace OpenGraphtheory
 		/// \brief Graph Copy-Constructor
 		Graph::Graph(const Graph& G)
 		{
+		    attributes = new AttributeCollection();
 			operator=(G);
 		}
 
@@ -63,10 +77,12 @@ namespace OpenGraphtheory
         /// \brief Operator to copy a graph
         void Graph::operator=(const Graph& G)
         {
+            attributes->Clear();
             Clear();
 
             Label = G.GetLabel();
             ID = G.GetID();
+            *attributes = *(G.attributes);
 
             /// copy vertices
             for(list<Graph::Vertex*>::const_iterator v = G.Vertices.begin(); v != G.Vertices.end(); v++)
@@ -421,6 +437,18 @@ namespace OpenGraphtheory
             RemoveVertex(VertexIteratorToPointer(v), RemoveIncidentEdges);
         }
 
+        void Graph::operator-=(Graph::VertexIterator v)
+        {
+            RemoveVertex(v);
+        }
+
+        Graph Graph::operator-(Graph::VertexIterator v)
+        {
+            Graph result(*this);
+            result.RemoveVertex(v);
+            return result;
+        }
+
 	// @}
 
 
@@ -648,6 +676,19 @@ namespace OpenGraphtheory
 			RemoveEdge(EdgeIteratorToPointer(e));
 		}
 
+        void Graph::operator-=(Graph::EdgeIterator e)
+        {
+            RemoveEdge(e);
+        }
+
+        Graph Graph::operator-(Graph::EdgeIterator e)
+        {
+            Graph result(*this);
+            result.RemoveEdge(e);
+            return result;
+        }
+
+
 	// @}
 
 
@@ -709,6 +750,14 @@ namespace OpenGraphtheory
 				ID = -1;
             else
                 ID = (*position)->ID;
+		}
+
+		Graph::VertexIterator Graph::VertexIterator::operator+(int n) const
+		{
+		    Graph::VertexIterator result(*this);
+		    for(; n > 0; --n)
+                result++;
+            return result;
 		}
 
 
@@ -802,6 +851,14 @@ namespace OpenGraphtheory
 				ID = -1;
             else
                 ID = (*position)->ID;
+		}
+
+		Graph::EdgeIterator Graph::EdgeIterator::operator+(int n) const
+		{
+		    Graph::EdgeIterator result(*this);
+		    for(; n > 0; --n)
+                result++;
+            return result;
 		}
 
 		bool Graph::EdgeIterator::operator==(const Graph::EdgeIterator& i) const
@@ -1056,6 +1113,11 @@ namespace OpenGraphtheory
 				Label = label;
 			}
 
+            Graph::AttributeCollection& Graph::Attributes()
+            {
+                return *attributes;
+            }
+
 		// @}
 
 		/// \defgroup vertexaccessors ''Accessor-Methods for Vertex-Attributes''
@@ -1140,6 +1202,11 @@ namespace OpenGraphtheory
 				(*position)->Tag = tag;
 			}
 
+            Graph::AttributeCollection& Graph::VertexIterator::Attributes()
+            {
+                return *((*position)->attributes);
+            }
+
 		// @}
 
 		/// \defgroup edgeaccessors ''Accessor-Methods for Edge-Attributes''
@@ -1187,6 +1254,11 @@ namespace OpenGraphtheory
 				(*position)->Tag = tag;
 			}
 
+            Graph::AttributeCollection& Graph::EdgeIterator::Attributes()
+            {
+                return *((*position)->attributes);
+            }
+
 		// @}
 
 	// @}
@@ -1212,7 +1284,17 @@ namespace OpenGraphtheory
 
 			XML* pGraph = XMLGraph.front();
 			Graph G;
-			G.SetLabel(pGraph->GetAttribute("Label",""));
+
+            /// assign attributes
+			list<XML*> attrs = pGraph->FindChildren("attr");
+			for(list<XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
+                G.Attributes().Set(*attr);
+
+            if(G.Attributes().HasStringAttribute("name"))
+            {
+                G.SetLabel(G.Attributes().GetStringAttribute("name"));
+                G.Attributes().Unset("name");
+            }
 
 			/// load vertices
 			list<XML*> nodes = pGraph->FindChildren("node");
@@ -1222,10 +1304,35 @@ namespace OpenGraphtheory
 				Graph::VertexIterator *v = new VertexIterator(G.AddVertex());
 
 				/// assign attributes
-				v->SetX((*node)->GetAttributeAsInt("X",-1));
-				v->SetY((*node)->GetAttributeAsInt("Y",-1));
-				v->SetLabel((*node)->GetAttribute("Label",""));
-				v->SetWeight((*node)->GetAttributeAsFloat("Weight",0.0f));
+				list<XML*> attrs = (*node)->FindChildren("attr");
+				for(list<XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
+                    v->Attributes().Set(*attr);
+
+                if(v->Attributes().HasStringAttribute("name"))
+                {
+                    v->SetLabel(v->Attributes().GetStringAttribute("name"));
+                    v->Attributes().Unset("name");
+                }
+                if(v->Attributes().HasFloatAttribute("x"))
+                {
+                    v->SetX(v->Attributes().GetFloatAttribute("x"));
+                    v->Attributes().Unset("x");
+                }
+                if(v->Attributes().HasFloatAttribute("y"))
+                {
+                    v->SetY(v->Attributes().GetFloatAttribute("y"));
+                    v->Attributes().Unset("y");
+                }
+                if(v->Attributes().HasFloatAttribute("z"))
+                {
+                    v->SetZ(v->Attributes().GetFloatAttribute("z"));
+                    v->Attributes().Unset("z");
+                }
+                if(v->Attributes().HasFloatAttribute("weight"))
+                {
+                    v->SetWeight(v->Attributes().GetFloatAttribute("weight"));
+                    v->Attributes().Unset("weight");
+                }
 
 				/// assign XML-ID
 				string id = (*node)->GetAttribute("id", "");
@@ -1259,9 +1366,23 @@ namespace OpenGraphtheory
                     e = G.AddArc(*(from->second), *(to->second));
                 else
                     e = G.AddEdge(*(from->second), *(to->second));
-				e.SetLabel((*edge)->GetAttribute("Label",""));
-				e.SetWeight((*edge)->GetAttributeAsFloat("Weight",0.0f));
-			}
+
+				/// assign attributes
+				list<XML*> attrs = (*edge)->FindChildren("attr");
+				for(list<XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
+                    e.Attributes().Set(*attr);
+
+                if(e.Attributes().HasStringAttribute("name"))
+                {
+                    e.SetLabel(e.Attributes().GetStringAttribute("name"));
+                    e.Attributes().Unset("name");
+                }
+                if(e.Attributes().HasFloatAttribute("weight"))
+                {
+                    e.SetWeight(e.Attributes().GetFloatAttribute("weight"));
+                    e.Attributes().Unset("weight");
+                }
+            }
 
 			/// load hyperedges
 			list<XML*> rels = pGraph->FindChildren("rel");
@@ -1269,7 +1390,7 @@ namespace OpenGraphtheory
 			{
 			    EdgeIterator e = G.AddLooseEdge();
 
-				/// collect positive incident vertices
+				/// collect incident vertices
 				list<XML*> relends = (*rel)->FindChildren("relend");
 				for(list<XML*>::iterator relend = relends.begin(); relend != relends.end(); relend++)
 				{
@@ -1292,6 +1413,22 @@ namespace OpenGraphtheory
                     else
                         return false;
 				}
+
+                /// assign attributes
+				list<XML*> attrs = (*rel)->FindChildren("attr");
+				for(list<XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
+                    e.Attributes().Set(*attr);
+
+                if(e.Attributes().HasStringAttribute("name"))
+                {
+                    e.SetLabel(e.Attributes().GetStringAttribute("name"));
+                    e.Attributes().Unset("name");
+                }
+                if(e.Attributes().HasFloatAttribute("weight"))
+                {
+                    e.SetWeight(e.Attributes().GetFloatAttribute("weight"));
+                    e.Attributes().Unset("weight");
+                }
 			}
 
 			/// G has been successfully loaded, copy it to *this
@@ -1454,73 +1591,127 @@ namespace OpenGraphtheory
 			return os;
 		}
 
-
-		// =========
-		// Debugging
-		// =========
-
-		void Graph::PrintDebugInfo(ostream& os)
-		{
-			os << "\nVertices\n--------\n";
-			for(list<Vertex*>::iterator it = Vertices.begin(); it != Vertices.end(); it++)
-			{
-				os << "\n("<<(*it)<<") ID=" << (*it)->ID;
-				os.flush();
-
-				os << "\n\tIncident Edges:";
-				for(list<Edge*>::iterator jt = (*it)->IncidentEdges.begin(); jt != (*it)->IncidentEdges.end(); jt++)
-				{
-					os << " " << (*jt);
-					os.flush();
-				}
-
-				os << "\n\tIncoming Arcs:";
-				for(list<Edge*>::iterator jt = (*it)->PositiveIncidentEdges.begin(); jt != (*it)->PositiveIncidentEdges.end(); jt++)
-				{
-					os << " " << (*jt);
-					os.flush();
-				}
-
-				os << "\n\tOutgoing Arcs:";
-				for(list<Edge*>::iterator jt = (*it)->NegativeIncidentEdges.begin(); jt != (*it)->NegativeIncidentEdges.end(); jt++)
-				{
-					os << " " << (*jt);
-					os.flush();
-				}
-			}
-
-			os << "\nEdges\n-----\n";
-			for(list<Edge*>::iterator it = Edges.begin(); it != Edges.end(); it++)
-			{
-				os << "(" << *it << ") ID=" << (*it)->ID << "\n\tIncident:";
-				os.flush();
-				for(list<Vertex*>::iterator jt = (*it)->IncidentVertices.begin(); jt != (*it)->IncidentVertices.end(); jt++)
-				{
-					os << " " << (*jt);
-					os.flush();
-				}
-
-				os << "\n\tPositiveIncident:";
-				for(list<Vertex*>::iterator jt = (*it)->PositiveIncidentVertices.begin(); jt != (*it)->PositiveIncidentVertices.end(); jt++)
-				{
-					os << " " << (*jt);
-					os.flush();
-				}
-
-				os << "\n\tNegativeIncident:";
-				for(list<Vertex*>::iterator jt = (*it)->NegativeIncidentVertices.begin(); jt != (*it)->NegativeIncidentVertices.end(); jt++)
-				{
-					os << " " << (*jt);
-					os.flush();
-				}
-				os << "\n";
-			}
-
-			os << "\n-----------------------------------------------------------\n";
-            os.flush();
-		}
-
 	// @}
+
+    /// \defgroup Arbitrary Attributes
+    // @{
+
+        void Graph::AttributeCollection::Set(XML* attr)
+        {
+            string name = attr->GetAttribute("name");
+            if(name == "")
+                return;
+
+            for(list<XML_Element*>::iterator child = attr->children.begin(); child != attr->children.end(); child++)
+            {
+       			XML* c = dynamic_cast<XML*>(*child);
+                if(c == NULL)
+                    continue;
+
+                if(c->name == "bool")
+                    SetAttribute(name, (*child)->InnerText(true) == "true");
+                else if(c->name == "int")
+                    SetAttribute(name, atoi((*child)->InnerText(true).c_str()));
+                else if(c->name == "float")
+                    SetAttribute(name, (float)atof((*child)->InnerText(true).c_str()));
+                else if(c->name == "string")
+                    SetAttribute(name, (*child)->InnerText(false));
+                else
+                    continue; // don't break
+
+                break;
+            }
+        }
+
+        void Graph::AttributeCollection::Clear()
+        {
+            BoolAttributes.clear();
+            IntAttributes.clear();
+            FloatAttributes.clear();
+            StringAttributes.clear();
+        }
+
+        void Graph::AttributeCollection::operator=(const AttributeCollection& attrs)
+        {
+            BoolAttributes = attrs.BoolAttributes;
+            IntAttributes = attrs.IntAttributes;
+            FloatAttributes = attrs.FloatAttributes;
+            StringAttributes = attrs.StringAttributes;
+        }
+
+        void Graph::AttributeCollection::Unset(string name)
+        {
+            BoolAttributes.erase(name);
+            IntAttributes.erase(name);
+            FloatAttributes.erase(name);
+            StringAttributes.erase(name);
+        }
+
+        void Graph::AttributeCollection::SetAttribute(string name, bool value)
+        {
+            Unset(name);
+            BoolAttributes[name] = value;
+        }
+
+        void Graph::AttributeCollection::SetAttribute(string name, int value)
+        {
+            Unset(name);
+            IntAttributes[name] = value;
+        }
+
+        void Graph::AttributeCollection::SetAttribute(string name, float value)
+        {
+            Unset(name);
+            FloatAttributes[name] = value;
+        }
+
+        void Graph::AttributeCollection::SetAttribute(string name, string value)
+        {
+            Unset(name);
+            StringAttributes[name] = value;
+        }
+
+        bool Graph::AttributeCollection::HasBoolAttribute(string name)
+        {
+            return(BoolAttributes.find(name) != BoolAttributes.end());
+        }
+
+        bool Graph::AttributeCollection::GetBoolAttribute(string name)
+        {
+            return BoolAttributes[name];
+        }
+
+        bool Graph::AttributeCollection::HasIntAttribute(string name)
+        {
+            return(IntAttributes.find(name) != IntAttributes.end());
+        }
+
+        int Graph::AttributeCollection::GetIntAttribute(string name)
+        {
+            return IntAttributes[name];
+        }
+
+        bool Graph::AttributeCollection::HasFloatAttribute(string name)
+        {
+            return(FloatAttributes.find(name) != FloatAttributes.end());
+        }
+
+        float Graph::AttributeCollection::GetFloatAttribute(string name)
+        {
+            return FloatAttributes[name];
+        }
+
+        bool Graph::AttributeCollection::HasStringAttribute(string name)
+        {
+            return(StringAttributes.find(name) != StringAttributes.end());
+        }
+
+        string Graph::AttributeCollection::GetStringAttribute(string name)
+        {
+            return StringAttributes[name];
+        }
+
+    // @}
 
 } // namespace OpenGraphtheory
 

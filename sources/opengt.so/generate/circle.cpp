@@ -18,10 +18,9 @@ namespace OpenGraphtheory
                 result.AddVertex(-100 * cos(i * (2 * M_PI / n) + M_PI/2), 100 * sin(i * (2 * M_PI / n) + M_PI/2), 0);
 
             Graph::VertexIterator v1 = result.BeginVertices();
-            Graph::VertexIterator v2 = v1;
-            for(v2++; v2 != result.EndVertices(); v1++, v2++)
+            for(Graph::VertexIterator v2 = v1 + 1; v2 != result.EndVertices(); v1++, v2++)
                 result.AddEdge(v1, v2);
-            result.AddEdge(result.BeginVertices(), v1);
+            result.AddEdge(v1, result.BeginVertices());
 
             return result;
         }

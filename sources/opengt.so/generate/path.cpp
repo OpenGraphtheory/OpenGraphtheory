@@ -16,10 +16,8 @@ namespace OpenGraphtheory
             for(int i = 0; i < n; i++)
                 result.AddVertex(0, 50 * i);
 
-            Graph::VertexIterator v1 = result.BeginVertices();
-            Graph::VertexIterator v2 = v1;
-            for(v2++; v2 != result.EndVertices(); v1++, v2++)
-                result.AddEdge(v1, v2);
+            for(Graph::VertexIterator v = result.BeginVertices(); v + 1 != result.EndVertices(); v++)
+                result.AddEdge(v, v+1);
 
             return result;
         }

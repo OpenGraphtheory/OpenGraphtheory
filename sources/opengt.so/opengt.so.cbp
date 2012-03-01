@@ -74,6 +74,9 @@
 		<Unit filename="export/mpost.cpp">
 			<Option virtualFolder="export/Sources/" />
 		</Unit>
+		<Unit filename="export/povray.cpp">
+			<Option virtualFolder="export/Sources/" />
+		</Unit>
 		<Unit filename="export/rgml.cpp">
 			<Option virtualFolder="export/Sources/" />
 		</Unit>
