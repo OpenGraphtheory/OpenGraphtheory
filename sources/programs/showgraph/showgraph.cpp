@@ -20,9 +20,18 @@ int main(int argc, char** argv)
             else
                 throw "no input source specified";
 
+        string vertexcoloring = "";
+        string edgecoloring = "";
+        for(int i = 1; i < argc; i++)
+        {
+            if(string(argv[i]) == "--vertexcoloring" && argc > i+1)
+                vertexcoloring = argv[i+1];
+            if(string(argv[i]) == "--edgecoloring" && argc > i+1)
+                edgecoloring = argv[i+1];
+        }
 
         /// do your thing
-        GraphWindow Win(800, 600, &G);
+        GraphWindow Win(800, 600, &G, "http://www.Open-Graphtheory.org", vertexcoloring, edgecoloring);
         Win.WaitUntilClosed();
 
 

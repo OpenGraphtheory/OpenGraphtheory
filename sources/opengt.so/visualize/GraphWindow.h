@@ -15,6 +15,9 @@ namespace OpenGraphtheory
                 bool ZoomToFit;
                 Graph* DisplayedGraph;
 
+                string VertexColoring;
+                string EdgeColoring;
+
                 float ModelLeft, ModelWidth, ModelTop, ModelHeight;
                 void UpdateModelDimensions();
                 void UpdateModelDimensions(float left, float top, float right, float bottom);
@@ -23,7 +26,8 @@ namespace OpenGraphtheory
 
             public:
 
-                GraphWindow(int width, int height, Graph* G, string Caption = "http://www.Open-Graphtheory.org", int gridsize = 1, bool ZoomToFit = false);
+                GraphWindow(int width, int height, Graph* G, string Caption = "http://www.Open-Graphtheory.org", string vertexcoloring = "",
+                            string edgecoloring = "", int gridsize = 1, bool ZoomToFit = false);
 
                 void Display(Graph* G);
                 void Update();

@@ -79,19 +79,19 @@
 	<File name="import/tgf.cpp" open="0" top="0" tabpos="8">
 		<Cursor position="2255" topLine="18" />
 	</File>
-	<File name="opengt.cpp" open="1" top="0" tabpos="4">
-		<Cursor position="548" topLine="10" />
+	<File name="opengt.cpp" open="1" top="1" tabpos="4">
+		<Cursor position="56456" topLine="1657" />
 	</File>
-	<File name="opengt.h" open="1" top="1" tabpos="3">
-		<Cursor position="6972" topLine="165" />
+	<File name="opengt.h" open="1" top="0" tabpos="3">
+		<Cursor position="455" topLine="8" />
 	</File>
 	<File name="processing/components.cpp" open="0" top="0" tabpos="9">
 		<Cursor position="171" topLine="0" />
 	</File>
-	<File name="simple_xml.cpp" open="1" top="0" tabpos="6">
+	<File name="simple_xml.cpp" open="0" top="0" tabpos="6">
 		<Cursor position="2121" topLine="87" />
 	</File>
-	<File name="simple_xml.h" open="1" top="0" tabpos="5">
+	<File name="simple_xml.h" open="0" top="0" tabpos="5">
 		<Cursor position="345" topLine="5" />
 	</File>
 	<File name="transform/spring_embedder.cpp" open="1" top="0" tabpos="1">
@@ -109,14 +109,14 @@
 	<File name="visualize/DisplayWindow.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="504" topLine="56" />
 	</File>
-	<File name="visualize/DisplayWindow.h" open="0" top="0" tabpos="5">
-		<Cursor position="4942" topLine="87" />
+	<File name="visualize/DisplayWindow.h" open="1" top="0" tabpos="7">
+		<Cursor position="2478" topLine="75" />
 	</File>
-	<File name="visualize/GraphWindow.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="1471" topLine="60" />
+	<File name="visualize/GraphWindow.cpp" open="1" top="0" tabpos="6">
+		<Cursor position="2947" topLine="60" />
 	</File>
 	<File name="visualize/GraphWindow.h" open="0" top="0" tabpos="3">
-		<Cursor position="630" topLine="9" />
+		<Cursor position="362" topLine="6" />
 	</File>
 	<File name="visualize/vector2d.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="718" topLine="18" />

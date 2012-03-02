@@ -8,7 +8,17 @@ namespace OpenGraphtheory
     namespace Visualization
     {
 
-        GraphWindow::GraphWindow(int width, int height, Graph* G, string Caption, int gridsize, bool ZoomToFit)
+        int defaultcolors[] = { 0xE50000, // red
+                               0xF3D510, // yellow
+                               0x34cd20, // green
+                               0x1C23EB, // dark blue
+                               0xF37D23, // orange
+                               0x15CDC7, // light blue
+                               0x8722E5, // purple
+                               0xFF33FF // pink
+                             };
+
+        GraphWindow::GraphWindow(int width, int height, Graph* G, string Caption, string vertexcoloring, string edgecoloring, int gridsize, bool ZoomToFit)
             : DisplayWindow(width, height, Caption)
         {
             ModelLeft = 0;
@@ -16,6 +26,8 @@ namespace OpenGraphtheory
             ModelWidth = width;
             ModelHeight = height;
             this -> ZoomToFit = ZoomToFit;
+            this -> VertexColoring = vertexcoloring;
+            this -> EdgeColoring = edgecoloring;
             Display(G);
         }
 
@@ -42,6 +54,15 @@ namespace OpenGraphtheory
 
                     ModelToScreen(x1, y1);
                     ModelToScreen(x2, y2);
+
+                    if(e.Attributes().HasIntAttribute(EdgeColoring))
+                    {
+                        int color = defaultcolors[e.Attributes().GetIntAttribute(EdgeColoring)];
+                        SetColor((short)(color / 65536), (short)((color / 256) % 256), (short)(color % 256));
+                    }
+                    else
+                        SetColor(0,0,0);
+
                     Line(x1,y1,x2,y2);
                 }
 
@@ -51,6 +72,15 @@ namespace OpenGraphtheory
                     float y = v.GetY();
 
                     ModelToScreen(x, y);
+
+                    if(v.Attributes().HasIntAttribute(VertexColoring))
+                    {
+                        int color = defaultcolors[v.Attributes().GetIntAttribute(VertexColoring)];
+                        SetColor((unsigned short)(color / 65536), (unsigned short)((color / 256) % 256), (unsigned short)(color % 256));
+                    }
+                    else
+                        SetColor(0,0,0);
+
                     FillCircle(x, y, 7);
                 }
             }

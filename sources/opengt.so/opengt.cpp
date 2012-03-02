@@ -77,7 +77,8 @@ namespace OpenGraphtheory
         /// \brief Operator to copy a graph
         void Graph::operator=(const Graph& G)
         {
-            attributes->Clear();
+		    cout.flush();
+
             Clear();
 
             Label = G.GetLabel();
@@ -86,7 +87,10 @@ namespace OpenGraphtheory
 
             /// copy vertices
             for(list<Graph::Vertex*>::const_iterator v = G.Vertices.begin(); v != G.Vertices.end(); v++)
-                InternalAddVertex((*v)->X, (*v)->Y, (*v)->Z, (*v)->Label, (*v)->Weight, (*v)->Tag, (*v)->ID);
+            {
+                Graph::VertexIterator vnew = InternalAddVertex((*v)->X, (*v)->Y, (*v)->Z, (*v)->Label, (*v)->Weight, (*v)->Tag, (*v)->ID);
+                vnew.Attributes() = *((*v)->attributes);
+            }
 
             /// copy edges
             for(list<Graph::Edge*>::const_iterator e = G.Edges.begin(); e != G.Edges.end(); e++)
@@ -103,13 +107,15 @@ namespace OpenGraphtheory
                 for(list<Graph::Vertex*>::const_iterator j = (*e)->NegativeIncidentVertices.begin(); j != (*e)->NegativeIncidentVertices.end(); j++)
                     OwnNegIncident.push_back(Vertex_ID_to_pointer[(*j)->ID]);
 
-                InternalAddEdge(OwnIncident, OwnPosIncident, OwnNegIncident, (*e)->Label, (*e)->Weight, (*e)->Tag, (*e)->ID);
+                Graph::EdgeIterator enew = InternalAddEdge(OwnIncident, OwnPosIncident, OwnNegIncident, (*e)->Label, (*e)->Weight, (*e)->Tag, (*e)->ID);
+                enew.Attributes() = *((*e)->attributes);
             }
         }
 
         /// \brief Remove all vertices and edges
         void Graph::Clear()
         {
+            attributes->Clear();
             while(Vertices.size() > 0)
                 RemoveVertex(*(Vertices.begin()));
         }
@@ -1432,7 +1438,7 @@ namespace OpenGraphtheory
 			}
 
 			/// G has been successfully loaded, copy it to *this
-			operator=(G);
+			*this = G;
 			for(map<string, Graph::VertexIterator*>::iterator cleaner = Vertex_XML_ID_to_pointer.begin(); cleaner != Vertex_XML_ID_to_pointer.end(); cleaner++)
                 delete(cleaner->second);
 			return true;
@@ -1513,6 +1519,8 @@ namespace OpenGraphtheory
 			os << ind[0] << "<gxl xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n";
 			os << ind[1] <<   "<graph id=\"" << GetID() << "\" edgeids=\"true\" edgemode=\"defaultundirected\" hypergraph=\"false\">\n";
 
+            attributes->WriteToStream(os, 2);
+
 			for(VertexIterator i = BeginVertices(); i != EndVertices(); i++)
 			{
 				os << ind[2] << "<node id=\"v" << i.GetID() << "\">\n";
@@ -1536,6 +1544,8 @@ namespace OpenGraphtheory
 				os << ind[3] <<   "<attr name=\"weight\">\n";
 				os << ind[4] <<     "<float>" << i.GetWeight() << "</float>\n";
 				os << ind[3] <<   "</attr>\n";
+
+                i.Attributes().WriteToStream(os, 3);
 
 				os << ind[2] << "</node>\n";
 			}
@@ -1571,6 +1581,8 @@ namespace OpenGraphtheory
 				os << ind[3] << "<attr name=\"weight\">\n";
 				os << ind[4] <<   "<float>" << i.GetWeight() << "</float>\n";
 				os << ind[3] << "</attr>\n";
+
+                i.Attributes().WriteToStream(os, 3);
 
 				os << ind[2] << ClosingTag;
 			}
@@ -1617,7 +1629,7 @@ namespace OpenGraphtheory
                 else if(c->name == "string")
                     SetAttribute(name, (*child)->InnerText(false));
                 else
-                    continue; // don't break
+                    continue; // don't do the following break
 
                 break;
             }
@@ -1633,10 +1645,46 @@ namespace OpenGraphtheory
 
         void Graph::AttributeCollection::operator=(const AttributeCollection& attrs)
         {
-            BoolAttributes = attrs.BoolAttributes;
-            IntAttributes = attrs.IntAttributes;
-            FloatAttributes = attrs.FloatAttributes;
-            StringAttributes = attrs.StringAttributes;
+            Clear();
+
+            for(map<string, bool>::const_iterator i = attrs.BoolAttributes.begin(); i != attrs.BoolAttributes.end(); i++)
+                BoolAttributes[i->first] = i->second;
+            for(map<string, int>::const_iterator i = attrs.IntAttributes.begin(); i != attrs.IntAttributes.end(); i++)
+                IntAttributes[i->first] = i->second;
+            for(map<string, float>::const_iterator i = attrs.FloatAttributes.begin(); i != attrs.FloatAttributes.end(); i++)
+                FloatAttributes[i->first] = i->second;
+            for(map<string, string>::const_iterator i = attrs.StringAttributes.begin(); i != attrs.StringAttributes.end(); i++)
+                StringAttributes[i->first] = i->second;
+        }
+
+        void Graph::AttributeCollection::WriteToStream(ostream& os, int indentlevel)
+        {
+            string indent(indentlevel*2, ' ');
+
+            for(map<string, bool>::const_iterator i = BoolAttributes.begin(); i != BoolAttributes.end(); i++)
+            {
+                os << indent << "<attr name=\"" << i->first << "\">\n";
+                os << indent << "  <bool>" << (i->second ? "true" : "false") << "</bool>\n";
+                os << indent << "</attr>\n";
+            }
+            for(map<string, int>::const_iterator i = IntAttributes.begin(); i != IntAttributes.end(); i++)
+            {
+                os << indent << "<attr name=\"" << i->first << "\">\n";
+                os << indent << "  <int>" << i->second << "</int>\n";
+                os << indent << "</attr>\n";
+            }
+            for(map<string, float>::const_iterator i = FloatAttributes.begin(); i != FloatAttributes.end(); i++)
+            {
+                os << indent << "<attr name=\"" << i->first << "\">\n";
+                os << indent << "  <float>" << i->second << "</float>\n";
+                os << indent << "</attr>\n";
+            }
+            for(map<string, string>::const_iterator i = StringAttributes.begin(); i != StringAttributes.end(); i++)
+            {
+                os << indent << "<attr name=\"" << i->first << "\">\n";
+                os << indent << "  <string>" << i->second << "</string>\n";
+                os << indent << "</attr>\n";
+            }
         }
 
         void Graph::AttributeCollection::Unset(string name)

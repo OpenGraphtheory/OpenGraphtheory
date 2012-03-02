@@ -21,7 +21,7 @@
 	induced subgraph from set<VertexIterator>
 	components
 	methods to get sizes of the sets (EdgesToAdjacentVertices etc)
-	graph::label,id -> operator=, LoadFromXML
+	graph::label,id -> , LoadFromXML
 	melt set<VertexIterator>
 
 	iterators must be instantiated in methods of the iterators, not in methods
@@ -376,7 +376,7 @@
                     map<string, string> StringAttributes;
 
                     void Set(XML* attr);
-
+                    void WriteToStream(ostream& os, int indentlevel);
                 public:
                     void Clear();
                     void Unset(string name);
