@@ -15,14 +15,22 @@ namespace OpenGraphtheory
             if(G.IsHypergraph())
                 throw "The GML fileformat doesn\'t support hypergraphs\n";
 
+            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+            {
+                vector<float> coordinates = v.GetCoordinates();
+                if(coordinates.size() < 2)
+                    throw "Vertex with less than 2 coordinates found";
+            }
+
             os << "# www.Open-Graphtheory.org\n";
             os << "graph [ id " << G.GetID() << " label \"" << G.GetLabel() << "\"\n";
 
             /// write vertices: node [ id label graphics [ x y ] ]
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
+                vector<float> coordinates = v.GetCoordinates();
                 os << "\tnode [ id " << v.GetID() << " label \"" << v.GetLabel() << "\"\n";
-                os << "\t\tgraphics [ x " << v.GetX() << " y " << v.GetY() << " ]\n";
+                os << "\t\tgraphics [ x " << coordinates[0] << " y " << coordinates[1] << " ]\n";
                 os << "\t]\n";
             }
 

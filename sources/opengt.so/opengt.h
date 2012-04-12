@@ -117,7 +117,7 @@
 
 			/// adding and removing vertices
 			protected:
-				Graph::VertexIterator InternalAddVertex(float x = -1, float y = -1, float z = -1, string label = "", float weight = 0, void* tag = NULL, int ID = -1);
+				Graph::VertexIterator InternalAddVertex(vector<float> coordinates, string label = "", float weight = 0, void* tag = NULL, int ID = -1);
 				void RemoveVertex(Graph::Vertex* v, bool RemoveIncidentEdges = true);
 			public:
 				Graph::VertexIterator AddVertex(float x, float y, string label, float weight = 0, void* tag = NULL);
@@ -171,8 +171,7 @@
                 private:
                     int ID;
                 protected:
-                    Vertex(Graph* owner, float x = -1, float y = -1, string label = "", float weight = 1, void* tag = NULL);
-                    Vertex(Graph* owner, float x = -1, float y = -1, float z = -1, string label = "", float weight = 1, void* tag = NULL);
+                    Vertex(Graph* owner, vector<float> coordinates, string label = "", float weight = 1, void* tag = NULL);
                     ~Vertex();
                     Graph* Owner;
 
@@ -182,9 +181,7 @@
 
                     AttributeCollection* attributes;
 
-                    float X;
-                    float Y;
-                    float Z;
+                    vector<float> Coordinates;
                     string Label;
                     float Weight;
                     void* Tag;
@@ -276,12 +273,8 @@
                     bool operator>=(const Graph::VertexIterator& i) const;
 
                     AttributeCollection& Attributes();
-                    float GetX() const;
-                    void SetX(float X);
-                    float GetY() const;
-                    void SetY(float Y);
-                    float GetZ() const;
-                    void SetZ(float Z);
+                    vector<float> GetCoordinates() const;
+                    void SetCoordinates(vector<float> coordinates);
                     string GetLabel() const;
                     void SetLabel(string Label);
                     float GetWeight() const;

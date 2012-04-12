@@ -16,6 +16,13 @@ namespace OpenGraphtheory
             if(G.IsHypergraph())
                 throw "The POV-Ray fileformat doesn\'t support hypergraphs\n";
 
+            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+            {
+                vector<float> coordinates = v.GetCoordinates();
+                if(coordinates.size() < 3)
+                    throw "Vertex with less than 3 coordinates found";
+            }
+
             os << "// www.Open-Graphtheory.org\n";
             os << "#include \"colors.inc\"\n\n";
 
@@ -49,10 +56,11 @@ namespace OpenGraphtheory
             // spheres for vertices
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
+                vector<float> coordinates = v.GetCoordinates();
                 os << "// v" << v.GetID() << "\n";
                 os << "sphere\n";
                 os << "{\n";
-                os << "    <" << v.GetX() << "," << v.GetY() << "," << v.GetZ() << ">, 1\n";
+                os << "    <" << coordinates[0] << "," << coordinates[1] << "," << coordinates[2] << ">, 1\n";
                 os << "    texture\n";
                 os << "    {\n";
                 os << "        pigment\n";
@@ -69,8 +77,11 @@ namespace OpenGraphtheory
                 os << "// e" << e.GetID() << "\n";
                 os << "cylinder\n";
                 os << "{\n";
-                os << "    <" << e.From().GetX() << "," << e.From().GetY() << "," << e.From().GetZ() << ">,";
-                os <<     "<" << e.To().GetX() << "," << e.To().GetY() << "," << e.To().GetZ() << ">,1\n";
+                vector<float> FromCoordinates = e.From().GetCoordinates();
+                vector<float> ToCoordinates = e.To().GetCoordinates();
+
+                os << "    <" << FromCoordinates[0] << "," << FromCoordinates[1] << "," << FromCoordinates[2] << ">,";
+                os <<     "<" << ToCoordinates[0] << "," << ToCoordinates[1] << "," << ToCoordinates[2] << ">,1\n";
                 os << "    pigment";
                 os << "    {\n";
                 os << "        color Black\n";

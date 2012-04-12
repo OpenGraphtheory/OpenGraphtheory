@@ -24,9 +24,10 @@ namespace OpenGraphtheory
             /// write vertices
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
+                vector<float> coordinates = v.GetCoordinates();
                 os << "\t<node id=\"" << v.GetID() << "\" label=\"" << v.GetLabel()
                    << "\" weight=\"" << v.GetWeight() << "\">\n";
-                os << "\t\t<graphics x=\"" << v.GetX() << "\" y=\"" << v.GetY() << "\"/>\n";
+                os << "\t\t<graphics x=\"" << coordinates[0] << "\" y=\"" << coordinates[1] << "\"/>\n";
                 os << "\t</node>\n";
             }
 

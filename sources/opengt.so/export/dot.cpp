@@ -21,8 +21,17 @@ namespace OpenGraphtheory
             /// write vertices
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                os << "\tv" << v.GetID() << " [ label=\"" << v.GetLabel() << "\", "
-                   << "pos=\"" << v.GetX() << "," << v.GetY() << "\" ];\n";
+                os << "\tv" << v.GetID() << " [ label=\"" << v.GetLabel() << "\"";
+                vector<float> coordinates = v.GetCoordinates();
+                if(coordinates.size() > 1)
+                {
+                    os << ", pos=\"" << coordinates[0];
+                    for(unsigned int i = 1; i < coordinates.size(); i++)
+                        os << "," << coordinates[i];
+                    os << "\"";
+                }
+
+                os << " ];\n";
             }
 
             /// write edges

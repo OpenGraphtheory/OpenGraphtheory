@@ -18,17 +18,19 @@ namespace OpenGraphtheory
                 throw "The SVG fileformat does not support hypergraphs\n";
 
             Graph::VertexIterator v1 = G.BeginVertices();
-            int maxx = v1.GetX(), minx = v1.GetX(), maxy = v1.GetY(), miny = v1.GetY();
+            vector<float> coordinates = v1.GetCoordinates();
+            int maxx = coordinates[0], minx = coordinates[0], maxy = coordinates[1], miny = coordinates[1];
             for(v1++; v1 != G.EndVertices(); v1++)
             {
-                if(v1.GetX() < minx)
-                    minx = v1.GetX();
-                if(v1.GetX() > maxx)
-                    maxx = v1.GetX();
-                if(v1.GetY() < miny)
-                    miny = v1.GetY();
-                if(v1.GetY() > maxy)
-                    maxy = v1.GetY();
+                coordinates = v1.GetCoordinates();
+                if(coordinates[0] < minx)
+                    minx = coordinates[0];
+                if(coordinates[0] > maxx)
+                    maxx = coordinates[0];
+                if(coordinates[1] < miny)
+                    miny = coordinates[1];
+                if(coordinates[1] > maxy)
+                    maxy = coordinates[1];
             }
 
             /// header
@@ -46,15 +48,20 @@ namespace OpenGraphtheory
             /// draw vertices
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                os << "  <circle cx=\"" << v.GetX() << "\" cy=\"" << v.GetY() << "\" r=\"" << 2*v.GetWeight() << "\"/>\n";
+                coordinates = v.GetCoordinates();
+                os << "  <circle cx=\"" << coordinates[0] << "\" cy=\"" << coordinates[1] << "\" r=\"" << 2*v.GetWeight() << "\"/>\n";
                 os << "  <text />\n";
             }
 
             /// draw edges
             for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
-                os << "  <line x1=\"" << e.From().GetX() << "\" y1=\"" << e.From().GetY()
-                   << "\" x2=\"" << e.To().GetX() << "\" y2=\"" << e.To().GetY()
+            {
+                vector<float> FromCoordinates = e.From().GetCoordinates();
+                vector<float> ToCoordinates = e.To().GetCoordinates();
+                os << "  <line x1=\"" << FromCoordinates[0] << "\" y1=\"" << FromCoordinates[1]
+                   << "\" x2=\"" << ToCoordinates[0] << "\" y2=\"" << ToCoordinates[1]
                    << "\" stroke-width=\"" << e.GetWeight() << "px\"/>\n";
+            }
 
             /// footer
             os << "</svg>\n";

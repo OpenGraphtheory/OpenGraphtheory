@@ -1,6 +1,7 @@
 
 #include "opengt.h"
 #include <stdlib.h>
+#include <vector>
 
 namespace OpenGraphtheory
 {
@@ -13,12 +14,11 @@ namespace OpenGraphtheory
 	// @{
 
 		/// \brief Vertex Constructor (protected, accessible for class "Graph")
-		Graph::Vertex::Vertex(Graph* owner, float x, float y, float z, string label, float weight, void* tag)
+		Graph::Vertex::Vertex(Graph* owner, vector<float> coordinates, string label, float weight, void* tag)
 		{
 		    attributes = new AttributeCollection();
 			Owner = owner;
-			X = x;
-			Y = y;
+			Coordinates = coordinates;
 			Label = label;
 			Weight = weight;
 			Tag = tag;
@@ -88,7 +88,7 @@ namespace OpenGraphtheory
             /// copy vertices
             for(list<Graph::Vertex*>::const_iterator v = G.Vertices.begin(); v != G.Vertices.end(); v++)
             {
-                Graph::VertexIterator vnew = InternalAddVertex((*v)->X, (*v)->Y, (*v)->Z, (*v)->Label, (*v)->Weight, (*v)->Tag, (*v)->ID);
+                Graph::VertexIterator vnew = InternalAddVertex((*v)->Coordinates, (*v)->Label, (*v)->Weight, (*v)->Tag, (*v)->ID);
                 vnew.Attributes() = *((*v)->attributes);
             }
 
@@ -376,9 +376,9 @@ namespace OpenGraphtheory
 
 		/// \brief Internal method: Add a new Vertex to the Graph, ID can be specified
 		/// \return VertexIterator that points to the newly created vertex
-		Graph::VertexIterator Graph::InternalAddVertex(float x, float y, float z, string label, float weight, void* tag, int ID)
+		Graph::VertexIterator Graph::InternalAddVertex(std::vector<float> coordinates, string label, float weight, void* tag, int ID)
 		{
-			Vertex* v = new Vertex(this, x, y, z, label, weight, tag);
+			Vertex* v = new Vertex(this, coordinates, label, weight, tag);
 
 			/// Register ID
 			if(ID <= 0)
@@ -396,14 +396,21 @@ namespace OpenGraphtheory
 		/// \return VertexIterator that points to the newly created instance
 		Graph::VertexIterator Graph::AddVertex(float x, float y, string label, float weight, void* tag)
 		{
-			return InternalAddVertex(x,y,-1,label,weight, tag, -1);
+		    vector<float> coordinates;
+		    coordinates.push_back(x);
+		    coordinates.push_back(y);
+			return InternalAddVertex(coordinates,label,weight, tag, -1);
 		}
 
 		/// \brief Add a new Vertex to the graph
 		/// \return VertexIterator that points to the newly created instance
 		Graph::VertexIterator Graph::AddVertex(float x, float y, float z, string label, float weight, void* tag)
 		{
-			return InternalAddVertex(x,y,z,label,weight, tag, -1);
+		    vector<float> coordinates;
+		    coordinates.push_back(x);
+		    coordinates.push_back(y);
+		    coordinates.push_back(z);
+			return InternalAddVertex(coordinates,label,weight, tag, -1);
 		}
 
 		/// \brief Internal Method: Remove a vertex from the graph
@@ -1135,42 +1142,15 @@ namespace OpenGraphtheory
 				return ID;
 			}
 
-			/// \brief Accessor-method for reading the X-coordinate of a vertex
-			float Graph::VertexIterator::GetX() const
-			{
-				return (*position)->X;
-			}
+            std::vector<float> Graph::VertexIterator::GetCoordinates() const
+            {
+                return (*position)->Coordinates;
+            }
 
-			/// \brief Accessor-method for writing the X-coordinate of a vertex
-			void Graph::VertexIterator::SetX(float x)
-			{
-				(*position)->X = x;
-			}
-
-			/// \brief Accessor-method for reading the Y-coordinate of a vertex
-			float Graph::VertexIterator::GetY() const
-			{
-				return (*position)->Y;
-			}
-
-			/// \brief Accessor-method for writing the Y-coordinate of a vertex
-			void Graph::VertexIterator::SetY(float y)
-			{
-				(*position)->Y = y;
-			}
-
-			/// \brief Accessor-method for reading the Z-coordinate of a vertex
-			float Graph::VertexIterator::GetZ() const
-			{
-				return (*position)->Z;
-			}
-
-			/// \brief Accessor-method for writing the Z-coordinate of a vertex
-			void Graph::VertexIterator::SetZ(float z)
-			{
-				(*position)->Z = z;
-			}
-
+            void Graph::VertexIterator::SetCoordinates(std::vector<float> coordinates)
+            {
+                (*position)->Coordinates = coordinates;
+            }
 
 			/// \brief Accessor-method for reading the Label of a vertex
 			string Graph::VertexIterator::GetLabel() const
@@ -1318,21 +1298,6 @@ namespace OpenGraphtheory
                 {
                     v->SetLabel(v->Attributes().GetStringAttribute("name"));
                     v->Attributes().Unset("name");
-                }
-                if(v->Attributes().HasFloatAttribute("x"))
-                {
-                    v->SetX(v->Attributes().GetFloatAttribute("x"));
-                    v->Attributes().Unset("x");
-                }
-                if(v->Attributes().HasFloatAttribute("y"))
-                {
-                    v->SetY(v->Attributes().GetFloatAttribute("y"));
-                    v->Attributes().Unset("y");
-                }
-                if(v->Attributes().HasFloatAttribute("z"))
-                {
-                    v->SetZ(v->Attributes().GetFloatAttribute("z"));
-                    v->Attributes().Unset("z");
                 }
                 if(v->Attributes().HasFloatAttribute("weight"))
                 {
@@ -1508,9 +1473,9 @@ namespace OpenGraphtheory
 
 		void Graph::WriteToStream(ostream& os, int indent)
 		{
-		    string* ind = new string[5];
+		    string* ind = new string[6];
 		    ind[0] = string(2*indent, ' ');
-		    for(int i = 1; i < 5; i++)
+		    for(int i = 1; i < 6; i++)
                 ind[i] = ind[i-1] + "  ";
 
 			os << ind[0] << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
@@ -1529,17 +1494,16 @@ namespace OpenGraphtheory
 				os << ind[4] <<     "<string>" << i.GetLabel() << "</string>\n";
 				os << ind[3] <<   "</attr>\n";
 
-				os << ind[3] <<   "<attr name=\"x\">\n";
-				os << ind[4] <<     "<float>" << i.GetX() << "</float>\n";
-				os << ind[3] <<   "</attr>\n";
-
-				os << ind[3] <<   "<attr name=\"y\">\n";
-				os << ind[4] <<     "<float>" << i.GetY() << "</float>\n";
-				os << ind[3] <<   "</attr>\n";
-
-				os << ind[3] <<   "<attr name=\"z\">\n";
-				os << ind[4] <<     "<float>" << i.GetZ() << "</float>\n";
-				os << ind[3] <<   "</attr>\n";
+                vector<float> coordinates = i.GetCoordinates();
+                if(coordinates.size() > 0)
+                {
+                    os << ind[3] <<   "<attr name=\"coordinates\">\n";
+                    os << ind[4] <<     "<vec>\n";
+                    for(unsigned int i = 0; i < coordinates.size(); i++)
+                        os << ind[5] <<   "<float>" << coordinates[i] << "</float>\n";
+                    os << ind[4] <<     "</vec>\n";
+                    os << ind[3] <<   "</attr>\n";
+                }
 
 				os << ind[3] <<   "<attr name=\"weight\">\n";
 				os << ind[4] <<     "<float>" << i.GetWeight() << "</float>\n";
