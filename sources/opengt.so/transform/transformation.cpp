@@ -16,7 +16,7 @@ namespace OpenGraphtheory
 
         }
 
-        Transformer::Transformer(string name, string description, int MinParameterCount, int MaxParameterCount, void TransformerFunction(Graph& G, list<float> parameter))
+        Transformer::Transformer(string name, string description, int MinParameterCount, int MaxParameterCount, void TransformerFunction(Graph& G, vector<float> parameter))
         {
             this->name = name;
             this->description = description;
@@ -27,7 +27,7 @@ namespace OpenGraphtheory
 
 
 
-        void Transformer::Transform(Graph& G, list<float> parameter)
+        void Transformer::Transform(Graph& G, vector<float> parameter)
         {
             if(MinParamCount > 0 && (((int)parameter.size()) < MinParamCount))
             {
@@ -55,12 +55,12 @@ namespace OpenGraphtheory
                                      4, 6,
                                      TransformLinear);
             result["scale"] = Transformer("scale",
-                                     "to fit the graph into the rectangle given by parameters (width height )",
-                                     2, 2,
+                                     "to fit the graph into the rectangle given by parameters (width height [depth ...])",
+                                     2, -1,
                                      TransformScale);
             result["shift"] = Transformer("shift",
                                      "for adding constant values to the coordinates of the vertices",
-                                     1, 2,
+                                     1, -1,
                                      TransformShift);
             result["rotate"] = Transformer("rotate",
                                      "for rotating the graph (parameter 2 and 3 to set the center of the rotation)",
@@ -76,157 +76,185 @@ namespace OpenGraphtheory
                                      TransformSpringEmbed3D);
             result["aspectscale"] = Transformer("",
                                      "for a transformation of the graph",
-                                     1, 1,
+                                     2, -1,
                                      TransformScalePreservingAspect);
 
             return result;
         }
 
 
-        void Transformer::Transform(Graph& G, list<float> parameter, string transformer)
+        void Transformer::Transform(Graph& G, vector<float> parameter, string transformer)
         {
             map<string, Transformer> Transformers = GetTransformers();
             if(Transformers.find(transformer) == Transformers.end())
-                throw "unknown generator";
+                throw "unknown transformer";
             Transformers[transformer].Transform(G, parameter);
         }
 
 
 
 
-        /// ( A11  A12 )     (OldX)   (B1)   (NewX)
-        /// ( A21  A22 )  *  (OldY) + (B2) = (NewY)
-        void TransformLinear(Graph& G, float A11, float A12, float A21, float A22, float B1, float B2)
+        /// A * OldCoordinates + B = NewCoordinates
+        void TransformLinear(Graph& G, vector<vector<float> > A, vector<float> B)
         {
+            while(B.size() < A.size())
+                B.push_back(0.0f);
+            while(A.size() < B.size())
+                A.push_back(vector<float>(0));
+
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                float OldX = v.GetX();
-                float OldY = v.GetY();
+                vector<float> OldCoordinates = v.GetCoordinates();
+                vector<float> NewCoordinates = B;
 
-                v.SetX( A11 * OldX + A12 * OldY + B1);
-                v.SetY( A21 * OldX + A22 * OldY + B2);
+                for(unsigned int y = A.size()-1; y >= 0; --y)
+                    for(unsigned int x = min(OldCoordinates.size(), A[y].size())-1; x >= 0; --x)
+                        NewCoordinates[y] += OldCoordinates[x] * A[y][x];
+
+                v.SetCoordinates(NewCoordinates);
             }
         }
 
-        void TransformLinear(Graph& G, list<float> parameters)
+        void TransformLinear(Graph& G, vector<float> parameters)
         {
-            float A11, A12, A21, A22, B1=0, B2=0;
-            A11 = parameters.front();
-            parameters.pop_front();
-            A12 = parameters.front();
-            parameters.pop_front();
-            A21 = parameters.front();
-            parameters.pop_front();
-            A22 = parameters.front();
-            parameters.pop_front();
-            if(parameters.size() > 0)
+            float A11, A12, A21, A22, B1=0.0f, B2=0.0f;
+            A11 = parameters[0];
+            A12 = parameters[1];
+            A21 = parameters[2];
+            A22 = parameters[3];
+            if(parameters.size() > 4)
             {
-                B1 = parameters.front();
-                parameters.pop_front();
-                if(parameters.size() > 0)
-                    B2 = parameters.front();
+                B1 = parameters[4];
+                if(parameters.size() > 5)
+                    B2 = parameters[5];
             }
 
             TransformLinear(G, A11, A12, A21, A22, B1, B2);
         }
 
-        void TransformScale(Graph& G, list<float> parameters)
+        void TransformScale(Graph& G, vector<float> parameters)
         {
-            float width=parameters.front();
-            parameters.pop_front();
-            float height=parameters.front();
+            unsigned int dimensions = 0;
+            vector<float> dimension_min;
+            vector<float> dimension_max;
+            vector<float> coordinates;
 
-            Graph::VertexIterator v1 = G.BeginVertices();
-            float maxx = v1.GetX(), minx = v1.GetX(), maxy = v1.GetY(), miny = v1.GetY();
-            for(v1++; v1 != G.EndVertices(); v1++)
+            // find minimum and maximum values on all dimensions
+            for(Graph::VertexIterator v1 = G.BeginVertices(); v1 != G.EndVertices(); v1++)
             {
-                if(v1.GetX() < minx)
-                    minx = v1.GetX();
-                if(v1.GetX() > maxx)
-                    maxx = v1.GetX();
-                if(v1.GetY() < miny)
-                    miny = v1.GetY();
-                if(v1.GetY() > maxy)
-                    maxy = v1.GetY();
+                coordinates = v1.GetCoordinates();
+                for(int j = min(dimensions, coordinates.size())-1; j >= 0; --j)
+                {
+                    if(coordinates[j] < dimension_min[j])
+                        dimension_min[j] = coordinates[j];
+                    if(coordinates[j] > dimension_max[j])
+                        dimension_max[j] = coordinates[j];
+                }
+
+                // add more dimensions, if neccessary
+                if(coordinates.size() > dimensions)
+                {
+                    for(unsigned int j = dimensions; j < coordinates.size(); j++)
+                    {
+                        dimension_min.push_back(coordinates[j]);
+                        dimension_max.push_back(coordinates[j]);
+                    }
+                    dimensions = coordinates.size();
+                }
             }
 
-            float scaleX = width / (maxx-minx);
-            float scaleY = height / (maxy-miny);
+            // set scales for all dimensions
+            vector<float> scale(dimensions);
+            for(unsigned int i = dimensions-1; i >= 0; --i)
+                if(dimension_max[i] > dimension_min[i])
+                    scale[i] = parameters[i] / (dimension_max[i] - dimension_min[i]);
+                else
+                    scale[i] = 0.0f;
 
-            TransformLinear(G, scaleX, 0, 0, scaleY, -scaleX * minx, -scaleY * miny);
-
-            /*
+            // scale
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                v.SetX( scaleX * (v.GetX() - minx));
-                v.SetY( scaleY * (v.GetY() - miny));
+                vector<float> coordinates = v.GetCoordinates();
+                for(unsigned int i = coordinates.size()-1; i >= 0; --i)
+                    coordinates[i] = (coordinates[i] - dimension_min[i]) * scale[i];
+                v.SetCoordinates(coordinates);
             }
-            */
         }
 
-        void TransformScalePreservingAspect(Graph& G, list<float> parameters)
+        void TransformScalePreservingAspect(Graph& G, vector<float> parameters)
         {
-            float width=parameters.front();
-            parameters.pop_front();
-            float height=parameters.front();
+            unsigned int dimensions = 0;
+            vector<float> dimension_min;
+            vector<float> dimension_max;
+            vector<float> coordinates;
 
-            Graph::VertexIterator v1 = G.BeginVertices();
-            float maxx = v1.GetX(), minx = v1.GetX(), maxy = v1.GetY(), miny = v1.GetY();
-            for(v1++; v1 != G.EndVertices(); v1++)
+            // find minimum and maximum values on all dimensions
+            for(Graph::VertexIterator v1 = G.BeginVertices(); v1 != G.EndVertices(); v1++)
             {
-                if(v1.GetX() < minx)
-                    minx = v1.GetX();
-                if(v1.GetX() > maxx)
-                    maxx = v1.GetX();
-                if(v1.GetY() < miny)
-                    miny = v1.GetY();
-                if(v1.GetY() > maxy)
-                    maxy = v1.GetY();
+                coordinates = v1.GetCoordinates();
+                for(int j = min(dimensions, coordinates.size())-1; j >= 0; --j)
+                {
+                    if(coordinates[j] < dimension_min[j])
+                        dimension_min[j] = coordinates[j];
+                    if(coordinates[j] > dimension_max[j])
+                        dimension_max[j] = coordinates[j];
+                }
+
+                // add more dimensions, if neccessary
+                if(coordinates.size() > dimensions)
+                {
+                    for(unsigned int j = dimensions; j < coordinates.size(); j++)
+                    {
+                        dimension_min.push_back(coordinates[j]);
+                        dimension_max.push_back(coordinates[j]);
+                    }
+                    dimensions = coordinates.size();
+                }
             }
 
-            float scaleX = width / (maxx-minx);
-            float scaleY = height / (maxy-miny);
-            float scale = scaleX < scaleY ? scaleX : scaleY;
+            // select minimum of scales
+            float scale = parameters[0] / (dimension_max[0] - dimension_min[0]);
+            for(unsigned int i = dimensions-1; i >= 1; --i)
+                if(dimension_max[i] > dimension_min[i])
+                    if(parameters[i] / (dimension_max[i] - dimension_min[i]) < scale)
+                        scale = parameters[i] / (dimension_max[i] - dimension_min[i]);
 
-            TransformLinear(G, scale, 0, 0, scale, -scale*minx, -scale*miny);
-
-            /*
+            // scale
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                v.SetX( scale * (v.GetX() - minx));
-                v.SetY( scale * (v.GetY() - miny));
+                vector<float> coordinates = v.GetCoordinates();
+                for(unsigned int i = coordinates.size()-1; i >= 0; --i)
+                    coordinates[i] = (coordinates[i] - dimension_min[i]) * scale;
+                v.SetCoordinates(coordinates);
             }
-            */
         }
 
 
-        void TransformShift(Graph& G, list<float> parameters)
+        void TransformShift(Graph& G, vector<float> parameters)
         {
-            float x = parameters.front();
-            parameters.pop_front();
-            float y = 0;
-            if(parameters.size() > 0)
-                y = parameters.front();
-
-            TransformLinear(G, 1, 0, 0, 1, x, y);
+            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+            {
+                vector<float> coordinates = v.GetCoordinates();
+                for(unsigned int i = min(coordinates.size(), parameters.size())-1; i >= 0; --i)
+                    coordinates[i] += parameters[i];
+                v.SetCoordinates(coordinates);
+            }
         }
 
 
         //    x' = x*cos a + y*sin a,
         //    y' = − x*sin a + y*cos a,
         // additional parameters define the center of the rotation
-        void TransformRotate(Graph& G, list<float> parameters)
+        void TransformRotate(Graph& G, vector<float> parameters)
         {
-            float angle=parameters.front();
+            float angle=parameters[0];
             float xshift = 0;
             float yshift = 0;
 
             if(parameters.size() == 3)
             {
-                parameters.pop_front();
-                xshift = parameters.front();
-                parameters.pop_front();
-                yshift = parameters.front();
+                xshift = parameters[1];
+                yshift = parameters[2];
                 TransformLinear(G, 1, 0, 0, 1, -xshift, -yshift);
             }
 

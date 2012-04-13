@@ -145,9 +145,10 @@
 	<string>
 	"../opengt.h"
 
-1330682619 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/opengt.cpp
+1334242215 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/opengt.cpp
 	"opengt.h"
 	<stdlib.h>
+	<vector>
 
 1327680614 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/processing/components.cpp
 	<set>
@@ -188,7 +189,7 @@
 
 1329746256 /home/viktor/Programming/OpenGraphtheory/opengt.so/visualize/vector2d.h
 
-1330517315 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/transform/spring_embedder3d.cpp
+1334308696 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/transform/spring_embedder3d.cpp
 	<iostream>
 	<math.h>
 	<stdlib.h>
@@ -198,13 +199,13 @@
 
 1329826904 /home/viktor/Programming/OpenGraphtheory/opengt.so/visualize/vector3d.h
 
-1329827928 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/transform/transformation.cpp
+1334325314 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/transform/transformation.cpp
 	<math.h>
 	"transformation.h"
 	"../../opengt.so/opengt.h"
 	<list>
 
-1329827523 /home/viktor/Programming/OpenGraphtheory/opengt.so/transform/transformation.h
+1334325128 /home/viktor/Programming/OpenGraphtheory/opengt.so/transform/transformation.h
 	<list>
 	"../opengt.h"
 

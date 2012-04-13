@@ -134,13 +134,7 @@ namespace OpenGraphtheory
 
         }
 
-        void TransformSpringEmbed(Graph& G, list<float> parameters)
-        {
-            GraphWindow win(width,height,&G);
-            win.Update();
-            SpringEmbed(G, &win);
-            //win.WaitUntilClosed();
-        }
+
 
 
     }

@@ -47,10 +47,12 @@ namespace OpenGraphtheory
 
                 for(Graph::EdgeIterator e = DisplayedGraph->BeginEdges(); e != DisplayedGraph->EndEdges(); e++)
                 {
-                    float x1 = e.From().GetX();
-                    float y1 = e.From().GetY();
-                    float x2 = e.To().GetX();
-                    float y2 = e.To().GetY();
+                    vector<float> FromCoordinates = e.From().GetCoordinates();
+                    vector<float> ToCoordinates = e.To().GetCoordinates();
+                    float x1 = FromCoordinates[0];
+                    float y1 = FromCoordinates[1];
+                    float x2 = ToCoordinates[0];
+                    float y2 = ToCoordinates[1];
 
                     ModelToScreen(x1, y1);
                     ModelToScreen(x2, y2);
@@ -68,8 +70,9 @@ namespace OpenGraphtheory
 
                 for(Graph::VertexIterator v = DisplayedGraph->BeginVertices(); v != DisplayedGraph->EndVertices(); v++)
                 {
-                    float x = v.GetX();
-                    float y = v.GetY();
+                    vector<float> coordinates = v.GetCoordinates();
+                    float x = coordinates[0];
+                    float y = coordinates[1];
 
                     ModelToScreen(x, y);
 
