@@ -4,7 +4,7 @@
 1328002104 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/algorithms/vertexcover/vertexcover.cpp
 	"../../opengt.h"
 
-1334242249 /home/viktor/Programming/OpenGraphtheory/opengt.so/opengt.h
+1337171688 /home/viktor/Programming/OpenGraphtheory/opengt.so/opengt.h
 	<list>
 	<set>
 	<map>
@@ -12,6 +12,7 @@
 	<iostream>
 	<fstream>
 	"simple_xml.h"
+	"attributes.h"
 
 1330615749 /home/viktor/Programming/OpenGraphtheory/opengt.so/simple_xml.h
 	<iostream>
@@ -145,8 +146,9 @@
 	<string>
 	"../opengt.h"
 
-1334242215 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/opengt.cpp
+1337172296 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/opengt.cpp
 	"opengt.h"
+	"attributes.h"
 	<stdlib.h>
 	<vector>
 
@@ -189,13 +191,13 @@
 
 1329746256 /home/viktor/Programming/OpenGraphtheory/opengt.so/visualize/vector2d.h
 
-1334308696 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/transform/spring_embedder3d.cpp
+1337172389 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/transform/spring_embedder3d.cpp
 	<iostream>
 	<math.h>
 	<stdlib.h>
 	"../opengt.h"
 	"../visualize/GraphWindow.h"
-	"../visualize/vector3d.h"
+	"../visualize/vectornd.h"
 
 1329826904 /home/viktor/Programming/OpenGraphtheory/opengt.so/visualize/vector3d.h
 
@@ -221,7 +223,29 @@
 	<math.h>
 	"vector3d.h"
 
-1330680393 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/visualize/GraphWindow.cpp
+1337172646 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/visualize/GraphWindow.cpp
 	"GraphWindow.h"
 	"../opengt.h"
+
+1337172082 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/attributes.cpp
+	"attributes.h"
+	"factory.h"
+	<cstdlib>
+
+1337172329 /home/viktor/Programming/OpenGraphtheory/opengt.so/attributes.h
+	<string>
+	<iostream>
+	"factory.h"
+	"simple_xml.h"
+
+1337155072 /home/viktor/Programming/OpenGraphtheory/opengt.so/factory.h
+	<string>
+	<map>
+
+1337170843 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/factory.cpp
+	<map>
+	"factory.h"
+
+1337172777 /home/viktor/Programming/OpenGraphtheory/opengt.so/visualize/vectornd.h
+	<vector>
 

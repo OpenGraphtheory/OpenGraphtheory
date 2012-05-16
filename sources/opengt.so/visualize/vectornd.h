@@ -1,4 +1,7 @@
 
+#include<vector>
+using namespace std;
+
 namespace OpenGraphtheory
 {
     namespace Visualization
@@ -11,7 +14,7 @@ namespace OpenGraphtheory
                 VectorND(int size);
                 VectorND(const vector<float> vect);
                 VectorND(const VectorND& Copy); // Copy Constructor
-                bool operator=(const VectorND &Copy);
+                VectorND& operator=(const VectorND &Copy);
                 float operator[](unsigned int index);
 
                 VectorND operator+(const VectorND& Sum) const;

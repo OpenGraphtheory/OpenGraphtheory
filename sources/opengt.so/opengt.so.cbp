@@ -53,6 +53,8 @@
 		<Unit filename="algorithms/vertexcover/vertexcover.h">
 			<Option virtualFolder="algorithms/vertexcover/Headers/" />
 		</Unit>
+		<Unit filename="attributes.cpp" />
+		<Unit filename="attributes.h" />
 		<Unit filename="export/dot.cpp">
 			<Option virtualFolder="export/Sources/" />
 		</Unit>
@@ -95,6 +97,8 @@
 		<Unit filename="export/xgmml.cpp">
 			<Option virtualFolder="export/Sources/" />
 		</Unit>
+		<Unit filename="factory.cpp" />
+		<Unit filename="factory.h" />
 		<Unit filename="generate/circle.cpp">
 			<Option virtualFolder="generate/Sources/" />
 		</Unit>

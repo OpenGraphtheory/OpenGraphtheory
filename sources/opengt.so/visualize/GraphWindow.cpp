@@ -57,9 +57,9 @@ namespace OpenGraphtheory
                     ModelToScreen(x1, y1);
                     ModelToScreen(x2, y2);
 
-                    if(e.Attributes().HasIntAttribute(EdgeColoring))
+                    if(e.Attributes().HasAttribute<IntAttribute>(EdgeColoring))
                     {
-                        int color = defaultcolors[e.Attributes().GetIntAttribute(EdgeColoring)];
+                        int color = defaultcolors[e.Attributes().GetAttribute<IntAttribute>(EdgeColoring)->Value];
                         SetColor((short)(color / 65536), (short)((color / 256) % 256), (short)(color % 256));
                     }
                     else
@@ -76,9 +76,9 @@ namespace OpenGraphtheory
 
                     ModelToScreen(x, y);
 
-                    if(v.Attributes().HasIntAttribute(VertexColoring))
+                    if(v.Attributes().HasAttribute<IntAttribute>(VertexColoring))
                     {
-                        int color = defaultcolors[v.Attributes().GetIntAttribute(VertexColoring)];
+                        int color = defaultcolors[v.Attributes().GetAttribute<IntAttribute>(VertexColoring)->Value];
                         SetColor((unsigned short)(color / 65536), (unsigned short)((color / 256) % 256), (unsigned short)(color % 256));
                     }
                     else
@@ -93,21 +93,24 @@ namespace OpenGraphtheory
         void GraphWindow::UpdateModelDimensions()
         {
             Graph::VertexIterator v = DisplayedGraph->BeginVertices();
-            float minx = v.GetX();
-            float miny = v.GetY();
+            vector<float> coordinates = v.GetCoordinates();
+            float minx = coordinates[0];
+            float miny = coordinates[1];
             float maxx = minx;
             float maxy = miny;
             for(v++; v != DisplayedGraph->EndVertices(); v++)
             {
-                if(v.GetX() < minx)
-                    minx = v.GetX();
-                else if(v.GetX() > maxx)
-                    maxx = v.GetX();
+                coordinates = v.GetCoordinates();
 
-                if(v.GetY() < miny)
-                    miny = v.GetY();
-                else if(v.GetY() > maxy)
-                    maxy = v.GetY();
+                if(coordinates[0] < minx)
+                    minx = coordinates[0];
+                else if(coordinates[0] > maxx)
+                    maxx = coordinates[0];
+
+                if(coordinates[1] < miny)
+                    miny = coordinates[1];
+                else if(coordinates[1] > maxy)
+                    maxy = coordinates[1];
             }
             UpdateModelDimensions(minx, miny, maxx, maxy);
         }

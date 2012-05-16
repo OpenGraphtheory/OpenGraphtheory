@@ -1,6 +1,6 @@
 
 #include<math.h>
-#include "VectorND.h"
+#include "vectornd.h"
 
 namespace OpenGraphtheory
 {
@@ -18,14 +18,15 @@ namespace OpenGraphtheory
         }
         VectorND::VectorND(int size)
         {
-            vec(size);
+            vec = vector<float>(size);
             for(int i = 0; i < size; i++)
                 vec[i] = 0.0f;
         }
 
-        bool VectorND::operator=(const VectorND &Copy)
+        VectorND& VectorND::operator=(const VectorND &Copy)
         {
-            return vec = Copy.vec;
+            vec = Copy.vec;
+            return *this;
         }
         float VectorND::operator[](unsigned int index)
         {

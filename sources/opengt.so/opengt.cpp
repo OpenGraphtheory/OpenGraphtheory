@@ -1,5 +1,6 @@
 
 #include "opengt.h"
+#include "attributes.h"
 #include <stdlib.h>
 #include <vector>
 
@@ -1126,7 +1127,7 @@ namespace OpenGraphtheory
 				Label = label;
 			}
 
-            Graph::AttributeCollection& Graph::Attributes()
+            AttributeCollection& Graph::Attributes()
             {
                 return *attributes;
             }
@@ -1188,7 +1189,7 @@ namespace OpenGraphtheory
 				(*position)->Tag = tag;
 			}
 
-            Graph::AttributeCollection& Graph::VertexIterator::Attributes()
+            AttributeCollection& Graph::VertexIterator::Attributes()
             {
                 return *((*position)->attributes);
             }
@@ -1240,7 +1241,7 @@ namespace OpenGraphtheory
 				(*position)->Tag = tag;
 			}
 
-            Graph::AttributeCollection& Graph::EdgeIterator::Attributes()
+            AttributeCollection& Graph::EdgeIterator::Attributes()
             {
                 return *((*position)->attributes);
             }
@@ -1276,9 +1277,9 @@ namespace OpenGraphtheory
 			for(list<XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
                 G.Attributes().Set(*attr);
 
-            if(G.Attributes().HasStringAttribute("name"))
+            if(G.Attributes().HasAttribute<StringAttribute>("name"))
             {
-                G.SetLabel(G.Attributes().GetStringAttribute("name"));
+                G.SetLabel(G.Attributes().GetAttribute<StringAttribute>("name")->Value);
                 G.Attributes().Unset("name");
             }
 
@@ -1294,14 +1295,14 @@ namespace OpenGraphtheory
 				for(list<XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
                     v->Attributes().Set(*attr);
 
-                if(v->Attributes().HasStringAttribute("name"))
+                if(v->Attributes().HasAttribute<StringAttribute>("name"))
                 {
-                    v->SetLabel(v->Attributes().GetStringAttribute("name"));
+                    v->SetLabel(v->Attributes().GetAttribute<StringAttribute>("name")->Value);
                     v->Attributes().Unset("name");
                 }
-                if(v->Attributes().HasFloatAttribute("weight"))
+                if(v->Attributes().HasAttribute<FloatAttribute>("weight"))
                 {
-                    v->SetWeight(v->Attributes().GetFloatAttribute("weight"));
+                    v->SetWeight(v->Attributes().GetAttribute<FloatAttribute>("weight")->Value);
                     v->Attributes().Unset("weight");
                 }
 
@@ -1343,14 +1344,14 @@ namespace OpenGraphtheory
 				for(list<XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
                     e.Attributes().Set(*attr);
 
-                if(e.Attributes().HasStringAttribute("name"))
+                if(e.Attributes().HasAttribute<StringAttribute>("name"))
                 {
-                    e.SetLabel(e.Attributes().GetStringAttribute("name"));
+                    e.SetLabel(e.Attributes().GetAttribute<StringAttribute>("name")->Value);
                     e.Attributes().Unset("name");
                 }
-                if(e.Attributes().HasFloatAttribute("weight"))
+                if(e.Attributes().HasAttribute<FloatAttribute>("weight"))
                 {
-                    e.SetWeight(e.Attributes().GetFloatAttribute("weight"));
+                    e.SetWeight(e.Attributes().GetAttribute<FloatAttribute>("weight")->Value);
                     e.Attributes().Unset("weight");
                 }
             }
@@ -1390,14 +1391,14 @@ namespace OpenGraphtheory
 				for(list<XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
                     e.Attributes().Set(*attr);
 
-                if(e.Attributes().HasStringAttribute("name"))
+                if(e.Attributes().HasAttribute<StringAttribute>("name"))
                 {
-                    e.SetLabel(e.Attributes().GetStringAttribute("name"));
+                    e.SetLabel(e.Attributes().GetAttribute<StringAttribute>("name")->Value);
                     e.Attributes().Unset("name");
                 }
-                if(e.Attributes().HasFloatAttribute("weight"))
+                if(e.Attributes().HasAttribute<FloatAttribute>("weight"))
                 {
-                    e.SetWeight(e.Attributes().GetFloatAttribute("weight"));
+                    e.SetWeight(e.Attributes().GetAttribute<FloatAttribute>("weight")->Value);
                     e.Attributes().Unset("weight");
                 }
 			}
@@ -1569,161 +1570,6 @@ namespace OpenGraphtheory
 
 	// @}
 
-    /// \defgroup Arbitrary Attributes
-    // @{
-
-        void Graph::AttributeCollection::Set(XML* attr)
-        {
-            string name = attr->GetAttribute("name");
-            if(name == "")
-                return;
-
-            for(list<XML_Element*>::iterator child = attr->children.begin(); child != attr->children.end(); child++)
-            {
-       			XML* c = dynamic_cast<XML*>(*child);
-                if(c == NULL)
-                    continue;
-
-                if(c->name == "bool")
-                    SetAttribute(name, (*child)->InnerText(true) == "true");
-                else if(c->name == "int")
-                    SetAttribute(name, atoi((*child)->InnerText(true).c_str()));
-                else if(c->name == "float")
-                    SetAttribute(name, (float)atof((*child)->InnerText(true).c_str()));
-                else if(c->name == "string")
-                    SetAttribute(name, (*child)->InnerText(false));
-                else
-                    continue; // don't do the following break
-
-                break;
-            }
-        }
-
-        void Graph::AttributeCollection::Clear()
-        {
-            BoolAttributes.clear();
-            IntAttributes.clear();
-            FloatAttributes.clear();
-            StringAttributes.clear();
-        }
-
-        void Graph::AttributeCollection::operator=(const AttributeCollection& attrs)
-        {
-            Clear();
-
-            for(map<string, bool>::const_iterator i = attrs.BoolAttributes.begin(); i != attrs.BoolAttributes.end(); i++)
-                BoolAttributes[i->first] = i->second;
-            for(map<string, int>::const_iterator i = attrs.IntAttributes.begin(); i != attrs.IntAttributes.end(); i++)
-                IntAttributes[i->first] = i->second;
-            for(map<string, float>::const_iterator i = attrs.FloatAttributes.begin(); i != attrs.FloatAttributes.end(); i++)
-                FloatAttributes[i->first] = i->second;
-            for(map<string, string>::const_iterator i = attrs.StringAttributes.begin(); i != attrs.StringAttributes.end(); i++)
-                StringAttributes[i->first] = i->second;
-        }
-
-        void Graph::AttributeCollection::WriteToStream(ostream& os, int indentlevel)
-        {
-            string indent(indentlevel*2, ' ');
-
-            for(map<string, bool>::const_iterator i = BoolAttributes.begin(); i != BoolAttributes.end(); i++)
-            {
-                os << indent << "<attr name=\"" << i->first << "\">\n";
-                os << indent << "  <bool>" << (i->second ? "true" : "false") << "</bool>\n";
-                os << indent << "</attr>\n";
-            }
-            for(map<string, int>::const_iterator i = IntAttributes.begin(); i != IntAttributes.end(); i++)
-            {
-                os << indent << "<attr name=\"" << i->first << "\">\n";
-                os << indent << "  <int>" << i->second << "</int>\n";
-                os << indent << "</attr>\n";
-            }
-            for(map<string, float>::const_iterator i = FloatAttributes.begin(); i != FloatAttributes.end(); i++)
-            {
-                os << indent << "<attr name=\"" << i->first << "\">\n";
-                os << indent << "  <float>" << i->second << "</float>\n";
-                os << indent << "</attr>\n";
-            }
-            for(map<string, string>::const_iterator i = StringAttributes.begin(); i != StringAttributes.end(); i++)
-            {
-                os << indent << "<attr name=\"" << i->first << "\">\n";
-                os << indent << "  <string>" << i->second << "</string>\n";
-                os << indent << "</attr>\n";
-            }
-        }
-
-        void Graph::AttributeCollection::Unset(string name)
-        {
-            BoolAttributes.erase(name);
-            IntAttributes.erase(name);
-            FloatAttributes.erase(name);
-            StringAttributes.erase(name);
-        }
-
-        void Graph::AttributeCollection::SetAttribute(string name, bool value)
-        {
-            Unset(name);
-            BoolAttributes[name] = value;
-        }
-
-        void Graph::AttributeCollection::SetAttribute(string name, int value)
-        {
-            Unset(name);
-            IntAttributes[name] = value;
-        }
-
-        void Graph::AttributeCollection::SetAttribute(string name, float value)
-        {
-            Unset(name);
-            FloatAttributes[name] = value;
-        }
-
-        void Graph::AttributeCollection::SetAttribute(string name, string value)
-        {
-            Unset(name);
-            StringAttributes[name] = value;
-        }
-
-        bool Graph::AttributeCollection::HasBoolAttribute(string name)
-        {
-            return(BoolAttributes.find(name) != BoolAttributes.end());
-        }
-
-        bool Graph::AttributeCollection::GetBoolAttribute(string name)
-        {
-            return BoolAttributes[name];
-        }
-
-        bool Graph::AttributeCollection::HasIntAttribute(string name)
-        {
-            return(IntAttributes.find(name) != IntAttributes.end());
-        }
-
-        int Graph::AttributeCollection::GetIntAttribute(string name)
-        {
-            return IntAttributes[name];
-        }
-
-        bool Graph::AttributeCollection::HasFloatAttribute(string name)
-        {
-            return(FloatAttributes.find(name) != FloatAttributes.end());
-        }
-
-        float Graph::AttributeCollection::GetFloatAttribute(string name)
-        {
-            return FloatAttributes[name];
-        }
-
-        bool Graph::AttributeCollection::HasStringAttribute(string name)
-        {
-            return(StringAttributes.find(name) != StringAttributes.end());
-        }
-
-        string Graph::AttributeCollection::GetStringAttribute(string name)
-        {
-            return StringAttributes[name];
-        }
-
-    // @}
 
 } // namespace OpenGraphtheory
 

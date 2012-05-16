@@ -9,6 +9,7 @@
 	#include <iostream>
 	#include <fstream>
 	#include "simple_xml.h"
+	#include "attributes.h"
 	using namespace std;
 
 /*
@@ -58,7 +59,6 @@
 				class EdgeSet;
 				class VertexIterator;
 				class EdgeIterator;
-				class AttributeCollection;
 
 			private:
 				static int Vertex_IDs;
@@ -356,39 +356,6 @@
                     void RemoveOutgoingConnection(Graph::VertexIterator v);
                     void RemoveIncomingConnection(Graph::VertexIterator v);
             };
-
-
-            class AttributeCollection
-            {
-                friend class Graph;
-                protected:
-                    bool IsCopy;
-                    map<string, bool> BoolAttributes;
-                    map<string, int> IntAttributes;
-                    map<string, float> FloatAttributes;
-                    map<string, string> StringAttributes;
-
-                    void Set(XML* attr);
-                    void WriteToStream(ostream& os, int indentlevel);
-                public:
-                    void Clear();
-                    void Unset(string name);
-                    void operator=(const AttributeCollection& attrs);
-
-                    void SetAttribute(string name, bool value);
-                    void SetAttribute(string name, int value);
-                    void SetAttribute(string name, float value);
-                    void SetAttribute(string name, string value);
-                    bool HasBoolAttribute(string name);
-                    bool GetBoolAttribute(string name);
-                    bool HasIntAttribute(string name);
-                    int GetIntAttribute(string name);
-                    bool HasFloatAttribute(string name);
-                    float GetFloatAttribute(string name);
-                    bool HasStringAttribute(string name);
-                    string GetStringAttribute(string name);
-            };
-
 		};
 
 

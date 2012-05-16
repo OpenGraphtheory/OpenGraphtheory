@@ -4,7 +4,7 @@
 #include <stdlib.h> // for random numbers
 #include "../opengt.h"
 #include "../visualize/GraphWindow.h"
-#include "../visualize/vector3d.h"
+#include "../visualize/vectornd.h"
 using namespace std;
 using namespace OpenGraphtheory;
 using namespace OpenGraphtheory::Visualization;
