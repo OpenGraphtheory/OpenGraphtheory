@@ -32,8 +32,8 @@
             void Unset(string name);
             void operator=(const AttributeCollection& attrs);
 
-            template<class U> bool HasAttribute(string name);
-            template<class U> U* GetAttribute(string name);
+            bool HasAttribute(string name);
+            Attribute* GetAttribute(string name);
     };
 
 

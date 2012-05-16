@@ -65,22 +65,19 @@
             Attributes.erase(it);
         }
 
-        template<class T> bool AttributeCollection::HasAttribute(string name)
+        bool AttributeCollection::HasAttribute(string name)
         {
             map<string, Attribute*>::iterator attr = Attributes.find(name);
-            if(attr == Attributes.end())
-                return false;
-
-            return dynamic_cast<T*>(attr->second) != NULL;
+            return attr != Attributes.end();
         }
 
-        template<class T> T* AttributeCollection::GetAttribute(string name)
+        Attribute* AttributeCollection::GetAttribute(string name)
         {
             map<string, Attribute*>::iterator attr = Attributes.find(name);
             if(attr == Attributes.end())
                 return NULL;
 
-            return dynamic_cast<T*>(attr->second);
+            return attr->second;
         }
 
 

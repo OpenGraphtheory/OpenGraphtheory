@@ -115,6 +115,28 @@ namespace OpenGraphtheory
             }
         }
 
+        void TransformLinear(Graph& G, float A11, float A12, float A21, float A22, float B1, float B2)
+        {
+            vector<float> B;
+            B.push_back(B1);
+            B.push_back(B2);
+
+            vector<float> A1;
+            A1.push_back(A11);
+            A1.push_back(A12);
+
+            vector<float> A2;
+            A2.push_back(A21);
+            A2.push_back(A22);
+
+            vector<vector<float> > A;
+            A.push_back(A1);
+            A.push_back(A2);
+
+            TransformLinear(G, A, B);
+        }
+
+
         void TransformLinear(Graph& G, vector<float> parameters)
         {
             float A11, A12, A21, A22, B1=0.0f, B2=0.0f;

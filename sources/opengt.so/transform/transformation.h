@@ -36,7 +36,7 @@ namespace OpenGraphtheory
         void TransformScalePreservingAspect(Graph& G, vector<float> parameter);
 
         void TransformLinear(Graph& G, vector<float> parameter);
-        void TransformLinear(Graph& G, float A11, float A12, float A21, float A22, float B1=0, float B2=0);
+        //void TransformLinear(Graph& G, float A11, float A12, float A21, float A22, float B1=0, float B2=0);
 
     }
 }

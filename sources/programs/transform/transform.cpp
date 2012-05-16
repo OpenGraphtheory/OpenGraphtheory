@@ -80,7 +80,7 @@ int main(int argc, char** argv)
         cin >> G;
 
 		/// do your thing
-		list<float> parameters;
+		vector<float> parameters;
 		for(int i = 2; i < argc; i++)
             parameters.push_back(atof(argv[i]));
 

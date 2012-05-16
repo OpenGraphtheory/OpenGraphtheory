@@ -14,30 +14,22 @@ namespace OpenGraphtheory
     namespace Transform
     {
 
-//        float width       =   800;
-//        float height      =   600;
+        float width       =   800;
+        float height      =   600;
         float depth       =   600;
-//        int maxiterations =  1500;
+        int maxiterations =  1500;
 
-//        float c_repel     =    25; // force with which vertices push each other off
-//        float c_spring    =    20;  // force with which adjacent vertices attract each other
+        float c_repel     =    25; // force with which vertices push each other off
+        float c_spring    =    20;  // force with which adjacent vertices attract each other
                                    // must not be 0 (or division by zero error will happen)
-//        float friction    =    0.5;
+        float friction    =    0.5;
 
-//        float unstressed_spring_length = 100; // if distance < this, then no more force between them
-//        float delta       =    0.2;  // scaling factor to make the movement more smooth
-//        float movement_threshold   =    0.5;    // stop if no vertex moves more than this far
+        float unstressed_spring_length = 100; // if distance < this, then no more force between them
+        float delta       =    0.2;  // scaling factor to make the movement more smooth
+        float movement_threshold   =    0.5;    // stop if no vertex moves more than this far
 
-        extern float width;
-        extern float height;
-        extern int iteration;
-        extern int nextincrease;
-        extern float c_repel;
-        extern float c_spring;
-        extern float friction;
-        extern float unstressed_spring_length;
-        extern float delta;
-        extern float movement_threshold;
+        int iteration;
+        int nextincrease;
 
         // -----------------------------------------------------------------------------
 
@@ -150,7 +142,7 @@ namespace OpenGraphtheory
 
         }
 
-        void TransformSpringEmbed3D(Graph& G, list<float> parameters)
+        void TransformSpringEmbed3D(Graph& G, vector<float> parameters)
         {
             GraphWindow win(width,height,&G);
             win.Update();
@@ -162,7 +154,7 @@ namespace OpenGraphtheory
             //win.WaitUntilClosed();
         }
 
-        void TransformSpringEmbed(Graph& G, list<float> parameters)
+        void TransformSpringEmbed(Graph& G, vector<float> parameters)
         {
             GraphWindow win(width,height,&G);
             win.Update();

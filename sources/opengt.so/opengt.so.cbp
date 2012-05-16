@@ -97,7 +97,6 @@
 		<Unit filename="export/xgmml.cpp">
 			<Option virtualFolder="export/Sources/" />
 		</Unit>
-		<Unit filename="factory.cpp" />
 		<Unit filename="factory.h" />
 		<Unit filename="generate/circle.cpp">
 			<Option virtualFolder="generate/Sources/" />

@@ -1277,10 +1277,14 @@ namespace OpenGraphtheory
 			for(list<XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
                 G.Attributes().Set(*attr);
 
-            if(G.Attributes().HasAttribute<StringAttribute>("name"))
+            if(G.Attributes().HasAttribute("name"))
             {
-                G.SetLabel(G.Attributes().GetAttribute<StringAttribute>("name")->Value);
-                G.Attributes().Unset("name");
+                StringAttribute *attrName = dynamic_cast<StringAttribute*>(G.Attributes().GetAttribute("name"));
+                if(attrName != NULL)
+                {
+                    G.SetLabel(attrName->Value);
+                    G.Attributes().Unset("name");
+                }
             }
 
 			/// load vertices
@@ -1295,15 +1299,23 @@ namespace OpenGraphtheory
 				for(list<XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
                     v->Attributes().Set(*attr);
 
-                if(v->Attributes().HasAttribute<StringAttribute>("name"))
+                if(v->Attributes().HasAttribute("name"))
                 {
-                    v->SetLabel(v->Attributes().GetAttribute<StringAttribute>("name")->Value);
-                    v->Attributes().Unset("name");
+                    StringAttribute *attrName = dynamic_cast<StringAttribute*>(v->Attributes().GetAttribute("name"));
+                    if(attrName != NULL)
+                    {
+                        v->SetLabel(attrName->Value);
+                        v->Attributes().Unset("name");
+                    }
                 }
-                if(v->Attributes().HasAttribute<FloatAttribute>("weight"))
+                if(v->Attributes().HasAttribute("weight"))
                 {
-                    v->SetWeight(v->Attributes().GetAttribute<FloatAttribute>("weight")->Value);
-                    v->Attributes().Unset("weight");
+                    FloatAttribute *attrWeight = dynamic_cast<FloatAttribute*>(v->Attributes().GetAttribute("weight"));
+                    if(attrWeight != NULL)
+                    {
+                        v->SetWeight(attrWeight->Value);
+                        v->Attributes().Unset("weight");
+                    }
                 }
 
 				/// assign XML-ID
@@ -1344,15 +1356,23 @@ namespace OpenGraphtheory
 				for(list<XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
                     e.Attributes().Set(*attr);
 
-                if(e.Attributes().HasAttribute<StringAttribute>("name"))
+                if(e.Attributes().HasAttribute("name"))
                 {
-                    e.SetLabel(e.Attributes().GetAttribute<StringAttribute>("name")->Value);
-                    e.Attributes().Unset("name");
+                    StringAttribute *attrName = dynamic_cast<StringAttribute*>(e.Attributes().GetAttribute("name"));
+                    if(attrName != NULL)
+                    {
+                        e.SetLabel(attrName->Value);
+                        e.Attributes().Unset("name");
+                    }
                 }
-                if(e.Attributes().HasAttribute<FloatAttribute>("weight"))
+                if(e.Attributes().HasAttribute("weight"))
                 {
-                    e.SetWeight(e.Attributes().GetAttribute<FloatAttribute>("weight")->Value);
-                    e.Attributes().Unset("weight");
+                    FloatAttribute *attrWeight = dynamic_cast<FloatAttribute*>(e.Attributes().GetAttribute("weight"));
+                    if(attrWeight != NULL)
+                    {
+                        e.SetWeight(attrWeight->Value);
+                        e.Attributes().Unset("weight");
+                    }
                 }
             }
 
@@ -1391,15 +1411,23 @@ namespace OpenGraphtheory
 				for(list<XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
                     e.Attributes().Set(*attr);
 
-                if(e.Attributes().HasAttribute<StringAttribute>("name"))
+                if(e.Attributes().HasAttribute("name"))
                 {
-                    e.SetLabel(e.Attributes().GetAttribute<StringAttribute>("name")->Value);
-                    e.Attributes().Unset("name");
+                    StringAttribute *attrName = dynamic_cast<StringAttribute*>(e.Attributes().GetAttribute("name"));
+                    if(attrName != NULL)
+                    {
+                        e.SetLabel(attrName->Value);
+                        e.Attributes().Unset("name");
+                    }
                 }
-                if(e.Attributes().HasAttribute<FloatAttribute>("weight"))
+                if(e.Attributes().HasAttribute("weight"))
                 {
-                    e.SetWeight(e.Attributes().GetAttribute<FloatAttribute>("weight")->Value);
-                    e.Attributes().Unset("weight");
+                    FloatAttribute *attrWeight = dynamic_cast<FloatAttribute*>(e.Attributes().GetAttribute("weight"));
+                    if(attrWeight != NULL)
+                    {
+                        e.SetWeight(attrWeight->Value);
+                        e.Attributes().Unset("weight");
+                    }
                 }
 			}
 

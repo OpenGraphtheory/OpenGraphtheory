@@ -57,10 +57,14 @@ namespace OpenGraphtheory
                     ModelToScreen(x1, y1);
                     ModelToScreen(x2, y2);
 
-                    if(e.Attributes().HasAttribute<IntAttribute>(EdgeColoring))
+                    if(e.Attributes().HasAttribute(EdgeColoring))
                     {
-                        int color = defaultcolors[e.Attributes().GetAttribute<IntAttribute>(EdgeColoring)->Value];
-                        SetColor((short)(color / 65536), (short)((color / 256) % 256), (short)(color % 256));
+                        IntAttribute* attrEdgeColoring = dynamic_cast<IntAttribute*>(e.Attributes().GetAttribute(EdgeColoring));
+                        if(attrEdgeColoring != NULL)
+                        {
+                            int color = defaultcolors[attrEdgeColoring->Value];
+                            SetColor((short)(color / 65536), (short)((color / 256) % 256), (short)(color % 256));
+                        }
                     }
                     else
                         SetColor(0,0,0);
@@ -76,10 +80,14 @@ namespace OpenGraphtheory
 
                     ModelToScreen(x, y);
 
-                    if(v.Attributes().HasAttribute<IntAttribute>(VertexColoring))
+                    if(v.Attributes().HasAttribute(VertexColoring))
                     {
-                        int color = defaultcolors[v.Attributes().GetAttribute<IntAttribute>(VertexColoring)->Value];
-                        SetColor((unsigned short)(color / 65536), (unsigned short)((color / 256) % 256), (unsigned short)(color % 256));
+                        IntAttribute* attrVertexColoring = dynamic_cast<IntAttribute*>(v.Attributes().GetAttribute(VertexColoring));
+                        if(attrVertexColoring != NULL)
+                        {
+                            int color = defaultcolors[attrVertexColoring->Value];
+                            SetColor((unsigned short)(color / 65536), (unsigned short)((color / 256) % 256), (unsigned short)(color % 256));
+                        }
                     }
                     else
                         SetColor(0,0,0);
