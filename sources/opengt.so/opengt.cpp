@@ -1407,7 +1407,6 @@ namespace OpenGraphtheory
 				throw "XML Document must have exactly 1 top element \"gxl\"";
 
 		    map<string, Graph::VertexIterator*> Vertex_XML_ID_to_pointer;
-		    bool DefaultDirected = false;
 
 			list<XML*> XMLGraph = gxl.front()->FindChildren("graph");
 			if(XMLGraph.size() != 1)
@@ -1415,6 +1414,14 @@ namespace OpenGraphtheory
 
 			XML* pGraph = XMLGraph.front();
 			Graph G;
+
+            bool DefaultDirected = true;
+            string edgemode = pGraph->GetAttribute("edgemode", "defaultdirected");
+            if(edgemode == "defaultdirected" || edgemode == "directed")
+                DefaultDirected = true;
+            else if(edgemode == "defaultundirected" || edgemode == "undirected")
+                DefaultDirected = false;
+
 
             /// assign attributes
 			list<XML*> attrs = pGraph->FindChildren("attr");
