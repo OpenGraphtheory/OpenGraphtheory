@@ -1272,6 +1272,8 @@ namespace OpenGraphtheory
 			XML* pGraph = XMLGraph.front();
 			Graph G;
 
+cout << "loading graph attributes\n"; cout.flush();
+
             /// assign attributes
 			list<XML*> attrs = pGraph->FindChildren("attr");
 			for(list<XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
@@ -1286,6 +1288,8 @@ namespace OpenGraphtheory
                     G.Attributes().Unset("name");
                 }
             }
+
+cout << "loading vertices\n"; cout.flush();
 
 			/// load vertices
 			list<XML*> nodes = pGraph->FindChildren("node");
@@ -1317,6 +1321,22 @@ namespace OpenGraphtheory
                         v->Attributes().Unset("weight");
                     }
                 }
+                if(v->Attributes().HasAttribute("coordinates"))
+                {
+                    VecAttribute *attrCoordinates = dynamic_cast<VecAttribute*>(v->Attributes().GetAttribute("coordinates"));
+                    if(attrCoordinates != NULL)
+                    {
+                        vector<float> coordinates;
+                        for(list<Attribute*>::iterator i = attrCoordinates->Value.begin(); i != attrCoordinates->Value.end(); i++)
+                        {
+                            FloatAttribute* attrCoordinate = dynamic_cast<FloatAttribute*>(*i);
+                            if(attrCoordinate != NULL)
+                                coordinates.push_back(attrCoordinate->Value);
+                        }
+                        v->SetCoordinates(coordinates);
+                        v->Attributes().Unset("coordinates");
+                    }
+                }
 
 				/// assign XML-ID
 				string id = (*node)->GetAttribute("id", "");
@@ -1327,6 +1347,8 @@ namespace OpenGraphtheory
 					return false; // same ID twice
 				Vertex_XML_ID_to_pointer[id] = v;
 			}
+
+cout << "loading edges\n"; cout.flush();
 
 			/// load edges
 			list<XML*> edges = pGraph->FindChildren("edge");
@@ -1375,6 +1397,8 @@ namespace OpenGraphtheory
                     }
                 }
             }
+
+cout << "loading hyperedges\n"; cout.flush();
 
 			/// load hyperedges
 			list<XML*> rels = pGraph->FindChildren("rel");
@@ -1430,6 +1454,8 @@ namespace OpenGraphtheory
                     }
                 }
 			}
+
+cout << "done\n"; cout.flush();
 
 			/// G has been successfully loaded, copy it to *this
 			*this = G;

@@ -9,10 +9,8 @@
 
     class Attribute
     {
-        private:
-            std::string name;
         public:
-            virtual void WriteToStream(std::ostream& os, int indentlevel, std::string name) = 0;
+            virtual void WriteToStream(std::ostream& os, int indentlevel) = 0;
             virtual bool LoadFromXml(XML* xml) = 0;
             virtual Attribute* Clone() = 0;
     };
@@ -45,7 +43,7 @@
             BoolAttribute();
             BoolAttribute(bool value);
 
-            void WriteToStream(ostream& os, int indentlevel, std::string name);
+            void WriteToStream(ostream& os, int indentlevel);
             bool LoadFromXml(XML* xml);
             Attribute* Clone();
     };
@@ -65,7 +63,7 @@
             IntAttribute();
             IntAttribute(int value);
 
-            void WriteToStream(ostream& os, int indentlevel, std::string name);
+            void WriteToStream(ostream& os, int indentlevel);
             bool LoadFromXml(XML* xml);
             Attribute* Clone();
     };
@@ -85,7 +83,7 @@
             FloatAttribute();
             FloatAttribute(float value);
 
-            void WriteToStream(ostream& os, int indentlevel, std::string name);
+            void WriteToStream(ostream& os, int indentlevel);
             bool LoadFromXml(XML* xml);
             Attribute* Clone();
     };
@@ -105,7 +103,7 @@
             StringAttribute();
             StringAttribute(string value);
 
-            void WriteToStream(ostream& os, int indentlevel, std::string name);
+            void WriteToStream(ostream& os, int indentlevel);
             bool LoadFromXml(XML* xml);
             Attribute* Clone();
     };
@@ -115,6 +113,28 @@
         public:
             Attribute* Instantiate();
     };
+
+
+    class VecAttribute : public Attribute
+    {
+        public:
+            list<Attribute*> Value;
+
+            VecAttribute();
+            VecAttribute(const list<Attribute*>& vec);
+            ~VecAttribute();
+
+            void WriteToStream(ostream& os, int indentlevel);
+            bool LoadFromXml(XML* xml);
+            Attribute* Clone();
+    };
+
+    class VecAttributeInstantiator : public Instantiator<Attribute>
+    {
+        public:
+            Attribute* Instantiate();
+    };
+
 
 
 #endif

@@ -4,7 +4,7 @@
 	"../../opengt.so/opengt.h"
 	"../../opengt.so/visualize/GraphWindow.h"
 
-1330618581 /home/viktor/Programming/OpenGraphtheory/opengt.so/opengt.h
+1337171688 /home/viktor/Programming/OpenGraphtheory/opengt.so/opengt.h
 	<list>
 	<set>
 	<map>
@@ -12,6 +12,7 @@
 	<iostream>
 	<fstream>
 	"simple_xml.h"
+	"attributes.h"
 
 1330615749 /home/viktor/Programming/OpenGraphtheory/opengt.so/simple_xml.h
 	<iostream>
@@ -33,4 +34,14 @@
 	"vector2d.h"
 
 1329746256 /home/viktor/Programming/OpenGraphtheory/opengt.so/visualize/vector2d.h
+
+1337178274 /home/viktor/Programming/OpenGraphtheory/opengt.so/attributes.h
+	<string>
+	<iostream>
+	"factory.h"
+	"simple_xml.h"
+
+1337178194 /home/viktor/Programming/OpenGraphtheory/opengt.so/factory.h
+	<string>
+	<map>
 

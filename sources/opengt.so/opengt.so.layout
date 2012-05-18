@@ -5,10 +5,10 @@
 		<Cursor position="801" topLine="3" />
 	</File>
 	<File name="attributes.cpp" open="1" top="0" tabpos="2">
-		<Cursor position="2586" topLine="54" />
+		<Cursor position="2039" topLine="49" />
 	</File>
 	<File name="attributes.h" open="1" top="0" tabpos="3">
-		<Cursor position="933" topLine="9" />
+		<Cursor position="2918" topLine="95" />
 	</File>
 	<File name="export/dot.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="864" topLine="6" />
@@ -92,7 +92,7 @@
 		<Cursor position="2255" topLine="18" />
 	</File>
 	<File name="opengt.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="48986" topLine="1290" />
+		<Cursor position="44939" topLine="1311" />
 	</File>
 	<File name="opengt.h" open="1" top="0" tabpos="6">
 		<Cursor position="199" topLine="78" />
@@ -107,12 +107,12 @@
 		<Cursor position="837" topLine="20" />
 	</File>
 	<File name="transform/spring_embedder3d.cpp" open="1" top="0" tabpos="7">
-		<Cursor position="1078" topLine="23" />
+		<Cursor position="1078" topLine="8" />
 	</File>
-	<File name="transform/transformation.cpp" open="1" top="0" tabpos="8">
+	<File name="transform/transformation.cpp" open="0" top="0" tabpos="8">
 		<Cursor position="5095" topLine="116" />
 	</File>
-	<File name="transform/transformation.h" open="1" top="0" tabpos="9">
+	<File name="transform/transformation.h" open="0" top="0" tabpos="9">
 		<Cursor position="1357" topLine="12" />
 	</File>
 	<File name="visualize/DisplayWindow.cpp" open="0" top="0" tabpos="2">
@@ -121,7 +121,7 @@
 	<File name="visualize/DisplayWindow.h" open="0" top="0" tabpos="6">
 		<Cursor position="2478" topLine="75" />
 	</File>
-	<File name="visualize/GraphWindow.cpp" open="1" top="0" tabpos="10">
+	<File name="visualize/GraphWindow.cpp" open="0" top="0" tabpos="10">
 		<Cursor position="3357" topLine="67" />
 	</File>
 	<File name="visualize/GraphWindow.h" open="0" top="0" tabpos="3">

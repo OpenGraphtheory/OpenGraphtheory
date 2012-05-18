@@ -52,8 +52,14 @@
 
         void AttributeCollection::WriteToStream(ostream& os, int indentlevel)
         {
+            string indent(indentlevel*2, ' ');
             for(map<string, Attribute*>::const_iterator i = Attributes.begin(); i != Attributes.end(); i++)
-                i->second->WriteToStream(os, indentlevel, i->first);
+            {
+                os << indent << "<attr name=\"" << i->first << "\">\n";
+                i->second->WriteToStream(os, indentlevel+1);
+                os << indent << "</attr>\n";
+            }
+
         }
 
         void AttributeCollection::Unset(string name)
@@ -82,7 +88,6 @@
 
 
     // @}
-
 
 
 
@@ -118,12 +123,10 @@
         return true;
     }
 
-    void BoolAttribute::WriteToStream(ostream& os, int indentlevel, std::string name)
+    void BoolAttribute::WriteToStream(ostream& os, int indentlevel)
     {
         string indent(indentlevel*2, ' ');
-        os << indent << "<attr name=\"" << name << "\">\n";
-        os << indent << "  <bool>" << (Value ? "true" : "false") << "</bool>\n";
-        os << indent << "</attr>\n";
+        os << indent << "<bool>" << (Value ? "true" : "false") << "</bool>\n";
     }
 
     Attribute* BoolAttribute::Clone()
@@ -160,12 +163,10 @@
         return true;
     }
 
-    void IntAttribute::WriteToStream(ostream& os, int indentlevel, std::string name)
+    void IntAttribute::WriteToStream(ostream& os, int indentlevel)
     {
         string indent(indentlevel*2, ' ');
-        os << indent << "<attr name=\"" << name << "\">\n";
-        os << indent << "  <int>" << Value << "</int>\n";
-        os << indent << "</attr>\n";
+        os << indent << "<int>" << Value << "</int>\n";
     }
 
     Attribute* IntAttribute::Clone()
@@ -201,12 +202,10 @@
         return true;
     }
 
-    void FloatAttribute::WriteToStream(ostream& os, int indentlevel, std::string name)
+    void FloatAttribute::WriteToStream(ostream& os, int indentlevel)
     {
         string indent(indentlevel*2, ' ');
-        os << indent << "<attr name=\"" << name << "\">\n";
-        os << indent << "  <float>" << Value << "</float>\n";
-        os << indent << "</attr>\n";
+        os << indent << "<float>" << Value << "</float>\n";
     }
 
     Attribute* FloatAttribute::Clone()
@@ -242,12 +241,10 @@
         return true;
     }
 
-    void StringAttribute::WriteToStream(ostream& os, int indentlevel, std::string name)
+    void StringAttribute::WriteToStream(ostream& os, int indentlevel)
     {
         string indent(indentlevel*2, ' ');
-        os << indent << "<attr name=\"" << name << "\">\n";
-        os << indent << "  <string>" << Value << "</string>\n";
-        os << indent << "</attr>\n";
+        os << indent << "<string>" << Value << "</string>\n";
     }
 
     Attribute* StringAttribute::Clone()
@@ -256,3 +253,69 @@
     }
 
     FactoryRegistrator<Attribute> StringAttributeRegistrator(&AttributeCollection::AttributeFactory, "string", new StringAttributeInstantiator());
+
+
+
+
+
+    Attribute* VecAttributeInstantiator::Instantiate()
+    {
+        return new VecAttribute();
+    }
+
+    VecAttribute::VecAttribute()
+        : Attribute()
+    {
+    }
+
+    VecAttribute::VecAttribute(const list<Attribute*>& vec)
+        : Attribute()
+    {
+        for(list<Attribute*>::const_iterator i = vec.begin(); i != vec.end(); i++)
+            Value.push_back((*i)->Clone());
+    }
+
+    VecAttribute::~VecAttribute()
+    {
+        for(list<Attribute*>::iterator i = Value.begin(); i != Value.end(); i++)
+            delete *i;
+    }
+
+    bool VecAttribute::LoadFromXml(XML* xml)
+    {
+        for(list<XML_Element*>::iterator child = xml->children.begin(); child != xml->children.end(); child++)
+        {
+   			XML* xChild = dynamic_cast<XML*>(*child);
+            if(xChild == NULL)
+                continue;
+
+            Attribute* attribute = AttributeCollection::AttributeFactory.Produce(xChild->name);
+            if(attribute == NULL)
+                continue;
+
+            if(!attribute->LoadFromXml(xChild))
+            {
+                delete attribute;
+                continue;
+            }
+
+            Value.push_back(attribute);
+        }
+        return true;
+    }
+
+    void VecAttribute::WriteToStream(ostream& os, int indentlevel)
+    {
+        string indent(indentlevel*2, ' ');
+        os << indent << "<vec>\n";
+        for(list<Attribute*>::iterator i = Value.begin(); i != Value.end(); i++)
+            (*i)->WriteToStream(os, indentlevel+1);
+        os << indent << "</vec>\n";
+    }
+
+    Attribute* VecAttribute::Clone()
+    {
+        return new VecAttribute(Value);
+    }
+
+    FactoryRegistrator<Attribute> VecAttributeRegistrator(&AttributeCollection::AttributeFactory, "vec", new VecAttributeInstantiator());
