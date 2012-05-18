@@ -21,8 +21,40 @@
     }
 
 
+    void XML_Element::WriteXmlString(ostream& os, string str)
+    {
+        for(unsigned int i = 0; i < str.length(); i++)
+        {
+            switch(str[i])
+            {
+                case '<':
+                    os << "&lt;";
+                    break;
+                case '>':
+                    os << "&gt;";
+                    break;
+                case '&':
+                    os << "&amp;";
+                    break;
+                case '\"':
+                    os << "&quot;";
+                    break;
+                default:
+                    os << char(str[i]);
+                    break;
+            }
+        }
+    }
+
+
     XML::XML(XML* Parent)
     {
+        parent = Parent;
+    }
+
+    XML::XML(string name, XML* Parent)
+    {
+        this->name = name;
         parent = Parent;
     }
 
@@ -34,10 +66,17 @@
 
 	void XML::WriteToStream(ostream& os, int level) const
 	{
-		os << string(level,'\t');
-		os << '<' << name;
+		os << string(2*level,' ');
+		os << '<';
+		WriteXmlString(os, name);
 		for(list<pair<string,string> >::const_iterator it = attributes.begin(); it != attributes.end(); it++)
-			os << ' ' << it->first << "=\"" << it->second << '\"';
+		{
+			os << ' ';
+			WriteXmlString(os, it->first);
+			os << "=\"";
+			WriteXmlString(os, it->second);
+			os << '\"';
+		}
 		if(children.size() <= 0)
 		{
 			os << " />\n";
@@ -47,8 +86,26 @@
 			os << ">\n";
 			for(list<XML_Element*>::const_iterator it = children.begin(); it != children.end(); it++)
 				(*it)->WriteToStream(os, level+1);
-			os << string(level,'\t') << "</" << name << ">\n";
+			os << string(2*level,' ') << "</";
+			WriteXmlString(os, name);
+			os << ">\n";
 		}
+	}
+
+	void XML::AddAttribute(string name, string value)
+	{
+	    attributes.push_back(pair<string,string>(name, value));
+	}
+
+	void XML::AddChild(XML_Element* elem)
+	{
+	    if(elem != NULL)
+	    {
+            children.push_back(elem);
+            XML* xChild = dynamic_cast<XML*>(elem);
+            if(xChild != NULL)
+                xChild->parent = this;
+  	    }
 	}
 
 	list<XML*> XML::FindChildren(string named) const
@@ -113,13 +170,19 @@
 			return;
 		if(text.size() == 1)
 		{
-			os << string(level,'\t') << "<!-- " << text[0] << "-->\n";
+			os << string(2*level,' ') << "<!-- ";
+			WriteXmlString(os, text[0]);
+			os << "-->\n";
 			return;
 		}
-		os << string(level,'\t') << "<!--\n";
+		os << string(2*level,' ') << "<!--\n";
 		for(vector<string>::const_iterator it = text.begin(); it != text.end(); it++)
-			os << string(level,'\t') << "    " << (*it) << "\n";
-		os << string(level,'\t') << "-->\n";
+		{
+			os << string(2*level+2,' ');
+			WriteXmlString(os, *it);
+			os << "\n";
+        }
+		os << string(2*level,' ') << "-->\n";
 	}
 
     string XML_Comment::InnerText(bool TrimStrings) const
@@ -129,10 +192,24 @@
 
 
 
+    XML_Text::XML_Text()
+    {
+
+    }
+
+    XML_Text::XML_Text(string Text)
+    {
+        text.push_back(Text);
+    }
+
 	void XML_Text::WriteToStream(ostream& os, int level) const
 	{
 		for(list<string>::const_iterator it = text.begin(); it != text.end(); it++)
-			os << string(level,'\t') << (*it) << '\n';
+		{
+			os << string(2*level,' ');
+			WriteXmlString(os, *it);
+			os << '\n';
+		}
 	}
 
     string XML_Text::InnerText(bool TrimStrings) const

@@ -257,8 +257,13 @@ namespace OpenGraphtheory
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
                 vector<float> coordinates = v.GetCoordinates();
-                for(unsigned int i = min(coordinates.size(), parameters.size())-1; i >= 0; --i)
+
+                unsigned int ubound = min(coordinates.size(), parameters.size());
+                for(unsigned int i = 0; i < ubound; ++i)
                     coordinates[i] += parameters[i];
+                for(unsigned int i = coordinates.size(); i < parameters.size(); ++i)
+                    coordinates.push_back(parameters[i]);
+
                 v.SetCoordinates(coordinates);
             }
         }

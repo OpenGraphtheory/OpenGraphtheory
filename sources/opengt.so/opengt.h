@@ -120,8 +120,10 @@
 				Graph::VertexIterator InternalAddVertex(vector<float> coordinates, string label = "", float weight = 0, void* tag = NULL, int ID = -1);
 				void RemoveVertex(Graph::Vertex* v, bool RemoveIncidentEdges = true);
 			public:
-				Graph::VertexIterator AddVertex(float x, float y, string label, float weight = 0, void* tag = NULL);
-				Graph::VertexIterator AddVertex(float x = -1, float y = -1, float z = -1, string label = "", float weight = 0, void* tag = NULL);
+				Graph::VertexIterator AddVertex(string label="", float weight = 0, void* tag = NULL);
+				Graph::VertexIterator AddVertex(float x, string label="", float weight = 0, void* tag = NULL);
+				Graph::VertexIterator AddVertex(float x, float y, string label="", float weight = 0, void* tag = NULL);
+				Graph::VertexIterator AddVertex(float x, float y, float z, string label = "", float weight = 0, void* tag = NULL);
 				void RemoveVertex(Graph::VertexIterator v, bool RemoveIncidentEdges = true);
 				Graph operator-(Graph::VertexIterator v);
 				void operator-=(Graph::VertexIterator v);
@@ -218,33 +220,6 @@
                     void RemoveIncomingConnection(Graph::Vertex* v);
             };
 
-/*
-            class VertexSet
-            {
-                friend class Graph;
-                private:
-                    list<Vertex*> Vertices;
-                protected:
-                    Graph* Owner;
-                    VertexSet(Graph* Owner);
-                public:
-                    VertexIterator Begin();
-                    VertexIterator End();
-            };
-
-            class EdgeSet
-            {
-                friend class Graph;
-                private:
-                    list<Edge*> Edges;
-                protected:
-                    Graph* Owner;
-                    EdgeSet(Graph* Owner);
-                public:
-                    EdgeIterator Begin();
-                    EdgeIterator End();
-            };
-*/
 
             class VertexIterator
             {
@@ -271,6 +246,8 @@
                     bool operator<=(const Graph::VertexIterator& i) const;
                     bool operator>(const Graph::VertexIterator& i) const;
                     bool operator>=(const Graph::VertexIterator& i) const;
+
+                    void WriteToXml(XML* xml);
 
                     AttributeCollection& Attributes();
                     vector<float> GetCoordinates() const;
@@ -318,6 +295,8 @@
                     bool operator<=(const Graph::EdgeIterator& i) const;
                     bool operator>(const Graph::EdgeIterator& i) const;
                     bool operator>=(const Graph::EdgeIterator& i) const;
+
+                    void WriteToXml(XML* xml);
 
                     AttributeCollection& Attributes();
                     string GetLabel() const;

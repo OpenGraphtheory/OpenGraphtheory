@@ -55,7 +55,7 @@ namespace OpenGraphtheory
 		{
 		    attributes = new AttributeCollection();
 			for(int i = 0; i < size; i++)
-				AddVertex(-1, -1, -1, "", 0, 0);
+				AddVertex();
 		}
 
 		/// \brief Graph Copy-Constructor
@@ -162,11 +162,140 @@ namespace OpenGraphtheory
                 return false;
             }
 
+            void Graph::VertexIterator::WriteToXml(XML* xml)
+            {
+                XML* node = new XML("node");
+                stringstream s;
+                s << "v" << GetID();
+                node->AddAttribute("id", s.str());
+
+                // Label
+                XML* name = new XML("attr");
+                name->AddAttribute("name", "name");
+                XML* str = new XML("string");
+                str->AddChild(new XML_Text(GetLabel()));
+                name->AddChild(str);
+                node->AddChild(name);
+
+                // Coordinates
+                vector<float> coordinates = GetCoordinates();
+                if(coordinates.size() > 0)
+                {
+                    XML* coords = new XML("attr");
+                    coords->AddAttribute("name", "coordinates");
+                    XML* vec = new XML("vec");
+
+                    for(unsigned int i = 0; i < coordinates.size(); i++)
+                    {
+                        XML* flt = new XML("float");
+                        stringstream s;
+                        s << coordinates[i];
+                        flt->AddChild(new XML_Text(s.str()));
+                        vec->AddChild(flt);
+                    }
+                    coords->AddChild(vec);
+                    node->AddChild(coords);
+                }
+
+                // weight
+                XML* weight = new XML("attr");
+                weight->AddAttribute("name", "weight");
+                XML* flt = new XML("float");
+                stringstream t;
+                t << GetWeight();
+                flt->AddChild(new XML_Text(t.str()));
+                weight->AddChild(flt);
+                node->AddChild(weight);
+
+                // arbitrary attributes
+                Attributes().WriteToXml(node);
+                xml->AddChild(node);
+            }
+
             /// \brief Test whether the Vertex is adjacent to the given vertex
             bool Graph::VertexIterator::Adjacent(const Graph::VertexIterator& to) const
             {
                 Vertex* v = Owner->VertexIteratorToPointer(to);
                 return (*position)->Adjacent(v);
+            }
+
+            void Graph::EdgeIterator::WriteToXml(XML* xml)
+            {
+				string ClosingTag = "</edge>\n";
+				XML* edge;
+				if(!IsHyperedge())
+				{
+				    edge = new XML("edge");
+
+				    stringstream id;
+                    id << "e" << GetID();
+                    edge->AddAttribute("id", id.str());
+
+				    stringstream from;
+				    from << "v" << From().GetID();
+				    edge->AddAttribute("from", from.str());
+
+				    stringstream to;
+				    to << "v" << To().GetID();
+				    edge->AddAttribute("to", to.str());
+
+				    edge->AddAttribute("isdirected", IsUndirected() ? "false" : "true");
+                }
+				else
+				{
+				    edge = new XML("rel");
+
+                    stringstream id;
+                    id << "e" << GetID();
+                    edge->AddAttribute("id", id.str());
+
+					for(VertexIterator j = BeginIncidentVertices(); j != EndIncidentVertices(); j++)
+					{
+					    XML* relend = new XML("relend");
+					    stringstream target;
+					    target << "v" << j.GetID();
+					    relend->AddAttribute("target", target.str());
+					    relend->AddAttribute("direction", "none");
+					}
+					for(VertexIterator j = BeginPositiveIncidentVertices(); j != EndPositiveIncidentVertices(); j++)
+					{
+					    XML* relend = new XML("relend");
+					    stringstream target;
+					    target << "v" << j.GetID();
+					    relend->AddAttribute("target", target.str());
+					    relend->AddAttribute("direction", "out");
+					}
+					for(VertexIterator j = BeginNegativeIncidentVertices(); j != EndNegativeIncidentVertices(); j++)
+					{
+					    XML* relend = new XML("relend");
+					    stringstream target;
+					    target << "v" << j.GetID();
+					    relend->AddAttribute("target", target.str());
+					    relend->AddAttribute("direction", "in");
+					}
+				}
+
+                // Label
+                XML* name = new XML("attr");
+                name->AddAttribute("name", "name");
+                XML* str = new XML("string");
+                str->AddChild(new XML_Text(GetLabel()));
+                name->AddChild(str);
+                edge->AddChild(name);
+
+                // weight
+                XML* weight = new XML("attr");
+                weight->AddAttribute("name", "weight");
+                XML* flt = new XML("float");
+                stringstream sweight;
+                sweight << GetWeight();
+                flt->AddChild(new XML_Text(sweight.str()));
+                weight->AddChild(flt);
+                edge->AddChild(weight);
+
+                // arbitrary attributes
+                Attributes().WriteToXml(edge);
+                xml->AddChild(edge);
             }
 
             /// \brief Test whether the Edge is incident to the given vertex
@@ -391,6 +520,21 @@ namespace OpenGraphtheory
 			Vertices.push_back(v);
 			list<Graph::Vertex*>::iterator result = Vertices.end();
 			return VertexIterator(this, ID, &Vertices, --result);
+		}
+
+		/// \brief Add a new Vertex to the graph
+		/// \return VertexIterator that points to the newly created instance
+		Graph::VertexIterator Graph::AddVertex(string label, float weight, void* tag)
+		{
+		    vector<float> coordinates;
+			return InternalAddVertex(coordinates,label,weight, tag, -1);
+		}
+
+		Graph::VertexIterator Graph::AddVertex(float x, string label, float weight, void* tag)
+		{
+		    vector<float> coordinates;
+		    coordinates.push_back(x);
+			return InternalAddVertex(coordinates,label,weight, tag, -1);
 		}
 
 		/// \brief Add a new Vertex to the graph
@@ -1272,8 +1416,6 @@ namespace OpenGraphtheory
 			XML* pGraph = XMLGraph.front();
 			Graph G;
 
-cout << "loading graph attributes\n"; cout.flush();
-
             /// assign attributes
 			list<XML*> attrs = pGraph->FindChildren("attr");
 			for(list<XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
@@ -1288,8 +1430,6 @@ cout << "loading graph attributes\n"; cout.flush();
                     G.Attributes().Unset("name");
                 }
             }
-
-cout << "loading vertices\n"; cout.flush();
 
 			/// load vertices
 			list<XML*> nodes = pGraph->FindChildren("node");
@@ -1348,8 +1488,6 @@ cout << "loading vertices\n"; cout.flush();
 				Vertex_XML_ID_to_pointer[id] = v;
 			}
 
-cout << "loading edges\n"; cout.flush();
-
 			/// load edges
 			list<XML*> edges = pGraph->FindChildren("edge");
 			for(list<XML*>::iterator edge = edges.begin(); edge != edges.end(); edge++)
@@ -1397,8 +1535,6 @@ cout << "loading edges\n"; cout.flush();
                     }
                 }
             }
-
-cout << "loading hyperedges\n"; cout.flush();
 
 			/// load hyperedges
 			list<XML*> rels = pGraph->FindChildren("rel");
@@ -1454,8 +1590,6 @@ cout << "loading hyperedges\n"; cout.flush();
                     }
                 }
 			}
-
-cout << "done\n"; cout.flush();
 
 			/// G has been successfully loaded, copy it to *this
 			*this = G;
@@ -1537,77 +1671,26 @@ cout << "done\n"; cout.flush();
 			os << ind[0] << "<!DOCTYPE gxl SYSTEM \"http://www.gupro.de/GXL/gxl-1.0.dtd\">\n";
 			os << ind[0] << "<!-- www.Open-Graphtheory.org -->\n";
 			os << ind[0] << "<gxl xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n";
-			os << ind[1] <<   "<graph id=\"" << GetID() << "\" edgeids=\"true\" edgemode=\"defaultundirected\" hypergraph=\"false\">\n";
 
-            attributes->WriteToStream(os, 2);
+			XML* graph = new XML("graph");
+			stringstream s;
+			s << GetID();
+			graph->AddAttribute("id", s.str());
+			graph->AddAttribute("edgeids", "true");
+			graph->AddAttribute("edgemode", "defaultundirected");
+			graph->AddAttribute("hypergraph", "true");
+            attributes->WriteToXml(graph);
 
 			for(VertexIterator i = BeginVertices(); i != EndVertices(); i++)
-			{
-				os << ind[2] << "<node id=\"v" << i.GetID() << "\">\n";
-
-				os << ind[3] <<   "<attr name=\"name\">\n";
-				os << ind[4] <<     "<string>" << i.GetLabel() << "</string>\n";
-				os << ind[3] <<   "</attr>\n";
-
-                vector<float> coordinates = i.GetCoordinates();
-                if(coordinates.size() > 0)
-                {
-                    os << ind[3] <<   "<attr name=\"coordinates\">\n";
-                    os << ind[4] <<     "<vec>\n";
-                    for(unsigned int i = 0; i < coordinates.size(); i++)
-                        os << ind[5] <<   "<float>" << coordinates[i] << "</float>\n";
-                    os << ind[4] <<     "</vec>\n";
-                    os << ind[3] <<   "</attr>\n";
-                }
-
-				os << ind[3] <<   "<attr name=\"weight\">\n";
-				os << ind[4] <<     "<float>" << i.GetWeight() << "</float>\n";
-				os << ind[3] <<   "</attr>\n";
-
-                i.Attributes().WriteToStream(os, 3);
-
-				os << ind[2] << "</node>\n";
-			}
+                i.WriteToXml(graph);
 
 			for(EdgeIterator i = BeginEdges(); i != EndEdges(); i++)
-			{
-				string ClosingTag = "</edge>\n";
-				if(!i.IsHyperedge())
-				{
-                    if(i.IsUndirected())
-                        os << ind[2] << "<edge id=\"e" << i.GetID() << "\" from=\"v" << i.From().GetID() << "\" to=\"v" << i.To().GetID() << "\" isdirected=\"false\">\n";
-                    else
-                        os << ind[2] << "<edge id=\"e" << i.GetID() << "\" from=\"v" << i.From().GetID() << "\" to=\"v" << i.To().GetID() << "\" isdirected=\"true\">\n";
-				}
-				else
-				{
-					os << ind[2] << "<rel id=\"e" << i.GetID() << "\">\n";
+                i.WriteToXml(graph);
 
-					for(VertexIterator j = i.BeginIncidentVertices(); j != i.EndIncidentVertices(); j++)
-						os << ind[3] << "<relend target=\"v" << j.GetID() << "\" direction=\"none\"/>\n";
-					for(VertexIterator j = i.BeginPositiveIncidentVertices(); j != i.EndPositiveIncidentVertices(); j++)
-						os << ind[3] << "<relend target=\"v" << j.GetID() << "\" direction=\"out\"/>\n";
-					for(VertexIterator j = i.BeginNegativeIncidentVertices(); j != i.EndNegativeIncidentVertices(); j++)
-						os << ind[3] << "<relend target=\"v" << j.GetID() << "\" direction=\"in\"/>\n";
+            graph->WriteToStream(os, 1);
+            delete graph;
 
-					ClosingTag = "</rel>\n";
-				}
-
-				os << ind[3] << "<attr name=\"name\">\n";
-				os << ind[4] <<   "<string>" << i.GetLabel() << "</string>\n";
-				os << ind[3] << "</attr>\n";
-
-				os << ind[3] << "<attr name=\"weight\">\n";
-				os << ind[4] <<   "<float>" << i.GetWeight() << "</float>\n";
-				os << ind[3] << "</attr>\n";
-
-                i.Attributes().WriteToStream(os, 3);
-
-				os << ind[2] << ClosingTag;
-			}
-
-			os << ind[1] <<   "</graph>\n";
-			os << ind[0] << "</gxl>\n";
+            os << "</gxl>";
 		}
 
 		void Graph::SaveToFile(string filename)

@@ -17,7 +17,7 @@ namespace OpenGraphtheory
             {
                 int n = parameter.front();
                 for(int i = 0; i < n; i++)
-                    result.AddVertex(-100 * cos(i * (2 * M_PI / n) + M_PI/2), 100 * sin(i * (2 * M_PI / n) + M_PI/2), 0);
+                    result.AddVertex(-100 * cos(i * (2 * M_PI / n) + M_PI/2), 100 * sin(i * (2 * M_PI / n) + M_PI/2));
 
                 for(Graph::VertexIterator v1 = result.BeginVertices(); v1 != result.EndVertices(); v1++)
                     for(Graph::VertexIterator v2 = v1 + 1; v2 != result.EndVertices(); v2++)

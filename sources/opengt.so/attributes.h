@@ -10,7 +10,8 @@
     class Attribute
     {
         public:
-            virtual void WriteToStream(std::ostream& os, int indentlevel) = 0;
+            virtual ~Attribute();
+            virtual void WriteToXml(XML* xml) = 0;
             virtual bool LoadFromXml(XML* xml) = 0;
             virtual Attribute* Clone() = 0;
     };
@@ -24,7 +25,7 @@
             static Factory<Attribute> AttributeFactory;
 
             void Set(XML* attr);
-            void WriteToStream(ostream& os, int indentlevel);
+            void WriteToXml(XML* xml);
 
             void Clear();
             void Unset(string name);
@@ -43,7 +44,7 @@
             BoolAttribute();
             BoolAttribute(bool value);
 
-            void WriteToStream(ostream& os, int indentlevel);
+            void WriteToXml(XML* xml);
             bool LoadFromXml(XML* xml);
             Attribute* Clone();
     };
@@ -63,7 +64,7 @@
             IntAttribute();
             IntAttribute(int value);
 
-            void WriteToStream(ostream& os, int indentlevel);
+            void WriteToXml(XML* xml);
             bool LoadFromXml(XML* xml);
             Attribute* Clone();
     };
@@ -83,7 +84,7 @@
             FloatAttribute();
             FloatAttribute(float value);
 
-            void WriteToStream(ostream& os, int indentlevel);
+            void WriteToXml(XML* xml);
             bool LoadFromXml(XML* xml);
             Attribute* Clone();
     };
@@ -103,7 +104,7 @@
             StringAttribute();
             StringAttribute(string value);
 
-            void WriteToStream(ostream& os, int indentlevel);
+            void WriteToXml(XML* xml);
             bool LoadFromXml(XML* xml);
             Attribute* Clone();
     };
@@ -124,7 +125,7 @@
             VecAttribute(const list<Attribute*>& vec);
             ~VecAttribute();
 
-            void WriteToStream(ostream& os, int indentlevel);
+            void WriteToXml(XML* xml);
             bool LoadFromXml(XML* xml);
             Attribute* Clone();
     };

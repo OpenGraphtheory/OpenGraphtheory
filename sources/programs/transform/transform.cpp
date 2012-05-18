@@ -85,6 +85,7 @@ int main(int argc, char** argv)
             parameters.push_back(atof(argv[i]));
 
         map<string, Transformer> transformers = Transformer::GetTransformers();
+
         if(transformers.find(argv[1]) != transformers.end())
             transformers[argv[1]].Transform(G, parameters);
 

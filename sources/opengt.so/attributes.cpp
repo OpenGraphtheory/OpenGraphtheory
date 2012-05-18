@@ -2,6 +2,7 @@
     #include "attributes.h"
     #include "factory.h"
     #include <cstdlib>
+    #include <sstream>
 
     /// \defgroup Arbitrary Attributes
     // @{
@@ -50,16 +51,15 @@
                 Attributes[i->first] = i->second->Clone();
         }
 
-        void AttributeCollection::WriteToStream(ostream& os, int indentlevel)
+        void AttributeCollection::WriteToXml(XML* xml)
         {
-            string indent(indentlevel*2, ' ');
             for(map<string, Attribute*>::const_iterator i = Attributes.begin(); i != Attributes.end(); i++)
             {
-                os << indent << "<attr name=\"" << i->first << "\">\n";
-                i->second->WriteToStream(os, indentlevel+1);
-                os << indent << "</attr>\n";
+                XML* attr = new XML("attr");
+                attr->AddAttribute("name", i->first);
+                i->second->WriteToXml(attr);
+                xml->AddChild(attr);
             }
-
         }
 
         void AttributeCollection::Unset(string name)
@@ -89,6 +89,10 @@
 
     // @}
 
+    Attribute::~Attribute()
+    {
+
+    }
 
 
     Attribute* BoolAttributeInstantiator::Instantiate()
@@ -123,10 +127,11 @@
         return true;
     }
 
-    void BoolAttribute::WriteToStream(ostream& os, int indentlevel)
+    void BoolAttribute::WriteToXml(XML* xml)
     {
-        string indent(indentlevel*2, ' ');
-        os << indent << "<bool>" << (Value ? "true" : "false") << "</bool>\n";
+        XML* child = new XML("bool");
+        child->AddChild(new XML_Text(Value ? "true" : "false"));
+        xml->AddChild(child);
     }
 
     Attribute* BoolAttribute::Clone()
@@ -163,10 +168,13 @@
         return true;
     }
 
-    void IntAttribute::WriteToStream(ostream& os, int indentlevel)
+    void IntAttribute::WriteToXml(XML* xml)
     {
-        string indent(indentlevel*2, ' ');
-        os << indent << "<int>" << Value << "</int>\n";
+        XML* child = new XML("int");
+        stringstream s;
+        s << Value;
+        child->AddChild(new XML_Text(s.str()));
+        xml->AddChild(child);
     }
 
     Attribute* IntAttribute::Clone()
@@ -202,10 +210,13 @@
         return true;
     }
 
-    void FloatAttribute::WriteToStream(ostream& os, int indentlevel)
+    void FloatAttribute::WriteToXml(XML* xml)
     {
-        string indent(indentlevel*2, ' ');
-        os << indent << "<float>" << Value << "</float>\n";
+        XML* child = new XML("float");
+        stringstream s;
+        s << Value;
+        child->AddChild(new XML_Text(s.str()));
+        xml->AddChild(child);
     }
 
     Attribute* FloatAttribute::Clone()
@@ -241,10 +252,11 @@
         return true;
     }
 
-    void StringAttribute::WriteToStream(ostream& os, int indentlevel)
+    void StringAttribute::WriteToXml(XML* xml)
     {
-        string indent(indentlevel*2, ' ');
-        os << indent << "<string>" << Value << "</string>\n";
+        XML* child = new XML("string");
+        child->AddChild(new XML_Text(Value));
+        xml->AddChild(child);
     }
 
     Attribute* StringAttribute::Clone()
@@ -304,13 +316,12 @@
         return true;
     }
 
-    void VecAttribute::WriteToStream(ostream& os, int indentlevel)
+    void VecAttribute::WriteToXml(XML* xml)
     {
-        string indent(indentlevel*2, ' ');
-        os << indent << "<vec>\n";
+        XML* child = new XML("vec");
         for(list<Attribute*>::iterator i = Value.begin(); i != Value.end(); i++)
-            (*i)->WriteToStream(os, indentlevel+1);
-        os << indent << "</vec>\n";
+            (*i)->WriteToXml(child);
+        xml->AddChild(child);
     }
 
     Attribute* VecAttribute::Clone()

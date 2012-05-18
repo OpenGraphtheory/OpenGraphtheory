@@ -7,7 +7,7 @@
 	"../../opengt.so/opengt.h"
 	"../../opengt.so/generate/generate.h"
 
-1330617047 /home/viktor/Programming/OpenGraphtheory/opengt.so/opengt.h
+1337344695 /home/viktor/Programming/OpenGraphtheory/opengt.so/opengt.h
 	<list>
 	<set>
 	<map>
@@ -15,8 +15,9 @@
 	<iostream>
 	<fstream>
 	"simple_xml.h"
+	"attributes.h"
 
-1330615749 /home/viktor/Programming/OpenGraphtheory/opengt.so/simple_xml.h
+1337345176 /home/viktor/Programming/OpenGraphtheory/opengt.so/simple_xml.h
 	<iostream>
 	<sstream>
 	<vector>
@@ -26,4 +27,14 @@
 	<list>
 	<string>
 	"../opengt.h"
+
+1337341449 /home/viktor/Programming/OpenGraphtheory/opengt.so/attributes.h
+	<string>
+	<iostream>
+	"factory.h"
+	"simple_xml.h"
+
+1337178194 /home/viktor/Programming/OpenGraphtheory/opengt.so/factory.h
+	<string>
+	<map>
 
