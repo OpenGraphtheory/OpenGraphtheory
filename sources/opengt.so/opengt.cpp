@@ -1662,15 +1662,12 @@ namespace OpenGraphtheory
 
 		void Graph::WriteToStream(ostream& os, int indent)
 		{
-		    string* ind = new string[6];
-		    ind[0] = string(2*indent, ' ');
-		    for(int i = 1; i < 6; i++)
-                ind[i] = ind[i-1] + "  ";
+			os << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+			os << "<!DOCTYPE gxl SYSTEM \"http://www.gupro.de/GXL/gxl-1.0.dtd\">\n";
 
-			os << ind[0] << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-			os << ind[0] << "<!DOCTYPE gxl SYSTEM \"http://www.gupro.de/GXL/gxl-1.0.dtd\">\n";
-			os << ind[0] << "<!-- www.Open-Graphtheory.org -->\n";
-			os << ind[0] << "<gxl xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n";
+			XML* gxl = new XML("gxl");
+			gxl->AddChild(new XML_Comment("www.Open-Graphtheory.org"));
+			gxl->AddAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
 
 			XML* graph = new XML("graph");
 			stringstream s;
@@ -1687,10 +1684,9 @@ namespace OpenGraphtheory
 			for(EdgeIterator i = BeginEdges(); i != EndEdges(); i++)
                 i.WriteToXml(graph);
 
-            graph->WriteToStream(os, 1);
-            delete graph;
-
-            os << "</gxl>";
+            gxl->AddChild(graph);
+            gxl->WriteToStream(os, 0);
+            delete gxl;
 		}
 
 		void Graph::SaveToFile(string filename)

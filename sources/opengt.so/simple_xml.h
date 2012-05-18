@@ -45,6 +45,9 @@
 	class XML_Comment : public XML_Element
 	{
 		public:
+            XML_Comment();
+            XML_Comment(string text);
+
 			vector<string> text;
 			void WriteToStream(ostream& os, int level) const;
 			~XML_Comment();

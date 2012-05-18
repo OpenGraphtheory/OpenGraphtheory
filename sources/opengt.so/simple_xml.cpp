@@ -163,6 +163,15 @@
 
 
 
+    XML_Comment::XML_Comment()
+    {
+
+    }
+
+    XML_Comment::XML_Comment(string Text)
+    {
+        text.push_back(Text);
+    }
 
 	void XML_Comment::WriteToStream(ostream& os, int level) const
 	{
