@@ -1470,7 +1470,7 @@ namespace OpenGraphtheory
                 }
                 if(v->Attributes().HasAttribute("coordinates"))
                 {
-                    VecAttribute *attrCoordinates = dynamic_cast<VecAttribute*>(v->Attributes().GetAttribute("coordinates"));
+                    SeqAttribute *attrCoordinates = dynamic_cast<SeqAttribute*>(v->Attributes().GetAttribute("coordinates"));
                     if(attrCoordinates != NULL)
                     {
                         vector<float> coordinates;

@@ -22,6 +22,7 @@
         protected:
             map<string, Attribute*> Attributes;
         public:
+            ~AttributeCollection();
             static Factory<Attribute> AttributeFactory;
 
             void Set(XML* attr);
@@ -116,21 +117,21 @@
     };
 
 
-    class VecAttribute : public Attribute
+    class SeqAttribute : public Attribute
     {
         public:
             list<Attribute*> Value;
 
-            VecAttribute();
-            VecAttribute(const list<Attribute*>& vec);
-            ~VecAttribute();
+            SeqAttribute();
+            SeqAttribute(const list<Attribute*>& seq);
+            ~SeqAttribute();
 
             void WriteToXml(XML* xml);
             bool LoadFromXml(XML* xml);
             Attribute* Clone();
     };
 
-    class VecAttributeInstantiator : public Instantiator<Attribute>
+    class SeqAttributeInstantiator : public Instantiator<Attribute>
     {
         public:
             Attribute* Instantiate();
