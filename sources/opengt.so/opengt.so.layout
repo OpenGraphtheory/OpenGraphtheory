@@ -4,8 +4,8 @@
 	<File name="algorithms/vertexcover/vertexcover.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="801" topLine="3" />
 	</File>
-	<File name="attributes.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="627" topLine="0" />
+	<File name="attributes.cpp" open="1" top="0" tabpos="6">
+		<Cursor position="11317" topLine="369" />
 	</File>
 	<File name="attributes.h" open="0" top="0" tabpos="3">
 		<Cursor position="0" topLine="97" />
@@ -91,8 +91,8 @@
 	<File name="import/tgf.cpp" open="0" top="0" tabpos="8">
 		<Cursor position="2255" topLine="18" />
 	</File>
-	<File name="opengt.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="0" topLine="75" />
+	<File name="opengt.cpp" open="1" top="1" tabpos="1">
+		<Cursor position="52681" topLine="1594" />
 	</File>
 	<File name="opengt.h" open="1" top="0" tabpos="2">
 		<Cursor position="12138" topLine="266" />
@@ -106,7 +106,7 @@
 	<File name="simple_xml.h" open="0" top="0" tabpos="6">
 		<Cursor position="1182" topLine="0" />
 	</File>
-	<File name="transform/spring_embedder3d.cpp" open="1" top="1" tabpos="3">
+	<File name="transform/spring_embedder3d.cpp" open="1" top="0" tabpos="3">
 		<Cursor position="0" topLine="0" />
 	</File>
 	<File name="transform/transformation.cpp" open="0" top="0" tabpos="8">

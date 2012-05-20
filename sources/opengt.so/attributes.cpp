@@ -395,7 +395,7 @@ Attribute::~Attribute()
     /// \brief Override WriteToXml method
     void SeqAttribute::WriteToXml(XML* xml)
     {
-        XML* child = new XML("vec");
+        XML* child = new XML("seq");
         for(list<Attribute*>::iterator i = Value.begin(); i != Value.end(); i++)
             (*i)->WriteToXml(child);
         xml->AddChild(child);

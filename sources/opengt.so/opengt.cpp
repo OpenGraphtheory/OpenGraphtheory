@@ -183,7 +183,7 @@ namespace OpenGraphtheory
                 {
                     XML* coords = new XML("attr");
                     coords->AddAttribute("name", "coordinates");
-                    XML* vec = new XML("vec");
+                    XML* seq = new XML("seq");
 
                     for(unsigned int i = 0; i < coordinates.size(); i++)
                     {
@@ -191,9 +191,9 @@ namespace OpenGraphtheory
                         stringstream s;
                         s << coordinates[i];
                         flt->AddChild(new XML_Text(s.str()));
-                        vec->AddChild(flt);
+                        seq->AddChild(flt);
                     }
-                    coords->AddChild(vec);
+                    coords->AddChild(seq);
                     node->AddChild(coords);
                 }
 
