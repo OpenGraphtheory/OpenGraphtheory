@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include "../opengt.h"
+#include "export.h"
 
 using namespace std;
 using namespace OpenGraphtheory;
@@ -10,7 +11,7 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportToTEI(Graph& G, ostream& os)
+        void ExportFilterTEI::Export(Graph& G, ostream& os)
         {
             if(G.IsHypergraph())
                 throw "The TEI fileformat doesn\'t support hypergraphs\n";
@@ -40,6 +41,11 @@ namespace OpenGraphtheory
 
             os << "</graph>\n";
         }
+
+        FactoryRegistrator<ExportFilter> ExportFilterTeiRegistrator(&ExportFilter::ExportFilterFactory, "tei",
+            new DefaultInstantiator<ExportFilter, ExportFilterTEI>("gml", "Text Encoding Initiative",
+                "http://www.tei-c.org/release/doc/tei-p5-doc/de/html/GD.html"));
+
 
     }
 }

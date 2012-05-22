@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include "../opengt.h"
+#include "export.h"
 
 using namespace std;
 using namespace OpenGraphtheory;
@@ -12,7 +13,7 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportToSVG(Graph& G, ostream& os)
+        void ExportFilterSVG::Export(Graph& G, ostream& os)
         {
             if(G.IsHypergraph())
                 throw "The SVG fileformat does not support hypergraphs\n";
@@ -66,6 +67,11 @@ namespace OpenGraphtheory
             /// footer
             os << "</svg>\n";
         }
+
+        FactoryRegistrator<ExportFilter> ExportFilterSvgRegistrator(&ExportFilter::ExportFilterFactory, "svg",
+            new DefaultInstantiator<ExportFilter, ExportFilterSVG>("svg", "Scalable Vector Graphics",
+                "http://de.wikipedia.org/wiki/Scalable_Vector_Graphics"));
+
 
     }
 }

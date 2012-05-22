@@ -8,8 +8,25 @@
     template<class T> class Instantiator
     {
         public:
+            std::string Name;
+            std::string Description;
+            std::string URL;
+
+            Instantiator();
+            Instantiator(std::string name, std::string description, std::string URL);
+            virtual ~Instantiator();
+
             virtual T* Instantiate() = 0;
     };
+
+    template<class T, class U> class DefaultInstantiator : public Instantiator<T>
+    {
+        public:
+            DefaultInstantiator();
+            DefaultInstantiator(std::string Name, std::string Description, std::string URL);
+            T* Instantiate();
+    };
+
 
     template<class T> class Factory
     {
@@ -27,6 +44,45 @@
             FactoryRegistrator(Factory<T>* factory, std::string name, Instantiator<T>* instantiator);
     };
 
+
+    // ======================================================================================================================
+
+
+    template<class T> Instantiator<T>::Instantiator()
+    {
+    }
+
+    template<class T> Instantiator<T>::Instantiator(std::string Name, std::string Description, std::string URL)
+    {
+        this->Name = Name;
+        this->Description = Description;
+        this->URL = URL;
+    }
+
+    template<class T> Instantiator<T>::~Instantiator()
+    {
+
+    }
+
+
+
+    template<class T, class U> DefaultInstantiator<T,U>::DefaultInstantiator()
+        : Instantiator<T>()
+    {
+    }
+
+    template<class T, class U> DefaultInstantiator<T,U>::DefaultInstantiator(std::string Name, std::string Description, std::string URL)
+        : Instantiator<T>(Name, Description, URL)
+    {
+    }
+
+    template<class T, class U> T* DefaultInstantiator<T, U>::Instantiate()
+    {
+        return new U();
+    }
+
+
+    // ======================================================================================================================
 
 
     template<class T> Factory<T>::~Factory()
@@ -50,6 +106,8 @@
             return NULL;
         return iInstantiator->second->Instantiate();
     }
+
+
 
     template<class T> FactoryRegistrator<T>::FactoryRegistrator(Factory<T>* factory, std::string name, Instantiator<T>* instantiator)
     {

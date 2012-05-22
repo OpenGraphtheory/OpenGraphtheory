@@ -40,9 +40,20 @@ int main(int argc, char** argv)
 
 		/// export
 		string format = (argc > 1) ? argv[1] : "--help";
-        map<string, ExportFilter> Filters = ExportFilter::GetExportFilters();
-		if(Filters.find(format) != Filters.end())
-		    Filters[format].Export(G, *os);
+		ExportFilter* exportfilter = ExportFilter::ExportFilterFactory.Produce(format);
+		if(exportfilter != NULL)
+		{
+		    try
+		    {
+                exportfilter->Export(G, *os);
+		    }
+		    catch(...)
+		    {
+		        delete exportfilter;
+		        throw;
+		    }
+		    delete exportfilter;
+		}
 		else
 			usage(argv[0]);
 
@@ -62,19 +73,19 @@ int main(int argc, char** argv)
 
 void usage(char* argv0)
 {
-    map<string, ExportFilter> Filters = ExportFilter::GetExportFilters();
+    map<string, ExportFilter*> Filters = ExportFilter::GetExportFilters();
 
 	cerr << "usage: " << argv0 << " format [sourcefile] [destinationfile]\n"
 	     << "     where format can be\n";
 
     unsigned int maxlength = 0;
-    for(map<string, ExportFilter>::iterator i = Filters.begin(); i != Filters.end(); i++)
+    for(map<string, ExportFilter*>::iterator i = Filters.begin(); i != Filters.end(); i++)
         if(i->first.length() > maxlength)
             maxlength = i->first.length();
 
-    for(map<string, ExportFilter>::iterator i = Filters.begin(); i != Filters.end(); i++)
+    for(map<string, ExportFilter*>::iterator i = Filters.begin(); i != Filters.end(); i++)
     {
-        cerr << "          " << i->first << string(maxlength - i->first.length() + 2, ' ') << i->second.description << "\n";
+        cerr << "          " << i->first << string(maxlength - i->first.length() + 2, ' ') << i->second->Description << "\n";
         cerr << "          " << string(maxlength + 2, ' ') << "  " << i->second.URL << "\n";
     }
 }

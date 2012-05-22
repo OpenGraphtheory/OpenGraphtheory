@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include "../opengt.h"
+#include "export.h"
 
 using namespace std;
 using namespace OpenGraphtheory;
@@ -10,7 +11,7 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportToDOT(Graph& G, ostream& os)
+        void ExportFilterDOT::Export(Graph& G, ostream& os)
         {
             if(G.IsHypergraph())
                 throw "The DOT fileformat doesn\'t support hypergraphs\n";
@@ -51,6 +52,9 @@ namespace OpenGraphtheory
 
             os << "}\n";
         }
+
+        FactoryRegistrator<ExportFilter> ExportFilterDotRegistrator(&ExportFilter::ExportFilterFactory, "dot",
+            new DefaultInstantiator<ExportFilter, ExportFilterDOT>("dot", "Fileformat of the Graphviz project", "http://www.graphviz.org/doc/info/lang.html"));
 
     }
 }

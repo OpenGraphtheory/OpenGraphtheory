@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include "../opengt.h"
+#include "export.h"
 
 using namespace std;
 using namespace OpenGraphtheory;
@@ -10,7 +11,7 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportToGASTEX(Graph& G, ostream& os)
+        void ExportFilterGASTEX::Export(Graph& G, ostream& os)
         {
             if(G.IsHypergraph())
                 throw "The GasTeX fileformat doesn\'t support hypergraphs\n";
@@ -40,6 +41,9 @@ namespace OpenGraphtheory
 
             os << "\\end{picture}\n";
         }
+
+        FactoryRegistrator<ExportFilter> ExportFilterGastexRegistrator(&ExportFilter::ExportFilterFactory, "gastex",
+            new DefaultInstantiator<ExportFilter, ExportFilterGASTEX>("gastex", "LaTeX package \"GasTeX\"", "http://www.lsv.ens-cachan.fr/~gastin/gastex/"));
 
     }
 }

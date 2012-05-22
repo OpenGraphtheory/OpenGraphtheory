@@ -1,5 +1,6 @@
 #include <iostream>
 #include "../opengt.h"
+#include "export.h"
 
 using namespace std;
 using namespace OpenGraphtheory;
@@ -9,7 +10,7 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportToMPOST(Graph& G, ostream& os)
+        void ExportFilterMPOST::Export(Graph& G, ostream& os)
         {
             if(G.IsHypergraph())
                 throw "The MPOST fileformat does not support hypergraphs\n";
@@ -74,6 +75,9 @@ namespace OpenGraphtheory
             os << "endfig;\n";
             os << "bye\n";
         }
+
+        FactoryRegistrator<ExportFilter> ExportFilterMpostRegistrator(&ExportFilter::ExportFilterFactory, "mpost",
+            new DefaultInstantiator<ExportFilter, ExportFilterMPOST>("mpost", "MetaPost", "http://de.wikipedia.org/wiki/MetaPost"));
 
     }
 }

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <math.h>
 #include "../opengt.h"
+#include "export.h"
 
 using namespace std;
 using namespace OpenGraphtheory;
@@ -11,7 +12,7 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportToPOVRAY(Graph& G, ostream& os)
+        void ExportFilterPOVRAY::Export(Graph& G, ostream& os)
         {
             if(G.IsHypergraph())
                 throw "The POV-Ray fileformat doesn\'t support hypergraphs\n";
@@ -90,6 +91,10 @@ namespace OpenGraphtheory
             }
 
         }
+
+        FactoryRegistrator<ExportFilter> ExportFilterPovrayRegistrator(&ExportFilter::ExportFilterFactory, "povray",
+            new DefaultInstantiator<ExportFilter, ExportFilterPOVRAY>("povray", "POV-Ray", "http://en.wikipedia.org/wiki/POV-Ray"));
+
 
     }
 }

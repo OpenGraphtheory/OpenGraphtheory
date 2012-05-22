@@ -50,13 +50,6 @@
             Attribute* Clone();
     };
 
-    class BoolAttributeInstantiator : public Instantiator<Attribute>
-    {
-        public:
-            Attribute* Instantiate();
-    };
-
-
     class IntAttribute : public Attribute
     {
         public:
@@ -69,13 +62,6 @@
             bool LoadFromXml(XML* xml);
             Attribute* Clone();
     };
-
-    class IntAttributeInstantiator : public Instantiator<Attribute>
-    {
-        public:
-            Attribute* Instantiate();
-    };
-
 
     class FloatAttribute : public Attribute
     {
@@ -90,13 +76,6 @@
             Attribute* Clone();
     };
 
-    class FloatAttributeInstantiator : public Instantiator<Attribute>
-    {
-        public:
-            Attribute* Instantiate();
-    };
-
-
     class StringAttribute : public Attribute
     {
         public:
@@ -109,13 +88,6 @@
             bool LoadFromXml(XML* xml);
             Attribute* Clone();
     };
-
-    class StringAttributeInstantiator : public Instantiator<Attribute>
-    {
-        public:
-            Attribute* Instantiate();
-    };
-
 
     class SeqAttribute : public Attribute
     {
@@ -130,13 +102,5 @@
             bool LoadFromXml(XML* xml);
             Attribute* Clone();
     };
-
-    class SeqAttributeInstantiator : public Instantiator<Attribute>
-    {
-        public:
-            Attribute* Instantiate();
-    };
-
-
 
 #endif

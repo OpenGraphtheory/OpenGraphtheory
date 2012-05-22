@@ -4,56 +4,56 @@
 	<File name="algorithms/vertexcover/vertexcover.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="801" topLine="3" />
 	</File>
-	<File name="attributes.cpp" open="1" top="0" tabpos="6">
-		<Cursor position="11317" topLine="369" />
+	<File name="attributes.cpp" open="1" top="0" tabpos="5">
+		<Cursor position="5299" topLine="154" />
 	</File>
 	<File name="attributes.h" open="0" top="0" tabpos="3">
-		<Cursor position="0" topLine="97" />
+		<Cursor position="2378" topLine="67" />
 	</File>
 	<File name="export/dot.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="864" topLine="6" />
+		<Cursor position="1825" topLine="21" />
 	</File>
 	<File name="export/export.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="4996" topLine="106" />
+		<Cursor position="1416" topLine="4" />
 	</File>
 	<File name="export/export.h" open="0" top="0" tabpos="0">
-		<Cursor position="1546" topLine="3" />
+		<Cursor position="247" topLine="20" />
 	</File>
 	<File name="export/gastex.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="329" topLine="3" />
+		<Cursor position="1592" topLine="10" />
 	</File>
 	<File name="export/gml.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1166" topLine="20" />
+		<Cursor position="1914" topLine="16" />
 	</File>
 	<File name="export/graphml.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="465" topLine="15" />
+		<Cursor position="2295" topLine="24" />
 	</File>
 	<File name="export/mpost.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2084" topLine="21" />
+		<Cursor position="3171" topLine="44" />
 	</File>
 	<File name="export/povray.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="3020" topLine="61" />
+		<Cursor position="3438" topLine="61" />
 	</File>
 	<File name="export/rgml.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2173" topLine="32" />
+		<Cursor position="2491" topLine="31" />
 	</File>
 	<File name="export/svg.cpp" open="0" top="0" tabpos="8">
-		<Cursor position="1958" topLine="23" />
+		<Cursor position="2945" topLine="38" />
 	</File>
 	<File name="export/tei.cpp" open="0" top="0" tabpos="5">
-		<Cursor position="1294" topLine="15" />
+		<Cursor position="1673" topLine="12" />
 	</File>
 	<File name="export/tgf.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="155" topLine="2" />
+		<Cursor position="1054" topLine="0" />
 	</File>
 	<File name="export/vrmlgraph.cpp" open="0" top="0" tabpos="6">
-		<Cursor position="463" topLine="0" />
+		<Cursor position="980" topLine="0" />
 	</File>
 	<File name="export/xgmml.cpp" open="0" top="0" tabpos="9">
-		<Cursor position="1103" topLine="13" />
+		<Cursor position="1868" topLine="14" />
 	</File>
 	<File name="factory.h" open="0" top="0" tabpos="0">
-		<Cursor position="1216" topLine="21" />
+		<Cursor position="1993" topLine="50" />
 	</File>
 	<File name="generate/circle.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="446" topLine="0" />
@@ -91,8 +91,8 @@
 	<File name="import/tgf.cpp" open="0" top="0" tabpos="8">
 		<Cursor position="2255" topLine="18" />
 	</File>
-	<File name="opengt.cpp" open="1" top="1" tabpos="1">
-		<Cursor position="52681" topLine="1594" />
+	<File name="opengt.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="52681" topLine="1648" />
 	</File>
 	<File name="opengt.h" open="1" top="0" tabpos="2">
 		<Cursor position="12138" topLine="266" />

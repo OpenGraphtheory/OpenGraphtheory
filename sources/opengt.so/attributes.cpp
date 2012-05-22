@@ -126,12 +126,6 @@ Attribute::~Attribute()
 /// \defgroup boolattribute ''BoolAttribute''
 // @{
 
-    /// \brief Overrides the virtual method Instantiate of AttributeInstantiator with a method that instantiates a BoolAttribute
-    Attribute* BoolAttributeInstantiator::Instantiate()
-    {
-        return new BoolAttribute();
-    }
-
     /// \brief Constructor
     BoolAttribute::BoolAttribute()
         : Attribute()
@@ -176,19 +170,14 @@ Attribute::~Attribute()
     }
 
     /// \brief Registers the AttributeInstantiator in the Factory immediately when the library is loaded
-    FactoryRegistrator<Attribute> BoolAttributeRegistrator(&AttributeCollection::AttributeFactory, "bool", new BoolAttributeInstantiator());
+    FactoryRegistrator<Attribute> BoolAttributeRegistrator(&AttributeCollection::AttributeFactory, "bool",
+        new DefaultInstantiator<Attribute, BoolAttribute>());
 
 // @}
 
 
 /// \defgroup intattribute ''IntAttribute''
 // @{
-
-    /// \brief Overrides the virtual method Instantiate of AttributeInstantiator with a method that instantiates an IntAttribute
-    Attribute* IntAttributeInstantiator::Instantiate()
-    {
-        return new IntAttribute();
-    }
 
     /// \brief Constructor
     IntAttribute::IntAttribute()
@@ -229,19 +218,14 @@ Attribute::~Attribute()
     }
 
     /// \brief Registers the AttributeInstantiator in the Factory immediately when the library is loaded
-    FactoryRegistrator<Attribute> IntAttributeRegistrator(&AttributeCollection::AttributeFactory, "int", new IntAttributeInstantiator());
+    FactoryRegistrator<Attribute> IntAttributeRegistrator(&AttributeCollection::AttributeFactory, "int",
+        new DefaultInstantiator<Attribute, IntAttribute>());
 
 // @}
 
 
 /// \defgroup floatattribute ''FloatAttribute''
 // @{
-
-    /// \brief Overrides the virtual method Instantiate of AttributeInstantiator with a method that instantiates a FloatAttribute
-    Attribute* FloatAttributeInstantiator::Instantiate()
-    {
-        return new FloatAttribute();
-    }
 
     /// \brief Constructor
     FloatAttribute::FloatAttribute()
@@ -282,7 +266,8 @@ Attribute::~Attribute()
     }
 
     /// \brief Registers the AttributeInstantiator in the Factory immediately when the library is loaded
-    FactoryRegistrator<Attribute> FloatAttributeRegistrator(&AttributeCollection::AttributeFactory, "float", new FloatAttributeInstantiator());
+    FactoryRegistrator<Attribute> FloatAttributeRegistrator(&AttributeCollection::AttributeFactory, "float",
+        new DefaultInstantiator<Attribute, FloatAttribute>());
 
 // @}
 
@@ -290,12 +275,6 @@ Attribute::~Attribute()
 
 /// \defgroup stringattribute ''StringAttribute''
 // @{
-
-    /// \brief Overrides the virtual method Instantiate of AttributeInstantiator with a method that instantiates a StringAttribute
-    Attribute* StringAttributeInstantiator::Instantiate()
-    {
-        return new StringAttribute();
-    }
 
     /// \brief Constructor
     StringAttribute::StringAttribute()
@@ -333,19 +312,14 @@ Attribute::~Attribute()
     }
 
     /// \brief Registers the AttributeInstantiator in the Factory immediately when the library is loaded
-    FactoryRegistrator<Attribute> StringAttributeRegistrator(&AttributeCollection::AttributeFactory, "string", new StringAttributeInstantiator());
+    FactoryRegistrator<Attribute> StringAttributeRegistrator(&AttributeCollection::AttributeFactory, "string",
+        new DefaultInstantiator<Attribute, StringAttribute>());
 
 // @}
 
 
 /// \defgroup seqattribute ''SeqAttribute''
 // @{
-
-    /// \brief Overrides the virtual method Instantiate of AttributeInstantiator with a method that instantiates a SeqAttribute
-    Attribute* SeqAttributeInstantiator::Instantiate()
-    {
-        return new SeqAttribute();
-    }
 
     /// \brief Constructor
     SeqAttribute::SeqAttribute()
@@ -408,6 +382,7 @@ Attribute::~Attribute()
     }
 
     /// \brief Registers the AttributeInstantiator in the Factory immediately when the library is loaded
-    FactoryRegistrator<Attribute> SeqAttributeRegistrator(&AttributeCollection::AttributeFactory, "seq", new SeqAttributeInstantiator());
+    FactoryRegistrator<Attribute> SeqAttributeRegistrator(&AttributeCollection::AttributeFactory, "seq",
+        new DefaultInstantiator<Attribute, SeqAttribute>());
 
 // @}

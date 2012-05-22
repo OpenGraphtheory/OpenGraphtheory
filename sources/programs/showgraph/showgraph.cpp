@@ -36,10 +36,7 @@ int main(int argc, char** argv)
 
 
 		/// select output destination
-		if(argc > 2)
-			G.SaveToFile(argv[2]);
-		else
-			cout << G;
+        cout << G;
 	}
 	catch(const char* s)
 	{

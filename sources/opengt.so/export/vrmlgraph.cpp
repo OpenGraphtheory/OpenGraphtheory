@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include "../opengt.h"
+#include "export.h"
 
 using namespace std;
 using namespace OpenGraphtheory;
@@ -10,7 +11,7 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportToVRMLGRAPH(Graph& G, ostream& os)
+        void ExportFilterVRMLGRAPH::Export(Graph& G, ostream& os)
         {
             if(G.IsHypergraph())
                 throw "The VRMLgraph fileformat doesn\'t support hypergraphs\n";
@@ -23,6 +24,11 @@ namespace OpenGraphtheory
             for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
                 os << e.From().GetID() << " " << e.To().GetID() << "\n";
         }
+
+        FactoryRegistrator<ExportFilter> ExportFilterVrmlgraphRegistrator(&ExportFilter::ExportFilterFactory, "vrmlgraph",
+            new DefaultInstantiator<ExportFilter, ExportFilterVRMLGRAPH>("vrmlgraph", "Virtual Reality Modeling Language",
+                "http://vrmlgraph.i-scream.org.uk"));
+
 
     }
 }

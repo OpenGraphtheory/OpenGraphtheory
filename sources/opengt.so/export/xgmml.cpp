@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include "../opengt.h"
+#include "export.h"
 
 using namespace std;
 using namespace OpenGraphtheory;
@@ -10,7 +11,7 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportToXGMML(Graph& G, ostream& os)
+        void ExportFilterXGMML::Export(Graph& G, ostream& os)
         {
             if(G.IsHypergraph())
                 throw "The XGMML fileformat does not support hypergraphs\n";
@@ -42,6 +43,11 @@ namespace OpenGraphtheory
 
             os << "</graph>\n";
         }
+
+        FactoryRegistrator<ExportFilter> ExportFilterXgmmlRegistrator(&ExportFilter::ExportFilterFactory, "xgmml",
+            new DefaultInstantiator<ExportFilter, ExportFilterXGMML>("xgmml", "eXtensible Graph Markup and Modeling Language",
+                "http://www.cs.rpi.edu/research/groups/pb/punin/public_html/XGMML/"));
+
 
     }
 }

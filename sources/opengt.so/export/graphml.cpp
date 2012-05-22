@@ -1,5 +1,6 @@
 #include <iostream>
 #include "../opengt.h"
+#include "export.h"
 
 using namespace std;
 using namespace OpenGraphtheory;
@@ -9,7 +10,7 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportToGRAPHML(Graph& G, ostream& os)
+        void ExportFilterGRAPHML::Export(Graph& G, ostream& os)
         {
             for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
                 if(e.IsHyperedge() && !e.IsUndirected())
@@ -53,6 +54,10 @@ namespace OpenGraphtheory
             os << "\t</graph>\n";
             os << "</graphml>\n";
         }
+
+        FactoryRegistrator<ExportFilter> ExportFilterGraphMLRegistrator(&ExportFilter::ExportFilterFactory, "graphml",
+            new DefaultInstantiator<ExportFilter, ExportFilterGRAPHML>("graphml", "GraphML", "http://graphml.graphdrawing.org/"));
+
 
     }
 }

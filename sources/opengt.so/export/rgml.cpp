@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include "../opengt.h"
+#include "export.h"
 
 using namespace std;
 using namespace OpenGraphtheory;
@@ -10,7 +11,7 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportToRGML(Graph& G, ostream& os)
+        void ExportFilterRGML::Export(Graph& G, ostream& os)
         {
             if(G.IsHypergraph())
                 throw "The XGMML fileformat does not support hypergraphs\n";
@@ -59,6 +60,11 @@ namespace OpenGraphtheory
 
             os << "\n</rdf:RDF>\n";
         }
+
+        FactoryRegistrator<ExportFilter> ExportFilterRgmlRegistrator(&ExportFilter::ExportFilterFactory, "rgml",
+            new DefaultInstantiator<ExportFilter, ExportFilterRGML>("rgml", "Resource Description Framework (RDF) Graph Modeling Language",
+                "http://www.cs.rpi.edu/research/groups/pb/punin/public_html/RGML/"));
+
 
     }
 }
