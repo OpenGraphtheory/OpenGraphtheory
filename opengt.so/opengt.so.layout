@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Debug" />
+	<File name="algorithms/vertexcover/vertexcover.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="801" topLine="3" />
+	</File>
+	<File name="attributes.cpp" open="0" top="0" tabpos="5">
+		<Cursor position="5299" topLine="154" />
+	</File>
+	<File name="attributes.h" open="0" top="0" tabpos="3">
+		<Cursor position="2378" topLine="67" />
+	</File>
+	<File name="export/dot.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="1825" topLine="21" />
+	</File>
+	<File name="export/export.cpp" open="0" top="0" tabpos="8">
+		<Cursor position="1416" topLine="10" />
+	</File>
+	<File name="export/export.h" open="0" top="0" tabpos="0">
+		<Cursor position="247" topLine="20" />
+	</File>
+	<File name="export/gastex.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1592" topLine="10" />
+	</File>
+	<File name="export/gml.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1914" topLine="16" />
+	</File>
+	<File name="export/graphml.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="2295" topLine="24" />
+	</File>
+	<File name="export/mpost.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="3171" topLine="44" />
+	</File>
+	<File name="export/povray.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="3438" topLine="61" />
+	</File>
+	<File name="export/rgml.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="2491" topLine="31" />
+	</File>
+	<File name="export/svg.cpp" open="0" top="0" tabpos="8">
+		<Cursor position="2945" topLine="38" />
+	</File>
+	<File name="export/tei.cpp" open="0" top="0" tabpos="5">
+		<Cursor position="1673" topLine="12" />
+	</File>
+	<File name="export/tgf.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1054" topLine="0" />
+	</File>
+	<File name="export/vrmlgraph.cpp" open="0" top="0" tabpos="6">
+		<Cursor position="980" topLine="0" />
+	</File>
+	<File name="export/xgmml.cpp" open="0" top="0" tabpos="9">
+		<Cursor position="1868" topLine="14" />
+	</File>
+	<File name="factory.h" open="0" top="0" tabpos="0">
+		<Cursor position="1993" topLine="50" />
+	</File>
+	<File name="generate/circle.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="446" topLine="0" />
+	</File>
+	<File name="generate/complete.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="426" topLine="9" />
+	</File>
+	<File name="generate/generate.cpp" open="0" top="0" tabpos="4">
+		<Cursor position="2748" topLine="62" />
+	</File>
+	<File name="generate/generate.h" open="0" top="0" tabpos="3">
+		<Cursor position="1071" topLine="9" />
+	</File>
+	<File name="generate/grid.cpp" open="0" top="0" tabpos="5">
+		<Cursor position="745" topLine="7" />
+	</File>
+	<File name="generate/path.cpp" open="0" top="0" tabpos="7">
+		<Cursor position="349" topLine="0" />
+	</File>
+	<File name="generate/random.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="916" topLine="15" />
+	</File>
+	<File name="generate/star.cpp" open="0" top="0" tabpos="5">
+		<Cursor position="583" topLine="0" />
+	</File>
+	<File name="generate/tree.cpp" open="0" top="0" tabpos="6">
+		<Cursor position="288" topLine="0" />
+	</File>
+	<File name="import/import.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="5059" topLine="111" />
+	</File>
+	<File name="import/import.h" open="0" top="0" tabpos="0">
+		<Cursor position="1111" topLine="16" />
+	</File>
+	<File name="import/tgf.cpp" open="0" top="0" tabpos="8">
+		<Cursor position="2255" topLine="18" />
+	</File>
+	<File name="opengt.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="52681" topLine="1648" />
+	</File>
+	<File name="opengt.h" open="1" top="0" tabpos="2">
+		<Cursor position="12138" topLine="266" />
+	</File>
+	<File name="processing/components.cpp" open="0" top="0" tabpos="9">
+		<Cursor position="171" topLine="0" />
+	</File>
+	<File name="simple_xml.cpp" open="0" top="0" tabpos="4">
+		<Cursor position="79" topLine="21" />
+	</File>
+	<File name="simple_xml.h" open="0" top="0" tabpos="6">
+		<Cursor position="1182" topLine="0" />
+	</File>
+	<File name="transform/spring_embedder3d.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="transform/transformation.cpp" open="0" top="0" tabpos="8">
+		<Cursor position="10062" topLine="0" />
+	</File>
+	<File name="transform/transformation.h" open="0" top="0" tabpos="9">
+		<Cursor position="1357" topLine="12" />
+	</File>
+	<File name="visualize/DisplayWindow.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="504" topLine="56" />
+	</File>
+	<File name="visualize/DisplayWindow.h" open="0" top="0" tabpos="6">
+		<Cursor position="2478" topLine="75" />
+	</File>
+	<File name="visualize/GraphWindow.cpp" open="0" top="0" tabpos="10">
+		<Cursor position="3357" topLine="67" />
+	</File>
+	<File name="visualize/GraphWindow.h" open="0" top="0" tabpos="3">
+		<Cursor position="362" topLine="6" />
+	</File>
+	<File name="visualize/vector2d.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="718" topLine="18" />
+	</File>
+	<File name="visualize/vector2d.h" open="0" top="0" tabpos="4">
+		<Cursor position="568" topLine="3" />
+	</File>
+	<File name="visualize/vectornd.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="371" topLine="5" />
+	</File>
+	<File name="visualize/vectornd.h" open="0" top="0" tabpos="0">
+		<Cursor position="373" topLine="1" />
+	</File>
+</CodeBlocks_layout_file>

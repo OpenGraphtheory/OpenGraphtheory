@@ -1,0 +1,72 @@
+# depslib dependency file v1.0
+1338379952 source:/home/viktor/Programming/OpenGraphtheory/programs/generate/generate.cpp
+	<iostream>
+	<list>
+	<string>
+	<stdlib.h>
+	"../../opengt.so/Headers/opengt.h"
+	"../../opengt.so/Headers/generate/generate.h"
+
+1337344695 /home/viktor/Programming/OpenGraphtheory/opengt.so/opengt.h
+	<list>
+	<set>
+	<map>
+	<string>
+	<iostream>
+	<fstream>
+	"simple_xml.h"
+	"attributes.h"
+
+1337348224 /home/viktor/Programming/OpenGraphtheory/opengt.so/simple_xml.h
+	<iostream>
+	<sstream>
+	<vector>
+	<list>
+
+1329831355 /home/viktor/Programming/OpenGraphtheory/opengt.so/generate/generate.h
+	<list>
+	<string>
+	"../opengt.h"
+
+1337755682 /home/viktor/Programming/OpenGraphtheory/opengt.so/attributes.h
+	<string>
+	<iostream>
+	"factory.h"
+	"simple_xml.h"
+
+1337755682 /home/viktor/Programming/OpenGraphtheory/opengt.so/factory.h
+	<string>
+	<map>
+
+1338300269 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
+	<list>
+	<set>
+	<map>
+	<string>
+	<iostream>
+	<fstream>
+	"simple_xml.h"
+	"attributes.h"
+
+1337348224 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/simple_xml.h
+	<iostream>
+	<sstream>
+	<vector>
+	<list>
+
+1338301009 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
+	<string>
+	<iostream>
+	"factory.h"
+	"simple_xml.h"
+
+1337755682 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/factory.h
+	<string>
+	<map>
+
+1338302472 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/generate/generate.h
+	<list>
+	<string>
+	"../opengt.h"
+	"../factory.h"
+

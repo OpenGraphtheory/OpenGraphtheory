@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="OpenGraphtheory.org" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="/usr/lib/libopengtdbg" prefix_auto="1" extension_auto="1" />
+				<Option object_output="../../obj/Debug/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-lpthread -lX11" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="/usr/lib/libopengt" prefix_auto="1" extension_auto="1" />
+				<Option object_output="../../obj/Release/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-lpthread -lX11" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="Headers/algorithms/clique/clique.h" />
+		<Unit filename="Headers/algorithms/vertexcover/vertexcover.h" />
+		<Unit filename="Headers/attributes.h" />
+		<Unit filename="Headers/export/dot.h" />
+		<Unit filename="Headers/export/export.h" />
+		<Unit filename="Headers/export/gastex.h" />
+		<Unit filename="Headers/export/gml.h" />
+		<Unit filename="Headers/export/graphml.h" />
+		<Unit filename="Headers/export/mpost.h" />
+		<Unit filename="Headers/export/postscript.h" />
+		<Unit filename="Headers/export/povray.h" />
+		<Unit filename="Headers/export/rgml.h" />
+		<Unit filename="Headers/export/svg.h" />
+		<Unit filename="Headers/export/tei.h" />
+		<Unit filename="Headers/export/tgf.h" />
+		<Unit filename="Headers/export/vrmlgraph.h" />
+		<Unit filename="Headers/export/xgmml.h" />
+		<Unit filename="Headers/factory.h" />
+		<Unit filename="Headers/generate/circle.h" />
+		<Unit filename="Headers/generate/complete.h" />
+		<Unit filename="Headers/generate/generate.h" />
+		<Unit filename="Headers/generate/grid.h" />
+		<Unit filename="Headers/generate/path.h" />
+		<Unit filename="Headers/generate/random.h" />
+		<Unit filename="Headers/generate/star.h" />
+		<Unit filename="Headers/generate/tree.h" />
+		<Unit filename="Headers/import/import.h" />
+		<Unit filename="Headers/import/tgf.h" />
+		<Unit filename="Headers/opengt.h" />
+		<Unit filename="Headers/simple_xml.h" />
+		<Unit filename="Headers/thread.h" />
+		<Unit filename="Headers/transform/aspectscale.h" />
+		<Unit filename="Headers/transform/linear.h" />
+		<Unit filename="Headers/transform/rotate.h" />
+		<Unit filename="Headers/transform/scale.h" />
+		<Unit filename="Headers/transform/shift.h" />
+		<Unit filename="Headers/transform/springembedder.h" />
+		<Unit filename="Headers/transform/transformation.h" />
+		<Unit filename="Headers/visualize/DisplayWindow.h" />
+		<Unit filename="Headers/visualize/GraphWindow.h" />
+		<Unit filename="Headers/visualize/vector2d.h" />
+		<Unit filename="Headers/visualize/vectornd.h" />
+		<Unit filename="Sources/algorithms/clique/clique.cpp" />
+		<Unit filename="Sources/algorithms/color/color.cpp" />
+		<Unit filename="Sources/algorithms/vertexcover/vertexcover.cpp" />
+		<Unit filename="Sources/attributes.cpp" />
+		<Unit filename="Sources/export/dot.cpp" />
+		<Unit filename="Sources/export/export.cpp" />
+		<Unit filename="Sources/export/gastex.cpp" />
+		<Unit filename="Sources/export/gml.cpp" />
+		<Unit filename="Sources/export/graphml.cpp" />
+		<Unit filename="Sources/export/mpost.cpp" />
+		<Unit filename="Sources/export/postscript.cpp" />
+		<Unit filename="Sources/export/povray.cpp" />
+		<Unit filename="Sources/export/rgml.cpp" />
+		<Unit filename="Sources/export/svg.cpp" />
+		<Unit filename="Sources/export/tei.cpp" />
+		<Unit filename="Sources/export/tgf.cpp" />
+		<Unit filename="Sources/export/vrmlgraph.cpp" />
+		<Unit filename="Sources/export/xgmml.cpp" />
+		<Unit filename="Sources/generate/circle.cpp" />
+		<Unit filename="Sources/generate/complete.cpp" />
+		<Unit filename="Sources/generate/generate.cpp" />
+		<Unit filename="Sources/generate/grid.cpp" />
+		<Unit filename="Sources/generate/path.cpp" />
+		<Unit filename="Sources/generate/random.cpp" />
+		<Unit filename="Sources/generate/star.cpp" />
+		<Unit filename="Sources/generate/tree.cpp" />
+		<Unit filename="Sources/import/import.cpp" />
+		<Unit filename="Sources/import/tgf.cpp" />
+		<Unit filename="Sources/opengt.cpp" />
+		<Unit filename="Sources/processing/components.cpp" />
+		<Unit filename="Sources/simple_xml.cpp" />
+		<Unit filename="Sources/thread.cpp" />
+		<Unit filename="Sources/transform/aspectscale.cpp" />
+		<Unit filename="Sources/transform/linear.cpp" />
+		<Unit filename="Sources/transform/rotate.cpp" />
+		<Unit filename="Sources/transform/scale.cpp" />
+		<Unit filename="Sources/transform/shift.cpp" />
+		<Unit filename="Sources/transform/spring_embedder.cpp" />
+		<Unit filename="Sources/transform/transformation.cpp" />
+		<Unit filename="Sources/visualize/DisplayWindow.cpp" />
+		<Unit filename="Sources/visualize/GraphWindow.cpp" />
+		<Unit filename="Sources/visualize/vector2d.cpp" />
+		<Unit filename="Sources/visualize/vectornd.cpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
