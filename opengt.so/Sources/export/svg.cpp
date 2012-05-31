@@ -66,7 +66,7 @@ namespace OpenGraphtheory
             os << "</svg>\n";
         }
 
-        FactoryRegistrator<ExportFilter> ExportFilterSvgRegistrator(&ExportFilter::ExportFilterFactory, "svg",
+        FactoryRegistrator<ExportFilter> ExportFilterSVG::ExportFilterSvgRegistrator(&ExportFilter::ExportFilterFactory, "svg",
             new DefaultInstantiator<ExportFilter, ExportFilterSVG>("svg", "Scalable Vector Graphics",
                 "http://de.wikipedia.org/wiki/Scalable_Vector_Graphics"));
 

@@ -35,8 +35,6 @@ namespace OpenGraphtheory
             return sstream.str();
         }
 
-
-
         void ExportFilter::Export(Graph& G, ostream& os, string format)
         {
             ExportFilter* exportfilter = ExportFilter::ExportFilterFactory.Produce(format);
@@ -56,6 +54,7 @@ namespace OpenGraphtheory
             exportfilter->Export(G, FileName);
             delete exportfilter;
         }
+
 
 
     }

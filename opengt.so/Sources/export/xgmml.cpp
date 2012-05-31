@@ -42,7 +42,7 @@ namespace OpenGraphtheory
             os << "</graph>\n";
         }
 
-        FactoryRegistrator<ExportFilter> ExportFilterXgmmlRegistrator(&ExportFilter::ExportFilterFactory, "xgmml",
+        FactoryRegistrator<ExportFilter> ExportFilterXGMML::ExportFilterXgmmlRegistrator(&ExportFilter::ExportFilterFactory, "xgmml",
             new DefaultInstantiator<ExportFilter, ExportFilterXGMML>("xgmml", "eXtensible Graph Markup and Modeling Language",
                 "http://www.cs.rpi.edu/research/groups/pb/punin/public_html/XGMML/"));
 

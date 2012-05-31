@@ -23,7 +23,7 @@ namespace OpenGraphtheory
                 os << e.From().GetID() << " " << e.To().GetID() << "\n";
         }
 
-        FactoryRegistrator<ExportFilter> ExportFilterVrmlgraphRegistrator(&ExportFilter::ExportFilterFactory, "vrmlgraph",
+        FactoryRegistrator<ExportFilter> ExportFilterVRMLGRAPH::ExportFilterVrmlgraphRegistrator(&ExportFilter::ExportFilterFactory, "vrmlgraph",
             new DefaultInstantiator<ExportFilter, ExportFilterVRMLGRAPH>("vrmlgraph", "Virtual Reality Modeling Language",
                 "http://vrmlgraph.i-scream.org.uk"));
 

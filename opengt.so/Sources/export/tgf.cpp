@@ -28,7 +28,7 @@ namespace OpenGraphtheory
 
         }
 
-        FactoryRegistrator<ExportFilter> ExportFilterTgfRegistrator(&ExportFilter::ExportFilterFactory, "tgf",
+        FactoryRegistrator<ExportFilter> ExportFilterTGF::ExportFilterTgfRegistrator(&ExportFilter::ExportFilterFactory, "tgf",
             new DefaultInstantiator<ExportFilter, ExportFilterTGF>("tgf", "Trivial Graph Format",
                 "http://en.wikipedia.org/wiki/Trivial_Graph_Format"));
 

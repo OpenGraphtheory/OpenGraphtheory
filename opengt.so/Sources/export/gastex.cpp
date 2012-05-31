@@ -40,7 +40,7 @@ namespace OpenGraphtheory
             os << "\\end{picture}\n";
         }
 
-        FactoryRegistrator<ExportFilter> ExportFilterGastexRegistrator(&ExportFilter::ExportFilterFactory, "gastex",
+        FactoryRegistrator<ExportFilter> ExportFilterGASTEX::ExportFilterGastexRegistrator(&ExportFilter::ExportFilterFactory, "gastex",
             new DefaultInstantiator<ExportFilter, ExportFilterGASTEX>("gastex", "LaTeX package \"GasTeX\"", "http://www.lsv.ens-cachan.fr/~gastin/gastex/"));
 
     }

@@ -10,9 +10,9 @@ namespace OpenGraphtheory
     {
 
 
-        //FactoryRegistrator<Transformer> TransformerSHIFT::TransformerShiftRegistrator(
-        //    &Transformer::TransformerFactory, "shift", new DefaultInstantiator<Transformer, TransformerSHIFT>(
-        //        "shift", "adding constant values to the coordinates of the vertices", "http://en.wikipedia.org/wiki/Shift_operator"));
+        FactoryRegistrator<Transformer> TransformerSHIFT::TransformerShiftRegistrator(
+            &Transformer::TransformerFactory, "shift", new DefaultInstantiator<Transformer, TransformerSHIFT>(
+                "shift", "adding constant values to the coordinates of the vertices", "http://en.wikipedia.org/wiki/Shift_operator"));
 
         TransformerSHIFT::TransformerSHIFT()
         {

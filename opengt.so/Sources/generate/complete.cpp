@@ -9,9 +9,9 @@ namespace OpenGraphtheory
 {
     namespace Generate
     {
-        //FactoryRegistrator<Generator> GeneratorCOMPLETE::GeneratorCompleteRegistrator(
-        //    &Generator::GeneratorFactory, "complete", new DefaultInstantiator<Generator, GeneratorCOMPLETE>(
-        //        "complete", "Complete / Complete multipartite graphs","http://en.wikipedia.org/wiki/Complete_graph"));
+        FactoryRegistrator<Generator> GeneratorCOMPLETE::GeneratorCompleteRegistrator(
+            &Generator::GeneratorFactory, "complete", new DefaultInstantiator<Generator, GeneratorCOMPLETE>(
+                "complete", "Complete / Complete multipartite graphs","http://en.wikipedia.org/wiki/Complete_graph"));
 
         GeneratorCOMPLETE::GeneratorCOMPLETE()
         {

@@ -46,7 +46,7 @@ namespace OpenGraphtheory
             os << "%%EOF\n";
         }
 
-        FactoryRegistrator<ExportFilter> ExportFilterPostscriptRegistrator(&ExportFilter::ExportFilterFactory, "postscript",
+        FactoryRegistrator<ExportFilter> ExportFilterPOSTSCRIPT::ExportFilterPostscriptRegistrator(&ExportFilter::ExportFilterFactory, "postscript",
             new DefaultInstantiator<ExportFilter, ExportFilterPOSTSCRIPT>("postscript", "PostScript", "http://en.wikipedia.org/wiki/PostScript"));
 
     }

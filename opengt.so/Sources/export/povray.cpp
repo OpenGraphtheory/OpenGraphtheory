@@ -90,7 +90,7 @@ namespace OpenGraphtheory
 
         }
 
-        FactoryRegistrator<ExportFilter> ExportFilterPovrayRegistrator(&ExportFilter::ExportFilterFactory, "povray",
+        FactoryRegistrator<ExportFilter> ExportFilterPOVRAY::ExportFilterPovrayRegistrator(&ExportFilter::ExportFilterFactory, "povray",
             new DefaultInstantiator<ExportFilter, ExportFilterPOVRAY>("povray", "POV-Ray", "http://en.wikipedia.org/wiki/POV-Ray"));
 
 

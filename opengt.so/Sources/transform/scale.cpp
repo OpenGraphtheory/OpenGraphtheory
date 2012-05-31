@@ -10,9 +10,9 @@ namespace OpenGraphtheory
     {
 
 
-        //FactoryRegistrator<Transformer> TransformerSCALE::TransformerScaleRegistrator(
-        //    &Transformer::TransformerFactory, "scale", new DefaultInstantiator<Transformer, TransformerSCALE>(
-        //        "scale", "to fit the graph into the rectangle given by parameters (width height [depth ...])", "http://en.wikipedia.org/wiki/Scaling_(geometry)"));
+        FactoryRegistrator<Transformer> TransformerSCALE::TransformerScaleRegistrator(
+            &Transformer::TransformerFactory, "scale", new DefaultInstantiator<Transformer, TransformerSCALE>(
+                "scale", "to fit the graph into the rectangle given by parameters (width height [depth ...])", "http://en.wikipedia.org/wiki/Scaling_(geometry)"));
 
         TransformerSCALE::TransformerSCALE()
         {

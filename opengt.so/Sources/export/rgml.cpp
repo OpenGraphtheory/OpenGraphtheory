@@ -59,7 +59,7 @@ namespace OpenGraphtheory
             os << "\n</rdf:RDF>\n";
         }
 
-        FactoryRegistrator<ExportFilter> ExportFilterRgmlRegistrator(&ExportFilter::ExportFilterFactory, "rgml",
+        FactoryRegistrator<ExportFilter> ExportFilterRGML::ExportFilterRgmlRegistrator(&ExportFilter::ExportFilterFactory, "rgml",
             new DefaultInstantiator<ExportFilter, ExportFilterRGML>("rgml", "Resource Description Framework (RDF) Graph Modeling Language",
                 "http://www.cs.rpi.edu/research/groups/pb/punin/public_html/RGML/"));
 

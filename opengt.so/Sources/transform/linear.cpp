@@ -9,9 +9,9 @@ namespace OpenGraphtheory
     namespace Transform
     {
 
-        //FactoryRegistrator<Transformer> TransformerLINEAR::TransformerLinearRegistrator(
-        //    &Transformer::TransformerFactory, "linear", new DefaultInstantiator<Transformer, TransformerLINEAR>(
-        //        "linear", "linear transforming", "http://en.wikipedia.org/wiki/Linear_map"));
+        FactoryRegistrator<Transformer> TransformerLINEAR::TransformerLinearRegistrator(
+            &Transformer::TransformerFactory, "linear", new DefaultInstantiator<Transformer, TransformerLINEAR>(
+                "linear", "linear transforming", "http://en.wikipedia.org/wiki/Linear_map"));
 
         TransformerLINEAR::TransformerLINEAR()
         {

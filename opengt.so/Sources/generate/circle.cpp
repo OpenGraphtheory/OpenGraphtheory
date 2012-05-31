@@ -9,9 +9,9 @@ namespace OpenGraphtheory
     namespace Generate
     {
 
-        //FactoryRegistrator<Generator> GeneratorCIRCLE::GeneratorCircleRegistrator(
-        //    &Generator::GeneratorFactory, "circle", new DefaultInstantiator<Generator, GeneratorCIRCLE> (
-        //        "circle", "Circular graphs","http://en.wikipedia.org/wiki/Cycle_graph"));
+        FactoryRegistrator<Generator> GeneratorCIRCLE::GeneratorCircleRegistrator(
+            &Generator::GeneratorFactory, "circle", new DefaultInstantiator<Generator, GeneratorCIRCLE> (
+                "circle", "Circular graphs","http://en.wikipedia.org/wiki/Cycle_graph"));
 
         GeneratorCIRCLE::GeneratorCIRCLE()
         {

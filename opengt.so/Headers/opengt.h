@@ -12,39 +12,6 @@
 	#include "attributes.h"
 	using namespace std;
 
-/*
-	TODO:
-	=====
-	need 2-3 videos before launch
-	Graph::Clear() doesn't invalidate iterators!
-
-	doxygen compatibility
-	induced subgraph from set<VertexIterator>
-	components
-	methods to get sizes of the sets (EdgesToAdjacentVertices etc)
-	graph::label,id -> , LoadFromXML
-	melt set<VertexIterator>
-
-	iterators must be instantiated in methods of the iterators, not in methods
-		of the actual objects
-	operator-> operator* must go (no access to actual objects!)
-	loops in exporters
-	multiplicity -> distinguish loops from half edges
-
-	changes must invalidate iterators
-	thread-safety
-
-	Induced Subgraph
-	operators + - * (sets of) vertices, edges, graphs
-
-	meta-infos (tree decomposition or so)
-	degree
-	Reverse Iterators
-
-	debugging -> print map<int,Vertex*> for ID, XML_Id
-
-*/
-
     namespace OpenGraphtheory
     {
 

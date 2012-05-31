@@ -10,10 +10,10 @@ namespace OpenGraphtheory
     namespace Transform
     {
 
-        //FactoryRegistrator<Transformer> TransformerSPRINGEMBEDDER::TransformerSpringEmbedderRegistrator(
-        //    &Transformer::TransformerFactory, "springembed", new DefaultInstantiator<Transformer, TransformerSPRINGEMBEDDER>(
-        //        "springembed", "assigns coordinates to vertices, using the spring-embedding technique",
-        //        "http://i11www.iti.uni-karlsruhe.de/_media/teaching/sommer2004/networkdrawing/spring.pdf"));
+        FactoryRegistrator<Transformer> TransformerSPRINGEMBEDDER::TransformerSpringEmbedderRegistrator(
+            &Transformer::TransformerFactory, "springembed", new DefaultInstantiator<Transformer, TransformerSPRINGEMBEDDER>(
+                "springembed", "assigns coordinates to vertices, using the spring-embedding technique",
+                "http://i11www.iti.uni-karlsruhe.de/_media/teaching/sommer2004/networkdrawing/spring.pdf"));
 
 
         TransformerSPRINGEMBEDDER::TransformerSPRINGEMBEDDER()

@@ -9,10 +9,10 @@ namespace OpenGraphtheory
     namespace Transform
     {
 
-        //FactoryRegistrator<Transformer> TransformerASPECTSCALE::TransformerAspectScaleRegistrator(
-        //    &(Transformer::TransformerFactory), "aspectscale", new DefaultInstantiator<Transformer, TransformerASPECTSCALE>(
-        //        "aspectscale", "fits the vertices into the given space (width height [depth ...]) preserving aspect ratio",
-        //        "http://en.wikipedia.org/wiki/Scaling_(geometry)"));
+        FactoryRegistrator<Transformer> TransformerASPECTSCALE::TransformerAspectScaleRegistrator(
+            &(Transformer::TransformerFactory), "aspectscale", new DefaultInstantiator<Transformer, TransformerASPECTSCALE>(
+                "aspectscale", "fits the vertices into the given space (width height [depth ...]) preserving aspect ratio",
+                "http://en.wikipedia.org/wiki/Scaling_(geometry)"));
 
         TransformerASPECTSCALE::TransformerASPECTSCALE()
         {

@@ -74,7 +74,7 @@ namespace OpenGraphtheory
             os << "bye\n";
         }
 
-        FactoryRegistrator<ExportFilter> ExportFilterMpostRegistrator(&ExportFilter::ExportFilterFactory, "mpost",
+        FactoryRegistrator<ExportFilter> ExportFilterMPOST::ExportFilterMpostRegistrator(&ExportFilter::ExportFilterFactory, "mpost",
             new DefaultInstantiator<ExportFilter, ExportFilterMPOST>("mpost", "MetaPost", "http://de.wikipedia.org/wiki/MetaPost"));
 
     }

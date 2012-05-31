@@ -9,9 +9,9 @@ namespace OpenGraphtheory
     namespace Transform
     {
 
-        //FactoryRegistrator<Transformer> TransformerROTATION::TransformerRotationRegistrator(
-        //    &Transformer::TransformerFactory, "rotate", new DefaultInstantiator<Transformer, TransformerROTATION>(
-        //        "rotate", "for rotating the graph (parameter 2 and 3 to set the center of the rotation, if present)", "http://en.wikipedia.org/wiki/Rotation_(mathematics)"));
+        FactoryRegistrator<Transformer> TransformerROTATION::TransformerRotationRegistrator(
+            &Transformer::TransformerFactory, "rotate", new DefaultInstantiator<Transformer, TransformerROTATION>(
+                "rotate", "for rotating the graph (parameter 2 and 3 to set the center of the rotation, if present)", "http://en.wikipedia.org/wiki/Rotation_(mathematics)"));
 
         TransformerROTATION::TransformerROTATION()
         {

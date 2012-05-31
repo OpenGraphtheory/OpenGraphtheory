@@ -53,7 +53,7 @@ namespace OpenGraphtheory
             os << "</graphml>\n";
         }
 
-        FactoryRegistrator<ExportFilter> ExportFilterGraphMLRegistrator(&ExportFilter::ExportFilterFactory, "graphml",
+        FactoryRegistrator<ExportFilter> ExportFilterGRAPHML::ExportFilterGraphmlRegistrator(&ExportFilter::ExportFilterFactory, "graphml",
             new DefaultInstantiator<ExportFilter, ExportFilterGRAPHML>("graphml", "GraphML", "http://graphml.graphdrawing.org/"));
 
 

@@ -51,8 +51,8 @@ namespace OpenGraphtheory
             os << "}\n";
         }
 
-//        FactoryRegistrator<ExportFilter> ExportFilterDotRegistrator(&ExportFilter::ExportFilterFactory, "dot",
-//            new DefaultInstantiator<ExportFilter, ExportFilterDOT>("dot", "Fileformat of the Graphviz project", "http://www.graphviz.org/doc/info/lang.html"));
+        FactoryRegistrator<ExportFilter> ExportFilterDOT::ExportFilterDotRegistrator(&ExportFilter::ExportFilterFactory, "dot",
+            new DefaultInstantiator<ExportFilter, ExportFilterDOT>("dot", "Fileformat of the Graphviz project", "http://www.graphviz.org/doc/info/lang.html"));
 
     }
 }
