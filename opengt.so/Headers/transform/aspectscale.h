@@ -17,7 +17,7 @@
                     static FactoryRegistrator<Transformer> TransformerAspectScaleRegistrator;
                 public:
                     TransformerASPECTSCALE();
-                    void DoTransform(OpenGraphtheory::Graph& G, std::vector<float> parameters);
+                    void DoTransform(OpenGraphtheory::Graph& G, std::vector<float> parameters, IntermediateSteps::IntermediateStepHandler* intermediatestephandler=NULL);
             };
 
         }

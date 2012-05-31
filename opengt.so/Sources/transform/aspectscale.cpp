@@ -3,6 +3,7 @@
 
 using namespace std;
 using namespace OpenGraphtheory;
+using namespace OpenGraphtheory::IntermediateSteps;
 
 namespace OpenGraphtheory
 {
@@ -20,7 +21,7 @@ namespace OpenGraphtheory
             MaxParamCount = -1;
         }
 
-        void TransformerASPECTSCALE::DoTransform(Graph& G, vector<float> parameters)
+        void TransformerASPECTSCALE::DoTransform(Graph& G, vector<float> parameters, IntermediateStepHandler* intermediatestephandler)
         {
             unsigned int dimensions = 0;
             vector<float> dimension_min;

@@ -1,40 +1,45 @@
 
-#include<vector>
-using namespace std;
+#ifndef __OPENGRAPHTHEORY_VISUALIZATION_VECTORND_H
+    #define __OPENGRAPHTHEORY_VISUALIZATION_VECTORND_H
 
-namespace OpenGraphtheory
-{
-    namespace Visualization
+    #include<vector>
+    using namespace std;
+
+    namespace OpenGraphtheory
     {
-
-        class VectorND
+        namespace Visualization
         {
-            public:
-                vector<float> vec;
-                VectorND(int size);
-                VectorND(const vector<float> vect);
-                VectorND(const VectorND& Copy); // Copy Constructor
-                VectorND& operator=(const VectorND &Copy);
-                float operator[](unsigned int index);
 
-                VectorND operator+(const VectorND& Sum) const;
-                VectorND operator-(const VectorND& Diff) const;
-                void operator+=(const VectorND& Sum);
-                void operator-=(const VectorND& Diff);
+            class VectorND
+            {
+                public:
+                    vector<float> vec;
+                    VectorND(int size);
+                    VectorND(const vector<float> vect);
+                    VectorND(const VectorND& Copy); // Copy Constructor
+                    VectorND& operator=(const VectorND &Copy);
+                    float operator[](unsigned int index);
 
-                float operator*(const VectorND& Prod) const; // Euclidian Product
-                VectorND operator*(float Prod) const;
-                VectorND operator/(float Div) const;
+                    VectorND operator+(const VectorND& Sum) const;
+                    VectorND operator-(const VectorND& Diff) const;
+                    void operator+=(const VectorND& Sum);
+                    void operator-=(const VectorND& Diff);
 
-                float Length() const;
-                VectorND Normalized() const;
-                //float Theta() const; // angle between the vector and the x-axis
+                    float operator*(const VectorND& Prod) const; // Euclidian Product
+                    VectorND operator*(float Prod) const;
+                    VectorND operator/(float Div) const;
 
-                static float Distance(const VectorND& a, const VectorND& b);
-        };
+                    float Length() const;
+                    VectorND Normalized() const;
+                    //float Theta() const; // angle between the vector and the x-axis
 
+                    static float Distance(const VectorND& a, const VectorND& b);
+            };
+
+        }
     }
-}
+
+#endif
 
 
 

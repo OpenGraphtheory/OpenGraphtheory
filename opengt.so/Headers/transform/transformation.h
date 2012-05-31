@@ -1,31 +1,36 @@
 
-#include <list>
-#include "../opengt.h"
-#include "../factory.h"
-using namespace std;
+#ifndef __OPENGRAPHTHEORY_TRANSFORM_TRANSFORMATION_H
+    #define __OPENGRAPHTHEORY_TRANSFORM_TRANSFORMATION_H
 
-namespace OpenGraphtheory
-{
-    namespace Transform
+    #include <list>
+    #include "../opengt.h"
+    #include "../factory.h"
+    #include "../intermediatesteps/intermediatesteps.h"
+    using namespace std;
+
+    namespace OpenGraphtheory
     {
-
-        class Transformer
+        namespace Transform
         {
-            public:
-                int MinParamCount;
-                int MaxParamCount;
 
-            protected:
-                virtual void DoTransform(Graph& G, vector<float> parameter) = 0;
+            class Transformer
+            {
+                public:
+                    int MinParamCount;
+                    int MaxParamCount;
 
-            public:
-                static Factory<Transformer> TransformerFactory;
+                protected:
+                    virtual void DoTransform(Graph& G, vector<float> parameter, IntermediateSteps::IntermediateStepHandler* intermediatestephandler) = 0;
 
-                virtual ~Transformer();
-                void Transform(Graph& G, vector<float> parameter);
-                static void Transform(Graph& G, vector<float> parameter, string transformer);
-        };
+                public:
+                    static Factory<Transformer> TransformerFactory;
 
+                    virtual ~Transformer();
+                    void Transform(Graph& G, vector<float> parameter, IntermediateSteps::IntermediateStepHandler* intermediatestephandler);
+                    static void Transform(Graph& G, vector<float> parameter, string transformer, IntermediateSteps::IntermediateStepHandler* intermediatestephandler);
+            };
+
+        }
     }
-}
 
+#endif

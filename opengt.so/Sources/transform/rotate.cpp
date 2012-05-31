@@ -3,6 +3,7 @@
 
 using namespace std;
 using namespace OpenGraphtheory;
+using namespace OpenGraphtheory::IntermediateSteps;
 
 namespace OpenGraphtheory
 {
@@ -23,7 +24,7 @@ namespace OpenGraphtheory
         //    x' = x*cos a + y*sin a,
         //    y' = − x*sin a + y*cos a,
         // additional parameters define the center of the rotation
-        void TransformerROTATION::DoTransform(Graph& G, vector<float> parameters)
+        void TransformerROTATION::DoTransform(Graph& G, vector<float> parameters, IntermediateStepHandler* intermediatestephandler)
         {
             //float angle=parameters[0];
             //float xshift = 0;

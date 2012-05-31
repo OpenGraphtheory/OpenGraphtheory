@@ -4,6 +4,7 @@
 using namespace std;
 using namespace OpenGraphtheory;
 using namespace OpenGraphtheory::Visualization;
+using namespace OpenGraphtheory::IntermediateSteps;
 
 namespace OpenGraphtheory
 {
@@ -18,6 +19,9 @@ namespace OpenGraphtheory
 
         TransformerSPRINGEMBEDDER::TransformerSPRINGEMBEDDER()
         {
+            MinParamCount = 0;
+            MaxParamCount = -1;
+
             c_repel     =    25;
             c_spring    =    20;
             friction    =    0.5;
@@ -63,7 +67,7 @@ namespace OpenGraphtheory
         // -----------------------------------------------------------------------------
 
 
-        void TransformerSPRINGEMBEDDER::SpringEmbed(Graph& G, GraphWindow* display, int dimensions, vector<float> dimension_limits)
+        void TransformerSPRINGEMBEDDER::SpringEmbed(Graph& G, int dimensions, vector<float> dimension_limits, IntermediateStepHandler* intermediatestephandler)
         {
             int width = dimension_limits[0];
             int height = dimension_limits[1];
@@ -92,6 +96,7 @@ namespace OpenGraphtheory
                 int i = 0;
                 for(Graph::VertexIterator a = G.BeginVertices(); a != G.EndVertices(); a++, i++)
                 {
+
                     VectorND traction = tractions[i] * friction;
 
                     // compute forces on a by the other vertices
@@ -127,8 +132,8 @@ namespace OpenGraphtheory
                         max_movement = current_movement;
                 }
 
-                if(display != NULL)
-                    display->Update();
+                if(intermediatestephandler != NULL)
+                    intermediatestephandler->Handle(&G);
 
                 if(++iteration > nextincrease)
                 {
@@ -140,31 +145,7 @@ namespace OpenGraphtheory
 
         }
 
-        void TransformerSPRINGEMBEDDER::DoTransform3D(Graph& G, vector<float> parameters)
-        {
-            int width = 800;
-            int height = 600;
-            int depth = 600;
-
-            if(parameters.size() > 1)
-            {
-                width = (int)(parameters[0]+0.5);
-                height = (int)(parameters[1]+0.5);
-            }
-            if(parameters.size() > 2)
-                depth = (int)(parameters[2]+0.5);
-
-            GraphWindow win(width,height,&G);
-            win.Update();
-            vector<float> dimension_limits;
-            dimension_limits.push_back(width);
-            dimension_limits.push_back(height);
-            dimension_limits.push_back(depth);
-            SpringEmbed(G, &win, 3, dimension_limits);
-            //win.WaitUntilClosed();
-        }
-
-        void TransformerSPRINGEMBEDDER::DoTransform(Graph& G, vector<float> parameters)
+        void TransformerSPRINGEMBEDDER::DoTransform(Graph& G, vector<float> parameters, IntermediateStepHandler* intermediatestephandler)
         {
             int width = 800;
             int height = 600;
@@ -175,13 +156,10 @@ namespace OpenGraphtheory
                 height = (int)(parameters[1]+0.5);
             }
 
-            GraphWindow win(width,height,&G);
-            win.Update();
             vector<float> dimension_limits;
             dimension_limits.push_back(width);
             dimension_limits.push_back(height);
-            SpringEmbed(G, &win, 2, dimension_limits);
-            //win.WaitUntilClosed();
+            SpringEmbed(G, 2, dimension_limits, intermediatestephandler);
         }
 
     }

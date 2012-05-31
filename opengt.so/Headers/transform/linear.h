@@ -16,12 +16,12 @@
                 protected:
                     static FactoryRegistrator<Transformer> TransformerLinearRegistrator;
 
-                    void TransformLinear(Graph& G, vector<vector<float> > A, vector<float> B);
-                    void TransformLinear(Graph& G, float A11, float A12, float A21, float A22, float B1, float B2);
+                    void TransformLinear(Graph& G, vector<vector<float> > A, vector<float> B, IntermediateSteps::IntermediateStepHandler* intermediatestephandler = NULL);
+                    void TransformLinear(Graph& G, float A11, float A12, float A21, float A22, float B1, float B2, IntermediateSteps::IntermediateStepHandler* intermediatestephandler = NULL);
 
                 public:
                     TransformerLINEAR();
-                    void DoTransform(OpenGraphtheory::Graph& G, std::vector<float> parameters);
+                    void DoTransform(OpenGraphtheory::Graph& G, std::vector<float> parameters, IntermediateSteps::IntermediateStepHandler* intermediatestephandler = NULL);
             };
 
         }

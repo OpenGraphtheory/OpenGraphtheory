@@ -3,6 +3,7 @@
 
 using namespace std;
 using namespace OpenGraphtheory;
+using namespace OpenGraphtheory::IntermediateSteps;
 
 namespace OpenGraphtheory
 {
@@ -20,7 +21,7 @@ namespace OpenGraphtheory
             MaxParamCount = -1;
         }
 
-        void TransformerSHIFT::DoTransform(Graph& G, vector<float> parameters)
+        void TransformerSHIFT::DoTransform(Graph& G, vector<float> parameters, IntermediateStepHandler* intermediatestephandler)
         {
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {

@@ -3,6 +3,7 @@
 
 using namespace std;
 using namespace OpenGraphtheory;
+using namespace OpenGraphtheory::IntermediateSteps;
 
 namespace OpenGraphtheory
 {
@@ -21,7 +22,7 @@ namespace OpenGraphtheory
 
 
         /// A * OldCoordinates + B = NewCoordinates
-        void TransformerLINEAR::TransformLinear(Graph& G, vector<vector<float> > A, vector<float> B)
+        void TransformerLINEAR::TransformLinear(Graph& G, vector<vector<float> > A, vector<float> B, IntermediateStepHandler* intermediatestephandler)
         {
             while(B.size() < A.size())
                 B.push_back(0.0f);
@@ -41,7 +42,7 @@ namespace OpenGraphtheory
             }
         }
 
-        void TransformerLINEAR::TransformLinear(Graph& G, float A11, float A12, float A21, float A22, float B1, float B2)
+        void TransformerLINEAR::TransformLinear(Graph& G, float A11, float A12, float A21, float A22, float B1, float B2, IntermediateStepHandler* intermediatestephandler)
         {
             vector<float> B;
             B.push_back(B1);
@@ -63,7 +64,7 @@ namespace OpenGraphtheory
         }
 
 
-        void TransformerLINEAR::DoTransform(Graph& G, vector<float> parameters)
+        void TransformerLINEAR::DoTransform(Graph& G, vector<float> parameters, IntermediateStepHandler* intermediatestephandler)
         {
             float A11, A12, A21, A22, B1=0.0f, B2=0.0f;
             A11 = parameters[0];

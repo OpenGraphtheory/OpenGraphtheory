@@ -10,7 +10,6 @@
     #include <iostream>
     #include <math.h>
     #include <stdlib.h> // for random numbers
-    #include "../visualize/GraphWindow.h"
 
     namespace OpenGraphtheory
     {
@@ -39,13 +38,13 @@
                     int iteration;
                     int nextincrease;
 
-                    void SpringEmbed(Graph& G, OpenGraphtheory::Visualization::GraphWindow* display, int dimensions, vector<float> dimension_limits);
+                    void SpringEmbed(Graph& G, int dimensions, vector<float> dimension_limits,
+                                     IntermediateSteps::IntermediateStepHandler* intermediatestephandler = NULL);
 
 
                 public:
                     TransformerSPRINGEMBEDDER();
-                    void DoTransform(OpenGraphtheory::Graph& G, std::vector<float> parameters);
-                    void DoTransform3D(Graph& G, vector<float> parameters);
+                    void DoTransform(OpenGraphtheory::Graph& G, std::vector<float> parameters, IntermediateSteps::IntermediateStepHandler* intermediatestephandler = NULL);
             };
 
         }

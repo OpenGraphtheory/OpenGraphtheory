@@ -70,6 +70,7 @@ int main(int argc, char** argv)
 using namespace std;
 using namespace OpenGraphtheory;
 using namespace OpenGraphtheory::Transform;
+using namespace OpenGraphtheory::IntermediateSteps;
 
 void usage(char* argv0);
 int main(int argc, char** argv)
@@ -78,15 +79,47 @@ int main(int argc, char** argv)
 	{
 		Graph G;
         cin >> G;
+        string sIntermediatestephandler = "";
+        IntermediateStepHandler* intermediatestephandler = NULL;
 
 		/// do your thing
 		vector<float> parameters;
-		for(int i = 2; i < argc; i++)
-            parameters.push_back(atof(argv[i]));
+		int argvi = 2;
+		for(; argvi < argc; argvi++)
+		{
+		    if(string(argv[argvi]) == "--intermediatesteps")
+		    {
+		        if(argc > argvi+1)
+                    sIntermediatestephandler = argv[argvi+1];
+                break;
+		    }
+            parameters.push_back(atof(argv[argvi]));
+		}
 
-        Transformer::Transform(G, parameters, argv[1]);
+		if(sIntermediatestephandler != "")
+		{
+            intermediatestephandler = IntermediateStepHandler::IntermediateStepHandlerFactory.Produce(sIntermediatestephandler);
+            if(intermediatestephandler != NULL)
+            {
+                argvi += 2;
+                vector<string> intermediatestephandlerparameters;
+                for(; argvi < argc; argvi++)
+                    intermediatestephandlerparameters.push_back(argv[argvi]);
+                intermediatestephandler->Configure(intermediatestephandlerparameters);
+                intermediatestephandler->BeginHandling();
+            }
+		}
 
+
+        Transformer::Transform(G, parameters, argv[1], intermediatestephandler);
         cout << G;
+
+        if(intermediatestephandler != NULL)
+        {
+            intermediatestephandler->EndHandling();
+            delete(intermediatestephandler);
+        }
+
 	}
 	catch(const char* s)
 	{

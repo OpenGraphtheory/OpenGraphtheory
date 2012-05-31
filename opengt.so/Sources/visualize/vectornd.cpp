@@ -1,4 +1,5 @@
-
+#include<iostream>
+using namespace std;
 #include<math.h>
 #include "../../Headers/visualize/vectornd.h"
 
@@ -74,7 +75,7 @@ namespace OpenGraphtheory
         float VectorND::operator*(const VectorND& Prod) const
         {
             float sum = 0;
-            for(unsigned int i = min(vec.size(), Prod.vec.size())-1; i >= 0; --i)
+            for(unsigned int i = 0; i < min(vec.size(), Prod.vec.size()); ++i)
                 sum += vec[i] * Prod.vec[i];
             return sum;
         }
@@ -82,15 +83,17 @@ namespace OpenGraphtheory
         VectorND VectorND::operator*(float Prod) const
         {
             vector<float> result(vec.size());
-            for(unsigned int i = vec.size() -1; i >= 0; --i)
+            for(unsigned int i = 0; i < vec.size(); ++i)
+            {
                 result[i] = vec[i] * Prod;
+            }
             return VectorND(result);
         }
 
         VectorND VectorND::operator/(float Div) const
         {
             vector<float> result(vec.size());
-            for(unsigned int i = vec.size() -1; i >= 0; --i)
+            for(unsigned int i = 0; i < vec.size(); ++i)
                 result[i] = vec[i] / Div;
             return VectorND(result);
         }
@@ -98,7 +101,7 @@ namespace OpenGraphtheory
         float VectorND::Length() const
         {
             float sum = 0;
-            for(unsigned int i = vec.size()-1; i >= 0; --i)
+            for(unsigned int i = 0; i < vec.size(); ++i)
                 sum += vec[i]*vec[i];
             return sqrt(sum);
         }

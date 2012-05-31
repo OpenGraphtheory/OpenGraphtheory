@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1338379332 source:/home/viktor/Programming/OpenGraphtheory/programs/transform/transform.cpp
+1338457568 source:/home/viktor/Programming/OpenGraphtheory/programs/transform/transform.cpp
 	<iostream>
 	"../../opengt.so/opengt.h"
 	<iostream>
@@ -42,7 +42,7 @@
 	<string>
 	<map>
 
-1338300269 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
+1338451743 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
 	<list>
 	<set>
 	<map>
@@ -68,8 +68,15 @@
 	<string>
 	<map>
 
-1338378852 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/transform/transformation.h
+1338456172 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/transform/transformation.h
 	<list>
+	"../opengt.h"
+	"../factory.h"
+	"../intermediatesteps/intermediatesteps.h"
+
+1338459313 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/intermediatesteps/intermediatesteps.h
+	<string>
+	<iostream>
 	"../opengt.h"
 	"../factory.h"
 

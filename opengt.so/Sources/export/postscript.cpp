@@ -23,7 +23,7 @@ namespace OpenGraphtheory
             /// header
             os << "%!PS-Adobe-3.0\n";
             os << "% www.Open-Graphtheory.org\n";
-            os << "72 2.54 div 10 div dup scale\n";
+            os << "72 2.54 div 30 div dup scale\n";
             os << "0.2 setlinewidth\n";
 
             /// draw vertices

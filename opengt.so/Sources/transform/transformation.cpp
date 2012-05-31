@@ -2,6 +2,7 @@
 #include "../../Headers/transform/transformation.h"
 using namespace std;
 using namespace OpenGraphtheory;
+using namespace OpenGraphtheory::IntermediateSteps;
 
 namespace OpenGraphtheory
 {
@@ -15,7 +16,7 @@ namespace OpenGraphtheory
 
         }
 
-        void Transformer::Transform(Graph& G, vector<float> parameter)
+        void Transformer::Transform(Graph& G, vector<float> parameter, IntermediateStepHandler* intermediatestephandler)
         {
             if(MinParamCount > 0 && (((int)parameter.size()) < MinParamCount))
             {
@@ -31,16 +32,16 @@ namespace OpenGraphtheory
                 throw exception.str().c_str();
             }
 
-            DoTransform(G, parameter);
+            DoTransform(G, parameter, intermediatestephandler);
         }
 
 
-        void Transformer::Transform(Graph& G, vector<float> parameter, string transformer)
+        void Transformer::Transform(Graph& G, vector<float> parameter, string transformer, IntermediateSteps::IntermediateStepHandler* intermediatestephandler)
         {
             Transformer* trans = Transformer::TransformerFactory.Produce(transformer);
             if(trans == NULL)
                 throw "unknown transformer";
-            trans->Transform(G, parameter);
+            trans->Transform(G, parameter, intermediatestephandler);
             delete trans;
        }
 
