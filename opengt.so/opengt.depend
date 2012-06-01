@@ -453,3 +453,26 @@
 	"intermediatesteps.h"
 	"../export/export.h"
 
+1338461585 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/transform/spring_embedder3d.cpp
+	"../../Headers/transform/springembedder3d.h"
+
+1338461878 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/transform/springembedder3d.h
+	<list>
+	"../opengt.h"
+	"../visualize/vectornd.h"
+	"../factory.h"
+	"transformation.h"
+	"springembedder.h"
+	<iostream>
+	<math.h>
+	<stdlib.h>
+
+1338550226 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/algorithm.cpp
+	"../../Headers/algorithms/algorithm.h"
+
+1338550740 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/algorithm.h
+	"../opengt.h"
+	"../factory.h"
+	<string>
+	<vector>
+
