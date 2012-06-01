@@ -68,6 +68,10 @@
 		<Unit filename="Headers/generate/tree.h" />
 		<Unit filename="Headers/import/import.h" />
 		<Unit filename="Headers/import/tgf.h" />
+		<Unit filename="Headers/intermediatesteps/intermediatesteps.h" />
+		<Unit filename="Headers/intermediatesteps/show.h" />
+		<Unit filename="Headers/intermediatesteps/stdout.h" />
+		<Unit filename="Headers/intermediatesteps/writefile.h" />
 		<Unit filename="Headers/opengt.h" />
 		<Unit filename="Headers/simple_xml.h" />
 		<Unit filename="Headers/thread.h" />
@@ -77,6 +81,7 @@
 		<Unit filename="Headers/transform/scale.h" />
 		<Unit filename="Headers/transform/shift.h" />
 		<Unit filename="Headers/transform/springembedder.h" />
+		<Unit filename="Headers/transform/springembedder3d.h" />
 		<Unit filename="Headers/transform/transformation.h" />
 		<Unit filename="Headers/visualize/DisplayWindow.h" />
 		<Unit filename="Headers/visualize/GraphWindow.h" />
@@ -114,6 +119,12 @@
 		<Unit filename="Sources/generate/tree.cpp" />
 		<Unit filename="Sources/import/import.cpp" />
 		<Unit filename="Sources/import/tgf.cpp" />
+		<Unit filename="Sources/intermediatesteps/intermediate.cpp">
+			<Option weight="49" />
+		</Unit>
+		<Unit filename="Sources/intermediatesteps/show.cpp" />
+		<Unit filename="Sources/intermediatesteps/stdout.cpp" />
+		<Unit filename="Sources/intermediatesteps/writefile.cpp" />
 		<Unit filename="Sources/opengt.cpp" />
 		<Unit filename="Sources/processing/components.cpp" />
 		<Unit filename="Sources/simple_xml.cpp" />
@@ -124,6 +135,7 @@
 		<Unit filename="Sources/transform/scale.cpp" />
 		<Unit filename="Sources/transform/shift.cpp" />
 		<Unit filename="Sources/transform/spring_embedder.cpp" />
+		<Unit filename="Sources/transform/spring_embedder3d.cpp" />
 		<Unit filename="Sources/transform/transformation.cpp">
 			<Option weight="49" />
 		</Unit>
