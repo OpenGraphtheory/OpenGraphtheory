@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1330729232 source:/home/viktor/Programming/OpenGraphtheory/programs/showgraph/showgraph.cpp
+1338380093 source:/home/viktor/Programming/OpenGraphtheory/programs/showgraph/showgraph.cpp
 	<iostream>
-	"../../opengt.so/opengt.h"
-	"../../opengt.so/visualize/GraphWindow.h"
+	"../../opengt.so/Headers/opengt.h"
+	"../../opengt.so/Headers/visualize/GraphWindow.h"
 
 1337355217 /home/viktor/Programming/OpenGraphtheory/opengt.so/opengt.h
 	<list>
@@ -44,4 +44,45 @@
 1337355217 /home/viktor/Programming/OpenGraphtheory/opengt.so/factory.h
 	<string>
 	<map>
+
+1338451743 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
+	<list>
+	<set>
+	<map>
+	<string>
+	<iostream>
+	<fstream>
+	"simple_xml.h"
+	"attributes.h"
+
+1337348224 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/simple_xml.h
+	<iostream>
+	<sstream>
+	<vector>
+	<list>
+
+1338301009 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
+	<string>
+	<iostream>
+	"factory.h"
+	"simple_xml.h"
+
+1337755682 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/factory.h
+	<string>
+	<map>
+
+1330678050 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/GraphWindow.h
+	"DisplayWindow.h"
+	"../opengt.h"
+
+1328603614 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/DisplayWindow.h
+	<iostream>
+	<map>
+	<X11/Xlib.h>
+	<X11/Xutil.h>
+	<semaphore.h>
+	<pthread.h>
+	"vector2d.h"
+
+1329746256 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/vector2d.h
 

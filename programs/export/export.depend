@@ -1,10 +1,10 @@
 # depslib dependency file v1.0
-1337848628 source:/home/viktor/Programming/OpenGraphtheory/programs/export/export.cpp
+1338379812 source:/home/viktor/Programming/OpenGraphtheory/programs/export/export.cpp
 	<iostream>
 	<fstream>
 	<stdio.h>
-	"../../opengt.so/opengt.h"
-	"../../opengt.so/export/export.h"
+	"../../opengt.so/Headers/opengt.h"
+	"../../opengt.so/Headers/export/export.h"
 
 1337344695 /home/viktor/Programming/OpenGraphtheory/opengt.so/opengt.h
 	<list>
@@ -35,4 +35,36 @@
 1337755682 /home/viktor/Programming/OpenGraphtheory/opengt.so/factory.h
 	<string>
 	<map>
+
+1338451743 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
+	<list>
+	<set>
+	<map>
+	<string>
+	<iostream>
+	<fstream>
+	"simple_xml.h"
+	"attributes.h"
+
+1337348224 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/simple_xml.h
+	<iostream>
+	<sstream>
+	<vector>
+	<list>
+
+1338301009 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
+	<string>
+	<iostream>
+	"factory.h"
+	"simple_xml.h"
+
+1337755682 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/factory.h
+	<string>
+	<map>
+
+1338301078 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/export.h
+	<string>
+	<ostream>
+	"../factory.h"
+	"../opengt.h"
 

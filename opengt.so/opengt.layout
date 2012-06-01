@@ -127,7 +127,7 @@
 	<File name="Sources/algorithms/algorithm.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="165" topLine="0" />
 	</File>
-	<File name="Sources/algorithms/color/color.cpp" open="1" top="1" tabpos="1">
+	<File name="Sources/algorithms/color/color.cpp" open="1" top="0" tabpos="1">
 		<Cursor position="727" topLine="0" />
 	</File>
 	<File name="Sources/algorithms/vertexcover/vertexcover.cpp" open="0" top="0" tabpos="0">
@@ -232,8 +232,8 @@
 	<File name="Sources/thread.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="22" topLine="0" />
 	</File>
-	<File name="Sources/transform/aspectscale.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="156" topLine="0" />
+	<File name="Sources/transform/aspectscale.cpp" open="1" top="0" tabpos="5">
+		<Cursor position="2789" topLine="31" />
 	</File>
 	<File name="Sources/transform/linear.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="1714" topLine="15" />
@@ -241,8 +241,8 @@
 	<File name="Sources/transform/rotate.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="151" topLine="1" />
 	</File>
-	<File name="Sources/transform/scale.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="150" topLine="1" />
+	<File name="Sources/transform/scale.cpp" open="1" top="1" tabpos="4">
+		<Cursor position="2751" topLine="26" />
 	</File>
 	<File name="Sources/transform/shift.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="151" topLine="0" />

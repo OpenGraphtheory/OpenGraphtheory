@@ -32,7 +32,7 @@ namespace OpenGraphtheory
             for(Graph::VertexIterator v1 = G.BeginVertices(); v1 != G.EndVertices(); v1++)
             {
                 coordinates = v1.GetCoordinates();
-                for(int j = min(dimensions, coordinates.size())-1; j >= 0; --j)
+                for(unsigned int j = 0; j < min(dimensions, coordinates.size()); ++j)
                 {
                     if(coordinates[j] < dimension_min[j])
                         dimension_min[j] = coordinates[j];
@@ -54,7 +54,7 @@ namespace OpenGraphtheory
 
             // select minimum of scales
             float scale = parameters[0] / (dimension_max[0] - dimension_min[0]);
-            for(unsigned int i = dimensions-1; i >= 1; --i)
+            for(unsigned int i = 0; i < dimensions; ++i)
                 if(dimension_max[i] > dimension_min[i])
                     if(parameters[i] / (dimension_max[i] - dimension_min[i]) < scale)
                         scale = parameters[i] / (dimension_max[i] - dimension_min[i]);
@@ -63,7 +63,7 @@ namespace OpenGraphtheory
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
                 vector<float> coordinates = v.GetCoordinates();
-                for(unsigned int i = coordinates.size()-1; i >= 0; --i)
+                for(unsigned int i = 0; i < coordinates.size(); ++i)
                     coordinates[i] = (coordinates[i] - dimension_min[i]) * scale;
                 v.SetCoordinates(coordinates);
             }

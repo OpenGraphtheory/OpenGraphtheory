@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
 1328001976 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/clique/clique.cpp
 
-1338300958 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/color/color.cpp
-	"../../../Headers/opengt.h"
+1338550820 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/color/color.cpp
+	"../../../Headers/algorithms/color/color.h"
 	<map>
 
 1338451743 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
@@ -304,7 +304,7 @@
 	"../factory.h"
 	"export.h"
 
-1338456639 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/transform/aspectscale.cpp
+1338563027 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/transform/aspectscale.cpp
 	"../../Headers/transform/aspectscale.h"
 
 1338456269 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/transform/aspectscale.h
@@ -337,7 +337,7 @@
 	"../factory.h"
 	"transformation.h"
 
-1338456808 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/transform/scale.cpp
+1338562869 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/transform/scale.cpp
 	"../../Headers/transform/scale.h"
 
 1338456417 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/transform/scale.h
@@ -474,5 +474,11 @@
 	"../opengt.h"
 	"../factory.h"
 	<string>
+	<vector>
+
+1338550761 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/color/color.h
+	"../algorithm.h"
+	<string>
+	<map>
 	<vector>
 
