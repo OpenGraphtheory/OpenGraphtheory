@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
+	<File name="Headers/algorithms/algorithm.h" open="1" top="0" tabpos="2">
+		<Cursor position="785" topLine="0" />
+	</File>
+	<File name="Headers/algorithms/color/color.h" open="0" top="0" tabpos="0">
+		<Cursor position="495" topLine="0" />
+	</File>
 	<File name="Headers/attributes.h" open="0" top="0" tabpos="0">
 		<Cursor position="672" topLine="12" />
 	</File>
@@ -118,8 +124,11 @@
 	<File name="Headers/visualize/vectornd.h" open="0" top="0" tabpos="0">
 		<Cursor position="1383" topLine="1" />
 	</File>
-	<File name="Sources/algorithms/color/color.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="320" topLine="0" />
+	<File name="Sources/algorithms/algorithm.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="165" topLine="0" />
+	</File>
+	<File name="Sources/algorithms/color/color.cpp" open="1" top="1" tabpos="1">
+		<Cursor position="727" topLine="0" />
 	</File>
 	<File name="Sources/algorithms/vertexcover/vertexcover.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="38" topLine="0" />
