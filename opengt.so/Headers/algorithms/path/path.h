@@ -17,12 +17,12 @@
                     static FactoryRegistrator<Algorithm> AlgorithmPathRegistrator;
                     void Run(Graph &G, std::vector<std::string> parameters);
 
-                    list<pair<Graph::VertexIterator, Graph::EdgeIterator> > FindPath(Graph &G, Graph::VertexIterator from, Graph::VertexIterator to);
+                    list<pair<Graph::VertexIterator, Graph::EdgeIterator>* > FindPath(Graph &G, Graph::VertexIterator from, Graph::VertexIterator to);
                     void DijkstraInit(Graph& G, set<Graph::VertexIterator> &Q, map<Graph::VertexIterator, float>& distance, Graph::VertexIterator from);
                     void DijkstraUpdate(Graph::VertexIterator v, Graph::EdgeIterator e, Graph::VertexIterator u, map<Graph::VertexIterator, float> &distance,
-                            map<Graph::VertexIterator, pair<Graph::VertexIterator, Graph::EdgeIterator> > &path);
-                    list<pair<Graph::VertexIterator, Graph::EdgeIterator> > DijkstraExtract(Graph::VertexIterator from, Graph::VertexIterator to,
-                                                        map<Graph::VertexIterator, pair<Graph::VertexIterator, Graph::EdgeIterator> > &path);
+                            map<Graph::VertexIterator, pair<Graph::VertexIterator, Graph::EdgeIterator>* > *path);
+                    list<pair<Graph::VertexIterator, Graph::EdgeIterator>* > DijkstraExtract(Graph::VertexIterator from, Graph::VertexIterator to,
+                                                        map<Graph::VertexIterator, pair<Graph::VertexIterator, Graph::EdgeIterator>* > *path);
             };
         }
     }
