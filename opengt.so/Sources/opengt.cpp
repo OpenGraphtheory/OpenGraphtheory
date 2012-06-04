@@ -162,6 +162,39 @@ namespace OpenGraphtheory
                 return false;
             }
 
+            set<Graph::VertexIterator> Graph::VertexIterator::UnderlyingNeighborhood()
+            {
+                set<Graph::VertexIterator> result;
+                for(Graph::EdgeIterator e = BeginIncidentEdges(); e != EndIncidentEdges(); e++)
+                {
+                    for(Graph::VertexIterator neighbor = e.BeginIncidentVertices(); neighbor != e.EndIncidentVertices(); neighbor++)
+                        result.insert(neighbor);
+                    for(Graph::VertexIterator neighbor = e.BeginPositiveIncidentVertices(); neighbor != e.EndPositiveIncidentVertices(); neighbor++)
+                        result.insert(neighbor);
+                    for(Graph::VertexIterator neighbor = e.BeginNegativeIncidentVertices(); neighbor != e.EndNegativeIncidentVertices(); neighbor++)
+                        result.insert(neighbor);
+                }
+                for(Graph::EdgeIterator e = BeginPositiveIncidentEdges(); e != EndPositiveIncidentEdges(); e++)
+                {
+                    for(Graph::VertexIterator neighbor = e.BeginIncidentVertices(); neighbor != e.EndIncidentVertices(); neighbor++)
+                        result.insert(neighbor);
+                    for(Graph::VertexIterator neighbor = e.BeginPositiveIncidentVertices(); neighbor != e.EndPositiveIncidentVertices(); neighbor++)
+                        result.insert(neighbor);
+                    for(Graph::VertexIterator neighbor = e.BeginNegativeIncidentVertices(); neighbor != e.EndNegativeIncidentVertices(); neighbor++)
+                        result.insert(neighbor);
+                }
+                for(Graph::EdgeIterator e = BeginNegativeIncidentEdges(); e != EndNegativeIncidentEdges(); e++)
+                {
+                    for(Graph::VertexIterator neighbor = e.BeginIncidentVertices(); neighbor != e.EndIncidentVertices(); neighbor++)
+                        result.insert(neighbor);
+                    for(Graph::VertexIterator neighbor = e.BeginPositiveIncidentVertices(); neighbor != e.EndPositiveIncidentVertices(); neighbor++)
+                        result.insert(neighbor);
+                    for(Graph::VertexIterator neighbor = e.BeginNegativeIncidentVertices(); neighbor != e.EndNegativeIncidentVertices(); neighbor++)
+                        result.insert(neighbor);
+                }
+                return result;
+            }
+
             void Graph::VertexIterator::WriteToXml(XML* xml)
             {
                 XML* node = new XML("node");

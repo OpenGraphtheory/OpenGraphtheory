@@ -13,11 +13,16 @@ namespace OpenGraphtheory
             if(G.IsHypergraph())
                 throw "The POSTSCRIPT fileformat does not support hypergraphs\n";
 
+            vector<float> FirstCoordinates = G.BeginVertices().GetCoordinates();
+            float MaxYCoordinate = FirstCoordinates[1];
+
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
                 vector<float> coordinates = v.GetCoordinates();
                 if(coordinates.size() < 2)
                     throw "Vertex with less than 2 coordinates found";
+                if(MaxYCoordinate < coordinates[1])
+                    MaxYCoordinate = coordinates[1];
             }
 
             /// header
@@ -30,7 +35,7 @@ namespace OpenGraphtheory
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
                 vector<float> Coordinates = v.GetCoordinates();
-                os << (int)(Coordinates[0]+0.5) << " " << (int)(Coordinates[1]+0.5) << " 2 0 360 arc fill\n";
+                os << (int)(Coordinates[0]+0.5) << " " << (int)(MaxYCoordinate - Coordinates[1]+0.5) << " 2 0 360 arc fill\n";
             }
 
             /// draw edges
@@ -38,8 +43,8 @@ namespace OpenGraphtheory
             {
                 vector<float> FromCoordinates = e.From().GetCoordinates();
                 vector<float> ToCoordinates = e.To().GetCoordinates();
-                os << (int)(FromCoordinates[0]+0.5) << " " << (int)(FromCoordinates[1]+0.5) << " moveto "
-                   << (int)(ToCoordinates[0]+0.5) << " " << (int)(ToCoordinates[1]+0.5) << " lineto stroke\n";
+                os << (int)(FromCoordinates[0]+0.5) << " " << (int)(MaxYCoordinate - FromCoordinates[1]+0.5) << " moveto "
+                   << (int)(ToCoordinates[0]+0.5) << " " << (int)(MaxYCoordinate - ToCoordinates[1]+0.5) << " lineto stroke\n";
             }
 
             os << "showpage\n";

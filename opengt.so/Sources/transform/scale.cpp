@@ -29,7 +29,7 @@ namespace OpenGraphtheory
             vector<float> dimension_min;
             vector<float> dimension_max;
             vector<float> coordinates;
-cout << "."; cout.flush();
+
             // find minimum and maximum values on all dimensions
             for(Graph::VertexIterator v1 = G.BeginVertices(); v1 != G.EndVertices(); v1++)
             {
@@ -53,7 +53,6 @@ cout << "."; cout.flush();
                     dimensions = coordinates.size();
                 }
             }
-cout << "."; cout.flush();
 
             // set scales for all dimensions
             vector<float> scale(dimensions);
@@ -63,7 +62,6 @@ cout << "."; cout.flush();
                 else
                     scale[i] = 0.0f;
 
-cout << "."; cout.flush();
             // scale
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
@@ -72,7 +70,6 @@ cout << "."; cout.flush();
                     coordinates[i] = (coordinates[i] - dimension_min[i]) * scale[i];
                 v.SetCoordinates(coordinates);
             }
-cout << "."; cout.flush();
         }
 
 

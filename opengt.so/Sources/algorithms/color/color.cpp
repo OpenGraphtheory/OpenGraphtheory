@@ -17,7 +17,7 @@ namespace OpenGraphtheory
         bool AlgorithmCOLORING::Colorize(Graph& G, map<Graph::VertexIterator, int>& Colors, int k)
         {
             Graph::VertexIterator MinChoicesVertex = G.EndVertices();
-            unsigned int MaxNeighborColors = 0;
+            int MaxNeighborColors = -1;
             set<int> MinChoicesUsedColors;
 
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
@@ -25,41 +25,43 @@ namespace OpenGraphtheory
                 if(Colors[v] != -1) // v already has a color
                     continue;
 
+                int UncoloredNeighbors = 0;
                 set<int> used_colors;
-
-                for(Graph::EdgeIterator e = v.BeginIncidentEdges(); e != v.EndIncidentEdges(); e++)
+                set<Graph::VertexIterator> neighbors = v.UnderlyingNeighborhood();
+                for(set<Graph::VertexIterator>::iterator neighbor = neighbors.begin(); neighbor != neighbors.end(); neighbor++)
                 {
-                    for(Graph::VertexIterator neighbor = e.BeginIncidentVertices(); neighbor != e.EndIncidentVertices(); neighbor++)
-                        used_colors.insert(Colors[neighbor]);
-                    for(Graph::VertexIterator neighbor = e.BeginPositiveIncidentVertices(); neighbor != e.EndPositiveIncidentVertices(); neighbor++)
-                        used_colors.insert(Colors[neighbor]);
-                    for(Graph::VertexIterator neighbor = e.BeginNegativeIncidentVertices(); neighbor != e.EndNegativeIncidentVertices(); neighbor++)
-                        used_colors.insert(Colors[neighbor]);
-                }
-                for(Graph::EdgeIterator e = v.BeginPositiveIncidentEdges(); e != v.EndPositiveIncidentEdges(); e++)
-                {
-                    for(Graph::VertexIterator neighbor = e.BeginIncidentVertices(); neighbor != e.EndIncidentVertices(); neighbor++)
-                        used_colors.insert(Colors[neighbor]);
-                    for(Graph::VertexIterator neighbor = e.BeginPositiveIncidentVertices(); neighbor != e.EndPositiveIncidentVertices(); neighbor++)
-                        used_colors.insert(Colors[neighbor]);
-                    for(Graph::VertexIterator neighbor = e.BeginNegativeIncidentVertices(); neighbor != e.EndNegativeIncidentVertices(); neighbor++)
-                        used_colors.insert(Colors[neighbor]);
-                }
-                for(Graph::EdgeIterator e = v.BeginNegativeIncidentEdges(); e != v.EndNegativeIncidentEdges(); e++)
-                {
-                    for(Graph::VertexIterator neighbor = e.BeginIncidentVertices(); neighbor != e.EndIncidentVertices(); neighbor++)
-                        used_colors.insert(Colors[neighbor]);
-                    for(Graph::VertexIterator neighbor = e.BeginPositiveIncidentVertices(); neighbor != e.EndPositiveIncidentVertices(); neighbor++)
-                        used_colors.insert(Colors[neighbor]);
-                    for(Graph::VertexIterator neighbor = e.BeginNegativeIncidentVertices(); neighbor != e.EndNegativeIncidentVertices(); neighbor++)
-                        used_colors.insert(Colors[neighbor]);
+                    if(Colors[*neighbor] >= 0)
+                        used_colors.insert(Colors[*neighbor]);
+                    else if(Colors[*neighbor] == -1)
+                        UncoloredNeighbors++;
                 }
 
-                if(used_colors.size() > MaxNeighborColors)
+                if((int)(used_colors.size()) > MaxNeighborColors)
                 {
                     MaxNeighborColors = used_colors.size();
                     MinChoicesUsedColors = used_colors;
                     MinChoicesVertex = v;
+                }
+
+                if(UncoloredNeighbors < k - (int)(used_colors.size()))
+                {
+                    Colors[v] = -2;
+                    if(Colorize(G, Colors, k))
+                    {
+                        for(set<Graph::VertexIterator>::iterator neighbor = neighbors.begin(); neighbor != neighbors.end(); neighbor++)
+                            used_colors.insert(Colors[*neighbor]);
+                        for(int i = 1; i <= k; i++)
+                            if(used_colors.find(i) == used_colors.end())
+                            {
+                                Colors[v] = i;
+                                return true;
+                            }
+                    }
+                    else
+                    {
+                        Colors[v] = -1;
+                        return false;
+                    }
                 }
             }
 
@@ -69,7 +71,7 @@ namespace OpenGraphtheory
                 return true;
             }
 
-            for(int i = 1; i <= k; i++)
+            for(int i = 1; i <= k; i++) // try all colors that are not used in the neighborhood
             {
                 if(MinChoicesUsedColors.find(i) != MinChoicesUsedColors.end())
                     continue;
@@ -87,6 +89,13 @@ namespace OpenGraphtheory
             map<Graph::VertexIterator, int> Colors;
             for(Graph::VertexIterator i = G.BeginVertices(); i != G.EndVertices(); i++)
                 Colors[i] = -1;
+
+            Graph::EdgeIterator e = G.BeginEdges();
+            if(e != G.EndEdges() && k >= 2)
+            {
+                Colors[e.From()] = 1;
+                Colors[e.To()] = 2;
+            }
 
             if(Colorize(G, Colors, k))
             {
@@ -108,7 +117,7 @@ namespace OpenGraphtheory
 
         void AlgorithmCOLORING::Colorize(Graph &G, string ColorizationName)
         {
-            for(int k = 1; ; k++)
+            for(unsigned int k = 1; ; k++)
                 if(Colorize(G, k, ColorizationName))
                     return;
         }

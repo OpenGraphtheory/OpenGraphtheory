@@ -234,6 +234,7 @@
                     Graph::EdgeIterator EndNegativeIncidentEdges();
 
                     bool Adjacent(const Graph::VertexIterator& to) const;
+                    set<Graph::VertexIterator> UnderlyingNeighborhood();
             };
 
             class EdgeIterator
