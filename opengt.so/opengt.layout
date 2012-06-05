@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Debug" />
+	<ActiveTarget name="Release" />
 	<File name="Headers/algorithms/algorithm.h" open="0" top="0" tabpos="2">
 		<Cursor position="785" topLine="0" />
 	</File>
 	<File name="Headers/algorithms/color/color.h" open="0" top="0" tabpos="0">
 		<Cursor position="677" topLine="0" />
 	</File>
-	<File name="Headers/algorithms/path/path.h" open="1" top="1" tabpos="2">
+	<File name="Headers/algorithms/path/path.h" open="1" top="0" tabpos="2">
 		<Cursor position="826" topLine="0" />
 	</File>
 	<File name="Headers/attributes.h" open="0" top="0" tabpos="0">
@@ -133,8 +133,8 @@
 	<File name="Sources/algorithms/color/color.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="1848" topLine="21" />
 	</File>
-	<File name="Sources/algorithms/path/path.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="5315" topLine="83" />
+	<File name="Sources/algorithms/path/path.cpp" open="1" top="1" tabpos="1">
+		<Cursor position="1878" topLine="29" />
 	</File>
 	<File name="Sources/algorithms/vertexcover/vertexcover.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="38" topLine="0" />

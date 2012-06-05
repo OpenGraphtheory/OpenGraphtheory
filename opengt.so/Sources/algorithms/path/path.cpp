@@ -42,6 +42,8 @@ namespace OpenGraphtheory
 
                 if(v == G.EndVertices()) // this can happen if the graph is not connected
                     break;
+                if(v == to) // shortest path to target-vertex found.
+                    break;
 
                 Q.erase(v);
 
