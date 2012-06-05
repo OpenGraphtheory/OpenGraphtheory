@@ -133,7 +133,7 @@
 	<File name="Sources/algorithms/color/color.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="1848" topLine="21" />
 	</File>
-	<File name="Sources/algorithms/path/path.cpp" open="1" top="1" tabpos="1">
+	<File name="Sources/algorithms/path/path.cpp" open="1" top="0" tabpos="1">
 		<Cursor position="1878" topLine="29" />
 	</File>
 	<File name="Sources/algorithms/vertexcover/vertexcover.cpp" open="0" top="0" tabpos="0">
@@ -160,8 +160,8 @@
 	<File name="Sources/export/mpost.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="3043" topLine="39" />
 	</File>
-	<File name="Sources/export/postscript.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="350" topLine="7" />
+	<File name="Sources/export/postscript.cpp" open="1" top="1" tabpos="3">
+		<Cursor position="2024" topLine="16" />
 	</File>
 	<File name="Sources/export/povray.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="3310" topLine="56" />

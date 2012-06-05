@@ -483,3 +483,13 @@
 	<map>
 	<vector>
 
+1338886504 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/path/path.cpp
+	"../../../Headers/algorithms/path/path.h"
+	<map>
+
+1338878607 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/path/path.h
+	"../algorithm.h"
+	<string>
+	<map>
+	<vector>
+

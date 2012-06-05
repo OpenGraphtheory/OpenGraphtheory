@@ -28,6 +28,7 @@ namespace OpenGraphtheory
             /// header
             os << "%!PS-Adobe-3.0\n";
             os << "% www.Open-Graphtheory.org\n";
+            os << "gsave\n";
             os << "72 2.54 div 30 div dup scale\n";
             os << "0.2 setlinewidth\n";
 
@@ -47,6 +48,7 @@ namespace OpenGraphtheory
                    << (int)(ToCoordinates[0]+0.5) << " " << (int)(MaxYCoordinate - ToCoordinates[1]+0.5) << " lineto stroke\n";
             }
 
+            os << "grestore\n";
             os << "showpage\n";
             os << "%%EOF\n";
         }
