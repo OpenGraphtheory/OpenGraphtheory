@@ -40,7 +40,7 @@ namespace OpenGraphtheory
             dimension_limits.push_back(width);
             dimension_limits.push_back(height);
             dimension_limits.push_back(depth);
-            SpringEmbed(G, 3, dimension_limits, intermediatestephandler);
+            SpringEmbed(G, dimension_limits, intermediatestephandler);
         }
 
     }

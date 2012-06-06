@@ -16,20 +16,6 @@ namespace OpenGraphtheory
                 "springembed", "assigns coordinates to vertices, using the spring-embedding technique",
                 "http://i11www.iti.uni-karlsruhe.de/_media/teaching/sommer2004/networkdrawing/spring.pdf"));
 
-
-        TransformerSPRINGEMBEDDER::TransformerSPRINGEMBEDDER()
-        {
-            MinParamCount = 0;
-            MaxParamCount = -1;
-
-            c_repel     =    25;
-            c_spring    =    20;
-            friction    =    0.5;
-            unstressed_spring_length = 100;
-            delta = 0.2;
-            movement_threshold = 0.5;
-        }
-
         // -----------------------------------------------------------------------------
 
         VectorND TransformerSPRINGEMBEDDER::coulomb(VectorND u, VectorND v)
@@ -66,14 +52,29 @@ namespace OpenGraphtheory
 
         // -----------------------------------------------------------------------------
 
-
-        void TransformerSPRINGEMBEDDER::SpringEmbed(Graph& G, int dimensions, vector<float> dimension_limits, IntermediateStepHandler* intermediatestephandler)
+        TransformerSPRINGEMBEDDER::TransformerSPRINGEMBEDDER()
         {
-            int width = dimension_limits[0];
-            int height = dimension_limits[1];
+            MinParamCount = 0;
+            MaxParamCount = -1;
 
+            c_repel     =    25;
+            c_spring    =    20;
+            friction    =    0.5; // lower value = more friction (0 = no preservation of momentum)
+            unstressed_spring_length = 100;
+            delta = 0.4;
+            movement_threshold = 0.5;
+        }
+
+        void TransformerSPRINGEMBEDDER::SpringEmbed(Graph& G, vector<float> dimension_limits, IntermediateStepHandler* intermediatestephandler)
+        {
             vector<VectorND> tractions;
-            unstressed_spring_length = sqrt(width * height / G.NumberOfVertices()) / 2;
+            int dimensions = dimension_limits.size();
+
+            unstressed_spring_length = dimension_limits[0];
+            for(int i = 1; i < dimensions; i++)
+                unstressed_spring_length *= dimension_limits[i];
+            unstressed_spring_length /= G.NumberOfVertices();
+            unstressed_spring_length = pow(unstressed_spring_length, 1.0f/dimensions) / (dimensions * 2);
 
             // init
             srand ( time(NULL) );
@@ -82,6 +83,7 @@ namespace OpenGraphtheory
                 vector<float> coordinates;
                 for(int i = 0; i < dimensions; i++)
                     coordinates.push_back(fmod(rand(), dimension_limits[i]));
+                a.SetCoordinates(coordinates);
 
                 // should make sure that no two vertices have the same position
                 tractions.push_back(VectorND(dimensions));
@@ -114,6 +116,7 @@ namespace OpenGraphtheory
                     tractions[i] = traction;
                 }
 
+
                 // execute movement
                 Graph::VertexIterator a = G.BeginVertices();
                 for(int i = 0; a != G.EndVertices(); a++, i++)
@@ -128,9 +131,10 @@ namespace OpenGraphtheory
                     float current_movement = 0.0f;
                     for(int j = 0; j < dimensions; j++)
                         current_movement += (OldCoordinates[j] - NewCoordinates[j]) * (OldCoordinates[j] - NewCoordinates[j]);
-                    if(current_movement > max_movement)
-                        max_movement = current_movement;
+                    if(sqrt(current_movement) > max_movement)
+                        max_movement = sqrt(current_movement);
                 }
+
 
                 if(intermediatestephandler != NULL)
                     intermediatestephandler->Handle(&G);
@@ -138,10 +142,10 @@ namespace OpenGraphtheory
                 if(++iteration > nextincrease)
                 {
                     movement_threshold++;
-                    nextincrease += nextincrease / 2;
+                    nextincrease *= 5;
                 }
             }
-            while((max_movement > movement_threshold*unstressed_spring_length));
+            while( true);//(max_movement > movement_threshold*unstressed_spring_length));
 
         }
 
@@ -159,7 +163,7 @@ namespace OpenGraphtheory
             vector<float> dimension_limits;
             dimension_limits.push_back(width);
             dimension_limits.push_back(height);
-            SpringEmbed(G, 2, dimension_limits, intermediatestephandler);
+            SpringEmbed(G, dimension_limits, intermediatestephandler);
         }
 
     }

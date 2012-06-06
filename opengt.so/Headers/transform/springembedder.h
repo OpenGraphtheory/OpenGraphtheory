@@ -38,7 +38,7 @@
                     int iteration;
                     int nextincrease;
 
-                    void SpringEmbed(Graph& G, int dimensions, vector<float> dimension_limits,
+                    void SpringEmbed(Graph& G, vector<float> dimension_limits,
                                      IntermediateSteps::IntermediateStepHandler* intermediatestephandler = NULL);
 
 
