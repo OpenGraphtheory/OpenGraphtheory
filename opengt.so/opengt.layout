@@ -4,53 +4,56 @@
 	<File name="Headers/algorithms/algorithm.h" open="0" top="0" tabpos="2">
 		<Cursor position="785" topLine="0" />
 	</File>
-	<File name="Headers/algorithms/color/color.h" open="0" top="0" tabpos="0">
-		<Cursor position="677" topLine="0" />
+	<File name="Headers/algorithms/clique/clique.h" open="0" top="0" tabpos="0">
+		<Cursor position="626" topLine="0" />
 	</File>
-	<File name="Headers/algorithms/path/path.h" open="1" top="0" tabpos="2">
+	<File name="Headers/algorithms/path/path.h" open="0" top="0" tabpos="2">
 		<Cursor position="826" topLine="0" />
 	</File>
 	<File name="Headers/attributes.h" open="0" top="0" tabpos="0">
 		<Cursor position="672" topLine="12" />
 	</File>
 	<File name="Headers/export/dot.h" open="0" top="0" tabpos="0">
-		<Cursor position="443" topLine="0" />
+		<Cursor position="674" topLine="0" />
 	</File>
 	<File name="Headers/export/export.h" open="0" top="0" tabpos="0">
-		<Cursor position="341" topLine="0" />
+		<Cursor position="681" topLine="0" />
 	</File>
 	<File name="Headers/export/gastex.h" open="0" top="0" tabpos="0">
-		<Cursor position="391" topLine="0" />
+		<Cursor position="686" topLine="0" />
 	</File>
 	<File name="Headers/export/gml.h" open="0" top="0" tabpos="0">
-		<Cursor position="382" topLine="0" />
+		<Cursor position="674" topLine="0" />
 	</File>
 	<File name="Headers/export/graphml.h" open="0" top="0" tabpos="0">
-		<Cursor position="394" topLine="0" />
+		<Cursor position="690" topLine="0" />
 	</File>
 	<File name="Headers/export/mpost.h" open="0" top="0" tabpos="0">
-		<Cursor position="388" topLine="0" />
+		<Cursor position="682" topLine="0" />
+	</File>
+	<File name="Headers/export/postscript.h" open="0" top="0" tabpos="0">
+		<Cursor position="702" topLine="0" />
 	</File>
 	<File name="Headers/export/povray.h" open="0" top="0" tabpos="0">
-		<Cursor position="391" topLine="0" />
+		<Cursor position="686" topLine="0" />
 	</File>
 	<File name="Headers/export/rgml.h" open="0" top="0" tabpos="0">
-		<Cursor position="385" topLine="0" />
+		<Cursor position="678" topLine="0" />
 	</File>
 	<File name="Headers/export/svg.h" open="0" top="0" tabpos="0">
-		<Cursor position="382" topLine="0" />
+		<Cursor position="674" topLine="0" />
 	</File>
 	<File name="Headers/export/tei.h" open="0" top="0" tabpos="0">
-		<Cursor position="382" topLine="0" />
+		<Cursor position="674" topLine="0" />
 	</File>
 	<File name="Headers/export/tgf.h" open="0" top="0" tabpos="0">
-		<Cursor position="382" topLine="0" />
+		<Cursor position="674" topLine="0" />
 	</File>
 	<File name="Headers/export/vrmlgraph.h" open="0" top="0" tabpos="0">
-		<Cursor position="400" topLine="0" />
+		<Cursor position="698" topLine="0" />
 	</File>
 	<File name="Headers/export/xgmml.h" open="0" top="0" tabpos="0">
-		<Cursor position="388" topLine="0" />
+		<Cursor position="682" topLine="0" />
 	</File>
 	<File name="Headers/factory.h" open="0" top="0" tabpos="0">
 		<Cursor position="2081" topLine="59" />
@@ -124,16 +127,28 @@
 	<File name="Headers/transform/transformation.h" open="0" top="0" tabpos="2">
 		<Cursor position="1143" topLine="0" />
 	</File>
+	<File name="Headers/visualize/DisplayWindow.h" open="0" top="0" tabpos="0">
+		<Cursor position="187" topLine="0" />
+	</File>
+	<File name="Headers/visualize/GraphWindow.h" open="0" top="0" tabpos="0">
+		<Cursor position="19" topLine="0" />
+	</File>
+	<File name="Headers/visualize/color.h" open="0" top="0" tabpos="0">
+		<Cursor position="761" topLine="0" />
+	</File>
 	<File name="Headers/visualize/vectornd.h" open="0" top="0" tabpos="0">
 		<Cursor position="1383" topLine="1" />
 	</File>
 	<File name="Sources/algorithms/algorithm.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="165" topLine="0" />
 	</File>
-	<File name="Sources/algorithms/color/color.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="1848" topLine="21" />
+	<File name="Sources/algorithms/clique/clique.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="1179" topLine="3" />
 	</File>
-	<File name="Sources/algorithms/path/path.cpp" open="1" top="0" tabpos="1">
+	<File name="Sources/algorithms/color/color.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="Sources/algorithms/path/path.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="1878" topLine="29" />
 	</File>
 	<File name="Sources/algorithms/vertexcover/vertexcover.cpp" open="0" top="0" tabpos="0">
@@ -143,46 +158,46 @@
 		<Cursor position="1792" topLine="29" />
 	</File>
 	<File name="Sources/export/dot.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1689" topLine="16" />
+		<Cursor position="310" topLine="0" />
 	</File>
 	<File name="Sources/export/export.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="715" topLine="16" />
+		<Cursor position="1592" topLine="12" />
 	</File>
 	<File name="Sources/export/gastex.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1478" topLine="5" />
+		<Cursor position="316" topLine="0" />
 	</File>
 	<File name="Sources/export/gml.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1784" topLine="6" />
+		<Cursor position="310" topLine="0" />
 	</File>
 	<File name="Sources/export/graphml.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2186" topLine="19" />
+		<Cursor position="317" topLine="1" />
 	</File>
-	<File name="Sources/export/mpost.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="3043" topLine="39" />
+	<File name="Sources/export/mpost.cpp" open="1" top="1" tabpos="3">
+		<Cursor position="313" topLine="1" />
 	</File>
-	<File name="Sources/export/postscript.cpp" open="1" top="0" tabpos="3">
-		<Cursor position="2024" topLine="0" />
+	<File name="Sources/export/postscript.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="2726" topLine="18" />
 	</File>
 	<File name="Sources/export/povray.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="3310" topLine="56" />
+		<Cursor position="334" topLine="0" />
 	</File>
 	<File name="Sources/export/rgml.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2363" topLine="26" />
+		<Cursor position="312" topLine="0" />
 	</File>
 	<File name="Sources/export/svg.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2817" topLine="33" />
+		<Cursor position="336" topLine="0" />
 	</File>
 	<File name="Sources/export/tei.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1546" topLine="6" />
+		<Cursor position="310" topLine="0" />
 	</File>
 	<File name="Sources/export/tgf.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="926" topLine="0" />
+		<Cursor position="310" topLine="0" />
 	</File>
 	<File name="Sources/export/vrmlgraph.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="852" topLine="0" />
+		<Cursor position="322" topLine="0" />
 	</File>
 	<File name="Sources/export/xgmml.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1740" topLine="9" />
+		<Cursor position="314" topLine="0" />
 	</File>
 	<File name="Sources/generate/circle.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="371" topLine="0" />
@@ -221,10 +236,10 @@
 		<Cursor position="1221" topLine="3" />
 	</File>
 	<File name="Sources/intermediatesteps/stdout.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1238" topLine="6" />
+		<Cursor position="1334" topLine="6" />
 	</File>
 	<File name="Sources/intermediatesteps/writefile.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1519" topLine="21" />
+		<Cursor position="1761" topLine="21" />
 	</File>
 	<File name="Sources/opengt.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="49605" topLine="1474" />
@@ -253,20 +268,23 @@
 	<File name="Sources/transform/shift.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="151" topLine="0" />
 	</File>
-	<File name="Sources/transform/spring_embedder.cpp" open="1" top="1" tabpos="5">
+	<File name="Sources/transform/spring_embedder.cpp" open="0" top="0" tabpos="5">
 		<Cursor position="2278" topLine="52" />
 	</File>
-	<File name="Sources/transform/spring_embedder3d.cpp" open="1" top="0" tabpos="4">
+	<File name="Sources/transform/spring_embedder3d.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="1578" topLine="5" />
 	</File>
 	<File name="Sources/transform/transformation.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="1527" topLine="7" />
 	</File>
 	<File name="Sources/visualize/DisplayWindow.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="4782" topLine="112" />
+		<Cursor position="4782" topLine="111" />
 	</File>
 	<File name="Sources/visualize/GraphWindow.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="35" topLine="112" />
+		<Cursor position="3298" topLine="50" />
+	</File>
+	<File name="Sources/visualize/color.cpp" open="1" top="0" tabpos="2">
+		<Cursor position="1442" topLine="35" />
 	</File>
 	<File name="Sources/visualize/vector2d.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="52" topLine="0" />

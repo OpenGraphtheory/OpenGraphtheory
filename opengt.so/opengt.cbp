@@ -88,6 +88,7 @@
 		<Unit filename="Headers/transform/transformation.h" />
 		<Unit filename="Headers/visualize/DisplayWindow.h" />
 		<Unit filename="Headers/visualize/GraphWindow.h" />
+		<Unit filename="Headers/visualize/color.h" />
 		<Unit filename="Headers/visualize/vector2d.h" />
 		<Unit filename="Headers/visualize/vectornd.h" />
 		<Unit filename="Sources/algorithms/algorithm.cpp">
@@ -148,6 +149,7 @@
 		</Unit>
 		<Unit filename="Sources/visualize/DisplayWindow.cpp" />
 		<Unit filename="Sources/visualize/GraphWindow.cpp" />
+		<Unit filename="Sources/visualize/color.cpp" />
 		<Unit filename="Sources/visualize/vector2d.cpp" />
 		<Unit filename="Sources/visualize/vectornd.cpp" />
 		<Extensions>
