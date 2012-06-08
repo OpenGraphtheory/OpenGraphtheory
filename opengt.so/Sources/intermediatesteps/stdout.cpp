@@ -39,7 +39,7 @@ namespace OpenGraphtheory
         void IntermediateStepHandlerStdout::Handle(Graph* G)
         {
             if(exporter != NULL)
-                exporter->Export(*G, cout);
+                exporter->Export(*G, cout, "", "");
             else
                 cout << *G;
         }

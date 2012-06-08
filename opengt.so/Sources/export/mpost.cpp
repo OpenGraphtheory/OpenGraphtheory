@@ -2,13 +2,14 @@
 
 using namespace std;
 using namespace OpenGraphtheory;
+using namespace OpenGraphtheory::Visualization;
 
 namespace OpenGraphtheory
 {
     namespace Export
     {
 
-        void ExportFilterMPOST::Export(Graph& G, ostream& os)
+        void ExportFilterMPOST::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring, map<Graph::EdgeIterator, Color>& edgecoloring)
         {
             if(G.IsHypergraph())
                 throw "The MPOST fileformat does not support hypergraphs\n";
@@ -59,14 +60,22 @@ namespace OpenGraphtheory
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
                 os << "drawdot z" << v.GetID() << " withpen pencircle"
-                   << " scaled " << 2*v.GetWeight() << ";\n";
+                   << " scaled " << 2*v.GetWeight();
+                if(vertexcoloring.find(v) != vertexcoloring.end())
+                    os << " withcolor (" << (vertexcoloring[v].Red/256.0f) << ","<< (vertexcoloring[v].Green/256.0f) << "," << (vertexcoloring[v].Blue/256.0f) << ");\n";
+                else
+                    os << " withcolor Black;\n";
                 os << " label.ulft(btex " << v.GetLabel() << " etex , z" << v.GetID() << ");\n";
             }
 
             /// draw edges
             for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
             {
-                os << " draw" << (e.IsEdge()?"":"arrow") << " z" << e.From().GetID() << " -- z" << e.To().GetID() << ";\n";
+                os << " draw" << (e.IsEdge()?"":"arrow") << " z" << e.From().GetID() << " -- z" << e.To().GetID();
+                if(edgecoloring.find(e) != edgecoloring.end())
+                    os << " withrgbcolor (" << (edgecoloring[e].Red/256.0f) << ","<< (edgecoloring[e].Green/256.0f) << "," << (edgecoloring[e].Blue/256.0f) << ");\n";
+                else
+                    os << " withcolor Black;\n";
                 os << "  label.ulft(btex "<< e.GetLabel() << " etex, (z"<<e.From().GetID()<<"+z"<<e.To().GetID()<<")/2);\n";
             }
 

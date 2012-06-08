@@ -16,7 +16,9 @@
                 protected:
                     static FactoryRegistrator<ExportFilter> ExportFilterVrmlgraphRegistrator;
                 public:
-                    void Export(OpenGraphtheory::Graph& G, std::ostream& os);
+                    void Export(OpenGraphtheory::Graph& G, std::ostream& os,
+                                map<Graph::VertexIterator, Visualization::Color>& vertexcoloring,
+                                map<Graph::EdgeIterator, Visualization::Color>& edgecoloring);
             };
 
         }

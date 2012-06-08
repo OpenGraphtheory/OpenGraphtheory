@@ -8,6 +8,7 @@ using namespace std;
 #include <pthread.h>
 
 #include "vector2d.h"
+#include "color.h"
 
 namespace OpenGraphtheory
 {

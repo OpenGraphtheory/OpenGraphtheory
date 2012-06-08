@@ -3,13 +3,14 @@
 
 using namespace std;
 using namespace OpenGraphtheory;
+using namespace OpenGraphtheory::Visualization;
 
 namespace OpenGraphtheory
 {
     namespace Export
     {
 
-        void ExportFilterRGML::Export(Graph& G, ostream& os)
+        void ExportFilterRGML::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring, map<Graph::EdgeIterator, Color>& edgecoloring)
         {
             if(G.IsHypergraph())
                 throw "The XGMML fileformat does not support hypergraphs\n";

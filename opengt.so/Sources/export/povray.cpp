@@ -4,13 +4,14 @@
 
 using namespace std;
 using namespace OpenGraphtheory;
+using namespace OpenGraphtheory::Visualization;
 
 namespace OpenGraphtheory
 {
     namespace Export
     {
 
-        void ExportFilterPOVRAY::Export(Graph& G, ostream& os)
+        void ExportFilterPOVRAY::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring, map<Graph::EdgeIterator, Color>& edgecoloring)
         {
             if(G.IsHypergraph())
                 throw "The POV-Ray fileformat doesn\'t support hypergraphs\n";
@@ -64,7 +65,11 @@ namespace OpenGraphtheory
                 os << "    {\n";
                 os << "        pigment\n";
                 os << "        {\n";
-                os << "            color Red\n";
+                if(vertexcoloring.find(v) != vertexcoloring.end())
+                    os << "            color rgb<" << (vertexcoloring[v].Red/256.0f) << ","
+                       << (vertexcoloring[v].Green/256.0f) << "," << (vertexcoloring[v].Blue/256.0f) << ">\n";
+                else
+                    os << "            color Black\n";
                 os << "        }\n";
                 os << "    }\n";
                 os << "}\n";
@@ -83,7 +88,10 @@ namespace OpenGraphtheory
                 os <<     "<" << ToCoordinates[0] << "," << ToCoordinates[1] << "," << ToCoordinates[2] << ">,1\n";
                 os << "    pigment";
                 os << "    {\n";
-                os << "        color Black\n";
+                if(edgecoloring.find(e) != edgecoloring.end())
+                    os << "        color rgb<" << (edgecoloring[e].Red/256.0f) << "," << (edgecoloring[e].Green/256.0f) << "," << (edgecoloring[e].Blue/256.0f) << ">\n";
+                else
+                    os << "        color Black\n";
                 os << "    }\n";
                 os << "}\n";
             }

@@ -7,16 +7,6 @@ namespace OpenGraphtheory
     namespace Visualization
     {
 
-        int defaultcolors[] = { 0xE50000, // red
-                               0xF3D510, // yellow
-                               0x34cd20, // green
-                               0x1C23EB, // dark blue
-                               0xF37D23, // orange
-                               0x15CDC7, // light blue
-                               0x8722E5, // purple
-                               0xFF33FF // pink
-                             };
-
         GraphWindow::GraphWindow(int width, int height, Graph* G, string Caption, string vertexcoloring, string edgecoloring, int gridsize, bool ZoomToFit)
             : DisplayWindow(width, height, Caption)
         {
@@ -61,8 +51,9 @@ namespace OpenGraphtheory
                         IntAttribute* attrEdgeColoring = dynamic_cast<IntAttribute*>(e.Attributes().GetAttribute(EdgeColoring));
                         if(attrEdgeColoring != NULL)
                         {
-                            int color = defaultcolors[attrEdgeColoring->Value];
-                            SetColor((short)(color / 65536), (short)((color / 256) % 256), (short)(color % 256));
+                            //int color = Color::DefaultColors[attrEdgeColoring->Value].ToInt();
+                            //SetColor((short)(color / 65536), (short)((color / 256) % 256), (short)(color % 256));
+                            SetColor(Color::DefaultColors[attrEdgeColoring->Value].Red, Color::DefaultColors[attrEdgeColoring->Value].Green, Color::DefaultColors[attrEdgeColoring->Value].Blue);
                         }
                     }
                     else
@@ -84,8 +75,9 @@ namespace OpenGraphtheory
                         IntAttribute* attrVertexColoring = dynamic_cast<IntAttribute*>(v.Attributes().GetAttribute(VertexColoring));
                         if(attrVertexColoring != NULL)
                         {
-                            int color = defaultcolors[attrVertexColoring->Value];
-                            SetColor((unsigned short)(color / 65536), (unsigned short)((color / 256) % 256), (unsigned short)(color % 256));
+                            //int color = defaultcolors[attrVertexColoring->Value];
+                            //SetColor((unsigned short)(color / 65536), (unsigned short)((color / 256) % 256), (unsigned short)(color % 256));
+                            SetColor(Color::DefaultColors[attrVertexColoring->Value].Red, Color::DefaultColors[attrVertexColoring->Value].Green, Color::DefaultColors[attrVertexColoring->Value].Blue);
                         }
                     }
                     else

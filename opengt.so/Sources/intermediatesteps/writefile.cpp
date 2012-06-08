@@ -52,7 +52,7 @@ namespace OpenGraphtheory
             ofstream outdat(filename.c_str());
 
             if(exporter != NULL)
-                exporter->Export(*G, outdat);
+                exporter->Export(*G, outdat, "", "");
             else
                 outdat << *G;
 

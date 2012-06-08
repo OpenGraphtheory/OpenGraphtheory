@@ -2,13 +2,14 @@
 
 using namespace std;
 using namespace OpenGraphtheory;
+using namespace OpenGraphtheory::Visualization;
 
 namespace OpenGraphtheory
 {
     namespace Export
     {
 
-        void ExportFilterPOSTSCRIPT::Export(Graph& G, ostream& os)
+        void ExportFilterPOSTSCRIPT::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring, map<Graph::EdgeIterator, Color>& edgecoloring)
         {
             if(G.IsHypergraph())
                 throw "The POSTSCRIPT fileformat does not support hypergraphs\n";
@@ -32,20 +33,30 @@ namespace OpenGraphtheory
             os << "72 2.54 div 30 div dup scale\n";
             os << "0.2 setlinewidth\n";
 
-            /// draw vertices
-            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-            {
-                vector<float> Coordinates = v.GetCoordinates();
-                os << (int)(Coordinates[0]+0.5) << " " << (int)(MaxYCoordinate - Coordinates[1]+0.5) << " 2 0 360 arc fill\n";
-            }
-
             /// draw edges
             for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
             {
                 vector<float> FromCoordinates = e.From().GetCoordinates();
                 vector<float> ToCoordinates = e.To().GetCoordinates();
+
+                if(edgecoloring.find(e) != edgecoloring.end())
+                    os << (edgecoloring[e].Red/256.0f) << " "<< (edgecoloring[e].Green/256.0f) << " " << (edgecoloring[e].Blue/256.0f) << " setrgbcolor\n";
+                else
+                    os << "0 0 0 setrgbcolor\n";
+
                 os << (int)(FromCoordinates[0]+0.5) << " " << (int)(MaxYCoordinate - FromCoordinates[1]+0.5) << " moveto "
                    << (int)(ToCoordinates[0]+0.5) << " " << (int)(MaxYCoordinate - ToCoordinates[1]+0.5) << " lineto stroke\n";
+            }
+
+            /// draw vertices
+            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+            {
+                vector<float> Coordinates = v.GetCoordinates();
+                if(vertexcoloring.find(v) != vertexcoloring.end())
+                    os << (vertexcoloring[v].Red/256.0f) << " "<< (vertexcoloring[v].Green/256.0f) << " " << (vertexcoloring[v].Blue/256.0f) << " setrgbcolor\n";
+                else
+                    os << "0 0 0 setrgbcolor\n";
+                os << (int)(Coordinates[0]+0.5) << " " << (int)(MaxYCoordinate - Coordinates[1]+0.5) << " 2 0 360 arc fill\n";
             }
 
             os << "grestore\n";
