@@ -142,7 +142,7 @@
 	<File name="Sources/algorithms/algorithm.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="165" topLine="0" />
 	</File>
-	<File name="Sources/algorithms/clique/clique.cpp" open="1" top="0" tabpos="1">
+	<File name="Sources/algorithms/clique/clique.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="1179" topLine="3" />
 	</File>
 	<File name="Sources/algorithms/color/color.cpp" open="0" top="0" tabpos="1">
@@ -172,11 +172,11 @@
 	<File name="Sources/export/graphml.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="317" topLine="1" />
 	</File>
-	<File name="Sources/export/mpost.cpp" open="1" top="1" tabpos="3">
-		<Cursor position="313" topLine="1" />
+	<File name="Sources/export/mpost.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="2971" topLine="43" />
 	</File>
-	<File name="Sources/export/postscript.cpp" open="0" top="0" tabpos="3">
-		<Cursor position="2726" topLine="18" />
+	<File name="Sources/export/postscript.cpp" open="1" top="1" tabpos="0">
+		<Cursor position="3219" topLine="33" />
 	</File>
 	<File name="Sources/export/povray.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="334" topLine="0" />
@@ -265,6 +265,9 @@
 	<File name="Sources/transform/scale.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="2820" topLine="35" />
 	</File>
+	<File name="Sources/transform/scalefactor.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="617" topLine="0" />
+	</File>
 	<File name="Sources/transform/shift.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="151" topLine="0" />
 	</File>
@@ -283,7 +286,7 @@
 	<File name="Sources/visualize/GraphWindow.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="3298" topLine="50" />
 	</File>
-	<File name="Sources/visualize/color.cpp" open="1" top="0" tabpos="2">
+	<File name="Sources/visualize/color.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="1442" topLine="35" />
 	</File>
 	<File name="Sources/visualize/vector2d.cpp" open="0" top="0" tabpos="0">

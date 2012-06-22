@@ -11,6 +11,8 @@ namespace OpenGraphtheory
 
         void ExportFilterPOSTSCRIPT::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring, map<Graph::EdgeIterator, Color>& edgecoloring)
         {
+            int Radius = 2;
+
             if(G.IsHypergraph())
                 throw "The POSTSCRIPT fileformat does not support hypergraphs\n";
 
@@ -32,6 +34,10 @@ namespace OpenGraphtheory
             os << "gsave\n";
             os << "72 2.54 div 30 div dup scale\n";
             os << "0.2 setlinewidth\n";
+
+            os << "/Helvetica-Bold findfont\n";
+            os << "7 scalefont\n";
+            os << "setfont\n";
 
             /// draw edges
             for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
@@ -56,7 +62,15 @@ namespace OpenGraphtheory
                     os << (vertexcoloring[v].Red/256.0f) << " "<< (vertexcoloring[v].Green/256.0f) << " " << (vertexcoloring[v].Blue/256.0f) << " setrgbcolor\n";
                 else
                     os << "0 0 0 setrgbcolor\n";
-                os << (int)(Coordinates[0]+0.5) << " " << (int)(MaxYCoordinate - Coordinates[1]+0.5) << " 2 0 360 arc fill\n";
+                os << (int)(Coordinates[0]+0.5) << " " << (int)(MaxYCoordinate - Coordinates[1]+0.5) << " " << Radius << " 0 360 arc fill\n";
+
+                if(v.GetLabel() != "")
+                {
+                    os << "0 0 0 setrgbcolor\n";
+                    os << (int)(Coordinates[0] + 0.5) + Radius << " " << (int)(MaxYCoordinate - Coordinates[1]+0.5) + Radius << " moveto\n";
+                    os << "(" << v.GetLabel() << ") show\n";
+                    os << "newpath\n";
+                }
             }
 
             os << "grestore\n";

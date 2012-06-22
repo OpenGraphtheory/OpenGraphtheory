@@ -15,37 +15,27 @@ int main(int argc, char** argv)
 	try
 	{
 		Graph G;
+        cin >> G;
 
-
-		/// select input source
-		if(!isatty(fileno(stdin)))
-			cin >> G;
-		else
-			if(argc > 2)
-				G.LoadFromFile(argv[2]);
-			else
-				throw "no input source specified";
-
-
-		/// select output destination
-		ostream *os;
-		bool mustdeleteOS = false;
-		if(argc > 3) {
-			os = new ofstream(argv[3]);
-			mustdeleteOS = true;
-		} else {
-			os = &cout;
+        string vertexcoloring = "";
+        string edgecoloring = "";
+        string format = "";
+		for(int i = 1; i < argc-1; i++)
+		{
+		    if(string(argv[i]) == "--format")
+                format = argv[++i];
+            else if(string(argv[i]) == "--vertexcoloring")
+                vertexcoloring = argv[++i];
+            else if(string(argv[i]) == "--edgecoloring")
+                edgecoloring = argv[++i];
 		}
 
-
-		/// export
-		string format = (argc > 1) ? argv[1] : "--help";
 		ExportFilter* exportfilter = ExportFilter::ExportFilterFactory.Produce(format);
 		if(exportfilter != NULL)
 		{
 		    try
 		    {
-                exportfilter->Export(G, *os);
+                exportfilter->DoExport(G, cout, vertexcoloring, edgecoloring);
 		    }
 		    catch(...)
 		    {
@@ -56,10 +46,6 @@ int main(int argc, char** argv)
 		}
 		else
 			usage(argv[0]);
-
-
-		if(mustdeleteOS)
-			delete os;
 	}
 	catch(const char* s)
 	{

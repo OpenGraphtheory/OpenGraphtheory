@@ -82,6 +82,7 @@
 		<Unit filename="Headers/transform/linear.h" />
 		<Unit filename="Headers/transform/rotate.h" />
 		<Unit filename="Headers/transform/scale.h" />
+		<Unit filename="Headers/transform/scalefactor.h" />
 		<Unit filename="Headers/transform/shift.h" />
 		<Unit filename="Headers/transform/springembedder.h" />
 		<Unit filename="Headers/transform/springembedder3d.h" />
@@ -141,6 +142,7 @@
 		<Unit filename="Sources/transform/linear.cpp" />
 		<Unit filename="Sources/transform/rotate.cpp" />
 		<Unit filename="Sources/transform/scale.cpp" />
+		<Unit filename="Sources/transform/scalefactor.cpp" />
 		<Unit filename="Sources/transform/shift.cpp" />
 		<Unit filename="Sources/transform/spring_embedder.cpp" />
 		<Unit filename="Sources/transform/spring_embedder3d.cpp" />

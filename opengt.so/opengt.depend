@@ -298,7 +298,7 @@
 	<process.h>
 	<stdint.h>
 
-1339148598 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/postscript.cpp
+1340369877 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/postscript.cpp
 	"../../Headers/export/postscript.h"
 
 1339148542 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/postscript.h
@@ -507,4 +507,14 @@
 	<string>
 	<set>
 	<vector>
+
+1340370486 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/transform/scalefactor.cpp
+	"../../Headers/transform/scalefactor.h"
+	<iostream>
+
+1340370210 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/transform/scalefactor.h
+	<vector>
+	"../opengt.h"
+	"../factory.h"
+	"transformation.h"
 
