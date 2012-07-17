@@ -4,8 +4,8 @@
 	<File name="Headers/algorithms/algorithm.h" open="0" top="0" tabpos="2">
 		<Cursor position="785" topLine="0" />
 	</File>
-	<File name="Headers/algorithms/clique/clique.h" open="0" top="0" tabpos="0">
-		<Cursor position="626" topLine="0" />
+	<File name="Headers/algorithms/clique/clique.h" open="1" top="0" tabpos="3">
+		<Cursor position="655" topLine="0" />
 	</File>
 	<File name="Headers/algorithms/path/path.h" open="0" top="0" tabpos="2">
 		<Cursor position="826" topLine="0" />
@@ -101,7 +101,7 @@
 		<Cursor position="643" topLine="0" />
 	</File>
 	<File name="Headers/opengt.h" open="0" top="0" tabpos="0">
-		<Cursor position="10085" topLine="195" />
+		<Cursor position="10112" topLine="219" />
 	</File>
 	<File name="Headers/transform/aspectscale.h" open="0" top="0" tabpos="0">
 		<Cursor position="557" topLine="0" />
@@ -142,8 +142,8 @@
 	<File name="Sources/algorithms/algorithm.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="165" topLine="0" />
 	</File>
-	<File name="Sources/algorithms/clique/clique.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="1179" topLine="3" />
+	<File name="Sources/algorithms/clique/clique.cpp" open="1" top="1" tabpos="2">
+		<Cursor position="1344" topLine="11" />
 	</File>
 	<File name="Sources/algorithms/color/color.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="0" topLine="0" />
@@ -175,8 +175,8 @@
 	<File name="Sources/export/mpost.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="2971" topLine="43" />
 	</File>
-	<File name="Sources/export/postscript.cpp" open="1" top="1" tabpos="0">
-		<Cursor position="3219" topLine="33" />
+	<File name="Sources/export/postscript.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="3219" topLine="9" />
 	</File>
 	<File name="Sources/export/povray.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="334" topLine="0" />
@@ -242,7 +242,7 @@
 		<Cursor position="1761" topLine="21" />
 	</File>
 	<File name="Sources/opengt.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="49605" topLine="1474" />
+		<Cursor position="10793" topLine="157" />
 	</File>
 	<File name="Sources/processing/components.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="57" topLine="0" />

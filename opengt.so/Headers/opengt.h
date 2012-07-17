@@ -155,6 +155,7 @@
                     void* Tag;
 
                     bool Adjacent(const Vertex* v) const;
+                    bool UnderlyingAdjacent(const Vertex* v) const;
             };
 
             class Edge
@@ -178,6 +179,7 @@
                     void* Tag;
 
                     bool Incident(const Graph::Vertex* v) const;
+                    bool UnderlyingIncident(const Graph::Vertex* v) const;
                     void AddUndirectedConnection(Graph::Vertex* v);
                     void AddOutgoingConnection(Graph::Vertex* v);
                     void AddIncomingConnection(Graph::Vertex* v);
@@ -234,6 +236,7 @@
                     Graph::EdgeIterator EndNegativeIncidentEdges();
 
                     bool Adjacent(const Graph::VertexIterator& to) const;
+                    bool UnderlyingAdjacent(const Graph::VertexIterator& to) const;
                     set<Graph::VertexIterator> UnderlyingNeighborhood();
             };
 
@@ -287,6 +290,7 @@
                     bool IsArc();
                     bool IsHyperedge();
                     bool Incident(const VertexIterator& v) const;
+                    bool UnderlyingIncident(const VertexIterator& v) const;
 
                     Graph::VertexIterator BeginIncidentVertices();
                     Graph::VertexIterator EndIncidentVertices();

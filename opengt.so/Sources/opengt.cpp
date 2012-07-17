@@ -162,6 +162,21 @@ namespace OpenGraphtheory
                 return false;
             }
 
+            bool Graph::Vertex::UnderlyingAdjacent(const Graph::Vertex* to) const
+            {
+                for(list<Graph::Edge*>::const_iterator it = IncidentEdges.begin(); it != IncidentEdges.end(); it++)
+                    if((*it)->UnderlyingIncident(to))
+                        return true;
+                for(list<Graph::Edge*>::const_iterator it = PositiveIncidentEdges.begin(); it != PositiveIncidentEdges.end(); it++)
+                    if((*it)->UnderlyingIncident(to))
+                        return true;
+                for(list<Graph::Edge*>::const_iterator it = NegativeIncidentEdges.begin(); it != NegativeIncidentEdges.end(); it++)
+                    if((*it)->UnderlyingIncident(to))
+                        return true;
+                return false;
+            }
+
+
             set<Graph::VertexIterator> Graph::VertexIterator::UnderlyingNeighborhood()
             {
                 set<Graph::VertexIterator> result;
@@ -252,6 +267,13 @@ namespace OpenGraphtheory
                 return (*position)->Adjacent(v);
             }
 
+            /// \brief Test whether the Vertex is adjacent to the given vertex
+            bool Graph::VertexIterator::UnderlyingAdjacent(const Graph::VertexIterator& to) const
+            {
+                Vertex* v = Owner->VertexIteratorToPointer(to);
+                return (*position)->UnderlyingAdjacent(v);
+            }
+
             void Graph::EdgeIterator::WriteToXml(XML* xml)
             {
 				string ClosingTag = "</edge>\n";
@@ -340,11 +362,31 @@ namespace OpenGraphtheory
                 return false;
             }
 
+            bool Graph::Edge::UnderlyingIncident(const Graph::Vertex* to) const
+            {
+                for(list<Graph::Vertex*>::const_iterator it = IncidentVertices.begin(); it != IncidentVertices.end(); it++)
+                    if(*it == to)
+                        return true;
+                for(list<Graph::Vertex*>::const_iterator it = PositiveIncidentVertices.begin(); it != PositiveIncidentVertices.end(); it++)
+                    if(*it == to)
+                        return true;
+                for(list<Graph::Vertex*>::const_iterator it = NegativeIncidentVertices.begin(); it != NegativeIncidentVertices.end(); it++)
+                    if(*it == to)
+                        return true;
+                return false;
+            }
+
             /// \brief Test whether the Edge is incident to the given vertex
             bool Graph::EdgeIterator::Incident(const Graph::VertexIterator& to) const
             {
                 Vertex* v = Owner->VertexIteratorToPointer(to);
                 return (*position)->Incident(v);
+            }
+
+            bool Graph::EdgeIterator::UnderlyingIncident(const Graph::VertexIterator& to) const
+            {
+                Vertex* v = Owner->VertexIteratorToPointer(to);
+                return (*position)->UnderlyingIncident(v);
             }
 
         // @}
