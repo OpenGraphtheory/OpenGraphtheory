@@ -5,7 +5,10 @@
 		<Cursor position="785" topLine="0" />
 	</File>
 	<File name="Headers/algorithms/clique/clique.h" open="1" top="0" tabpos="3">
-		<Cursor position="655" topLine="0" />
+		<Cursor position="707" topLine="0" />
+	</File>
+	<File name="Headers/algorithms/independentset/independentset.h" open="1" top="0" tabpos="5">
+		<Cursor position="602" topLine="0" />
 	</File>
 	<File name="Headers/algorithms/path/path.h" open="0" top="0" tabpos="2">
 		<Cursor position="826" topLine="0" />
@@ -142,11 +145,14 @@
 	<File name="Sources/algorithms/algorithm.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="165" topLine="0" />
 	</File>
-	<File name="Sources/algorithms/clique/clique.cpp" open="1" top="1" tabpos="2">
-		<Cursor position="2183" topLine="16" />
+	<File name="Sources/algorithms/clique/clique.cpp" open="1" top="0" tabpos="2">
+		<Cursor position="483" topLine="0" />
 	</File>
 	<File name="Sources/algorithms/color/color.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="Sources/algorithms/independentset/independentset.cpp" open="1" top="1" tabpos="4">
+		<Cursor position="1266" topLine="5" />
 	</File>
 	<File name="Sources/algorithms/path/path.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="1878" topLine="29" />

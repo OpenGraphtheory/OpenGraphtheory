@@ -15,7 +15,7 @@ namespace OpenGraphtheory
             "clique", "Adds a clique to the graph", "http://en.wikipedia.org/wiki/Clique_(graph_theory)"));
 
 
-        bool AlgorithmCLIQUE::TestClique(set<Graph::VertexIterator>& Clique, set<Graph::VertexIterator>& Candidates, unsigned int k)
+        bool AlgorithmCLIQUE::TestClique(set<Graph::VertexIterator>& Clique, set<Graph::VertexIterator>& Candidates, unsigned int k, bool CliqueOrIndependentSet)
         {
             if(k == 0)
                 return true;
@@ -27,7 +27,7 @@ namespace OpenGraphtheory
                 set<Graph::VertexIterator> NextCandidates;
                 set<Graph::VertexIterator>::iterator n = v;
                 for(n++; n != Candidates.end(); n++)
-                    if(v->UnderlyingAdjacent(*n))
+                    if(v->UnderlyingAdjacent(*n) == CliqueOrIndependentSet)
                         NextCandidates.insert(*n);
 
                 // Remove Candidates that dont have enough Neighbors in the Candidates-Set
@@ -43,7 +43,7 @@ namespace OpenGraphtheory
 
                         set<Graph::VertexIterator> iNeighborCandidates;
                         for(set<Graph::VertexIterator>::iterator j = NextCandidates.begin(); j != NextCandidates.end(); j++)
-                            if(i->UnderlyingAdjacent(*j) && (RemovableCandidates.find(*j) == RemovableCandidates.end()))
+                            if((i->UnderlyingAdjacent(*j) == CliqueOrIndependentSet) && (RemovableCandidates.find(*j) == RemovableCandidates.end()))
                                 iNeighborCandidates.insert(*j);
                         iNeighborCandidates.erase(*i);
 
@@ -61,7 +61,7 @@ namespace OpenGraphtheory
 
 
                 Clique.insert(*v);
-                if(TestClique(Clique, NextCandidates, k-1))
+                if(TestClique(Clique, NextCandidates, k-1, CliqueOrIndependentSet))
                     return true;
                 Clique.erase(*v);
 
@@ -77,7 +77,7 @@ namespace OpenGraphtheory
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
                 V.insert(v);
 
-            return TestClique(Clique, V, k);
+            return TestClique(Clique, V, k, true);
         }
 
 

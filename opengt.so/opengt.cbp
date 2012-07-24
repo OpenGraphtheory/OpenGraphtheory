@@ -43,6 +43,7 @@
 		<Unit filename="Headers/algorithms/algorithm.h" />
 		<Unit filename="Headers/algorithms/clique/clique.h" />
 		<Unit filename="Headers/algorithms/color/color.h" />
+		<Unit filename="Headers/algorithms/independentset/independentset.h" />
 		<Unit filename="Headers/algorithms/path/path.h" />
 		<Unit filename="Headers/algorithms/vertexcover/vertexcover.h" />
 		<Unit filename="Headers/attributes.h" />
@@ -97,6 +98,7 @@
 		</Unit>
 		<Unit filename="Sources/algorithms/clique/clique.cpp" />
 		<Unit filename="Sources/algorithms/color/color.cpp" />
+		<Unit filename="Sources/algorithms/independentset/independentset.cpp" />
 		<Unit filename="Sources/algorithms/path/path.cpp" />
 		<Unit filename="Sources/algorithms/vertexcover/vertexcover.cpp" />
 		<Unit filename="Sources/attributes.cpp" />

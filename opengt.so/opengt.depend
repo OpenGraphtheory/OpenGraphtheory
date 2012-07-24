@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1339149751 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/clique/clique.cpp
+1343137922 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/clique/clique.cpp
 	"../../../Headers/algorithms/clique/clique.h"
 	<set>
 
@@ -502,7 +502,7 @@
 1339147772 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/color.cpp
 	"../../Headers/visualize/color.h"
 
-1339149776 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/clique/clique.h
+1343137733 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/clique/clique.h
 	"../algorithm.h"
 	<string>
 	<set>
