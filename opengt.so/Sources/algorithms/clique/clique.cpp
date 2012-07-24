@@ -30,6 +30,36 @@ namespace OpenGraphtheory
                     if(v->UnderlyingAdjacent(*n))
                         NextCandidates.insert(*n);
 
+                // Remove Candidates that dont have enough Neighbors in the Candidates-Set
+                set<Graph::VertexIterator> RemovableCandidates;
+                bool CandidateRemoved;
+                do
+                {
+                    CandidateRemoved = false;
+                    for(set<Graph::VertexIterator>::iterator i = NextCandidates.begin(); i != NextCandidates.end(); i++)
+                    {
+                        if(RemovableCandidates.find(*i) != RemovableCandidates.end())
+                            continue;
+
+                        set<Graph::VertexIterator> iNeighborCandidates;
+                        for(set<Graph::VertexIterator>::iterator j = NextCandidates.begin(); j != NextCandidates.end(); j++)
+                            if(i->UnderlyingAdjacent(*j) && (RemovableCandidates.find(*j) == RemovableCandidates.end()))
+                                iNeighborCandidates.insert(*j);
+                        iNeighborCandidates.erase(*i);
+
+                        if(iNeighborCandidates.size() < k-2)
+                        {
+                            RemovableCandidates.insert(*i);
+                            CandidateRemoved = true;
+                        }
+                    }
+
+                } while(CandidateRemoved);
+
+                for(set<Graph::VertexIterator>::iterator i = RemovableCandidates.begin(); i != RemovableCandidates.end(); i++)
+                    NextCandidates.erase(*i);
+
+
                 Clique.insert(*v);
                 if(TestClique(Clique, NextCandidates, k-1))
                     return true;
@@ -43,29 +73,11 @@ namespace OpenGraphtheory
 
         bool AlgorithmCLIQUE::FindClique(Graph& G, set<Graph::VertexIterator>& Clique, unsigned int k)
         {
-            set<Graph::VertexIterator> Excluded;
+            set<Graph::VertexIterator> V;
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-            {
+                V.insert(v);
 
-                if(Excluded.find(v) != Excluded.end())
-                    continue;
-
-                set<Graph::VertexIterator> Candidates = v.UnderlyingNeighborhood();
-                // remove excluded vertices and v from candidates set
-                for(set<Graph::VertexIterator>::iterator i = Excluded.begin(); i != Excluded.end(); i++)
-                    Candidates.erase(*i);
-                Candidates.erase(v);
-
-                Clique.insert(v);
-                if(TestClique(Clique, Candidates, k-1))
-                    return true;
-                Clique.clear();
-
-                Candidates.clear();
-                Excluded.insert(v);
-            }
-
-            return false;
+            return TestClique(Clique, V, k);
         }
 
 
