@@ -5,13 +5,16 @@
 		<Cursor position="785" topLine="0" />
 	</File>
 	<File name="Headers/algorithms/clique/clique.h" open="1" top="0" tabpos="3">
-		<Cursor position="707" topLine="0" />
+		<Cursor position="621" topLine="0" />
 	</File>
-	<File name="Headers/algorithms/independentset/independentset.h" open="1" top="0" tabpos="5">
-		<Cursor position="602" topLine="0" />
+	<File name="Headers/algorithms/color/color.h" open="0" top="0" tabpos="0">
+		<Cursor position="526" topLine="0" />
+	</File>
+	<File name="Headers/algorithms/independentset/independentset.h" open="0" top="0" tabpos="5">
+		<Cursor position="418" topLine="0" />
 	</File>
 	<File name="Headers/algorithms/path/path.h" open="0" top="0" tabpos="2">
-		<Cursor position="826" topLine="0" />
+		<Cursor position="553" topLine="0" />
 	</File>
 	<File name="Headers/attributes.h" open="0" top="0" tabpos="0">
 		<Cursor position="672" topLine="12" />
@@ -155,7 +158,7 @@
 		<Cursor position="1266" topLine="5" />
 	</File>
 	<File name="Sources/algorithms/path/path.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="1878" topLine="29" />
+		<Cursor position="5918" topLine="100" />
 	</File>
 	<File name="Sources/algorithms/vertexcover/vertexcover.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="38" topLine="0" />

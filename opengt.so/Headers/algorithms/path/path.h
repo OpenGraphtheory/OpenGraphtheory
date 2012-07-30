@@ -13,11 +13,14 @@
         {
             class AlgorithmPATH : public Algorithm
             {
+                public:
+                    void Run(Graph &G, std::vector<std::string> parameters);
+                    void AddPath(Graph &G, Graph::VertexIterator from, Graph::VertexIterator to, std::string pathname);
+                    list<pair<Graph::VertexIterator, Graph::EdgeIterator>* > FindPath(Graph &G, Graph::VertexIterator from, Graph::VertexIterator to);
+
                 protected:
                     static FactoryRegistrator<Algorithm> AlgorithmPathRegistrator;
-                    void Run(Graph &G, std::vector<std::string> parameters);
 
-                    list<pair<Graph::VertexIterator, Graph::EdgeIterator>* > FindPath(Graph &G, Graph::VertexIterator from, Graph::VertexIterator to);
                     void DijkstraInit(Graph& G, set<Graph::VertexIterator> &Q, map<Graph::VertexIterator, float>& distance, Graph::VertexIterator from);
                     void DijkstraUpdate(Graph::VertexIterator v, Graph::EdgeIterator e, Graph::VertexIterator u, map<Graph::VertexIterator, float> &distance,
                             map<Graph::VertexIterator, pair<Graph::VertexIterator, Graph::EdgeIterator>* > *path);

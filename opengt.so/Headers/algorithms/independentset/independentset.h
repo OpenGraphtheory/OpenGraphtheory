@@ -13,13 +13,14 @@
         {
             class AlgorithmINDEPENDENTSET : public AlgorithmCLIQUE
             {
+                public:
+                    void Run(Graph &G, std::vector<std::string> parameters);
+                    bool FindIndependentSet(Graph& G, std::set<Graph::VertexIterator>& IndependentSet, unsigned int k);
+                    void AddIndependentSet(Graph &G, std::string IndependentSetName);
                 protected:
                     static FactoryRegistrator<Algorithm> AlgorithmIndependentsetRegistrator;
                     static FactoryRegistrator<Algorithm> AlgorithmStablesetRegistrator;
-                    void Run(Graph &G, std::vector<std::string> parameters);
 
-                    bool FindIndependentSet(Graph& G, std::set<Graph::VertexIterator>& IndependentSet, unsigned int k);
-                    void AddIndependentSet(Graph &G, std::string IndependentSetName);
             };
         }
     }

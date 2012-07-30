@@ -481,17 +481,17 @@
 	<string>
 	<vector>
 
-1338796853 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/color/color.h
+1343643963 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/color/color.h
 	"../algorithm.h"
 	<string>
 	<map>
 	<vector>
 
-1338886504 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/path/path.cpp
+1343644837 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/path/path.cpp
 	"../../../Headers/algorithms/path/path.h"
 	<map>
 
-1338878607 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/path/path.h
+1343644668 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/path/path.h
 	"../algorithm.h"
 	<string>
 	<map>
@@ -502,7 +502,7 @@
 1339147772 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/color.cpp
 	"../../Headers/visualize/color.h"
 
-1343137733 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/clique/clique.h
+1343643355 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/clique/clique.h
 	"../algorithm.h"
 	<string>
 	<set>
@@ -517,4 +517,14 @@
 	"../opengt.h"
 	"../factory.h"
 	"transformation.h"
+
+1343138128 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/independentset/independentset.cpp
+	"../../../Headers/algorithms/independentset/independentset.h"
+	<set>
+
+1343655272 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/independentset/independentset.h
+	"../clique/clique.h"
+	<string>
+	<set>
+	<vector>
 

@@ -100,6 +100,20 @@ namespace OpenGraphtheory
         }
 
 
+        void AlgorithmPATH::AddPath(Graph &G, Graph::VertexIterator from, Graph::VertexIterator to, std::string PathName)
+        {
+            list<pair<Graph::VertexIterator, Graph::EdgeIterator>* > path = FindPath(G, from, to);
+
+            for(list<pair<Graph::VertexIterator, Graph::EdgeIterator>* >::iterator i = path.begin(); i != path.end(); i++)
+            {
+                (*i)->second.Attributes().Add(PathName, "int");
+                Attribute* attr = (*i)->second.Attributes().GetAttribute(PathName);
+                IntAttribute* iattr = dynamic_cast<IntAttribute*>(attr);
+                if(iattr != NULL)
+                    iattr->Value = 0;
+            }
+        }
+
 
         void AlgorithmPATH::Run(Graph &G, vector<string> parameters)
         {
@@ -121,18 +135,7 @@ namespace OpenGraphtheory
             }
 
             if(from != G.EndVertices() && to != G.EndVertices())
-            {
-                list<pair<Graph::VertexIterator, Graph::EdgeIterator>* > path = FindPath(G, from, to);
-
-                for(list<pair<Graph::VertexIterator, Graph::EdgeIterator>* >::iterator i = path.begin(); i != path.end(); i++)
-                {
-                    (*i)->second.Attributes().Add(PathName, "int");
-                    Attribute* attr = (*i)->second.Attributes().GetAttribute(PathName);
-                    IntAttribute* iattr = dynamic_cast<IntAttribute*>(attr);
-                    if(iattr != NULL)
-                        iattr->Value = 0;
-                }
-            }
+                AddPath(G, from, to, PathName);
         }
 
     }

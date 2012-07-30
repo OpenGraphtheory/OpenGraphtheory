@@ -13,13 +13,15 @@
         {
             class AlgorithmCOLORING : public Algorithm
             {
-                protected:
-                    static FactoryRegistrator<Algorithm> AlgorithmColoringRegistrator;
+                public:
                     void Run(Graph &G, std::vector<std::string> parameters);
-
-                    bool Colorize(Graph& G, std::map<Graph::VertexIterator, int>& Colors, int k);
                     bool Colorize(Graph& G, int k, std::string ColorizationName);
                     void Colorize(Graph &G, std::string ColorizationName);
+
+                protected:
+                    static FactoryRegistrator<Algorithm> AlgorithmColoringRegistrator;
+
+                    bool Colorize(Graph& G, std::map<Graph::VertexIterator, int>& Colors, int k);
             };
         }
     }
