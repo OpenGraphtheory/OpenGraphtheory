@@ -117,6 +117,11 @@ namespace OpenGraphtheory
         void Graph::Clear()
         {
             attributes->Clear();
+            for(set<VertexIterator*>::iterator i = VIterators.begin(); i != VIterators.end(); i++)
+                (*i)->Owner = NULL;
+            for(set<VertexIterator*>::iterator i = VIterators.begin(); i != VIterators.end(); i++)
+                (*i)->Owner = NULL;
+
             while(Vertices.size() > 0)
                 RemoveVertex(*(Vertices.begin()));
         }

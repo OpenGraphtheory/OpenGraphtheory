@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Debug" />
+	<ActiveTarget name="Release" />
 	<File name="Headers/algorithms/algorithm.h" open="0" top="0" tabpos="2">
 		<Cursor position="785" topLine="0" />
 	</File>
-	<File name="Headers/algorithms/clique/clique.h" open="1" top="0" tabpos="3">
+	<File name="Headers/algorithms/clique/clique.h" open="0" top="0" tabpos="3">
 		<Cursor position="621" topLine="0" />
 	</File>
 	<File name="Headers/algorithms/color/color.h" open="0" top="0" tabpos="0">
@@ -107,7 +107,7 @@
 		<Cursor position="643" topLine="0" />
 	</File>
 	<File name="Headers/opengt.h" open="0" top="0" tabpos="0">
-		<Cursor position="10112" topLine="219" />
+		<Cursor position="653" topLine="13" />
 	</File>
 	<File name="Headers/transform/aspectscale.h" open="0" top="0" tabpos="0">
 		<Cursor position="557" topLine="0" />
@@ -148,13 +148,13 @@
 	<File name="Sources/algorithms/algorithm.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="165" topLine="0" />
 	</File>
-	<File name="Sources/algorithms/clique/clique.cpp" open="1" top="0" tabpos="2">
+	<File name="Sources/algorithms/clique/clique.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="483" topLine="0" />
 	</File>
 	<File name="Sources/algorithms/color/color.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="0" topLine="0" />
 	</File>
-	<File name="Sources/algorithms/independentset/independentset.cpp" open="1" top="1" tabpos="4">
+	<File name="Sources/algorithms/independentset/independentset.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="1266" topLine="5" />
 	</File>
 	<File name="Sources/algorithms/path/path.cpp" open="0" top="0" tabpos="1">
@@ -241,8 +241,8 @@
 	<File name="Sources/intermediatesteps/intermediate.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="753" topLine="0" />
 	</File>
-	<File name="Sources/intermediatesteps/show.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1221" topLine="3" />
+	<File name="Sources/intermediatesteps/show.cpp" open="1" top="0" tabpos="2">
+		<Cursor position="39" topLine="3" />
 	</File>
 	<File name="Sources/intermediatesteps/stdout.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="1334" topLine="6" />
@@ -250,8 +250,8 @@
 	<File name="Sources/intermediatesteps/writefile.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="1761" topLine="21" />
 	</File>
-	<File name="Sources/opengt.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="10793" topLine="157" />
+	<File name="Sources/opengt.cpp" open="0" top="0" tabpos="5">
+		<Cursor position="3803" topLine="99" />
 	</File>
 	<File name="Sources/processing/components.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="57" topLine="0" />
@@ -280,8 +280,8 @@
 	<File name="Sources/transform/shift.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="151" topLine="0" />
 	</File>
-	<File name="Sources/transform/spring_embedder.cpp" open="0" top="0" tabpos="5">
-		<Cursor position="2278" topLine="52" />
+	<File name="Sources/transform/spring_embedder.cpp" open="1" top="1" tabpos="3">
+		<Cursor position="0" topLine="0" />
 	</File>
 	<File name="Sources/transform/spring_embedder3d.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="1578" topLine="5" />
