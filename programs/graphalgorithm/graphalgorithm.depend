@@ -1,0 +1,40 @@
+# depslib dependency file v1.0
+1338551664 source:/home/viktor/Programming/OpenGraphtheory/programs/graphalgorithm/graphalgorithm.cpp
+	<iostream>
+	<stdlib.h>
+	<list>
+	"../../opengt.so/Headers/opengt.h"
+	"../../opengt.so/Headers/algorithms/algorithm.h"
+
+1338451743 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
+	<list>
+	<set>
+	<map>
+	<string>
+	<iostream>
+	<fstream>
+	"simple_xml.h"
+	"attributes.h"
+
+1337348224 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/simple_xml.h
+	<iostream>
+	<sstream>
+	<vector>
+	<list>
+
+1338301009 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
+	<string>
+	<iostream>
+	"factory.h"
+	"simple_xml.h"
+
+1337755682 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/factory.h
+	<string>
+	<map>
+
+1338550740 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/algorithm.h
+	"../opengt.h"
+	"../factory.h"
+	<string>
+	<vector>
+
