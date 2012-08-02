@@ -1,7 +1,7 @@
 #ifndef EDITACTION_H
 #define EDITACTION_H
 
-#include "../../OpenGraphtheory/opengt.so/Headers/opengt.h"
+#include "../../../opengt.so/Headers/opengt.h"
 using namespace OpenGraphtheory;
 
 class EditAction
@@ -9,8 +9,8 @@ class EditAction
     public:
         virtual ~EditAction();
 
-        virtual void Undo();
-        virtual void Redo();
+        virtual void Undo() = 0;
+        virtual void Redo() = 0;
 };
 
 class VertexCreated : public EditAction

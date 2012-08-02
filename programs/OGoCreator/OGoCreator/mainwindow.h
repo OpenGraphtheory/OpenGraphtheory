@@ -7,12 +7,12 @@
 #include <QDragMoveEvent>
 #include <QDropEvent>
 #include "../OGoWidget/OGoWidget/ogographview.h"
-#include "../../OpenGraphtheory/opengt.so/Headers/opengt.h"
-#include "../../OpenGraphtheory/opengt.so/Headers/algorithms/clique/clique.h"
-#include "../../OpenGraphtheory/opengt.so/Headers/algorithms/color/color.h"
-#include "../../OpenGraphtheory/opengt.so/Headers/algorithms/independentset/independentset.h"
-#include "../../OpenGraphtheory/opengt.so/Headers/algorithms/path/path.h"
-#include "../../OpenGraphtheory/opengt.so/Headers/transform/springembedder.h"
+#include "../../../opengt.so/Headers/opengt.h"
+#include "../../../opengt.so/Headers/algorithms/clique/clique.h"
+#include "../../../opengt.so/Headers/algorithms/color/color.h"
+#include "../../../opengt.so/Headers/algorithms/independentset/independentset.h"
+#include "../../../opengt.so/Headers/algorithms/path/path.h"
+#include "../../../opengt.so/Headers/transform/springembedder.h"
 
 namespace Ui {
 class MainWindow;
