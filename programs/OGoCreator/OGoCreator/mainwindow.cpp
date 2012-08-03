@@ -270,7 +270,7 @@ void MainWindow::on_actionSpring_Embed_triggered()
 {
     OGoGraphView* gv = static_cast<OGoGraphView*>(ui->tabWidget->currentWidget());
 
-    OpenGraphtheory::Transform::TransformerSPRINGEMBEDDER algo;
+    OpenGraphtheory::Transform::TransformerSPRINGEMBEDDER3D algo;
     RepaintOnChange *foo = new RepaintOnChange(gv);
     vector<float> params;
     //params.push_back();

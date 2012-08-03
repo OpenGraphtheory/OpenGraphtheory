@@ -12,7 +12,7 @@
 #include "../../../opengt.so/Headers/algorithms/color/color.h"
 #include "../../../opengt.so/Headers/algorithms/independentset/independentset.h"
 #include "../../../opengt.so/Headers/algorithms/path/path.h"
-#include "../../../opengt.so/Headers/transform/springembedder.h"
+#include "../../../opengt.so/Headers/transform/springembedder3d.h"
 
 namespace Ui {
 class MainWindow;
