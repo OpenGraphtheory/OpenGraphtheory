@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Release" />
+	<ActiveTarget name="Debug" />
 	<File name="Headers/algorithms/algorithm.h" open="0" top="0" tabpos="2">
 		<Cursor position="785" topLine="0" />
 	</File>
@@ -9,6 +9,9 @@
 	</File>
 	<File name="Headers/algorithms/color/color.h" open="0" top="0" tabpos="0">
 		<Cursor position="526" topLine="0" />
+	</File>
+	<File name="Headers/algorithms/dominatingset/dominatingset.h" open="1" top="0" tabpos="3">
+		<Cursor position="1261" topLine="0" />
 	</File>
 	<File name="Headers/algorithms/independentset/independentset.h" open="0" top="0" tabpos="5">
 		<Cursor position="418" topLine="0" />
@@ -154,6 +157,9 @@
 	<File name="Sources/algorithms/color/color.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="0" topLine="0" />
 	</File>
+	<File name="Sources/algorithms/dominatingset/dominatingset.cpp" open="1" top="1" tabpos="2">
+		<Cursor position="2373" topLine="74" />
+	</File>
 	<File name="Sources/algorithms/independentset/independentset.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="1266" topLine="5" />
 	</File>
@@ -184,7 +190,7 @@
 	<File name="Sources/export/mpost.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="2971" topLine="43" />
 	</File>
-	<File name="Sources/export/postscript.cpp" open="1" top="0" tabpos="1">
+	<File name="Sources/export/postscript.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="3219" topLine="9" />
 	</File>
 	<File name="Sources/export/povray.cpp" open="0" top="0" tabpos="0">
@@ -241,7 +247,7 @@
 	<File name="Sources/intermediatesteps/intermediate.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="753" topLine="0" />
 	</File>
-	<File name="Sources/intermediatesteps/show.cpp" open="1" top="0" tabpos="2">
+	<File name="Sources/intermediatesteps/show.cpp" open="1" top="0" tabpos="1">
 		<Cursor position="39" topLine="3" />
 	</File>
 	<File name="Sources/intermediatesteps/stdout.cpp" open="0" top="0" tabpos="0">
@@ -280,7 +286,7 @@
 	<File name="Sources/transform/shift.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="151" topLine="0" />
 	</File>
-	<File name="Sources/transform/spring_embedder.cpp" open="1" top="1" tabpos="3">
+	<File name="Sources/transform/spring_embedder.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="0" topLine="0" />
 	</File>
 	<File name="Sources/transform/spring_embedder3d.cpp" open="0" top="0" tabpos="4">
