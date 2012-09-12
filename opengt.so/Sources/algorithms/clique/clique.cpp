@@ -99,14 +99,7 @@ namespace OpenGraphtheory
                 CurrentClique.clear();
             }
 
-            for(set<Graph::VertexIterator>::iterator i = LastClique.begin(); i != LastClique.end(); i++)
-            {
-                Graph::VertexIterator j = *i;
-                j.Attributes().Add(CliqueName, "int");
-                IntAttribute* attr = dynamic_cast<IntAttribute*>(j.Attributes().GetAttribute(CliqueName));
-                if(attr != NULL)
-                    attr->Value = 1;
-            }
+            G.AddVertexSet(LastClique, CliqueName);
         }
 
         void AlgorithmCLIQUE::Run(Graph &G, vector<string> parameters)

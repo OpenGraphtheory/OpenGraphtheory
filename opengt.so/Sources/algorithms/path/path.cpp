@@ -104,14 +104,10 @@ namespace OpenGraphtheory
         {
             list<pair<Graph::VertexIterator, Graph::EdgeIterator>* > path = FindPath(G, from, to);
 
+            set<Graph::EdgeIterator> pathedges;
             for(list<pair<Graph::VertexIterator, Graph::EdgeIterator>* >::iterator i = path.begin(); i != path.end(); i++)
-            {
-                (*i)->second.Attributes().Add(PathName, "int");
-                Attribute* attr = (*i)->second.Attributes().GetAttribute(PathName);
-                IntAttribute* iattr = dynamic_cast<IntAttribute*>(attr);
-                if(iattr != NULL)
-                    iattr->Value = 0;
-            }
+                pathedges.insert((*i)->second);
+            G.AddEdgeSet(pathedges, PathName);
         }
 
 

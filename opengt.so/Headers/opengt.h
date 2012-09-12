@@ -81,6 +81,13 @@
 				Graph::EdgeIterator BeginEdges();
 				Graph::EdgeIterator EndEdges();
 
+            /// management of attributes
+
+                void AddVertexSet(std::set<Graph::VertexIterator> V, string name);
+                void AddEdgeSet(std::set<Graph::EdgeIterator> E, string name);
+                void AddVertexColoring(std::map<Graph::VertexIterator, int> Coloring, string name);
+                void AddEdgeColoring(std::map<Graph::EdgeIterator, int> Coloring, string name);
+
 			/// adding and removing vertices
 			protected:
 				Graph::VertexIterator InternalAddVertex(vector<float> coordinates, string label = "", float weight = 0, void* tag = NULL, int ID = -1);
@@ -132,7 +139,7 @@
 				friend ostream& operator<<(ostream& os, Graph& G);
 
 
-            /// \brief A class to represent graphs
+            /// \brief A class to represent vertices
             class Vertex
             {
                 friend class Graph;
@@ -158,6 +165,7 @@
                     bool UnderlyingAdjacent(const Vertex* v) const;
             };
 
+            /// \brief A class to represent edges
             class Edge
             {
                 friend class Graph;

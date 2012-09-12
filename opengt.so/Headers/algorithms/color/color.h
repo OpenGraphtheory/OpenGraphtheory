@@ -15,13 +15,15 @@
             {
                 public:
                     void Run(Graph &G, std::vector<std::string> parameters);
-                    bool Colorize(Graph& G, int k, std::string ColorizationName);
-                    void Colorize(Graph &G, std::string ColorizationName);
+
+                    bool CompleteColoring(Graph& G, map<Graph::VertexIterator, int>& PreColoring, int k);
+                    map<Graph::VertexIterator, int> FindColoring(Graph &G);
+                    bool AddColoring(Graph& G, int k, string ColoringName);
+                    void AddColoring(Graph& G, string ColoringName);
 
                 protected:
                     static FactoryRegistrator<Algorithm> AlgorithmColoringRegistrator;
 
-                    bool Colorize(Graph& G, std::map<Graph::VertexIterator, int>& Colors, int k);
             };
         }
     }

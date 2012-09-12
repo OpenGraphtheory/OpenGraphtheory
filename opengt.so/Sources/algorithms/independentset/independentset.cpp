@@ -46,14 +46,7 @@ namespace OpenGraphtheory
                 CurrentIndependentSet.clear();
             }
 
-            for(set<Graph::VertexIterator>::iterator i = LastIndependentSet.begin(); i != LastIndependentSet.end(); i++)
-            {
-                Graph::VertexIterator j = *i;
-                j.Attributes().Add(IndependentSetName, "int");
-                IntAttribute* attr = dynamic_cast<IntAttribute*>(j.Attributes().GetAttribute(IndependentSetName));
-                if(attr != NULL)
-                    attr->Value = 1;
-            }
+            G.AddVertexSet(LastIndependentSet, IndependentSetName);
         }
 
         void AlgorithmINDEPENDENTSET::Run(Graph &G, vector<string> parameters)

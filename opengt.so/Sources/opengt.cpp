@@ -581,6 +581,69 @@ namespace OpenGraphtheory
 	// @}
 
 
+	/// \defgroup attributemanagement ''Managing Attributes''
+	// @{
+
+        void Graph::AddVertexSet(std::set<Graph::VertexIterator> V, string name)
+        {
+            for(VertexIterator v = BeginVertices(); v != EndVertices(); v++)
+            {
+                v.Attributes().Unset(name);
+                v.Attributes().Add(name, "bool");
+                Attribute* attr = v.Attributes().GetAttribute(name);
+                BoolAttribute* battr = dynamic_cast<BoolAttribute*>(attr);
+                if(battr != NULL)
+                    battr->Value = (V.find(v) != V.end());
+            }
+        }
+
+        void Graph::AddEdgeSet(std::set<Graph::EdgeIterator> E, string name)
+        {
+            for(EdgeIterator e = BeginEdges(); e != EndEdges(); e++)
+            {
+                e.Attributes().Unset(name);
+                e.Attributes().Add(name, "bool");
+                Attribute* attr = e.Attributes().GetAttribute(name);
+                BoolAttribute* battr = dynamic_cast<BoolAttribute*>(attr);
+                if(battr != NULL)
+                    battr->Value = (E.find(e) != E.end());
+            }
+        }
+
+        void Graph::AddVertexColoring(std::map<Graph::VertexIterator, int> Coloring, string name)
+        {
+            for(VertexIterator v = BeginVertices(); v != EndVertices(); v++)
+            {
+                v.Attributes().Unset(name);
+                if(Coloring.find(v) != Coloring.end())
+                {
+                    v.Attributes().Add(name, "int");
+                    Attribute* attr = v.Attributes().GetAttribute(name);
+                    IntAttribute* iattr = dynamic_cast<IntAttribute*>(attr);
+                    if(iattr != NULL)
+                        iattr->Value = Coloring[v];
+                }
+            }
+        }
+
+        void Graph::AddEdgeColoring(std::map<Graph::EdgeIterator, int> Coloring, string name)
+        {
+            for(EdgeIterator e = BeginEdges(); e != EndEdges(); e++)
+            {
+                e.Attributes().Unset(name);
+                if(Coloring.find(e) != Coloring.end())
+                {
+                    e.Attributes().Add(name, "int");
+                    Attribute* attr = e.Attributes().GetAttribute(name);
+                    IntAttribute* iattr = dynamic_cast<IntAttribute*>(attr);
+                    if(iattr != NULL)
+                        iattr->Value = Coloring[e];
+                }
+            }
+        }
+
+    // @}
+
 	/// \defgroup vertexmanipulation ''Vertex Manipulation''
 	// @{
 

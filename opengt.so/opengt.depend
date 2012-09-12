@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1343137922 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/clique/clique.cpp
+1347435129 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/clique/clique.cpp
 	"../../../Headers/algorithms/clique/clique.h"
 	<set>
 
@@ -7,7 +7,7 @@
 	"../../../Headers/algorithms/color/color.h"
 	<map>
 
-1342517188 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
+1347434786 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
 	<list>
 	<set>
 	<map>
@@ -275,7 +275,7 @@
 	<string>
 	"import.h"
 
-1343826532 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/opengt.cpp
+1347434922 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/opengt.cpp
 	"../Headers/opengt.h"
 	"../Headers/attributes.h"
 	<stdlib.h>
@@ -518,12 +518,22 @@
 	"../factory.h"
 	"transformation.h"
 
-1343138128 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/independentset/independentset.cpp
+1347435174 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/independentset/independentset.cpp
 	"../../../Headers/algorithms/independentset/independentset.h"
 	<set>
 
 1343655272 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/independentset/independentset.h
 	"../clique/clique.h"
+	<string>
+	<set>
+	<vector>
+
+1347435038 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/dominatingset/dominatingset.cpp
+	"../../../Headers/algorithms/dominatingset/dominatingset.h"
+	<set>
+
+1347281108 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/dominatingset/dominatingset.h
+	"../algorithm.h"
 	<string>
 	<set>
 	<vector>

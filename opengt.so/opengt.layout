@@ -7,10 +7,10 @@
 	<File name="Headers/algorithms/clique/clique.h" open="0" top="0" tabpos="3">
 		<Cursor position="621" topLine="0" />
 	</File>
-	<File name="Headers/algorithms/color/color.h" open="0" top="0" tabpos="0">
-		<Cursor position="526" topLine="0" />
+	<File name="Headers/algorithms/color/color.h" open="1" top="0" tabpos="5">
+		<Cursor position="550" topLine="0" />
 	</File>
-	<File name="Headers/algorithms/dominatingset/dominatingset.h" open="1" top="0" tabpos="3">
+	<File name="Headers/algorithms/dominatingset/dominatingset.h" open="0" top="0" tabpos="3">
 		<Cursor position="1261" topLine="0" />
 	</File>
 	<File name="Headers/algorithms/independentset/independentset.h" open="0" top="0" tabpos="5">
@@ -20,7 +20,7 @@
 		<Cursor position="553" topLine="0" />
 	</File>
 	<File name="Headers/attributes.h" open="0" top="0" tabpos="0">
-		<Cursor position="672" topLine="12" />
+		<Cursor position="227" topLine="12" />
 	</File>
 	<File name="Headers/export/dot.h" open="0" top="0" tabpos="0">
 		<Cursor position="674" topLine="0" />
@@ -110,7 +110,7 @@
 		<Cursor position="643" topLine="0" />
 	</File>
 	<File name="Headers/opengt.h" open="0" top="0" tabpos="0">
-		<Cursor position="653" topLine="13" />
+		<Cursor position="2115" topLine="67" />
 	</File>
 	<File name="Headers/transform/aspectscale.h" open="0" top="0" tabpos="0">
 		<Cursor position="557" topLine="0" />
@@ -152,21 +152,21 @@
 		<Cursor position="165" topLine="0" />
 	</File>
 	<File name="Sources/algorithms/clique/clique.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="483" topLine="0" />
+		<Cursor position="3843" topLine="73" />
 	</File>
-	<File name="Sources/algorithms/color/color.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="0" topLine="0" />
+	<File name="Sources/algorithms/color/color.cpp" open="1" top="0" tabpos="4">
+		<Cursor position="1772" topLine="11" />
 	</File>
-	<File name="Sources/algorithms/dominatingset/dominatingset.cpp" open="1" top="1" tabpos="2">
-		<Cursor position="2373" topLine="74" />
+	<File name="Sources/algorithms/dominatingset/dominatingset.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="6908" topLine="101" />
 	</File>
 	<File name="Sources/algorithms/independentset/independentset.cpp" open="0" top="0" tabpos="4">
-		<Cursor position="1266" topLine="5" />
+		<Cursor position="1991" topLine="16" />
 	</File>
-	<File name="Sources/algorithms/path/path.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="5918" topLine="100" />
+	<File name="Sources/algorithms/path/path.cpp" open="1" top="1" tabpos="3">
+		<Cursor position="5233" topLine="96" />
 	</File>
-	<File name="Sources/algorithms/vertexcover/vertexcover.cpp" open="0" top="0" tabpos="0">
+	<File name="Sources/algorithms/vertexcover/vertexcover.cpp" open="1" top="0" tabpos="2">
 		<Cursor position="38" topLine="0" />
 	</File>
 	<File name="Sources/attributes.cpp" open="0" top="0" tabpos="0">
@@ -257,7 +257,7 @@
 		<Cursor position="1761" topLine="21" />
 	</File>
 	<File name="Sources/opengt.cpp" open="0" top="0" tabpos="5">
-		<Cursor position="3803" topLine="99" />
+		<Cursor position="23732" topLine="604" />
 	</File>
 	<File name="Sources/processing/components.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="57" topLine="0" />
