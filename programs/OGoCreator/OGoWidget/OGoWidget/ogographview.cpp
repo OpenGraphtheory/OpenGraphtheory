@@ -193,6 +193,9 @@ void OGoGraphView::paintEvent(QPaintEvent *)
             IntAttribute* iattr = dynamic_cast<IntAttribute*>(attr);
             if(iattr != NULL)
                 pen.setColor(colors[iattr->Value % colorsCount]);
+            BoolAttribute* battr = dynamic_cast<BoolAttribute*>(attr);
+            if(battr != NULL && battr->Value)
+                pen.setColor(colors[0]);
         }
 
         p.setPen(pen);
@@ -217,12 +220,22 @@ void OGoGraphView::paintEvent(QPaintEvent *)
                 p.setPen(colors[iattr->Value % colorsCount]);
                 p.setBrush(colors[iattr->Value % colorsCount]);
             }
+            BoolAttribute* battr = dynamic_cast<BoolAttribute*>(attr);
+            if(battr != NULL && battr->Value)
+            {
+                p.setPen(colors[0]);
+                p.setBrush(colors[0]);
+            }
+
+
         }
         p.drawEllipse(x, y, vertexsize*zoom, vertexsize*zoom);
     }
 
     if(mouseaction == OGoGraphView::DrawingEdge)
     {
+        pen.setWidthF(edgewidth*zoom);
+        p.setPen(pen);
         for(set<Graph::VertexIterator>::iterator i = selectedvertices.begin(); i != selectedvertices.end(); i++)
         {
             vector<float> Coordinates = i->GetCoordinates();

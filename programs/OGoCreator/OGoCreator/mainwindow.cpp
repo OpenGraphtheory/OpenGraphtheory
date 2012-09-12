@@ -206,7 +206,7 @@ void MainWindow::on_actionColoring_triggered()
     OGoGraphView* gv = static_cast<OGoGraphView*>(ui->tabWidget->currentWidget());
 
     OpenGraphtheory::Algorithms::AlgorithmCOLORING algo;
-    algo.Colorize(*(gv->getGraph()), text.toUtf8().constData());
+    algo.AddColoring(*(gv->getGraph()), text.toUtf8().constData());
 
     gv->setVertexColoring(text.toUtf8().constData());
     gv->resetEdgeColoring();
@@ -253,6 +253,22 @@ void MainWindow::on_actionIndependent_Set_triggered()
     gv->resetEdgeColoring();
 }
 
+void MainWindow::on_actionDominating_Set_triggered()
+{
+    bool ok;
+    QString text = QInputDialog::getText(this, "Dominating Set Algorithm", "Enter a name for the Dominating Set",
+                   QLineEdit::Normal, "DominatingSet", &ok );
+    if ( !ok || text.isEmpty() )
+        return;
+
+    OGoGraphView* gv = static_cast<OGoGraphView*>(ui->tabWidget->currentWidget());
+
+    OpenGraphtheory::Algorithms::AlgorithmDOMINATINGSET algo;
+    algo.AddDominatingSet(*(gv->getGraph()), text.toUtf8().constData());
+
+    gv->setVertexColoring(text.toUtf8().constData());
+    gv->resetEdgeColoring();
+}
 
 
 
@@ -278,4 +294,5 @@ void MainWindow::on_actionSpring_Embed_triggered()
     algo.DoTransform(*(gv->getGraph()), params, foo);
     delete foo;
 }
+
 

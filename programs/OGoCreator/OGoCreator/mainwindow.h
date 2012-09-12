@@ -11,6 +11,7 @@
 #include "../../../opengt.so/Headers/algorithms/clique/clique.h"
 #include "../../../opengt.so/Headers/algorithms/color/color.h"
 #include "../../../opengt.so/Headers/algorithms/independentset/independentset.h"
+#include "../../../opengt.so/Headers/algorithms/dominatingset/dominatingset.h"
 #include "../../../opengt.so/Headers/algorithms/path/path.h"
 #include "../../../opengt.so/Headers/transform/springembedder3d.h"
 
@@ -58,6 +59,8 @@ private slots:
     void on_actionIndependent_Set_triggered();
 
     void on_actionSpring_Embed_triggered();
+
+    void on_actionDominating_Set_triggered();
 
     private:
     Ui::MainWindow *ui;

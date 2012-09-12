@@ -3,7 +3,7 @@
 	"../../../Headers/algorithms/clique/clique.h"
 	<set>
 
-1338797283 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/color/color.cpp
+1347438818 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/color/color.cpp
 	"../../../Headers/algorithms/color/color.h"
 	<map>
 
@@ -481,13 +481,13 @@
 	<string>
 	<vector>
 
-1343643963 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/color/color.h
+1347438535 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/color/color.h
 	"../algorithm.h"
 	<string>
 	<map>
 	<vector>
 
-1343644837 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/path/path.cpp
+1347439308 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/path/path.cpp
 	"../../../Headers/algorithms/path/path.h"
 	<map>
 
