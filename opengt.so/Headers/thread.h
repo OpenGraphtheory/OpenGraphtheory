@@ -7,7 +7,12 @@
 			#define __unix__
 		#endif
 	#endif
-	
+	#ifndef __unix__
+        #ifdef __APPLE__ & __MACH__
+            #define __unix__
+        #endif
+	#endif
+
 	#ifdef __unix__
 		#include <pthread.h>
 	#elif __WIN32__ || _MSC_VER || _Windows || __NT__
@@ -29,7 +34,7 @@
 		public:
 			Mutex();
 			~Mutex();
-			
+
 			void Lock();
 			bool TryLock();
 			void Unlock();
@@ -66,7 +71,7 @@
 			void Start();
 			void Terminate();
 			State GetState();
-			
+
 			void Lock();
 			void Unlock();
 			bool TryLock();

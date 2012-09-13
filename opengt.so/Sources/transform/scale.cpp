@@ -34,7 +34,7 @@ namespace OpenGraphtheory
             for(Graph::VertexIterator v1 = G.BeginVertices(); v1 != G.EndVertices(); v1++)
             {
                 coordinates = v1.GetCoordinates();
-                for(unsigned int j = 0; j < min(dimensions, coordinates.size()); ++j)
+                for(unsigned int j = 0; j < min(dimensions, (unsigned int)(coordinates.size())); ++j)
                 {
                     if(coordinates[j] < dimension_min[j])
                         dimension_min[j] = coordinates[j];
