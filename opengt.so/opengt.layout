@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Release" />
+	<ActiveTarget name="Debug" />
 	<File name="Headers/algorithms/algorithm.h" open="0" top="0" tabpos="2">
 		<Cursor position="785" topLine="0" />
 	</File>
@@ -298,8 +298,8 @@
 	<File name="Sources/visualize/DisplayWindow.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="4782" topLine="111" />
 	</File>
-	<File name="Sources/visualize/GraphWindow.cpp" open="1" top="1" tabpos="3">
-		<Cursor position="2198" topLine="36" />
+	<File name="Sources/visualize/GraphWindow.cpp" open="1" top="1" tabpos="2">
+		<Cursor position="2504" topLine="40" />
 	</File>
 	<File name="Sources/visualize/color.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="1442" topLine="35" />

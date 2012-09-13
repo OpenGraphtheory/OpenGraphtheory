@@ -52,10 +52,13 @@ namespace OpenGraphtheory
                         if(attrEdgeColoring != NULL)
                             SetColor(Color::DefaultColors[attrEdgeColoring->Value].Red, Color::DefaultColors[attrEdgeColoring->Value].Green, Color::DefaultColors[attrEdgeColoring->Value].Blue);
                         BoolAttribute* attrEdgeSet = dynamic_cast<BoolAttribute*>(e.Attributes().GetAttribute(EdgeColoring));
-                        if(attrEdgeSet != NULL && attrEdgeSet->Value)
-                            SetColor(Color::DefaultColors[0].Red, Color::DefaultColors[0].Green, Color::DefaultColors[0].Blue);
-                        else
-                            SetColor(0,0,0);
+                        if(attrEdgeSet != NULL)
+                        {
+                            if(attrEdgeSet->Value)
+                                SetColor(Color::DefaultColors[0].Red, Color::DefaultColors[0].Green, Color::DefaultColors[0].Blue);
+                            else
+                                SetColor(0,0,0);
+                        }
                     }
                     else
                         SetColor(0,0,0);
@@ -77,10 +80,13 @@ namespace OpenGraphtheory
                         if(attrVertexColoring != NULL)
                             SetColor(Color::DefaultColors[attrVertexColoring->Value].Red, Color::DefaultColors[attrVertexColoring->Value].Green, Color::DefaultColors[attrVertexColoring->Value].Blue);
                         BoolAttribute* attrVertexSet = dynamic_cast<BoolAttribute*>(v.Attributes().GetAttribute(VertexColoring));
-                        if(attrVertexSet != NULL && attrVertexSet->Value)
-                            SetColor(Color::DefaultColors[0].Red, Color::DefaultColors[0].Green, Color::DefaultColors[0].Blue);
-                        else
-                            SetColor(0,0,0);
+                        if(attrVertexSet != NULL)
+                        {
+                            if(attrVertexSet->Value)
+                                SetColor(Color::DefaultColors[0].Red, Color::DefaultColors[0].Green, Color::DefaultColors[0].Blue);
+                            else
+                                SetColor(0,0,0);
+                        }
                     }
                     else
                         SetColor(0,0,0);
