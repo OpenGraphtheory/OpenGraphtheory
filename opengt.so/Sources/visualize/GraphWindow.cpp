@@ -50,11 +50,10 @@ namespace OpenGraphtheory
                     {
                         IntAttribute* attrEdgeColoring = dynamic_cast<IntAttribute*>(e.Attributes().GetAttribute(EdgeColoring));
                         if(attrEdgeColoring != NULL)
-                        {
-                            //int color = Color::DefaultColors[attrEdgeColoring->Value].ToInt();
-                            //SetColor((short)(color / 65536), (short)((color / 256) % 256), (short)(color % 256));
                             SetColor(Color::DefaultColors[attrEdgeColoring->Value].Red, Color::DefaultColors[attrEdgeColoring->Value].Green, Color::DefaultColors[attrEdgeColoring->Value].Blue);
-                        }
+                        BoolAttribute* attrEdgeSet = dynamic_cast<BoolAttribute*>(e.Attributes().GetAttribute(EdgeColoring));
+                        if(attrEdgeSet != NULL && attrEdgeSet->Value)
+                            SetColor(Color::DefaultColors[0].Red, Color::DefaultColors[0].Green, Color::DefaultColors[0].Blue);
                     }
                     else
                         SetColor(0,0,0);
@@ -74,11 +73,11 @@ namespace OpenGraphtheory
                     {
                         IntAttribute* attrVertexColoring = dynamic_cast<IntAttribute*>(v.Attributes().GetAttribute(VertexColoring));
                         if(attrVertexColoring != NULL)
-                        {
-                            //int color = defaultcolors[attrVertexColoring->Value];
-                            //SetColor((unsigned short)(color / 65536), (unsigned short)((color / 256) % 256), (unsigned short)(color % 256));
                             SetColor(Color::DefaultColors[attrVertexColoring->Value].Red, Color::DefaultColors[attrVertexColoring->Value].Green, Color::DefaultColors[attrVertexColoring->Value].Blue);
-                        }
+                        BoolAttribute* attrVertexSet = dynamic_cast<BoolAttribute*>(v.Attributes().GetAttribute(VertexColoring));
+                        if(attrVertexSet != NULL && attrVertexSet->Value)
+                            SetColor(Color::DefaultColors[0].Red, Color::DefaultColors[0].Green, Color::DefaultColors[0].Blue);
+
                     }
                     else
                         SetColor(0,0,0);
