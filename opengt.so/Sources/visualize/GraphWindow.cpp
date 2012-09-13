@@ -54,6 +54,8 @@ namespace OpenGraphtheory
                         BoolAttribute* attrEdgeSet = dynamic_cast<BoolAttribute*>(e.Attributes().GetAttribute(EdgeColoring));
                         if(attrEdgeSet != NULL && attrEdgeSet->Value)
                             SetColor(Color::DefaultColors[0].Red, Color::DefaultColors[0].Green, Color::DefaultColors[0].Blue);
+                        else
+                            SetColor(0,0,0);
                     }
                     else
                         SetColor(0,0,0);
@@ -77,7 +79,8 @@ namespace OpenGraphtheory
                         BoolAttribute* attrVertexSet = dynamic_cast<BoolAttribute*>(v.Attributes().GetAttribute(VertexColoring));
                         if(attrVertexSet != NULL && attrVertexSet->Value)
                             SetColor(Color::DefaultColors[0].Red, Color::DefaultColors[0].Green, Color::DefaultColors[0].Blue);
-
+                        else
+                            SetColor(0,0,0);
                     }
                     else
                         SetColor(0,0,0);
