@@ -11,7 +11,7 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportFilterPOVRAY::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring, map<Graph::EdgeIterator, Color>& edgecoloring)
+        void ExportFilterPOVRAY::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring, map<Graph::EdgeIterator, Color>& edgecoloring, float dpi)
         {
             if(G.IsHypergraph())
                 throw "The POV-Ray fileformat doesn\'t support hypergraphs\n";

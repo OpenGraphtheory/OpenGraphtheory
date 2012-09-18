@@ -23,7 +23,7 @@ namespace OpenGraphtheory
         }
 
 
-        void ExportFilter::DoExport(Graph& G, ostream& os, std::string vertexcoloring, std::string edgecoloring)
+        void ExportFilter::DoExport(Graph& G, ostream& os, std::string vertexcoloring, std::string edgecoloring, float dpi)
         {
             map<Graph::VertexIterator, Color> vcoloring;
             map<Graph::EdgeIterator, Color> ecoloring;
@@ -50,43 +50,43 @@ namespace OpenGraphtheory
                 }
             }
 
-            Export(G, os, vcoloring, ecoloring);
+            Export(G, os, vcoloring, ecoloring, dpi);
         }
 
 
-        void ExportFilter::DoExport(Graph& G, string FileName, std::string vertexcoloring, std::string edgecoloring)
+        void ExportFilter::DoExport(Graph& G, string FileName, std::string vertexcoloring, std::string edgecoloring, float dpi)
         {
             ofstream os(FileName.c_str());
-            DoExport(G, os, vertexcoloring, edgecoloring);
+            DoExport(G, os, vertexcoloring, edgecoloring, dpi);
             os.close();
         }
 
-        string ExportFilter::DoExport(Graph& G, std::string vertexcoloring, std::string edgecoloring)
+        string ExportFilter::DoExport(Graph& G, std::string vertexcoloring, std::string edgecoloring, float dpi)
         {
             stringstream sstream;
-            DoExport(G, sstream, vertexcoloring, edgecoloring);
+            DoExport(G, sstream, vertexcoloring, edgecoloring, dpi);
             return sstream.str();
         }
 
 
 
-        void ExportFilter::Export(Graph& G, ostream& os, string format, std::string vertexcoloring, std::string edgecoloring)
+        void ExportFilter::Export(Graph& G, ostream& os, string format, std::string vertexcoloring, std::string edgecoloring, float dpi)
         {
             ExportFilter* exportfilter = ExportFilter::ExportFilterFactory.Produce(format);
             if(exportfilter == NULL)
                 throw "unknown export-format";
 
-            exportfilter->DoExport(G, os, vertexcoloring, edgecoloring);
+            exportfilter->DoExport(G, os, vertexcoloring, edgecoloring, dpi);
             delete exportfilter;
         }
 
-        void ExportFilter::Export(Graph& G, string FileName, string format, std::string vertexcoloring, std::string edgecoloring)
+        void ExportFilter::Export(Graph& G, string FileName, string format, std::string vertexcoloring, std::string edgecoloring, float dpi)
         {
             ExportFilter* exportfilter = ExportFilter::ExportFilterFactory.Produce(format);
             if(exportfilter == NULL)
                 throw "unknown export-format";
 
-            exportfilter->DoExport(G, FileName, vertexcoloring, edgecoloring);
+            exportfilter->DoExport(G, FileName, vertexcoloring, edgecoloring, dpi);
             delete exportfilter;
         }
 

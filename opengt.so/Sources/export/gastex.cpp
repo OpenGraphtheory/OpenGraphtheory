@@ -10,7 +10,7 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportFilterGASTEX::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring, map<Graph::EdgeIterator, Color>& edgecoloring)
+        void ExportFilterGASTEX::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring, map<Graph::EdgeIterator, Color>& edgecoloring, float dpi)
         {
             if(G.IsHypergraph())
                 throw "The GasTeX fileformat doesn\'t support hypergraphs\n";
@@ -24,6 +24,7 @@ namespace OpenGraphtheory
 
 
             os << "% www.Open-Graphtheory.org\n";
+            os << "%\\usepackage{gastex}";
             os << "\\begin{picture}(100,100)(0,0)\n";
 
             /// write vertices

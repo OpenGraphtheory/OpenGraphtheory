@@ -1,5 +1,5 @@
-#ifndef __OPENGRAPHTHEORY_EXPORT_XGMML_H
-    #define __OPENGRAPHTHEORY_EXPORT_XGMML_H
+#ifndef __OPENGRAPHTHEORY_EXPORT_PDF_H
+    #define __OPENGRAPHTHEORY_EXPORT_PDF_H
 
     #include <ostream>
     #include "../opengt.h"
@@ -11,10 +11,10 @@
         namespace Export
         {
 
-            class ExportFilterXGMML : public ExportFilter
+            class ExportFilterPDF : public ExportFilter
             {
                 protected:
-                    static FactoryRegistrator<ExportFilter> ExportFilterXgmmlRegistrator;
+                    static FactoryRegistrator<ExportFilter> ExportFilterPdfRegistrator;
                 public:
                     void Export(OpenGraphtheory::Graph& G, std::ostream& os,
                                 map<Graph::VertexIterator, Visualization::Color>& vertexcoloring,

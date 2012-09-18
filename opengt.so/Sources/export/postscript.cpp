@@ -9,15 +9,16 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportFilterPOSTSCRIPT::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring, map<Graph::EdgeIterator, Color>& edgecoloring)
+        void ExportFilterPOSTSCRIPT::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring, map<Graph::EdgeIterator, Color>& edgecoloring, float dpi)
         {
-            int Radius = 2;
+            float Radius = 0.5; // cm
 
             if(G.IsHypergraph())
                 throw "The POSTSCRIPT fileformat does not support hypergraphs\n";
 
             vector<float> FirstCoordinates = G.BeginVertices().GetCoordinates();
             float MaxYCoordinate = FirstCoordinates[1];
+            float MinXCoordinate = FirstCoordinates[0];
 
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
@@ -26,13 +27,16 @@ namespace OpenGraphtheory
                     throw "Vertex with less than 2 coordinates found";
                 if(MaxYCoordinate < coordinates[1])
                     MaxYCoordinate = coordinates[1];
+                if(MinXCoordinate > coordinates[0])
+                    MinXCoordinate = coordinates[0];
             }
+            MinXCoordinate -= Radius;
+            MaxYCoordinate += Radius;
 
             /// header
             os << "%!PS-Adobe-3.0\n";
             os << "% www.Open-Graphtheory.org\n";
             os << "gsave\n";
-            os << "72 2.54 div 30 div dup scale\n";
             os << "0.2 setlinewidth\n";
 
             os << "/Helvetica-Bold findfont\n";
@@ -50,8 +54,8 @@ namespace OpenGraphtheory
                 else
                     os << "0 0 0 setrgbcolor\n";
 
-                os << (int)(FromCoordinates[0]+0.5) << " " << (int)(MaxYCoordinate - FromCoordinates[1]+0.5) << " moveto "
-                   << (int)(ToCoordinates[0]+0.5) << " " << (int)(MaxYCoordinate - ToCoordinates[1]+0.5) << " lineto stroke\n";
+                os << (int)((FromCoordinates[0]-MinXCoordinate)* dpi/2.54) << " " << (int)((MaxYCoordinate - FromCoordinates[1])* dpi/2.54) << " moveto "
+                   << (int)((ToCoordinates[0]-MinXCoordinate)* dpi/2.54) << " " << (int)((MaxYCoordinate - ToCoordinates[1])*dpi/2.54) << " lineto stroke\n";
             }
 
             /// draw vertices
@@ -62,12 +66,12 @@ namespace OpenGraphtheory
                     os << (vertexcoloring[v].Red/256.0f) << " "<< (vertexcoloring[v].Green/256.0f) << " " << (vertexcoloring[v].Blue/256.0f) << " setrgbcolor\n";
                 else
                     os << "0 0 0 setrgbcolor\n";
-                os << (int)(Coordinates[0]+0.5) << " " << (int)(MaxYCoordinate - Coordinates[1]+0.5) << " " << Radius << " 0 360 arc fill\n";
+                os << (int)((Coordinates[0]-MinXCoordinate)* dpi/2.54) << " " << (int)((MaxYCoordinate - Coordinates[1])* dpi/2.54) << " " << (int)(Radius*dpi/2.54) << " 0 360 arc fill\n";
 
                 if(v.GetLabel() != "")
                 {
                     os << "0 0 0 setrgbcolor\n";
-                    os << (int)(Coordinates[0] + 0.5) + Radius << " " << (int)(MaxYCoordinate - Coordinates[1]+0.5) + Radius << " moveto\n";
+                    os << (int)((Coordinates[0] - MinXCoordinate + Radius)* dpi/2.54) << " " << (int)((MaxYCoordinate - Coordinates[1] + Radius)* dpi/2.54) << " moveto\n";
                     os << "(" << v.GetLabel() << ") show\n";
                     os << "newpath\n";
                 }

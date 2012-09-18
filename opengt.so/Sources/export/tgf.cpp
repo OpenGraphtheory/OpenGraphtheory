@@ -10,7 +10,7 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportFilterTGF::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring, map<Graph::EdgeIterator, Color>& edgecoloring)
+        void ExportFilterTGF::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring, map<Graph::EdgeIterator, Color>& edgecoloring, float dpi)
         {
             if(G.IsHypergraph())
                 throw "The TGF fileformat doesn\'t support hypergraphs\n";

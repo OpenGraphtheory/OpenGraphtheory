@@ -10,7 +10,7 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportFilterRGML::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring, map<Graph::EdgeIterator, Color>& edgecoloring)
+        void ExportFilterRGML::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring, map<Graph::EdgeIterator, Color>& edgecoloring, float dpi)
         {
             if(G.IsHypergraph())
                 throw "The XGMML fileformat does not support hypergraphs\n";
