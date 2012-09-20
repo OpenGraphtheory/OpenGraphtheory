@@ -26,7 +26,7 @@
 		<Cursor position="745" topLine="0" />
 	</File>
 	<File name="Headers/export/export.h" open="1" top="0" tabpos="11">
-		<Cursor position="1571" topLine="0" />
+		<Cursor position="862" topLine="0" />
 	</File>
 	<File name="Headers/export/gastex.h" open="0" top="0" tabpos="0">
 		<Cursor position="757" topLine="0" />
@@ -196,11 +196,11 @@
 	<File name="Sources/export/mpost.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="1584" topLine="35" />
 	</File>
-	<File name="Sources/export/pdf.cpp" open="1" top="0" tabpos="2">
-		<Cursor position="384" topLine="3" />
+	<File name="Sources/export/pdf.cpp" open="1" top="1" tabpos="2">
+		<Cursor position="5297" topLine="87" />
 	</File>
 	<File name="Sources/export/postscript.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="3366" topLine="0" />
+		<Cursor position="3366" topLine="51" />
 	</File>
 	<File name="Sources/export/povray.cpp" open="1" top="0" tabpos="8">
 		<Cursor position="390" topLine="42" />
@@ -208,7 +208,7 @@
 	<File name="Sources/export/rgml.cpp" open="1" top="0" tabpos="9">
 		<Cursor position="368" topLine="11" />
 	</File>
-	<File name="Sources/export/svg.cpp" open="1" top="1" tabpos="10">
+	<File name="Sources/export/svg.cpp" open="1" top="0" tabpos="10">
 		<Cursor position="2879" topLine="42" />
 	</File>
 	<File name="Sources/export/tei.cpp" open="0" top="0" tabpos="0">
