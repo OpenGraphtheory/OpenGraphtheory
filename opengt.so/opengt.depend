@@ -51,19 +51,20 @@
 	"../factory.h"
 	"export.h"
 
-1347962951 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/export.h
+1348232677 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/export.h
 	<string>
 	<ostream>
 	"../factory.h"
 	"../opengt.h"
 	"../visualize/color.h"
 
-1347961255 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/export.cpp
+1348232625 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/export.cpp
 	<iostream>
 	<fstream>
 	<sstream>
 	<string>
 	<list>
+	<math.h>
 	"../../Headers/export/export.h"
 
 1347969811 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/gastex.cpp
@@ -93,10 +94,10 @@
 	"../factory.h"
 	"export.h"
 
-1347973672 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/mpost.cpp
+1348233461 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/mpost.cpp
 	"../../Headers/export/mpost.h"
 
-1347962006 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/mpost.h
+1348233476 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/mpost.h
 	<ostream>
 	"../opengt.h"
 	"../factory.h"
@@ -497,9 +498,9 @@
 	<map>
 	<vector>
 
-1339149004 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/color.h
+1348229371 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/color.h
 
-1339147772 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/color.cpp
+1348229441 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/color.cpp
 	"../../Headers/visualize/color.h"
 
 1343643355 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/clique/clique.h
@@ -1077,7 +1078,7 @@
 	<set>
 	<vector>
 
-1347962006 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/pdf.cpp
+1348151611 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/pdf.cpp
 	"../../Headers/export/pdf.h"
 	<iomanip>
 

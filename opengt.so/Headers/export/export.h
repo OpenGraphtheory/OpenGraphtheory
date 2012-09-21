@@ -31,6 +31,27 @@
 
             };
 
+            class GraphicalExportFilter : public ExportFilter
+            {
+                public:
+                    void Export(OpenGraphtheory::Graph& G, std::ostream& os,
+                                map<Graph::VertexIterator, Visualization::Color>& vertexcoloring,
+                                map<Graph::EdgeIterator, Visualization::Color>& edgecoloring, float dpi=72);
+
+                    virtual void Begin(ostream &os, float WidthInCm, float HeightInCm, float ResolutionDPI);
+                    virtual void End(ostream &os);
+                    virtual void SetPenColor(ostream &os, Visualization::Color);
+                    virtual void SetBrushColor(ostream &os, Visualization::Color);
+                    virtual void SetLineWidth(ostream &os, float Width);
+                    virtual void DeclareNode(ostream &os, int node_id, float x, float y);
+                    virtual void Line(ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2);
+                    virtual void Arrow(ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2);
+                    virtual void Circle(ostream &os, int node_id, float x, float y, float radius);
+                    virtual void PutText(ostream &os, float x, float y, string text);
+                    virtual void PutVertexText(ostream &os, int node_id, float x, float y, string text);
+                    virtual void PutEdgeText(ostream &os, int from_id, int to_id, float x, float y, string text);
+            };
+
         }
     }
 

@@ -75,3 +75,19 @@ void Color::operator=(const Color& c)
     Blue = c.Blue;
     Transparency = c.Transparency;
 }
+
+bool Color::operator==(const Color& c)
+{
+    return Red == c.Red
+            && Green == c.Green
+            && Blue == c.Blue
+            && Transparency == c.Transparency;
+}
+
+bool Color::operator!=(const Color& c)
+{
+    return Red != c.Red
+            || Green != c.Green
+            || Blue != c.Blue
+            || Transparency != c.Transparency;
+}
