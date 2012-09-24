@@ -10,25 +10,16 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportFilterPDF::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring, map<Graph::EdgeIterator, Color>& edgecoloring, float dpi)
+        void ExportFilterPDF::Begin(ostream &os, float WidthInCm, float HeightInCm, float ResolutionDPI)
         {
-            if(G.IsHypergraph())
-                throw "The PDF export filter does not support hypergraphs\n";
+            ImageHeight = HeightInCm;
+            ResolutionDPCM = ResolutionDPI / 2.54;
 
-            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-            {
-                vector<float> coordinates = v.GetCoordinates();
-                if(coordinates.size() < 2)
-                    throw "Vertex with less than 2 coordinates found";
-            }
-            int obj = 1;
-            list<int> obj_offsets;
+            obj=1;
+            obj_offsets.clear();
+            temp_os.clear();
+            oss.clear();
 
-            // unfortunately, this indirect writing is necessary. Otherwise tellp fails, if os is stdout and
-            // not redirected to a file (tellp then always returns -1, which would write a corrupted pdf)
-            stringstream temp_os;
-
-            /// header
             temp_os << "%PDF-1.0\n";
 
             // Object 1 for Meta-Infos of the file
@@ -87,50 +78,11 @@ namespace OpenGraphtheory
             oss << "0 0 0 rg\n";
             oss << "0 0 0 RG\n";
 
+            ImageHeight = HeightInCm;
+        }
 
-/*
-            /// draw vertices
-            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-            {
-                os << "drawdot z" << v.GetID() << " withpen pencircle"
-                   << " scaled " << 2*v.GetWeight();
-                if(vertexcoloring.find(v) != vertexcoloring.end())
-                    os << " withcolor (" << (vertexcoloring[v].Red/256.0f) << ","<< (vertexcoloring[v].Green/256.0f) << "," << (vertexcoloring[v].Blue/256.0f) << ");\n";
-                else
-                    os << " withcolor Black;\n";
-                os << "(" << v.GetLabel() << ") \n";
-            }
-
-            /// draw edges
-            for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
-            {
-                os << " draw" << (e.IsEdge()?"":"arrow") << " z" << e.From().GetID() << " -- z" << e.To().GetID();
-                if(edgecoloring.find(e) != edgecoloring.end())
-                    os << " withrgbcolor (" << (edgecoloring[e].Red/256.0f) << ","<< (edgecoloring[e].Green/256.0f) << "," << (edgecoloring[e].Blue/256.0f) << ");\n";
-                else
-                    os << " withcolor Black;\n";
-                os << "  label.ulft(btex "<< e.GetLabel() << " etex, (z"<<e.From().GetID()<<"+z"<<e.To().GetID()<<")/2);\n";
-            }
-*/
-
-
-            for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
-            {
-                vector<float> from = e.From().GetCoordinates();
-                vector<float> to = e.To().GetCoordinates();
-
-                oss << (int)(from[0]*dpi/2.54) << " " << (int)(from[1]*dpi/2.54) << " m " << (int)(to[0]*dpi/2.54) << " " << (int)(to[1]*dpi/2.54) << " l s\n";
-                /*
-                if(edgecoloring.find(e) != edgecoloring.end())
-                    os << " withrgbcolor (" << (edgecoloring[e].Red/256.0f) << ","<< (edgecoloring[e].Green/256.0f) << "," << (edgecoloring[e].Blue/256.0f) << ");\n";
-                else
-                    os << " withcolor Black;\n";
-                */
-
-                //os << "("<< e.GetLabel() << ")\n";
-            }
-
-
+        void ExportFilterPDF::End(ostream &os)
+        {
             oss << "Q\n";
 
             temp_os << "<< /Length " << oss.tellp() << " >>\n";
@@ -200,6 +152,50 @@ namespace OpenGraphtheory
             temp_os << "%%EOF\n";
 
             os << temp_os.str();
+        }
+
+        void ExportFilterPDF::SetPenColor(ostream &os, Visualization::Color color)
+        {
+            oss << (color.Red/256.0f) << " " << (color.Green/256.0f) << " " << (color.Blue/256.0f) << " RG\n";
+        }
+
+        void ExportFilterPDF::SetBrushColor(ostream &os, Visualization::Color color)
+        {
+            oss << (color.Red/256.0f) << " " << (color.Green/256.0f) << " " << (color.Blue/256.0f) << " rg\n";
+        }
+
+        void ExportFilterPDF::SetLineWidth(ostream &os, float width)
+        {
+            oss << (int)(width*ResolutionDPCM) << " w\n";
+        }
+
+        void ExportFilterPDF::Line(ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2)
+        {
+            oss << (int)(x1*ResolutionDPCM) << " " << (int)((ImageHeight-y1)*ResolutionDPCM) << " m "
+                << (int)(x2*ResolutionDPCM) << " " << (int)((ImageHeight-y2)*ResolutionDPCM) << " l s\n";
+        }
+
+
+        void ExportFilterPDF::Circle(ostream &os, int node_id, float x, float y, float Radius)
+        {
+            // http://forums.adobe.com/message/2312083
+            // WTF, Adobe!? Seriously, WTF!?
+
+            int radius = Radius * ResolutionDPCM;
+            int h = 0.5522422 * Radius * ResolutionDPCM; // sine of 33 deg 31 sec
+
+            oss << "q 1 0 0 1 " << x*ResolutionDPCM << " " << (ImageHeight-y)*ResolutionDPCM << " cm\n"
+                << "0 " << -radius << " m\n"
+
+                << h << " " << -radius << " " << radius << " " << -h << " " << radius << " " << 0 << "c\n"
+                << radius << " " << h << " " << h << " " << radius << " " << 0 << " " << radius << "c\n"
+                << -h << " " << radius << " " << -radius << " " << h << " " << -radius << " " << 0 << "c\n"
+                << -radius << " " << -h << " " << -h << " " << -radius << " " << 0 << " " << -radius << "c\n"
+                << "f Q\n";
+        }
+
+        void ExportFilterPDF::PutText(ostream &os, float x, float y, string text)
+        {
         }
 
         FactoryRegistrator<ExportFilter> ExportFilterPDF::ExportFilterPdfRegistrator(&ExportFilter::ExportFilterFactory, "pdf",
