@@ -9,77 +9,59 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportFilterPOSTSCRIPT::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring, map<Graph::EdgeIterator, Color>& edgecoloring, float dpi)
+        void ExportFilterPOSTSCRIPT::Begin(ostream &os, float WidthInCm, float HeightInCm, float ResolutionDPI)
         {
-            float Radius = 0.5; // cm
-
-            if(G.IsHypergraph())
-                throw "The POSTSCRIPT fileformat does not support hypergraphs\n";
-
-            vector<float> FirstCoordinates = G.BeginVertices().GetCoordinates();
-            float MaxYCoordinate = FirstCoordinates[1];
-            float MinXCoordinate = FirstCoordinates[0];
-
-            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-            {
-                vector<float> coordinates = v.GetCoordinates();
-                if(coordinates.size() < 2)
-                    throw "Vertex with less than 2 coordinates found";
-                if(MaxYCoordinate < coordinates[1])
-                    MaxYCoordinate = coordinates[1];
-                if(MinXCoordinate > coordinates[0])
-                    MinXCoordinate = coordinates[0];
-            }
-            MinXCoordinate -= Radius;
-            MaxYCoordinate += Radius;
-
-            /// header
             os << "%!PS-Adobe-3.0\n";
             os << "% www.Open-Graphtheory.org\n";
             os << "gsave\n";
-            os << "0.2 setlinewidth\n";
 
             os << "/Helvetica-Bold findfont\n";
             os << "7 scalefont\n";
             os << "setfont\n";
 
-            /// draw edges
-            for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
-            {
-                vector<float> FromCoordinates = e.From().GetCoordinates();
-                vector<float> ToCoordinates = e.To().GetCoordinates();
+            ImageHeight = HeightInCm;
+            ResolutionDPCM = ResolutionDPI / 2.54;
+        }
 
-                if(edgecoloring.find(e) != edgecoloring.end())
-                    os << (edgecoloring[e].Red/256.0f) << " "<< (edgecoloring[e].Green/256.0f) << " " << (edgecoloring[e].Blue/256.0f) << " setrgbcolor\n";
-                else
-                    os << "0 0 0 setrgbcolor\n";
-
-                os << (int)((FromCoordinates[0]-MinXCoordinate)* dpi/2.54) << " " << (int)((MaxYCoordinate - FromCoordinates[1])* dpi/2.54) << " moveto "
-                   << (int)((ToCoordinates[0]-MinXCoordinate)* dpi/2.54) << " " << (int)((MaxYCoordinate - ToCoordinates[1])*dpi/2.54) << " lineto stroke\n";
-            }
-
-            /// draw vertices
-            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-            {
-                vector<float> Coordinates = v.GetCoordinates();
-                if(vertexcoloring.find(v) != vertexcoloring.end())
-                    os << (vertexcoloring[v].Red/256.0f) << " "<< (vertexcoloring[v].Green/256.0f) << " " << (vertexcoloring[v].Blue/256.0f) << " setrgbcolor\n";
-                else
-                    os << "0 0 0 setrgbcolor\n";
-                os << (int)((Coordinates[0]-MinXCoordinate)* dpi/2.54) << " " << (int)((MaxYCoordinate - Coordinates[1])* dpi/2.54) << " " << (int)(Radius*dpi/2.54) << " 0 360 arc fill\n";
-
-                if(v.GetLabel() != "")
-                {
-                    os << "0 0 0 setrgbcolor\n";
-                    os << (int)((Coordinates[0] - MinXCoordinate + Radius)* dpi/2.54) << " " << (int)((MaxYCoordinate - Coordinates[1] + Radius)* dpi/2.54) << " moveto\n";
-                    os << "(" << v.GetLabel() << ") show\n";
-                    os << "newpath\n";
-                }
-            }
-
+        void ExportFilterPOSTSCRIPT::End(ostream &os)
+        {
             os << "grestore\n";
             os << "showpage\n";
             os << "%%EOF\n";
+        }
+
+        void ExportFilterPOSTSCRIPT::SetPenColor(ostream &os, Visualization::Color color)
+        {
+            os << (color.Red/256.0f) << " "<< (color.Green/256.0f) << " " << (color.Blue/256.0f) << " setrgbcolor\n";
+        }
+
+        void ExportFilterPOSTSCRIPT::SetBrushColor(ostream &os, Visualization::Color color)
+        {
+            os << (color.Red/256.0f) << " "<< (color.Green/256.0f) << " " << (color.Blue/256.0f) << " setrgbcolor\n";
+        }
+
+        void ExportFilterPOSTSCRIPT::SetLineWidth(ostream &os, float width)
+        {
+            os << width*ResolutionDPCM << " setlinewidth\n";
+        }
+
+        void ExportFilterPOSTSCRIPT::Line(ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2)
+        {
+            os << (int)(x1*ResolutionDPCM) << " " << (int)((ImageHeight-y1)*ResolutionDPCM) << " moveto "
+               << (int)(x2*ResolutionDPCM) << " " << (int)((ImageHeight-y2)*ResolutionDPCM) << " lineto stroke\n";
+        }
+
+        void ExportFilterPOSTSCRIPT::Circle(ostream &os, int node_id, float x, float y, float radius)
+        {
+            os << (int)(x*ResolutionDPCM) << " " << (int)((ImageHeight-y)*ResolutionDPCM) << " " << (int)(radius*ResolutionDPCM) << " 0 360 arc fill\n";
+        }
+
+        void ExportFilterPOSTSCRIPT::PutText(ostream &os, float x, float y, string text)
+        {
+            os << "0 0 0 setrgbcolor\n";
+            os << (int)(x*ResolutionDPCM) << " " << (int)((ImageHeight-y)*ResolutionDPCM) << " moveto\n";
+            os << "(" << text << ") show\n";
+            os << "newpath\n";
         }
 
         FactoryRegistrator<ExportFilter> ExportFilterPOSTSCRIPT::ExportFilterPostscriptRegistrator(&ExportFilter::ExportFilterFactory, "postscript",

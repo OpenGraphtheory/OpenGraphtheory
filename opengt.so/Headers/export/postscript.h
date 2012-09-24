@@ -11,14 +11,22 @@
         namespace Export
         {
 
-            class ExportFilterPOSTSCRIPT : public ExportFilter
+            class ExportFilterPOSTSCRIPT : public GraphicalExportFilter
             {
                 protected:
                     static FactoryRegistrator<ExportFilter> ExportFilterPostscriptRegistrator;
+                    float ImageHeight;
+                    float ResolutionDPCM;
+
                 public:
-                    void Export(OpenGraphtheory::Graph& G, std::ostream& os,
-                                map<Graph::VertexIterator, Visualization::Color>& vertexcoloring,
-                                map<Graph::EdgeIterator, Visualization::Color>& edgecoloring, float dpi);
+                    void Begin(ostream &os, float WidthInCm, float HeightInCm, float ResolutionDPI);
+                    void End(ostream &os);
+                    void SetPenColor(ostream &os, Visualization::Color);
+                    void SetBrushColor(ostream &os, Visualization::Color);
+                    void SetLineWidth(ostream &os, float Width);
+                    void Line(ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2);
+                    void Circle(ostream &os, int node_id, float x, float y, float radius);
+                    void PutText(ostream &os, float x, float y, string text);
             };
 
         }

@@ -9,62 +9,84 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportFilterTIKZ::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring, map<Graph::EdgeIterator, Color>& edgecoloring, float dpi)
+        void ExportFilterTIKZ::Begin(ostream &os, float WidthInCm, float HeightInCm, float ResolutionDPI)
         {
-            float radius = 0.5;
-
-            if(G.IsHypergraph())
-                throw "The TIKZ export filter does not support hypergraphs\n";
-
-            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-            {
-                vector<float> coordinates = v.GetCoordinates();
-                if(coordinates.size() < 2)
-                    throw "Vertex with less than 2 coordinates found";
-            }
-
-            /// header
             os << "% www.Open-Graphtheory.org\n";
             os << "% \\usepackage{tikz}\n";
             os << "\\begin{tikzpicture}\n";
+            //os << "  \\tikzstyle{vertex}=[shape=circle, draw]\n";
+            ImageHeight = HeightInCm;
+            RenderingVertices = false;
+            RenderingEdges = false;
+        }
 
-            os << "\\tikzstyle{vertex}=[shape=circle, draw, inner sep=" << radius << "cm]\n";
-
-            /// declare vertices
-            Graph::VertexIterator v1 = G.BeginVertices();
-            vector<float> coordinates = v1.GetCoordinates();
-            float minx = coordinates[0], maxy = coordinates[1];
-            for(v1++; v1 != G.EndVertices(); v1++)
-            {
-                coordinates = v1.GetCoordinates();
-                if(coordinates[0] < minx)
-                    minx = coordinates[0];
-                if(coordinates[1] > maxy)
-                    maxy = coordinates[1];
-            }
-            minx -= radius;
-            maxy += radius;
-
-            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-            {
-                coordinates = v.GetCoordinates();
-                os << "  \\definecolor{currentcolor}{rgb}{" << (vertexcoloring[v].Red/256.0f) << ","<< (vertexcoloring[v].Green/256.0f) << "," << (vertexcoloring[v].Blue/256.0f) << "}\n";
-                os << "  \\node[vertex,fill=currentcolor] (n" << v.GetID() << ") at (" << (coordinates[0] - minx) << "cm, "
-                                                                                  << (maxy-coordinates[1]-radius) << "cm){"
-                                                                                  << v.GetLabel() << "};\n";
-            }
-            os << "\n";
-
-            /// draw edges
-            for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
-            {
-                os << "  \\definecolor{currentcolor}{rgb}{" << (edgecoloring[e].Red/256.0f) << ","<< (edgecoloring[e].Green/256.0f) << "," << (edgecoloring[e].Blue/256.0f) << "}\n";
-                os << "  \\draw[-" << (e.IsEdge() ? "" : ">") << ",currentcolor] (n" << e.From().GetID() << ") -- (n" << e.To().GetID() << ");\n";
-
-                //os << "  label.ulft(btex "<< e.GetLabel() << " etex, (z"<<e.From().GetID()<<"+z"<<e.To().GetID()<<")/2);\n";
-            }
-
+        void ExportFilterTIKZ::End(ostream &os)
+        {
             os << "\\end{tikzpicture}\n";
+        }
+
+        void ExportFilterTIKZ::DeclareVertex(ostream &os, int vertex_id, float x, float y, float radius, string text)
+        {
+                os << "  \\node (n" << vertex_id
+                   << ") at (" << x << "cm, " << ImageHeight-y << "cm){" << text << "};\n";
+        }
+
+        void ExportFilterTIKZ::SetPenColor(ostream &os, Visualization::Color color)
+        {
+            if(RenderingEdges || RenderingVertices)
+                os << "  \\definecolor{pencolor}{rgb}{" << (color.Red/256.0f) << ","<< (color.Green/256.0f) << "," << (color.Blue/256.0f) << "}\n";
+        }
+
+        void ExportFilterTIKZ::SetBrushColor(ostream &os, Visualization::Color color)
+        {
+            if(RenderingVertices)
+                os << "  \\definecolor{brushcolor}{rgb}{" << (color.Red/256.0f) << ","<< (color.Green/256.0f) << "," << (color.Blue/256.0f) << "}\n";
+        }
+
+        void ExportFilterTIKZ::SetLineWidth(ostream &os, float width)
+        {
+            LineWidth = width;
+        }
+
+        void ExportFilterTIKZ::BeginRenderingVertices(ostream& os)
+        {
+            RenderingVertices = true;
+        }
+
+        void ExportFilterTIKZ::Circle(ostream &os, int node_id, float x, float y, float radius)
+        {
+            os << "  \\draw[fill=brushcolor] (n" << node_id << ") circle (" << radius << "cm);\n";
+        }
+
+        void ExportFilterTIKZ::EndRenderingVertices(ostream& os)
+        {
+            RenderingVertices = false;
+        }
+
+
+        void ExportFilterTIKZ::BeginRenderingEdges(ostream& os)
+        {
+            RenderingEdges = true;
+        }
+
+        void ExportFilterTIKZ::Line(ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2)
+        {
+            os << "  \\draw[line width="<<LineWidth<<"cm,-,pencolor] (n" << from_id << ") -- (n" << to_id << ");\n";
+        }
+
+        void ExportFilterTIKZ::Arrow(ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2)
+        {
+            os << "  \\draw[->,pencolor,line width=" << LineWidth << "cm] (n" << from_id << ") -- (n" << to_id << ");\n";
+        }
+
+        void ExportFilterTIKZ::EndRenderingEdges(ostream& os)
+        {
+            RenderingEdges = false;
+        }
+
+
+        void ExportFilterTIKZ::PutText(ostream &os, float x, float y, string text)
+        {
         }
 
         FactoryRegistrator<ExportFilter> ExportFilterTIKZ::ExportFilterTikzRegistrator(&ExportFilter::ExportFilterFactory, "tikz",

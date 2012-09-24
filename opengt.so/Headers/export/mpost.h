@@ -27,7 +27,7 @@
                     void SetPenColor(ostream &os, Visualization::Color);
                     void SetBrushColor(ostream &os, Visualization::Color);
                     void SetLineWidth(ostream &os, float Width);
-                    void DeclareNode(ostream &os, int node_id, float x, float y);
+                    void DeclareVertex(ostream &os, int vertex_id, float x, float y, float radius, string text);
                     void Line(ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2);
                     void Arrow(ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2);
                     void Circle(ostream &os, int node_id, float x, float y, float radius);

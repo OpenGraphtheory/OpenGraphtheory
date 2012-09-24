@@ -118,20 +118,51 @@ namespace OpenGraphtheory
             // Write Header
             Begin(os, maxx-minx, maxy-miny, dpi);
             Visualization::Color LastColor(0,0,0);
-            SetPenColor(os, LastColor);
 
+
+            BeginDeclaringVertices(os);
+
+            SetPenColor(os, LastColor);
+            SetBrushColor(os, LastColor);
 
             // Write Vertex-Declaration (if necessary)
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
                 coordinates = v.GetCoordinates();
-                DeclareNode(os, v.GetID(), coordinates[0] - minx, coordinates[1] - miny);
+
+                // color
+                if(vertexcoloring.find(v) != vertexcoloring.end())
+                {
+                    if(LastColor != vertexcoloring[v])
+                    {
+                        LastColor = vertexcoloring[v];
+                        SetBrushColor(os, vertexcoloring[v]);
+                    }
+                }
+                else
+                {
+                    if(LastColor != Visualization::Color(0,0,0))
+                    {
+                        LastColor = Visualization::Color(0,0,0);
+                        SetBrushColor(os, Visualization::Color(0,0,0));
+                    }
+                }
+
+                DeclareVertex(os, v.GetID(), coordinates[0] - minx, coordinates[1] - miny, v.GetWeight(), v.GetLabel());
             }
+
+            EndDeclaringVertices(os);
 
 
             // Render Edges
+            BeginRenderingEdges(os);
+
+            LastColor = Visualization::Color(0,0,0);
+            SetPenColor(os, Visualization::Color(0,0,0));
+
             float LastWidth = 1;
             SetLineWidth(os, 1);
+
             for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
             {
                 vector<float> FromCoordinates = e.From().GetCoordinates();
@@ -177,7 +208,12 @@ namespace OpenGraphtheory
                     PutEdgeText(os, e.From().GetID(), e.To().GetID(), (x1+x2)/2, (y1+y2)/2, e.GetLabel());
             }
 
+            EndRenderingEdges(os);
+
+
             // Render Vertices
+            BeginRenderingVertices(os);
+
             LastColor = Visualization::Color(0,0,0);
             SetBrushColor(os, Visualization::Color(0,0,0));
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
@@ -210,6 +246,9 @@ namespace OpenGraphtheory
                     PutVertexText(os, v.GetID(), x + sin(M_PI/4)*Radius, y + sin(M_PI/4)*Radius, v.GetLabel());
             }
 
+            EndRenderingVertices(os);
+
+
             End(os);
 
         }
@@ -225,10 +264,21 @@ namespace OpenGraphtheory
 
         }
 
-        void GraphicalExportFilter::DeclareNode(ostream &os, int node_id, float x, float y)
+        void GraphicalExportFilter::BeginDeclaringVertices(ostream &os)
         {
 
         }
+
+        void GraphicalExportFilter::DeclareVertex(ostream &os, int node_id, float x, float y, float radius, string text)
+        {
+
+        }
+
+        void GraphicalExportFilter::EndDeclaringVertices(ostream &os)
+        {
+
+        }
+
 
         void GraphicalExportFilter::SetPenColor(ostream &os, Visualization::Color color)
         {
@@ -245,6 +295,13 @@ namespace OpenGraphtheory
 
         }
 
+
+
+        void GraphicalExportFilter::BeginRenderingEdges(ostream &os)
+        {
+
+        }
+
         void GraphicalExportFilter::Line(ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2)
         {
 
@@ -255,10 +312,28 @@ namespace OpenGraphtheory
             Line(os, from_id, to_id, x1, y1, x2, y2);
         }
 
+        void GraphicalExportFilter::EndRenderingEdges(ostream &os)
+        {
+
+        }
+
+
+
+        void GraphicalExportFilter::BeginRenderingVertices(ostream &os)
+        {
+
+        }
+
         void GraphicalExportFilter::Circle(ostream &os, int node_id, float x, float y, float radius)
         {
 
         }
+
+        void GraphicalExportFilter::EndRenderingVertices(ostream &os)
+        {
+
+        }
+
 
         void GraphicalExportFilter::PutText(ostream &os, float x, float y, string text)
         {

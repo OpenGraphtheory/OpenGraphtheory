@@ -23,9 +23,9 @@ namespace OpenGraphtheory
             os << "bye\n";
         }
 
-        void ExportFilterMPOST::DeclareNode(ostream &os, int node_id, float x, float y)
+        void ExportFilterMPOST::DeclareVertex(ostream &os, int vertex_id, float x, float y, float radius, string text)
         {
-            os << "z" << node_id << " = (" << x << "cm, " << ImageHeight-y << "cm);\n";
+            os << "z" << vertex_id << " = (" << x << "cm, " << ImageHeight-y << "cm);\n";
         }
 
         void ExportFilterMPOST::SetPenColor(ostream &os, Visualization::Color color)
