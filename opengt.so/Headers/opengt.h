@@ -245,7 +245,13 @@
 
                     bool Adjacent(const Graph::VertexIterator& to) const;
                     bool UnderlyingAdjacent(const Graph::VertexIterator& to) const;
+                    set<Graph::VertexIterator> CollectNeighbors(
+                                    bool UndirectedToUndirected, bool UndirectedToPositive, bool UndirectedToNegative,
+                                    bool PositiveToUndirected,   bool PositiveToPositive,   bool PositiveToNegative,
+                                    bool NegativeToUndirected,   bool NegativeToPositive,   bool NegativeToNegative);
                     set<Graph::VertexIterator> UnderlyingNeighborhood();
+                    set<Graph::VertexIterator> Successors();
+                    set<Graph::VertexIterator> Predecessors();
             };
 
             class EdgeIterator

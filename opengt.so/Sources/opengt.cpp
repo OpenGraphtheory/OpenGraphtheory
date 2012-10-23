@@ -181,38 +181,88 @@ namespace OpenGraphtheory
                 return false;
             }
 
+            set<Graph::VertexIterator> Graph::VertexIterator::CollectNeighbors(
+                    bool UndirectedToUndirected, bool UndirectedToPositive, bool UndirectedToNegative,
+                    bool PositiveToUndirected,   bool PositiveToPositive,   bool PositiveToNegative,
+                    bool NegativeToUndirected,   bool NegativeToPositive,   bool NegativeToNegative)
+            {
+                set<Graph::VertexIterator> result;
+
+                if(UndirectedToUndirected || UndirectedToPositive || UndirectedToNegative)
+                    for(Graph::EdgeIterator e = BeginIncidentEdges(); e != EndIncidentEdges(); e++)
+                    {
+                        bool FoundMyself = false;
+                        if(UndirectedToUndirected)
+                            for(Graph::VertexIterator neighbor = e.BeginIncidentVertices(); neighbor != e.EndIncidentVertices(); neighbor++)
+                            {
+                                if(neighbor == *this && !FoundMyself)
+                                    FoundMyself = true;
+                                else
+                                    result.insert(neighbor);
+                            }
+                        if(UndirectedToPositive)
+                            for(Graph::VertexIterator neighbor = e.BeginPositiveIncidentVertices(); neighbor != e.EndPositiveIncidentVertices(); neighbor++)
+                                result.insert(neighbor);
+                        if(UndirectedToNegative)
+                            for(Graph::VertexIterator neighbor = e.BeginNegativeIncidentVertices(); neighbor != e.EndNegativeIncidentVertices(); neighbor++)
+                                result.insert(neighbor);
+                    }
+
+                if(PositiveToUndirected || PositiveToPositive || PositiveToNegative)
+                    for(Graph::EdgeIterator e = BeginPositiveIncidentEdges(); e != EndPositiveIncidentEdges(); e++)
+                    {
+                        bool FoundMyself = false;
+                        if(PositiveToUndirected)
+                            for(Graph::VertexIterator neighbor = e.BeginIncidentVertices(); neighbor != e.EndIncidentVertices(); neighbor++)
+                                result.insert(neighbor);
+                        if(PositiveToPositive)
+                            for(Graph::VertexIterator neighbor = e.BeginPositiveIncidentVertices(); neighbor != e.EndPositiveIncidentVertices(); neighbor++)
+                                result.insert(neighbor);
+                        if(PositiveToNegative)
+                            for(Graph::VertexIterator neighbor = e.BeginNegativeIncidentVertices(); neighbor != e.EndNegativeIncidentVertices(); neighbor++)
+                            {
+                                if(neighbor == *this && !FoundMyself)
+                                    FoundMyself = true;
+                                else
+                                    result.insert(neighbor);
+                            }
+                    }
+
+                if(NegativeToUndirected || NegativeToPositive || NegativeToNegative)
+                    for(Graph::EdgeIterator e = BeginNegativeIncidentEdges(); e != EndNegativeIncidentEdges(); e++)
+                    {
+                        bool FoundMyself = false;
+                        if(NegativeToUndirected)
+                            for(Graph::VertexIterator neighbor = e.BeginIncidentVertices(); neighbor != e.EndIncidentVertices(); neighbor++)
+                                result.insert(neighbor);
+                        if(NegativeToPositive)
+                            for(Graph::VertexIterator neighbor = e.BeginPositiveIncidentVertices(); neighbor != e.EndPositiveIncidentVertices(); neighbor++)
+                            {
+                                if(neighbor == *this && !FoundMyself)
+                                    FoundMyself = true;
+                                else
+                                    result.insert(neighbor);
+                            }
+                        if(NegativeToNegative)
+                            for(Graph::VertexIterator neighbor = e.BeginNegativeIncidentVertices(); neighbor != e.EndNegativeIncidentVertices(); neighbor++)
+                                result.insert(neighbor);
+                    }
+                return result;
+            }
 
             set<Graph::VertexIterator> Graph::VertexIterator::UnderlyingNeighborhood()
             {
-                set<Graph::VertexIterator> result;
-                for(Graph::EdgeIterator e = BeginIncidentEdges(); e != EndIncidentEdges(); e++)
-                {
-                    for(Graph::VertexIterator neighbor = e.BeginIncidentVertices(); neighbor != e.EndIncidentVertices(); neighbor++)
-                        result.insert(neighbor);
-                    for(Graph::VertexIterator neighbor = e.BeginPositiveIncidentVertices(); neighbor != e.EndPositiveIncidentVertices(); neighbor++)
-                        result.insert(neighbor);
-                    for(Graph::VertexIterator neighbor = e.BeginNegativeIncidentVertices(); neighbor != e.EndNegativeIncidentVertices(); neighbor++)
-                        result.insert(neighbor);
-                }
-                for(Graph::EdgeIterator e = BeginPositiveIncidentEdges(); e != EndPositiveIncidentEdges(); e++)
-                {
-                    for(Graph::VertexIterator neighbor = e.BeginIncidentVertices(); neighbor != e.EndIncidentVertices(); neighbor++)
-                        result.insert(neighbor);
-                    for(Graph::VertexIterator neighbor = e.BeginPositiveIncidentVertices(); neighbor != e.EndPositiveIncidentVertices(); neighbor++)
-                        result.insert(neighbor);
-                    for(Graph::VertexIterator neighbor = e.BeginNegativeIncidentVertices(); neighbor != e.EndNegativeIncidentVertices(); neighbor++)
-                        result.insert(neighbor);
-                }
-                for(Graph::EdgeIterator e = BeginNegativeIncidentEdges(); e != EndNegativeIncidentEdges(); e++)
-                {
-                    for(Graph::VertexIterator neighbor = e.BeginIncidentVertices(); neighbor != e.EndIncidentVertices(); neighbor++)
-                        result.insert(neighbor);
-                    for(Graph::VertexIterator neighbor = e.BeginPositiveIncidentVertices(); neighbor != e.EndPositiveIncidentVertices(); neighbor++)
-                        result.insert(neighbor);
-                    for(Graph::VertexIterator neighbor = e.BeginNegativeIncidentVertices(); neighbor != e.EndNegativeIncidentVertices(); neighbor++)
-                        result.insert(neighbor);
-                }
-                return result;
+                return CollectNeighbors(true,true,true, true,true,true, true,true,true);
+            }
+
+            set<Graph::VertexIterator> Graph::VertexIterator::Successors()
+            {
+                return CollectNeighbors(false,false,false, false,true,false, false,false,false);
+            }
+
+            set<Graph::VertexIterator> Graph::VertexIterator::Predecessors()
+            {
+                return CollectNeighbors(false,false,false, false,false,false, false,false,true);
             }
 
             void Graph::VertexIterator::WriteToXml(XML* xml)
