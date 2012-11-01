@@ -20,6 +20,7 @@ int main(int argc, char** argv)
         string vertexcoloring = "";
         string edgecoloring = "";
         string format = "";
+        float dpi = 72;
 		for(int i = 1; i < argc-1; i++)
 		{
 		    if(string(argv[i]) == "--format")
@@ -28,6 +29,12 @@ int main(int argc, char** argv)
                 vertexcoloring = argv[++i];
             else if(string(argv[i]) == "--edgecoloring")
                 edgecoloring = argv[++i];
+            else if(string(argv[i]) == "--dpi")
+            {
+                stringstream foo;
+                foo << argv[++i];
+                foo >> dpi;
+            }
 		}
 
 		ExportFilter* exportfilter = ExportFilter::ExportFilterFactory.Produce(format);
@@ -35,7 +42,7 @@ int main(int argc, char** argv)
 		{
 		    try
 		    {
-                exportfilter->DoExport(G, cout, vertexcoloring, edgecoloring);
+                exportfilter->DoExport(G, cout, vertexcoloring, edgecoloring, dpi);
 		    }
 		    catch(...)
 		    {

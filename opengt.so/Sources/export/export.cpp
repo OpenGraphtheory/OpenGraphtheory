@@ -37,6 +37,12 @@ namespace OpenGraphtheory
                     IntAttribute* iattr = dynamic_cast<IntAttribute*>(attr);
                     if(iattr != NULL)
                         vcoloring[v] = Color::DefaultColors[iattr->Value < 7 ? iattr->Value : 0];
+                    else
+                    {
+                        BoolAttribute* battr = dynamic_cast<BoolAttribute*>(attr);
+                        if(battr != NULL && battr->Value)
+                            vcoloring[v] = Color::DefaultColors[0];
+                    }
                 }
             }
 
@@ -48,6 +54,12 @@ namespace OpenGraphtheory
                     IntAttribute* iattr = dynamic_cast<IntAttribute*>(attr);
                     if(iattr != NULL)
                         ecoloring[e] = Color::DefaultColors[iattr->Value < 7 ? iattr->Value : 0];
+                    else
+                    {
+                        BoolAttribute* battr = dynamic_cast<BoolAttribute*>(attr);
+                        if(battr != NULL && battr->Value)
+                            ecoloring[e] = Color::DefaultColors[0];
+                    }
                 }
             }
 

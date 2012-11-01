@@ -15,7 +15,8 @@ namespace OpenGraphtheory
             "dominatingset", "Adds a dominating set to the graph", "http://en.wikipedia.org/wiki/Dominating_set"));
 
 
-        bool AlgorithmDOMINATINGSET::TestDominatingSet(map<Graph::VertexIterator, int>& Dominators, set<Graph::VertexIterator>& Undominated,
+        bool AlgorithmDOMINATINGSET::TestDominatingSet(Graph &G,
+                                                       map<Graph::VertexIterator, int>& Dominators, set<Graph::VertexIterator>& Undominated,
                                                        set<Graph::VertexIterator>& Excluded, set<Graph::VertexIterator>& DominatingSet,
                                                        unsigned int k, bool VerticesCanDominateThemselves)
         {
@@ -24,63 +25,137 @@ namespace OpenGraphtheory
             if(k <= 0)
                 return false;
 
+            set<Graph::VertexIterator> LargeEnough;
+            map<Graph::VertexIterator, set<Graph::VertexIterator> > Dominatable;
 
-            Graph::VertexIterator v = *(Undominated.begin());
+
+            // Test if the sum of the k largest vertices have < |Undominated| neighbors (if so, the instance is not solvable)
+            int* NewDominationPotential = new int[G.NumberOfVertices()+1];
+            for(int i = G.NumberOfVertices(); i >= 0; --i)
+                NewDominationPotential[i] = 0;
+            for(Graph::VertexIterator i = G.BeginVertices(); i != G.EndVertices(); i++)
+            {
+                if(Excluded.find(i) != Excluded.end())
+                    continue;
+                if(DominatingSet.find(i) != DominatingSet.end())
+                    continue;
+
+                // which vertices can be newly dominated by vertex i?
+                set<Graph::VertexIterator> Dominated = i.CollectNeighbors(1,1,0,1,1,0,0,0,0);
+                if(VerticesCanDominateThemselves)
+                    Dominated.insert(i);
+                set<Graph::VertexIterator> removable;
+                for(set<Graph::VertexIterator>::iterator j = Dominated.begin(); j != Dominated.end(); j++)
+                    if(Dominators[*j] > 0)
+                        removable.insert(*j);
+                for(set<Graph::VertexIterator>::iterator j = removable.begin(); j != removable.end(); j++)
+                    Dominated.erase(*j);
+
+
+
+                for(map<Graph::VertexIterator, set<Graph::VertexIterator> >::iterator sets = Dominatable.begin(); sets != Dominatable.end(); sets++)
+                {
+                    bool subset = true;
+                    for(set<Graph::VertexIterator>::iterator j = Dominated.begin(); subset && j != Dominated.end(); j++)
+                        if(sets->second.find(*j) == sets->second.end())
+                            subset = false;
+
+                    if(subset)
+                    {
+                        Excluded.insert(i);
+                        bool temp = TestDominatingSet(G, Dominators, Undominated, Excluded, DominatingSet, k);
+                        Excluded.erase(i);
+                        delete[] NewDominationPotential;
+                        return temp;
+                    }
+
+                    bool superset = true;
+
+                    for(set<Graph::VertexIterator>::iterator j = sets->second.begin(); superset && j != sets->second.end(); j++)
+                        if(Dominated.find(*j) == Dominated.end())
+                            superset = false;
+
+                    if(superset)
+                    {
+                        Excluded.insert(sets->first);
+                        bool temp = TestDominatingSet(G, Dominators, Undominated, Excluded, DominatingSet, k);
+                        Excluded.erase(sets->first);
+                        delete[] NewDominationPotential;
+                        return temp;
+                    }
+                }
+
+                NewDominationPotential[Dominated.size()]++;
+                if(Dominated.size() * k >= Undominated.size())
+                    LargeEnough.insert(i);
+                Dominatable[i] = Dominated;
+
+            }
+            unsigned int MaxNewDomination = 0;
+            int k_left = k;
+            for(int d = G.NumberOfVertices(); d >= 0; --d)
+            {
+                if(NewDominationPotential[d] >= k_left)
+                {
+                    MaxNewDomination += k_left * d;
+                    break;
+                }
+                else
+                {
+                    MaxNewDomination += NewDominationPotential[d] * d;
+                    k_left -= NewDominationPotential[d];
+                    if(MaxNewDomination > Undominated.size())
+                        break;
+                }
+            }
+            delete[] NewDominationPotential;
+            if(MaxNewDomination < Undominated.size())
+                return false;
+
+
+            Graph::VertexIterator SelectedToBeDominated;
+            unsigned int MinCandidateCount = G.NumberOfVertices() + 2;
+            for(set<Graph::VertexIterator>::iterator vi = Undominated.begin(); vi != Undominated.end(); vi++)
+            {
+                Graph::VertexIterator vCandidate = *vi;
+                set<Graph::VertexIterator> CandidateDominators = vCandidate.CollectNeighbors(1,0,1,0,0,0,1,0,1);
+                if(VerticesCanDominateThemselves)
+                    CandidateDominators.insert(vCandidate);
+                for(set<Graph::VertexIterator>::iterator excluded = Excluded.begin(); excluded != Excluded.end(); excluded++)
+                    CandidateDominators.erase(*excluded);
+                if(CandidateDominators.size() < MinCandidateCount)
+                {
+                    SelectedToBeDominated = vCandidate;
+                    MinCandidateCount = CandidateDominators.size();
+                }
+            }
+
             set<Graph::VertexIterator> NextExcluded;
-/*
-            for(set<Graph::VertexIterator>::iterator i = Undominated.begin(); i != Undominated.end(); i++)
-            {
 
-            }
-*/
-            // at this point v must be a VertexIterator with the vertex that has been chosen to be dominated next.
 
-            set<Graph::VertexIterator> Candidates;
-            for(Graph::EdgeIterator e = v.BeginIncidentEdges(); e != v.EndIncidentEdges(); e++)
-            {
-                for(Graph::VertexIterator n = e.BeginIncidentVertices(); n != e.EndIncidentVertices(); n++)
-                    Candidates.insert(n);
-                for(Graph::VertexIterator n = e.BeginNegativeIncidentVertices(); n != e.EndNegativeIncidentVertices(); n++)
-                    Candidates.insert(n);
-            }
-
-            for(Graph::EdgeIterator e = v.BeginNegativeIncidentEdges(); e != v.EndNegativeIncidentEdges(); e++)
-            {
-                for(Graph::VertexIterator n = e.BeginIncidentVertices(); n != e.EndIncidentVertices(); n++)
-                    Candidates.insert(n);
-                for(Graph::VertexIterator n = e.BeginNegativeIncidentVertices(); n != e.EndNegativeIncidentVertices(); n++)
-                    Candidates.insert(n);
-            }
-
+            set<Graph::VertexIterator> Candidates = SelectedToBeDominated.CollectNeighbors(1,0,1,0,0,0,1,0,1);
             if(VerticesCanDominateThemselves)
-                Candidates.insert(v);
+                Candidates.insert(SelectedToBeDominated);
             for(set<Graph::VertexIterator>::iterator excluded = Excluded.begin(); excluded != Excluded.end(); excluded++)
                 Candidates.erase(*excluded);
+
+
+            if(LargeEnough.size() < Candidates.size())
+                Candidates = LargeEnough;
 
 
             for(set<Graph::VertexIterator>::iterator candidateiterator = Candidates.begin(); candidateiterator != Candidates.end(); candidateiterator++)
             {
                 Graph::VertexIterator candidate = *candidateiterator;
-
-                for(Graph::EdgeIterator e = candidate.BeginIncidentEdges(); e != candidate.EndIncidentEdges(); e++)
-                {
-                    for(Graph::VertexIterator n = e.BeginIncidentVertices(); n != e.EndIncidentVertices(); n++)
-                        if(++Dominators[n] == 1) Undominated.erase(n);
-                    for(Graph::VertexIterator n = e.BeginPositiveIncidentVertices(); n != e.EndPositiveIncidentVertices(); n++)
-                        if(++Dominators[n] == 1) Undominated.erase(n);
-                }
-                for(Graph::EdgeIterator e = candidate.BeginPositiveIncidentEdges(); e != candidate.EndPositiveIncidentEdges(); e++)
-                {
-                    for(Graph::VertexIterator n = e.BeginIncidentVertices(); n != e.EndIncidentVertices(); n++)
-                        if(++Dominators[n] == 1) Undominated.erase(n);
-                    for(Graph::VertexIterator n = e.BeginPositiveIncidentVertices(); n != e.EndPositiveIncidentVertices(); n++)
-                        if(++Dominators[n] == 1) Undominated.erase(n);
-                }
-
+                set<Graph::VertexIterator> Dominated = candidate.CollectNeighbors(1,1,0,1,1,0,0,0,0);
+                if(VerticesCanDominateThemselves)
+                    Dominated.insert(candidate);
+                for(set<Graph::VertexIterator>::iterator n = Dominated.begin(); n != Dominated.end(); n++)
+                    if(++Dominators[*n] == 1) Undominated.erase(*n);
 
                 // RECURSIVE CALL
                 DominatingSet.insert(candidate);
-                if(TestDominatingSet(Dominators, Undominated, Excluded, DominatingSet, k-1))
+                if(TestDominatingSet(G, Dominators, Undominated, Excluded, DominatingSet, k-1))
                     return true;
                 DominatingSet.erase(candidate);
                 if(Excluded.find(candidate) == Excluded.end())
@@ -89,20 +164,8 @@ namespace OpenGraphtheory
                     NextExcluded.insert(candidate);
                 }
 
-                for(Graph::EdgeIterator e = candidate.BeginIncidentEdges(); e != candidate.EndIncidentEdges(); e++)
-                {
-                    for(Graph::VertexIterator n = e.BeginIncidentVertices(); n != e.EndIncidentVertices(); n++)
-                        if(--Dominators[n] == 0) Undominated.insert(n);
-                    for(Graph::VertexIterator n = e.BeginPositiveIncidentVertices(); n != e.EndPositiveIncidentVertices(); n++)
-                        if(--Dominators[n] == 0) Undominated.insert(n);
-                }
-                for(Graph::EdgeIterator e = candidate.BeginPositiveIncidentEdges(); e != candidate.EndPositiveIncidentEdges(); e++)
-                {
-                    for(Graph::VertexIterator n = e.BeginIncidentVertices(); n != e.EndIncidentVertices(); n++)
-                        if(--Dominators[n] == 0) Undominated.insert(n);
-                    for(Graph::VertexIterator n = e.BeginPositiveIncidentVertices(); n != e.EndPositiveIncidentVertices(); n++)
-                        if(--Dominators[n] == 0) Undominated.insert(n);
-                }
+                for(set<Graph::VertexIterator>::iterator n = Dominated.begin(); n != Dominated.end(); n++)
+                    if(--Dominators[*n] == 0) Undominated.insert(*n);
             }
 
             for(set<Graph::VertexIterator>::iterator nextexcluded = NextExcluded.begin(); nextexcluded != NextExcluded.end(); nextexcluded++)
@@ -123,7 +186,7 @@ namespace OpenGraphtheory
 
             set<Graph::VertexIterator> Excluded;
 
-            return TestDominatingSet(Dominators, Undominated, Excluded, DominatingSet, k, VerticesCanDominateThemselves);
+            return TestDominatingSet(G, Dominators, Undominated, Excluded, DominatingSet, k, VerticesCanDominateThemselves);
         }
 
 
@@ -134,7 +197,7 @@ namespace OpenGraphtheory
             if(G.NumberOfVertices() <= 0)
                 return;
 
-            for(unsigned int k = 1; ; k++)
+            for(int k = 1; k<=G.NumberOfVertices(); k++)
             {
                 if(FindDominatingSet(G, DominatingSet, k))
                     break;

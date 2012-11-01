@@ -20,7 +20,8 @@
 
                 protected:
                     static FactoryRegistrator<Algorithm> AlgorithmDominatingSetRegistrator;
-                    bool TestDominatingSet(std::map<Graph::VertexIterator,int>& Dominators, std::set<Graph::VertexIterator>& Undominated,
+                    bool TestDominatingSet(Graph &G,
+                                           std::map<Graph::VertexIterator,int>& Dominators, std::set<Graph::VertexIterator>& Undominated,
                                            std::set<Graph::VertexIterator>& Excluded, std::set<Graph::VertexIterator>& DominatingSet,
                                            unsigned int k, bool VerticesCanDominateThemselves = true);
             };
