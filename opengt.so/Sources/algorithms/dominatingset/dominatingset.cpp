@@ -199,6 +199,7 @@ namespace OpenGraphtheory
 
             for(int k = 1; k<=G.NumberOfVertices(); k++)
             {
+                cout << "k = " << k << endl;
                 if(FindDominatingSet(G, DominatingSet, k))
                     break;
                 DominatingSet.clear();
