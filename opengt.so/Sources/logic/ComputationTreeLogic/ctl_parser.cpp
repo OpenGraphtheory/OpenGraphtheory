@@ -48,9 +48,9 @@
 /* Unqualified %code blocks.  */
 
 /* Line 300 of lalr1.cc  */
-#line 27 "ctl_parser.yy"
+#line 26 "ctl_parser.yy"
 
-  static int yylex(CTLParser::semantic_type * yylval, OpenGraphtheory::Logic::CTLLexer &scanner);
+    static int yylex(CTLParser::semantic_type * yylval, OpenGraphtheory::Logic::CTLLexer &scanner);
 
 
 
@@ -139,7 +139,7 @@ do {					\
 
 
 /* Line 382 of lalr1.cc  */
-#line 16 "ctl_parser.yy"
+#line 15 "ctl_parser.yy"
 namespace OpenGraphtheory { namespace Logic {
 
 /* Line 382 of lalr1.cc  */
@@ -407,119 +407,119 @@ namespace OpenGraphtheory { namespace Logic {
 	  case 2:
 
 /* Line 690 of lalr1.cc  */
-#line 50 "ctl_parser.yy"
+#line 49 "ctl_parser.yy"
     { *result = (yysemantic_stack_[(2) - (1)].fval); }
     break;
 
   case 3:
 
 /* Line 690 of lalr1.cc  */
-#line 51 "ctl_parser.yy"
+#line 50 "ctl_parser.yy"
     { *result = (yysemantic_stack_[(2) - (1)].fval); }
     break;
 
   case 5:
 
 /* Line 690 of lalr1.cc  */
-#line 54 "ctl_parser.yy"
+#line 53 "ctl_parser.yy"
     { (yyval.fval) = new CTL_Not((yysemantic_stack_[(2) - (2)].fval)); }
     break;
 
   case 6:
 
 /* Line 690 of lalr1.cc  */
-#line 55 "ctl_parser.yy"
+#line 54 "ctl_parser.yy"
     { (yyval.fval) = new CTL_And((yysemantic_stack_[(3) - (1)].fval), (yysemantic_stack_[(3) - (3)].fval)); }
     break;
 
   case 7:
 
 /* Line 690 of lalr1.cc  */
-#line 56 "ctl_parser.yy"
+#line 55 "ctl_parser.yy"
     { (yyval.fval) = new CTL_Or((yysemantic_stack_[(3) - (1)].fval), (yysemantic_stack_[(3) - (3)].fval)); }
     break;
 
   case 8:
 
 /* Line 690 of lalr1.cc  */
-#line 58 "ctl_parser.yy"
+#line 57 "ctl_parser.yy"
     { (yyval.fval) = new CTL_ExistsNext((yysemantic_stack_[(3) - (3)].fval)); }
     break;
 
   case 9:
 
 /* Line 690 of lalr1.cc  */
-#line 59 "ctl_parser.yy"
+#line 58 "ctl_parser.yy"
     { (yyval.fval) = new CTL_ExistsGlobally((yysemantic_stack_[(3) - (3)].fval)); }
     break;
 
   case 10:
 
 /* Line 690 of lalr1.cc  */
-#line 60 "ctl_parser.yy"
+#line 59 "ctl_parser.yy"
     { (yyval.fval) = new CTL_ExistsFinally((yysemantic_stack_[(3) - (3)].fval)); }
     break;
 
   case 11:
 
 /* Line 690 of lalr1.cc  */
-#line 61 "ctl_parser.yy"
+#line 60 "ctl_parser.yy"
     { (yyval.fval) = new CTL_ExistsUntil((yysemantic_stack_[(4) - (2)].fval), (yysemantic_stack_[(4) - (4)].fval)); }
     break;
 
   case 12:
 
 /* Line 690 of lalr1.cc  */
-#line 63 "ctl_parser.yy"
+#line 62 "ctl_parser.yy"
     { (yyval.fval) = new CTL_AlwaysNext((yysemantic_stack_[(3) - (3)].fval)); }
     break;
 
   case 13:
 
 /* Line 690 of lalr1.cc  */
-#line 64 "ctl_parser.yy"
+#line 63 "ctl_parser.yy"
     { (yyval.fval) = new CTL_AlwaysGlobally((yysemantic_stack_[(3) - (3)].fval)); }
     break;
 
   case 14:
 
 /* Line 690 of lalr1.cc  */
-#line 65 "ctl_parser.yy"
+#line 64 "ctl_parser.yy"
     { (yyval.fval) = new CTL_ExistsFinally((yysemantic_stack_[(3) - (3)].fval)); }
     break;
 
   case 15:
 
 /* Line 690 of lalr1.cc  */
-#line 66 "ctl_parser.yy"
+#line 65 "ctl_parser.yy"
     { /* $$ = new CTL_AlwaysUntil($2, $4);*/ (yyval.fval) = NULL; }
     break;
 
   case 16:
 
 /* Line 690 of lalr1.cc  */
-#line 69 "ctl_parser.yy"
+#line 68 "ctl_parser.yy"
     { (yyval.fval) = new CTL_True(); }
     break;
 
   case 17:
 
 /* Line 690 of lalr1.cc  */
-#line 70 "ctl_parser.yy"
+#line 69 "ctl_parser.yy"
     { (yyval.fval) = new CTL_False(); }
     break;
 
   case 18:
 
 /* Line 690 of lalr1.cc  */
-#line 71 "ctl_parser.yy"
+#line 70 "ctl_parser.yy"
     { (yyval.fval) = new CTL_Atomic((yysemantic_stack_[(1) - (1)].sval)); }
     break;
 
   case 19:
 
 /* Line 690 of lalr1.cc  */
-#line 72 "ctl_parser.yy"
+#line 71 "ctl_parser.yy"
     { (yyval.fval) = (yysemantic_stack_[(3) - (2)].fval); }
     break;
 
@@ -854,8 +854,8 @@ namespace OpenGraphtheory { namespace Logic {
   const unsigned char
   CTLParser::yyrline_[] =
   {
-         0,    50,    50,    51,    53,    54,    55,    56,    58,    59,
-      60,    61,    63,    64,    65,    66,    69,    70,    71,    72
+         0,    49,    49,    50,    52,    53,    54,    55,    57,    58,
+      59,    60,    62,    63,    64,    65,    68,    69,    70,    71
   };
 
   // Print the state stack on the debug stream.
@@ -944,7 +944,7 @@ namespace OpenGraphtheory { namespace Logic {
 
 
 /* Line 1136 of lalr1.cc  */
-#line 16 "ctl_parser.yy"
+#line 15 "ctl_parser.yy"
 } } // OpenGraphtheory::Logic
 
 /* Line 1136 of lalr1.cc  */
@@ -952,8 +952,7 @@ namespace OpenGraphtheory { namespace Logic {
 
 
 /* Line 1138 of lalr1.cc  */
-#line 74 "ctl_parser.yy"
-
+#line 73 "ctl_parser.yy"
 
 
 #include "../../../Headers/logic/ComputationTreeLogic/ctl_lexer.h"
@@ -967,3 +966,4 @@ static int yylex(CTLParser::semantic_type * yylval, OpenGraphtheory::Logic::CTLL
 {
     return scanner.yylex(yylval);
 }
+

@@ -40,21 +40,20 @@
 /* Line 35 of lalr1.cc  */
 #line 1 "ctl_parser.yy"
 
-#include<string>
-#include "../../../Headers/logic/ComputationTreeLogic/ctl.h"
-namespace OpenGraphtheory
-{
-    namespace Logic
-    {
-        class CTLLexer;
-    }
-}
-using namespace OpenGraphtheory::Logic;
+
+    // Many thanks to
+    // http://www.thebinaryidiot.com/archives/2010/03/06/flex-bison-cpp-example/
+
+    #include<string>
+    #include "../../../Headers/logic/ComputationTreeLogic/ctl.h"
+
+    namespace OpenGraphtheory { namespace Logic { class CTLLexer; } }
+    using namespace OpenGraphtheory::Logic;
 
 
 
 /* Line 35 of lalr1.cc  */
-#line 58 "ctl_parser.hpp"
+#line 57 "ctl_parser.hpp"
 
 
 #include <string>
@@ -82,11 +81,11 @@ using namespace OpenGraphtheory::Logic;
 
 
 /* Line 35 of lalr1.cc  */
-#line 16 "ctl_parser.yy"
+#line 15 "ctl_parser.yy"
 namespace OpenGraphtheory { namespace Logic {
 
 /* Line 35 of lalr1.cc  */
-#line 90 "ctl_parser.hpp"
+#line 89 "ctl_parser.hpp"
 
   /// A Bison parser.
   class CTLParser
@@ -98,15 +97,15 @@ namespace OpenGraphtheory { namespace Logic {
     {
 
 /* Line 35 of lalr1.cc  */
-#line 22 "ctl_parser.yy"
+#line 21 "ctl_parser.yy"
 
-  std::string* sval;
-  CTLFormula* fval;
+    std::string* sval;
+    CTLFormula* fval;
 
 
 
 /* Line 35 of lalr1.cc  */
-#line 110 "ctl_parser.hpp"
+#line 109 "ctl_parser.hpp"
     };
 #else
     typedef YYSTYPE semantic_type;
@@ -308,11 +307,11 @@ namespace OpenGraphtheory { namespace Logic {
   };
 
 /* Line 35 of lalr1.cc  */
-#line 16 "ctl_parser.yy"
+#line 15 "ctl_parser.yy"
 } } // OpenGraphtheory::Logic
 
 /* Line 35 of lalr1.cc  */
-#line 316 "ctl_parser.hpp"
+#line 315 "ctl_parser.hpp"
 
 
 

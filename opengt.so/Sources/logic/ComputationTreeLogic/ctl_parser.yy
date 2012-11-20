@@ -1,14 +1,13 @@
 %code requires {
-#include<string>
-#include "../../../Headers/logic/ComputationTreeLogic/ctl.h"
-namespace OpenGraphtheory
-{
-    namespace Logic
-    {
-        class CTLLexer;
-    }
-}
-using namespace OpenGraphtheory::Logic;
+
+    // Many thanks to
+    // http://www.thebinaryidiot.com/archives/2010/03/06/flex-bison-cpp-example/
+
+    #include<string>
+    #include "../../../Headers/logic/ComputationTreeLogic/ctl.h"
+
+    namespace OpenGraphtheory { namespace Logic { class CTLLexer; } }
+    using namespace OpenGraphtheory::Logic;
 }
 
 %skeleton "lalr1.cc"
@@ -20,12 +19,12 @@ using namespace OpenGraphtheory::Logic;
 %lex-param { OpenGraphtheory::Logic::CTLLexer &scanner }
 %union
 {
-  std::string* sval;
-  CTLFormula* fval;
+    std::string* sval;
+    CTLFormula* fval;
 };
 
 %code {
-  static int yylex(CTLParser::semantic_type * yylval, OpenGraphtheory::Logic::CTLLexer &scanner);
+    static int yylex(CTLParser::semantic_type * yylval, OpenGraphtheory::Logic::CTLLexer &scanner);
 }
 
 %start S
@@ -72,7 +71,6 @@ ACTLFORMULA: _TRUE                            { $<fval>$ = new CTL_True(); }
        | OPEN CTLFORMULA CLOSE                { $<fval>$ = $<fval>2; }
 
 %%
-
 
 #include "../../../Headers/logic/ComputationTreeLogic/ctl_lexer.h"
 

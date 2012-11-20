@@ -37,7 +37,7 @@
 
 
 /* Line 1149 of lalr1.cc  */
-#line 16 "ctl_parser.yy"
+#line 15 "ctl_parser.yy"
 namespace OpenGraphtheory { namespace Logic {
 
 /* Line 1149 of lalr1.cc  */
@@ -129,7 +129,7 @@ namespace OpenGraphtheory { namespace Logic {
   };
 
 /* Line 1235 of lalr1.cc  */
-#line 16 "ctl_parser.yy"
+#line 15 "ctl_parser.yy"
 } } // OpenGraphtheory::Logic
 
 /* Line 1235 of lalr1.cc  */

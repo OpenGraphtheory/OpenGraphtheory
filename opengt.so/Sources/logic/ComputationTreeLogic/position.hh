@@ -44,7 +44,7 @@
 
 
 /* Line 37 of location.cc  */
-#line 16 "ctl_parser.yy"
+#line 15 "ctl_parser.yy"
 namespace OpenGraphtheory { namespace Logic {
 
 /* Line 37 of location.cc  */
@@ -157,7 +157,7 @@ namespace OpenGraphtheory { namespace Logic {
 
 
 /* Line 144 of location.cc  */
-#line 16 "ctl_parser.yy"
+#line 15 "ctl_parser.yy"
 } } // OpenGraphtheory::Logic
 
 /* Line 144 of location.cc  */
