@@ -20,9 +20,12 @@
             class CTLFormula : public Formula
             {
                 public:
-                    void Interpret(Graph &G);
+                    void Interpret(Graph &G, list<std::string> parameters);
                     virtual set<Graph::VertexIterator> Interpretation(Graph &G) = 0;
             };
+
+
+
 
             class CTL_Atomic : public CTLFormula
             {
@@ -31,6 +34,8 @@
                 public:
                     CTL_Atomic(std::string* atomic_test_description);
                     ~CTL_Atomic();
+                    Formula* Clone();
+
                     set<Graph::VertexIterator> Interpretation(Graph &G);
                     virtual bool Satisfies(Graph::VertexIterator v);
             };
@@ -40,6 +45,8 @@
                 public:
                     CTL_True();
                     ~CTL_True();
+                    Formula* Clone();
+
                     set<Graph::VertexIterator> Interpretation(Graph &G);
             };
 
@@ -48,6 +55,8 @@
                 public:
                     CTL_False();
                     ~CTL_False();
+                    Formula* Clone();
+
                     set<Graph::VertexIterator> Interpretation(Graph &G);
             };
 
@@ -58,6 +67,8 @@
                 public:
                     CTL_Not(CTLFormula* phi);
                     ~CTL_Not();
+                    Formula* Clone();
+
                     set<Graph::VertexIterator> Interpretation(Graph &G);
             };
 
@@ -69,6 +80,8 @@
                 public:
                     CTL_And(CTLFormula* phi1, CTLFormula* phi2);
                     ~CTL_And();
+                    Formula* Clone();
+
                     set<Graph::VertexIterator> Interpretation(Graph &G);
             };
 
@@ -80,6 +93,8 @@
                 public:
                     CTL_Or(CTLFormula* phi1, CTLFormula* phi2);
                     ~CTL_Or();
+                    Formula* Clone();
+
                     set<Graph::VertexIterator> Interpretation(Graph &G);
             };
 
@@ -90,6 +105,8 @@
                 public:
                     CTL_ExistsNext(CTLFormula* phi);
                     ~CTL_ExistsNext();
+                    Formula* Clone();
+
                     set<Graph::VertexIterator> Interpretation(Graph& G);
             };
 
@@ -100,6 +117,8 @@
                 public:
                     CTL_ExistsGlobally(CTLFormula* phi);
                     ~CTL_ExistsGlobally();
+                    Formula* Clone();
+
                     set<Graph::VertexIterator> Interpretation(Graph& G);
             };
 
@@ -111,6 +130,8 @@
                 public:
                     CTL_ExistsUntil(CTLFormula* phi1, CTLFormula* phi2);
                     ~CTL_ExistsUntil();
+                    Formula* Clone();
+
                     set<Graph::VertexIterator> Interpretation(Graph& G);
             };
 
@@ -122,7 +143,10 @@
                 protected:
                     CTLFormula* forwarded;
                 public:
+                    CTL_Forwarder();
                     virtual ~CTL_Forwarder();
+                    Formula* Clone();
+
                     set<Graph::VertexIterator> Interpretation(Graph& G);
             };
 
@@ -151,13 +175,11 @@
                     CTL_AlwaysFinally(CTLFormula* phi);
             };
 
-            /*
             class CTL_AlwaysUntil : public CTL_Forwarder
             {
                 public:
-                    CTL_AlwaysUntil(CTLFormula* phi1, CTL*Formula* phi2);
+                    CTL_AlwaysUntil(CTLFormula* phi1, CTLFormula* phi2);
             };
-            */
 
         } // namespace Logic
     } // namespace OpenGraphtheory

@@ -492,7 +492,7 @@ namespace OpenGraphtheory { namespace Logic {
 
 /* Line 690 of lalr1.cc  */
 #line 65 "ctl_parser.yy"
-    { /* $$ = new CTL_AlwaysUntil($2, $4);*/ (yyval.fval) = NULL; }
+    { (yyval.fval) = new CTL_AlwaysUntil((yysemantic_stack_[(4) - (2)].fval), (yysemantic_stack_[(4) - (4)].fval)); }
     break;
 
   case 16:

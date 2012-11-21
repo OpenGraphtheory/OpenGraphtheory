@@ -10,7 +10,7 @@
 	<File name="Headers/algorithms/color/color.h" open="0" top="0" tabpos="5">
 		<Cursor position="479" topLine="0" />
 	</File>
-	<File name="Headers/algorithms/dominatingset/dominatingset.h" open="1" top="0" tabpos="3">
+	<File name="Headers/algorithms/dominatingset/dominatingset.h" open="0" top="0" tabpos="3">
 		<Cursor position="941" topLine="0" />
 	</File>
 	<File name="Headers/algorithms/independentset/independentset.h" open="0" top="0" tabpos="5">
@@ -115,6 +115,15 @@
 	<File name="Headers/intermediatesteps/writefile.h" open="0" top="0" tabpos="0">
 		<Cursor position="643" topLine="0" />
 	</File>
+	<File name="Headers/logic/ComputationTreeLogic/ctl.h" open="0" top="0" tabpos="0">
+		<Cursor position="4430" topLine="131" />
+	</File>
+	<File name="Headers/logic/ComputationTreeLogic/ctl_lexer.h" open="0" top="0" tabpos="0">
+		<Cursor position="282" topLine="0" />
+	</File>
+	<File name="Headers/logic/logic.h" open="0" top="0" tabpos="0">
+		<Cursor position="402" topLine="6" />
+	</File>
 	<File name="Headers/opengt.h" open="0" top="0" tabpos="0">
 		<Cursor position="2115" topLine="67" />
 	</File>
@@ -163,7 +172,7 @@
 	<File name="Sources/algorithms/color/color.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="1772" topLine="11" />
 	</File>
-	<File name="Sources/algorithms/dominatingset/dominatingset.cpp" open="1" top="1" tabpos="1">
+	<File name="Sources/algorithms/dominatingset/dominatingset.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="9190" topLine="184" />
 	</File>
 	<File name="Sources/algorithms/independentset/independentset.cpp" open="0" top="0" tabpos="4">
@@ -181,7 +190,7 @@
 	<File name="Sources/export/dot.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="355" topLine="7" />
 	</File>
-	<File name="Sources/export/export.cpp" open="1" top="0" tabpos="2">
+	<File name="Sources/export/export.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="1705" topLine="99" />
 	</File>
 	<File name="Sources/export/gastex.cpp" open="0" top="0" tabpos="4">
@@ -267,6 +276,15 @@
 	</File>
 	<File name="Sources/intermediatesteps/writefile.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="1761" topLine="21" />
+	</File>
+	<File name="Sources/logic/ComputationTreeLogic/ctl.cpp" open="1" top="1" tabpos="2">
+		<Cursor position="2811" topLine="95" />
+	</File>
+	<File name="Sources/logic/ComputationTreeLogic/ctl_lexer.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="679" topLine="0" />
+	</File>
+	<File name="Sources/logic/logic.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="394" topLine="0" />
 	</File>
 	<File name="Sources/opengt.cpp" open="0" top="0" tabpos="5">
 		<Cursor position="23732" topLine="604" />

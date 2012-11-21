@@ -79,6 +79,9 @@
 		<Unit filename="Headers/intermediatesteps/show.h" />
 		<Unit filename="Headers/intermediatesteps/stdout.h" />
 		<Unit filename="Headers/intermediatesteps/writefile.h" />
+		<Unit filename="Headers/logic/ComputationTreeLogic/ctl.h" />
+		<Unit filename="Headers/logic/ComputationTreeLogic/ctl_lexer.h" />
+		<Unit filename="Headers/logic/logic.h" />
 		<Unit filename="Headers/opengt.h" />
 		<Unit filename="Headers/simple_xml.h" />
 		<Unit filename="Headers/thread.h" />
@@ -142,6 +145,12 @@
 		<Unit filename="Sources/intermediatesteps/show.cpp" />
 		<Unit filename="Sources/intermediatesteps/stdout.cpp" />
 		<Unit filename="Sources/intermediatesteps/writefile.cpp" />
+		<Unit filename="Sources/logic/ComputationTreeLogic/ctl.cpp" />
+		<Unit filename="Sources/logic/ComputationTreeLogic/ctl_lexer.cpp" />
+		<Unit filename="Sources/logic/ComputationTreeLogic/ctl_parser.cpp" />
+		<Unit filename="Sources/logic/logic.cpp">
+			<Option weight="49" />
+		</Unit>
 		<Unit filename="Sources/opengt.cpp" />
 		<Unit filename="Sources/processing/components.cpp" />
 		<Unit filename="Sources/simple_xml.cpp" />

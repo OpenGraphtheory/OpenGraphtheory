@@ -6,6 +6,7 @@
     #include "../opengt.h"
     #include<istream>
     #include<string>
+    #include<list>
 
     namespace OpenGraphtheory
     {
@@ -15,7 +16,8 @@
             class Formula
             {
                 public:
-                    virtual void Interpret(Graph &G) = 0;
+                    virtual void Interpret(Graph &G, list<std::string> parameters) = 0;
+                    virtual Formula* Clone() = 0;
             };
 
             class ModelChecker
@@ -25,12 +27,14 @@
                 public:
                     static Factory<ModelChecker> ModelCheckerFactory;
                     virtual ~ModelChecker();
-                    
-                    void ModelCheck(Graph& G, std::istream& formula);
+
+                    void ModelCheck(Graph& G, std::istream& formula, list<std::string> parameters);
+                    void ModelCheck(Graph& G, std::string formula, list<std::string> parameters);
+
             };
 
         }
     }
 
 #endif
- 
+

@@ -62,7 +62,7 @@ CTLFORMULA:
        | ALWAYS NEXT ACTLFORMULA              { $<fval>$ = new CTL_AlwaysNext($<fval>3); }
        | ALWAYS GLOBALLY ACTLFORMULA          { $<fval>$ = new CTL_AlwaysGlobally($<fval>3); }
        | ALWAYS FINALLY ACTLFORMULA           { $<fval>$ = new CTL_ExistsFinally($<fval>3); }
-       | ALWAYS ACTLFORMULA UNTIL ACTLFORMULA { /* $$ = new CTL_AlwaysUntil($2, $4);*/ $<fval>$ = NULL; }
+       | ALWAYS ACTLFORMULA UNTIL ACTLFORMULA { $<fval>$ = new CTL_AlwaysUntil($<fval>2, $<fval>4); }
 
        ;
 ACTLFORMULA: _TRUE                            { $<fval>$ = new CTL_True(); }
