@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1353421967 source:/home/viktor/Programming/OpenGraphtheory/programs/logic/main.cpp
+1353492318 source:/home/viktor/Programming/OpenGraphtheory/programs/logic/main.cpp
 	<iostream>
 	<fstream>
 	<stdio.h>
@@ -32,9 +32,10 @@
 	<string>
 	<map>
 
-1352468241 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/logic/logic.h
+1353490124 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/logic/logic.h
 	"../factory.h"
 	"../opengt.h"
 	<istream>
 	<string>
+	<list>
 

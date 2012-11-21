@@ -14,20 +14,27 @@ int main(int argc, char** argv)
 {
 	try
 	{
-		Graph G;
-        cin >> G;
+	    if(argc < 3)
+	    {
+	        usage(argv[0]);
+            return 1;
+	    }
 
         string logic = argv[1];
         string query = argv[2];
-        stringstream querystream;
-        querystream << query << "\n";
+        list<string> parameters;
+        for(int i = 3; i < argc; i++)
+            parameters.push_back(argv[i]);
+
+		Graph G;
+        cin >> G;
 
 		ModelChecker* modelchecker = ModelChecker::ModelCheckerFactory.Produce(logic);
 		if(modelchecker != NULL)
 		{
 		    try
 		    {
-                modelchecker-> ModelCheck(G, querystream);
+                modelchecker-> ModelCheck(G, query, parameters);
                 cout << G;
 		    }
 		    catch(...)
