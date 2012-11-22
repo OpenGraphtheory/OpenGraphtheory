@@ -75,7 +75,9 @@ ACTLFORMULA: _TRUE                            { $<fval>$ = new CTL_True(); }
        | STRING                               { $<fval>$ = new CTL_Atomic($<sval>1); }
        | NOT STRING                           { $<fval>$ = new CTL_Not( new CTL_Atomic($<sval>2) ); }
        | OPEN CTLFORMULA CLOSE                { $<fval>$ = $<fval>2; }
+       | OPEN ACTLFORMULA CLOSE               { $<fval>$ = $<fval>2; }
        | NOT OPEN CTLFORMULA CLOSE            { $<fval>$ = new CTL_Not( $<fval>3 ); }
+       | NOT OPEN ACTLFORMULA CLOSE           { $<fval>$ = new CTL_Not( $<fval>3 ); }
        ;
 
 %%
