@@ -48,11 +48,10 @@
 
 S:       CTLFORMULA END                       { *result = $<fval>1; }
        | ACTLFORMULA END                      { *result = $<fval>1; }
- ;
+       ;
 CTLFORMULA:
-       | NOT ACTLFORMULA                      { $<fval>$ = new CTL_Not($<fval>2); }
-       | ACTLFORMULA AND ACTLFORMULA          { $<fval>$ = new CTL_And($<fval>1, $<fval>3); }
-       | ACTLFORMULA OR ACTLFORMULA           { $<fval>$ = new CTL_Or($<fval>1, $<fval>3); }
+       | ANDS                                 { $<fval>$ = $<fval>1; }
+       | ORS                                  { $<fval>$ = $<fval>1; }
 
        | EXISTS NEXT ACTLFORMULA              { $<fval>$ = new CTL_ExistsNext($<fval>3); }
        | EXISTS GLOBALLY ACTLFORMULA          { $<fval>$ = new CTL_ExistsGlobally($<fval>3); }
@@ -63,12 +62,21 @@ CTLFORMULA:
        | ALWAYS GLOBALLY ACTLFORMULA          { $<fval>$ = new CTL_AlwaysGlobally($<fval>3); }
        | ALWAYS FINALLY ACTLFORMULA           { $<fval>$ = new CTL_ExistsFinally($<fval>3); }
        | ALWAYS ACTLFORMULA UNTIL ACTLFORMULA { $<fval>$ = new CTL_AlwaysUntil($<fval>2, $<fval>4); }
+       ;
 
+ANDS:    ANDS AND ACTLFORMULA                 { $<fval>$ = new CTL_And($<fval>1, $<fval>3); }
+       | ACTLFORMULA AND ACTLFORMULA          { $<fval>$ = new CTL_And($<fval>1, $<fval>3); }
+       ;
+ORS:     ORS OR ACTLFORMULA                   { $<fval>$ = new CTL_Or($<fval>1, $<fval>3); }
+       | ACTLFORMULA OR ACTLFORMULA           { $<fval>$ = new CTL_Or($<fval>1, $<fval>3); }
        ;
 ACTLFORMULA: _TRUE                            { $<fval>$ = new CTL_True(); }
        | _FALSE                               { $<fval>$ = new CTL_False(); }
        | STRING                               { $<fval>$ = new CTL_Atomic($<sval>1); }
+       | NOT STRING                           { $<fval>$ = new CTL_Not( new CTL_Atomic($<sval>2) ); }
        | OPEN CTLFORMULA CLOSE                { $<fval>$ = $<fval>2; }
+       | NOT OPEN CTLFORMULA CLOSE            { $<fval>$ = new CTL_Not( $<fval>3 ); }
+       ;
 
 %%
 

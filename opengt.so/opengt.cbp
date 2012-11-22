@@ -147,7 +147,12 @@
 		<Unit filename="Sources/intermediatesteps/writefile.cpp" />
 		<Unit filename="Sources/logic/ComputationTreeLogic/ctl.cpp" />
 		<Unit filename="Sources/logic/ComputationTreeLogic/ctl_lexer.cpp" />
+		<Unit filename="Sources/logic/ComputationTreeLogic/ctl_lexer.l" />
 		<Unit filename="Sources/logic/ComputationTreeLogic/ctl_parser.cpp" />
+		<Unit filename="Sources/logic/ComputationTreeLogic/ctl_parser.yy" />
+		<Unit filename="Sources/logic/ComputationTreeLogic/makefile">
+			<Option compiler="gcc" use="1" buildCommand="make" />
+		</Unit>
 		<Unit filename="Sources/logic/logic.cpp">
 			<Option weight="49" />
 		</Unit>

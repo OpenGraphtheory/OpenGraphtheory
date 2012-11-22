@@ -277,11 +277,14 @@
 	<File name="Sources/intermediatesteps/writefile.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="1761" topLine="21" />
 	</File>
-	<File name="Sources/logic/ComputationTreeLogic/ctl.cpp" open="1" top="1" tabpos="2">
+	<File name="Sources/logic/ComputationTreeLogic/ctl.cpp" open="1" top="0" tabpos="1">
 		<Cursor position="2811" topLine="95" />
 	</File>
 	<File name="Sources/logic/ComputationTreeLogic/ctl_lexer.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="679" topLine="0" />
+	</File>
+	<File name="Sources/logic/ComputationTreeLogic/ctl_parser.yy" open="1" top="1" tabpos="3">
+		<Cursor position="2995" topLine="51" />
 	</File>
 	<File name="Sources/logic/logic.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="394" topLine="0" />

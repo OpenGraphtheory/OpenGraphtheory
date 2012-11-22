@@ -422,111 +422,146 @@ namespace OpenGraphtheory { namespace Logic {
 
 /* Line 690 of lalr1.cc  */
 #line 53 "ctl_parser.yy"
-    { (yyval.fval) = new CTL_Not((yysemantic_stack_[(2) - (2)].fval)); }
+    { (yyval.fval) = (yysemantic_stack_[(1) - (1)].fval); }
     break;
 
   case 6:
 
 /* Line 690 of lalr1.cc  */
 #line 54 "ctl_parser.yy"
-    { (yyval.fval) = new CTL_And((yysemantic_stack_[(3) - (1)].fval), (yysemantic_stack_[(3) - (3)].fval)); }
+    { (yyval.fval) = (yysemantic_stack_[(1) - (1)].fval); }
     break;
 
   case 7:
 
 /* Line 690 of lalr1.cc  */
-#line 55 "ctl_parser.yy"
-    { (yyval.fval) = new CTL_Or((yysemantic_stack_[(3) - (1)].fval), (yysemantic_stack_[(3) - (3)].fval)); }
+#line 56 "ctl_parser.yy"
+    { (yyval.fval) = new CTL_ExistsNext((yysemantic_stack_[(3) - (3)].fval)); }
     break;
 
   case 8:
 
 /* Line 690 of lalr1.cc  */
 #line 57 "ctl_parser.yy"
-    { (yyval.fval) = new CTL_ExistsNext((yysemantic_stack_[(3) - (3)].fval)); }
+    { (yyval.fval) = new CTL_ExistsGlobally((yysemantic_stack_[(3) - (3)].fval)); }
     break;
 
   case 9:
 
 /* Line 690 of lalr1.cc  */
 #line 58 "ctl_parser.yy"
-    { (yyval.fval) = new CTL_ExistsGlobally((yysemantic_stack_[(3) - (3)].fval)); }
+    { (yyval.fval) = new CTL_ExistsFinally((yysemantic_stack_[(3) - (3)].fval)); }
     break;
 
   case 10:
 
 /* Line 690 of lalr1.cc  */
 #line 59 "ctl_parser.yy"
-    { (yyval.fval) = new CTL_ExistsFinally((yysemantic_stack_[(3) - (3)].fval)); }
+    { (yyval.fval) = new CTL_ExistsUntil((yysemantic_stack_[(4) - (2)].fval), (yysemantic_stack_[(4) - (4)].fval)); }
     break;
 
   case 11:
 
 /* Line 690 of lalr1.cc  */
-#line 60 "ctl_parser.yy"
-    { (yyval.fval) = new CTL_ExistsUntil((yysemantic_stack_[(4) - (2)].fval), (yysemantic_stack_[(4) - (4)].fval)); }
+#line 61 "ctl_parser.yy"
+    { (yyval.fval) = new CTL_AlwaysNext((yysemantic_stack_[(3) - (3)].fval)); }
     break;
 
   case 12:
 
 /* Line 690 of lalr1.cc  */
 #line 62 "ctl_parser.yy"
-    { (yyval.fval) = new CTL_AlwaysNext((yysemantic_stack_[(3) - (3)].fval)); }
+    { (yyval.fval) = new CTL_AlwaysGlobally((yysemantic_stack_[(3) - (3)].fval)); }
     break;
 
   case 13:
 
 /* Line 690 of lalr1.cc  */
 #line 63 "ctl_parser.yy"
-    { (yyval.fval) = new CTL_AlwaysGlobally((yysemantic_stack_[(3) - (3)].fval)); }
+    { (yyval.fval) = new CTL_ExistsFinally((yysemantic_stack_[(3) - (3)].fval)); }
     break;
 
   case 14:
 
 /* Line 690 of lalr1.cc  */
 #line 64 "ctl_parser.yy"
-    { (yyval.fval) = new CTL_ExistsFinally((yysemantic_stack_[(3) - (3)].fval)); }
+    { (yyval.fval) = new CTL_AlwaysUntil((yysemantic_stack_[(4) - (2)].fval), (yysemantic_stack_[(4) - (4)].fval)); }
     break;
 
   case 15:
 
 /* Line 690 of lalr1.cc  */
-#line 65 "ctl_parser.yy"
-    { (yyval.fval) = new CTL_AlwaysUntil((yysemantic_stack_[(4) - (2)].fval), (yysemantic_stack_[(4) - (4)].fval)); }
+#line 67 "ctl_parser.yy"
+    { (yyval.fval) = new CTL_And((yysemantic_stack_[(3) - (1)].fval), (yysemantic_stack_[(3) - (3)].fval)); }
     break;
 
   case 16:
 
 /* Line 690 of lalr1.cc  */
 #line 68 "ctl_parser.yy"
-    { (yyval.fval) = new CTL_True(); }
+    { (yyval.fval) = new CTL_And((yysemantic_stack_[(3) - (1)].fval), (yysemantic_stack_[(3) - (3)].fval)); }
     break;
 
   case 17:
 
 /* Line 690 of lalr1.cc  */
-#line 69 "ctl_parser.yy"
-    { (yyval.fval) = new CTL_False(); }
+#line 70 "ctl_parser.yy"
+    { (yyval.fval) = new CTL_Or((yysemantic_stack_[(3) - (1)].fval), (yysemantic_stack_[(3) - (3)].fval)); }
     break;
 
   case 18:
 
 /* Line 690 of lalr1.cc  */
-#line 70 "ctl_parser.yy"
-    { (yyval.fval) = new CTL_Atomic((yysemantic_stack_[(1) - (1)].sval)); }
+#line 71 "ctl_parser.yy"
+    { (yyval.fval) = new CTL_Or((yysemantic_stack_[(3) - (1)].fval), (yysemantic_stack_[(3) - (3)].fval)); }
     break;
 
   case 19:
 
 /* Line 690 of lalr1.cc  */
-#line 71 "ctl_parser.yy"
+#line 73 "ctl_parser.yy"
+    { (yyval.fval) = new CTL_True(); }
+    break;
+
+  case 20:
+
+/* Line 690 of lalr1.cc  */
+#line 74 "ctl_parser.yy"
+    { (yyval.fval) = new CTL_False(); }
+    break;
+
+  case 21:
+
+/* Line 690 of lalr1.cc  */
+#line 75 "ctl_parser.yy"
+    { (yyval.fval) = new CTL_Atomic((yysemantic_stack_[(1) - (1)].sval)); }
+    break;
+
+  case 22:
+
+/* Line 690 of lalr1.cc  */
+#line 76 "ctl_parser.yy"
+    { (yyval.fval) = new CTL_Not( new CTL_Atomic((yysemantic_stack_[(2) - (2)].sval)) ); }
+    break;
+
+  case 23:
+
+/* Line 690 of lalr1.cc  */
+#line 77 "ctl_parser.yy"
     { (yyval.fval) = (yysemantic_stack_[(3) - (2)].fval); }
+    break;
+
+  case 24:
+
+/* Line 690 of lalr1.cc  */
+#line 78 "ctl_parser.yy"
+    { (yyval.fval) = new CTL_Not( (yysemantic_stack_[(4) - (3)].fval) ); }
     break;
 
 
 
 /* Line 690 of lalr1.cc  */
-#line 530 "ctl_parser.cpp"
+#line 565 "ctl_parser.cpp"
 	default:
           break;
       }
@@ -716,10 +751,11 @@ namespace OpenGraphtheory { namespace Logic {
   const signed char
   CTLParser::yypact_[] =
   {
-        23,    34,    45,     7,    -7,    -7,    23,    -7,     6,     9,
-       8,     7,     7,     7,     2,     7,     7,     7,    17,    -7,
-      -2,    -6,    -7,    -7,    -7,     7,     7,    -7,    -7,    -7,
-       7,    -7,    -7,    -7,     7,    -7,    -7,    -7,    -7,    -7
+        29,    40,    51,     9,    -7,    -7,    29,    -7,    10,    16,
+      15,    19,    12,    -5,    -5,    -5,    21,    -5,    -5,    -5,
+      31,    29,    -7,    22,    -6,    -7,    -7,    -5,    -5,    -7,
+      -5,    -5,    -7,    -7,    -7,    -5,    -7,    -7,    -7,    -5,
+      23,    -7,    -7,    -7,    -7,    -7,    -7,    -7,    -7
   };
 
   /* YYDEFACT[S] -- default reduction number in state S.  Performed when
@@ -728,24 +764,25 @@ namespace OpenGraphtheory { namespace Logic {
   const unsigned char
   CTLParser::yydefact_[] =
   {
-         4,     0,     0,     0,    16,    17,     4,    18,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     5,
-       0,     0,     1,     2,     3,     0,     0,    14,    12,    13,
-       0,    10,     8,     9,     0,    19,     6,     7,    15,    11
+         4,     0,     0,     0,    19,    20,     4,    21,     0,     0,
+       5,     6,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     4,    22,     0,     0,     1,     2,     0,     0,     3,
+       0,     0,    13,    11,    12,     0,     9,     7,     8,     0,
+       0,    23,    15,    17,    16,    18,    14,    10,    24
   };
 
   /* YYPGOTO[NTERM-NUM].  */
   const signed char
   CTLParser::yypgoto_[] =
   {
-        -7,    -7,    22,    -1
+        -7,    -7,    -1,    -7,    -7,     0
   };
 
   /* YYDEFGOTO[NTERM-NUM].  */
   const signed char
   CTLParser::yydefgoto_[] =
   {
-        -1,     8,     9,    10
+        -1,     8,     9,    10,    11,    24
   };
 
   /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
@@ -755,26 +792,26 @@ namespace OpenGraphtheory { namespace Logic {
   const unsigned char
   CTLParser::yytable_[] =
   {
-        14,    18,    19,    25,    26,    21,    22,    30,    24,    23,
-      27,    28,    29,    35,    31,    32,    33,    25,    26,     4,
-       5,     6,    34,     7,    36,    37,     1,     2,    20,    38,
-       0,     0,     0,    39,     3,     4,     5,     6,     0,     7,
-      11,    12,    13,     0,     0,     0,     4,     5,     6,     0,
-       7,    15,    16,    17,     0,     0,     0,     4,     5,     6,
-       0,     7
+        12,    16,    20,    30,    31,    23,     3,     4,     5,     6,
+      25,     7,    29,    32,    33,    34,    26,    36,    37,    38,
+      40,    30,    31,    21,    27,    22,    35,    42,    43,    28,
+      44,    45,     1,     2,     0,    46,    39,    41,    48,    47,
+       3,     4,     5,     6,     0,     7,    13,    14,    15,     0,
+       0,     3,     4,     5,     6,     0,     7,    17,    18,    19,
+       0,     0,     3,     4,     5,     6,     0,     7
   };
 
   /* YYCHECK.  */
   const signed char
   CTLParser::yycheck_[] =
   {
-         1,     2,     3,     9,    10,     6,     0,     5,     0,     0,
-      11,    12,    13,    15,    15,    16,    17,     9,    10,    12,
-      13,    14,     5,    16,    25,    26,     3,     4,     6,    30,
-      -1,    -1,    -1,    34,    11,    12,    13,    14,    -1,    16,
-       6,     7,     8,    -1,    -1,    -1,    12,    13,    14,    -1,
-      16,     6,     7,     8,    -1,    -1,    -1,    12,    13,    14,
-      -1,    16
+         0,     1,     2,     9,    10,     6,    11,    12,    13,    14,
+       0,    16,     0,    13,    14,    15,     0,    17,    18,    19,
+      21,     9,    10,    14,     9,    16,     5,    27,    28,    10,
+      30,    31,     3,     4,    -1,    35,     5,    15,    15,    39,
+      11,    12,    13,    14,    -1,    16,     6,     7,     8,    -1,
+      -1,    11,    12,    13,    14,    -1,    16,     6,     7,     8,
+      -1,    -1,    11,    12,    13,    14,    -1,    16
   };
 
   /* STOS_[STATE-NUM] -- The (internal number of the) accessing
@@ -783,9 +820,10 @@ namespace OpenGraphtheory { namespace Logic {
   CTLParser::yystos_[] =
   {
          0,     3,     4,    11,    12,    13,    14,    16,    18,    19,
-      20,     6,     7,     8,    20,     6,     7,     8,    20,    20,
-      19,    20,     0,     0,     0,     9,    10,    20,    20,    20,
-       5,    20,    20,    20,     5,    15,    20,    20,    20,    20
+      20,    21,    22,     6,     7,     8,    22,     6,     7,     8,
+      22,    14,    16,    19,    22,     0,     0,     9,    10,     0,
+       9,    10,    22,    22,    22,     5,    22,    22,    22,     5,
+      19,    15,    22,    22,    22,    22,    22,    22,    15
   };
 
 #if YYDEBUG
@@ -804,15 +842,17 @@ namespace OpenGraphtheory { namespace Logic {
   CTLParser::yyr1_[] =
   {
          0,    17,    18,    18,    19,    19,    19,    19,    19,    19,
-      19,    19,    19,    19,    19,    19,    20,    20,    20,    20
+      19,    19,    19,    19,    19,    20,    20,    21,    21,    22,
+      22,    22,    22,    22,    22
   };
 
   /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
   const unsigned char
   CTLParser::yyr2_[] =
   {
-         0,     2,     2,     2,     0,     2,     3,     3,     3,     3,
-       3,     4,     3,     3,     3,     4,     1,     1,     1,     3
+         0,     2,     2,     2,     0,     1,     1,     3,     3,     3,
+       4,     3,     3,     3,     4,     3,     3,     3,     3,     1,
+       1,     1,     2,     3,     4
   };
 
 #if YYDEBUG || YYERROR_VERBOSE || YYTOKEN_TABLE
@@ -823,7 +863,8 @@ namespace OpenGraphtheory { namespace Logic {
   {
     "\"end of file\"", "error", "$undefined", "ALWAYS", "EXISTS", "UNTIL",
   "FINALLY", "NEXT", "GLOBALLY", "AND", "OR", "NOT", "_TRUE", "_FALSE",
-  "OPEN", "CLOSE", "STRING", "$accept", "S", "CTLFORMULA", "ACTLFORMULA", 0
+  "OPEN", "CLOSE", "STRING", "$accept", "S", "CTLFORMULA", "ANDS", "ORS",
+  "ACTLFORMULA", 0
   };
 #endif
 
@@ -832,13 +873,15 @@ namespace OpenGraphtheory { namespace Logic {
   const CTLParser::rhs_number_type
   CTLParser::yyrhs_[] =
   {
-        18,     0,    -1,    19,     0,    -1,    20,     0,    -1,    -1,
-      11,    20,    -1,    20,     9,    20,    -1,    20,    10,    20,
-      -1,     4,     7,    20,    -1,     4,     8,    20,    -1,     4,
-       6,    20,    -1,     4,    20,     5,    20,    -1,     3,     7,
-      20,    -1,     3,     8,    20,    -1,     3,     6,    20,    -1,
-       3,    20,     5,    20,    -1,    12,    -1,    13,    -1,    16,
-      -1,    14,    19,    15,    -1
+        18,     0,    -1,    19,     0,    -1,    22,     0,    -1,    -1,
+      20,    -1,    21,    -1,     4,     7,    22,    -1,     4,     8,
+      22,    -1,     4,     6,    22,    -1,     4,    22,     5,    22,
+      -1,     3,     7,    22,    -1,     3,     8,    22,    -1,     3,
+       6,    22,    -1,     3,    22,     5,    22,    -1,    20,     9,
+      22,    -1,    22,     9,    22,    -1,    21,    10,    22,    -1,
+      22,    10,    22,    -1,    12,    -1,    13,    -1,    16,    -1,
+      11,    16,    -1,    14,    19,    15,    -1,    11,    14,    19,
+      15,    -1
   };
 
   /* YYPRHS[YYN] -- Index of the first RHS symbol of rule number YYN in
@@ -846,16 +889,18 @@ namespace OpenGraphtheory { namespace Logic {
   const unsigned char
   CTLParser::yyprhs_[] =
   {
-         0,     0,     3,     6,     9,    10,    13,    17,    21,    25,
-      29,    33,    38,    42,    46,    50,    55,    57,    59,    61
+         0,     0,     3,     6,     9,    10,    12,    14,    18,    22,
+      26,    31,    35,    39,    43,    48,    52,    56,    60,    64,
+      66,    68,    70,    73,    77
   };
 
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
   const unsigned char
   CTLParser::yyrline_[] =
   {
-         0,    49,    49,    50,    52,    53,    54,    55,    57,    58,
-      59,    60,    62,    63,    64,    65,    68,    69,    70,    71
+         0,    49,    49,    50,    52,    53,    54,    56,    57,    58,
+      59,    61,    62,    63,    64,    67,    68,    70,    71,    73,
+      74,    75,    76,    77,    78
   };
 
   // Print the state stack on the debug stream.
@@ -931,10 +976,10 @@ namespace OpenGraphtheory { namespace Logic {
   }
 
   const int CTLParser::yyeof_ = 0;
-  const int CTLParser::yylast_ = 61;
-  const int CTLParser::yynnts_ = 4;
+  const int CTLParser::yylast_ = 67;
+  const int CTLParser::yynnts_ = 6;
   const int CTLParser::yyempty_ = -2;
-  const int CTLParser::yyfinal_ = 22;
+  const int CTLParser::yyfinal_ = 25;
   const int CTLParser::yyterror_ = 1;
   const int CTLParser::yyerrcode_ = 256;
   const int CTLParser::yyntokens_ = 17;
@@ -948,11 +993,11 @@ namespace OpenGraphtheory { namespace Logic {
 } } // OpenGraphtheory::Logic
 
 /* Line 1136 of lalr1.cc  */
-#line 952 "ctl_parser.cpp"
+#line 997 "ctl_parser.cpp"
 
 
 /* Line 1138 of lalr1.cc  */
-#line 73 "ctl_parser.yy"
+#line 81 "ctl_parser.yy"
 
 
 #include "../../../Headers/logic/ComputationTreeLogic/ctl_lexer.h"
