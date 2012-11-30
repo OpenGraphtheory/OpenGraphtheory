@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Debug" />
+	<ActiveTarget name="Release" />
 	<File name="showgraph.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="100" topLine="3" />
+		<Cursor position="29" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>

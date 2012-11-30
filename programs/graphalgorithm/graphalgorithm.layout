@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Debug" />
+	<ActiveTarget name="Release" />
 	<File name="graphalgorithm.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="660" topLine="5" />
+		<Cursor position="525" topLine="5" />
 	</File>
 </CodeBlocks_layout_file>

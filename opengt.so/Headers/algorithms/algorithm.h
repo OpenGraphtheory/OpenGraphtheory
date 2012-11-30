@@ -28,7 +28,7 @@
                 public:
                     static Factory<Algorithm> AlgorithmFactory;
                     virtual void Run(Graph &G, std::vector<std::string> parameters) = 0;
-
+                    virtual ~Algorithm();
             };
 
         }

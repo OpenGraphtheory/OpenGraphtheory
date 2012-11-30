@@ -81,6 +81,8 @@
 		<Unit filename="Headers/intermediatesteps/writefile.h" />
 		<Unit filename="Headers/logic/ComputationTreeLogic/ctl.h" />
 		<Unit filename="Headers/logic/ComputationTreeLogic/ctl_lexer.h" />
+		<Unit filename="Headers/logic/ModalLogic/ml.h" />
+		<Unit filename="Headers/logic/ModalLogic/ml_lexer.h" />
 		<Unit filename="Headers/logic/logic.h" />
 		<Unit filename="Headers/opengt.h" />
 		<Unit filename="Headers/simple_xml.h" />
@@ -153,6 +155,12 @@
 		<Unit filename="Sources/logic/ComputationTreeLogic/makefile">
 			<Option compiler="gcc" use="1" buildCommand="make" />
 		</Unit>
+		<Unit filename="Sources/logic/ModalLogic/makefile" />
+		<Unit filename="Sources/logic/ModalLogic/ml.cpp" />
+		<Unit filename="Sources/logic/ModalLogic/ml_lexer.cpp" />
+		<Unit filename="Sources/logic/ModalLogic/ml_lexer.l" />
+		<Unit filename="Sources/logic/ModalLogic/ml_parser.cpp" />
+		<Unit filename="Sources/logic/ModalLogic/ml_parser.yy" />
 		<Unit filename="Sources/logic/logic.cpp">
 			<Option weight="49" />
 		</Unit>

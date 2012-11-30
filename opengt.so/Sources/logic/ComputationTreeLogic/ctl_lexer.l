@@ -9,6 +9,7 @@
 %option noyywrap
 %option nounput
 %option batch
+%option prefix="Logic_CTL_"
 
 %%
 

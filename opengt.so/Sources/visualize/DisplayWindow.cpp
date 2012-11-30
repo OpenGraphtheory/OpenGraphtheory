@@ -279,7 +279,7 @@ namespace OpenGraphtheory
                     break;
 
                 case ClientMessage:
-                    if((int)report.xclient.data.l[0] == wm_delete_window)
+                    if((unsigned int)report.xclient.data.l[0] == wm_delete_window)
                     {
                         bool AbortClose = false;
                         if(OnClose != NULL)

@@ -18,6 +18,7 @@
                 public:
                     virtual void Interpret(Graph &G, list<std::string> parameters) = 0;
                     virtual Formula* Clone() = 0;
+                    virtual ~Formula();
             };
 
             class ModelChecker

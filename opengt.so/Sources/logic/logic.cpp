@@ -31,6 +31,10 @@ namespace OpenGraphtheory
 
         }
 
+        Formula::~Formula()
+        {
+
+        }
 
     } // namespace Logic
 } // namespace OpenGraphtheory

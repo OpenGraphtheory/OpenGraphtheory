@@ -8,5 +8,10 @@ namespace OpenGraphtheory
 
         Factory<Algorithm> Algorithm::AlgorithmFactory;
 
+        Algorithm::~Algorithm()
+        {
+
+        }
+
     }
 }

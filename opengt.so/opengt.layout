@@ -2,7 +2,7 @@
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
 	<File name="Headers/algorithms/algorithm.h" open="0" top="0" tabpos="2">
-		<Cursor position="785" topLine="0" />
+		<Cursor position="811" topLine="0" />
 	</File>
 	<File name="Headers/algorithms/clique/clique.h" open="0" top="0" tabpos="3">
 		<Cursor position="621" topLine="0" />
@@ -118,11 +118,11 @@
 	<File name="Headers/logic/ComputationTreeLogic/ctl.h" open="0" top="0" tabpos="0">
 		<Cursor position="4430" topLine="131" />
 	</File>
-	<File name="Headers/logic/ComputationTreeLogic/ctl_lexer.h" open="0" top="0" tabpos="0">
-		<Cursor position="282" topLine="0" />
+	<File name="Headers/logic/ComputationTreeLogic/ctl_lexer.h" open="1" top="1" tabpos="5">
+		<Cursor position="164" topLine="0" />
 	</File>
-	<File name="Headers/logic/logic.h" open="0" top="0" tabpos="0">
-		<Cursor position="402" topLine="6" />
+	<File name="Headers/logic/logic.h" open="1" top="0" tabpos="4">
+		<Cursor position="498" topLine="0" />
 	</File>
 	<File name="Headers/opengt.h" open="0" top="0" tabpos="0">
 		<Cursor position="2115" topLine="67" />
@@ -164,7 +164,7 @@
 		<Cursor position="1383" topLine="1" />
 	</File>
 	<File name="Sources/algorithms/algorithm.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="165" topLine="0" />
+		<Cursor position="209" topLine="0" />
 	</File>
 	<File name="Sources/algorithms/clique/clique.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="3843" topLine="73" />
@@ -283,11 +283,11 @@
 	<File name="Sources/logic/ComputationTreeLogic/ctl_lexer.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="679" topLine="0" />
 	</File>
-	<File name="Sources/logic/ComputationTreeLogic/ctl_parser.yy" open="1" top="1" tabpos="3">
+	<File name="Sources/logic/ComputationTreeLogic/ctl_parser.yy" open="1" top="0" tabpos="2">
 		<Cursor position="2995" topLine="51" />
 	</File>
-	<File name="Sources/logic/logic.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="394" topLine="0" />
+	<File name="Sources/logic/logic.cpp" open="1" top="0" tabpos="3">
+		<Cursor position="773" topLine="0" />
 	</File>
 	<File name="Sources/opengt.cpp" open="0" top="0" tabpos="5">
 		<Cursor position="23732" topLine="604" />
@@ -329,7 +329,7 @@
 		<Cursor position="1527" topLine="7" />
 	</File>
 	<File name="Sources/visualize/DisplayWindow.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="4782" topLine="111" />
+		<Cursor position="10609" topLine="260" />
 	</File>
 	<File name="Sources/visualize/GraphWindow.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="2504" topLine="40" />

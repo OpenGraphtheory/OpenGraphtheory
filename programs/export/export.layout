@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Debug" />
+	<ActiveTarget name="Release" />
 	<File name="export.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="307" topLine="8" />
 	</File>
