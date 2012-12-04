@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1354314196 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/algorithm.cpp
+1354314740 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/algorithm.cpp
 	"../../Headers/algorithms/algorithm.h"
 
 1354314717 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/algorithm.h
@@ -448,7 +448,7 @@
 1354314199 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/logic/ComputationTreeLogic/ctl.h
 	"../logic.h"
 
-1354314463 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/logic/ComputationTreeLogic/ctl_lexer.h
+1354611968 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/logic/ComputationTreeLogic/ctl_lexer.h
 	<FlexLexer.h>
 	"../../../Sources/logic/ComputationTreeLogic/ctl_parser.hpp"
 
@@ -473,7 +473,7 @@
 	<string>
 	<algorithm>
 
-1354314197 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/logic/ComputationTreeLogic/ctl_lexer.cpp
+1354611939 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/logic/ComputationTreeLogic/ctl_lexer.cpp
 	<inttypes.h>
 	<iostream>
 	<errno.h>
@@ -616,4 +616,53 @@
 1354314579 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/DisplayWindow.cpp
 	"DisplayWindow.h"
 	"../../Headers/visualize/DisplayWindow.h"
+
+1354317967 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/logic/ModalLogic/ml.cpp
+	"../../../Headers/logic/ModalLogic/ml.h"
+	"../../../Headers/logic/ModalLogic/ml_lexer.h"
+	"ml_parser.hpp"
+
+1354317969 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/logic/ModalLogic/ml.h
+	"../logic.h"
+
+1354612002 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/logic/ModalLogic/ml_lexer.h
+	<FlexLexer.h>
+	"../../../Sources/logic/ModalLogic/ml_parser.hpp"
+
+1354317968 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/logic/ModalLogic/ml_parser.hpp
+	<string>
+	"../../../Headers/logic/ModalLogic/ml.h"
+	<string>
+	<iostream>
+	"stack.hh"
+	"location.hh"
+
+1354317969 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/logic/ModalLogic/stack.hh
+	<deque>
+
+1354317966 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/logic/ModalLogic/location.hh
+	<iostream>
+	<string>
+	"position.hh"
+
+1354317969 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/logic/ModalLogic/position.hh
+	<iostream>
+	<string>
+	<algorithm>
+
+1354317967 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/logic/ModalLogic/ml_lexer.cpp
+	<inttypes.h>
+	<iostream>
+	<errno.h>
+	<cstdlib>
+	<cstdio>
+	<cstring>
+	<FlexLexer.h>
+	"../../../Headers/logic/ModalLogic/ml_lexer.h"
+	<unistd.h>
+
+1354317968 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/logic/ModalLogic/ml_parser.cpp
+	"ml_parser.hpp"
+	<libintl.h>
+	"../../../Headers/logic/ModalLogic/ml_lexer.h"
 

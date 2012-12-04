@@ -3,6 +3,7 @@
     #define __OPENGRAPHTHEORY_LOGIC_MODALLOGIC_ML_LEXER_H
 
     #ifndef yyFlexLexerOnce
+        #define yyFlexLexer Logic_ML_FlexLexer
         #include<FlexLexer.h>
     #endif
 
@@ -17,7 +18,7 @@
         {
 
 
-            class MLLexer : public yyFlexLexer
+            class MLLexer : public Logic_ML_FlexLexer
             {
                 private:
                     MLParser::semantic_type * yylval;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Release" />
+	<ActiveTarget name="Debug" />
 	<File name="Headers/algorithms/algorithm.h" open="0" top="0" tabpos="2">
 		<Cursor position="811" topLine="0" />
 	</File>
@@ -118,10 +118,16 @@
 	<File name="Headers/logic/ComputationTreeLogic/ctl.h" open="0" top="0" tabpos="0">
 		<Cursor position="4430" topLine="131" />
 	</File>
-	<File name="Headers/logic/ComputationTreeLogic/ctl_lexer.h" open="1" top="1" tabpos="5">
-		<Cursor position="164" topLine="0" />
+	<File name="Headers/logic/ComputationTreeLogic/ctl_lexer.h" open="0" top="0" tabpos="5">
+		<Cursor position="533" topLine="0" />
 	</File>
-	<File name="Headers/logic/logic.h" open="1" top="0" tabpos="4">
+	<File name="Headers/logic/ModalLogic/ml.h" open="0" top="0" tabpos="0">
+		<Cursor position="0" topLine="27" />
+	</File>
+	<File name="Headers/logic/ModalLogic/ml_lexer.h" open="0" top="0" tabpos="0">
+		<Cursor position="760" topLine="0" />
+	</File>
+	<File name="Headers/logic/logic.h" open="0" top="0" tabpos="4">
 		<Cursor position="498" topLine="0" />
 	</File>
 	<File name="Headers/opengt.h" open="0" top="0" tabpos="0">
@@ -277,16 +283,16 @@
 	<File name="Sources/intermediatesteps/writefile.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="1761" topLine="21" />
 	</File>
-	<File name="Sources/logic/ComputationTreeLogic/ctl.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="2811" topLine="95" />
+	<File name="Sources/logic/ComputationTreeLogic/ctl.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="2811" topLine="0" />
 	</File>
-	<File name="Sources/logic/ComputationTreeLogic/ctl_lexer.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="679" topLine="0" />
-	</File>
-	<File name="Sources/logic/ComputationTreeLogic/ctl_parser.yy" open="1" top="0" tabpos="2">
+	<File name="Sources/logic/ComputationTreeLogic/ctl_parser.yy" open="1" top="0" tabpos="1">
 		<Cursor position="2995" topLine="51" />
 	</File>
-	<File name="Sources/logic/logic.cpp" open="1" top="0" tabpos="3">
+	<File name="Sources/logic/ModalLogic/ml.cpp" open="1" top="1" tabpos="2">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="Sources/logic/logic.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="773" topLine="0" />
 	</File>
 	<File name="Sources/opengt.cpp" open="0" top="0" tabpos="5">

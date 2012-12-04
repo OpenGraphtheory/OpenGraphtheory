@@ -9,7 +9,7 @@
 %option noyywrap
 %option nounput
 %option batch
-%option prefix="ML"
+%option prefix="Logic_ML_"
 
 %%
 
@@ -33,7 +33,7 @@
 
 %%
 
-MLLexer::MLLexer(istream& is) : yyFlexLexer(&is)
+MLLexer::MLLexer(istream& is) : Logic_ML_FlexLexer(&is)
 {
 }
 

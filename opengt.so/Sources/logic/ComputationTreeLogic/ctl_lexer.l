@@ -37,7 +37,7 @@
 
 %%
 
-CTLLexer::CTLLexer(istream& is) : yyFlexLexer(&is)
+CTLLexer::CTLLexer(istream& is) : Logic_CTL_FlexLexer(&is)
 {
 }
 

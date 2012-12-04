@@ -3,6 +3,7 @@
     #define __OPENGRAPHTHEORY_LOGIC_COMPUTATIONTREELOGIC_CTL_LEXER_H
 
     #ifndef yyFlexLexerOnce
+        #define yyFlexLexer Logic_CTL_FlexLexer
         #include<FlexLexer.h>
     #endif
 
@@ -17,7 +18,7 @@
         {
 
 
-            class CTLLexer : public yyFlexLexer
+            class CTLLexer : public Logic_CTL_FlexLexer
             {
                 private:
                     CTLParser::semantic_type * yylval;

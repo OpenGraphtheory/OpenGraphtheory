@@ -1,6 +1,7 @@
 # depslib dependency file v1.0
-1338380093 source:/home/viktor/Programming/OpenGraphtheory/programs/showgraph/showgraph.cpp
+1354314811 source:/home/viktor/Programming/OpenGraphtheory/programs/showgraph/showgraph.cpp
 	<iostream>
+	<unistd.h>
 	"../../opengt.so/Headers/opengt.h"
 	"../../opengt.so/Headers/visualize/GraphWindow.h"
 
@@ -45,7 +46,7 @@
 	<string>
 	<map>
 
-1338793428 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
+1354314198 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
 	<list>
 	<set>
 	<map>
@@ -55,27 +56,27 @@
 	"simple_xml.h"
 	"attributes.h"
 
-1337348224 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/simple_xml.h
+1354314198 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/simple_xml.h
 	<iostream>
 	<sstream>
 	<vector>
 	<list>
 
-1338301009 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
+1354314199 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
 	<string>
 	<iostream>
 	"factory.h"
 	"simple_xml.h"
 
-1337755682 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/factory.h
+1354314199 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/factory.h
 	<string>
 	<map>
 
-1330678050 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/GraphWindow.h
+1354314199 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/GraphWindow.h
 	"DisplayWindow.h"
 	"../opengt.h"
 
-1339148925 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/DisplayWindow.h
+1354314199 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/DisplayWindow.h
 	<iostream>
 	<map>
 	<X11/Xlib.h>
@@ -85,7 +86,7 @@
 	"vector2d.h"
 	"color.h"
 
-1329746256 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/vector2d.h
+1354314199 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/vector2d.h
 
-1339149004 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/color.h
+1354314199 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/color.h
 

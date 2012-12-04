@@ -28,7 +28,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add option="-lopengtdbg" />
+					<Add option="-lopengt" />
 				</Linker>
 			</Target>
 		</Build>

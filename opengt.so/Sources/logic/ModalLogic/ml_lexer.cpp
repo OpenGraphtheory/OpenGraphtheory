@@ -20,7 +20,7 @@
      * We will address this in a future release of flex, or omit the C++ scanner
      * altogether.
      */
-    #define yyFlexLexer MLFlexLexer
+    #define yyFlexLexer Logic_ML_FlexLexer
 
 /* First, we deal with  platform-specific or compiler-specific issues. */
 
@@ -284,9 +284,9 @@ struct yy_buffer_state
  */
 #define YY_CURRENT_BUFFER_LVALUE (yy_buffer_stack)[(yy_buffer_stack_top)]
 
-void *MLalloc (yy_size_t  );
-void *MLrealloc (void *,yy_size_t  );
-void MLfree (void *  );
+void *Logic_ML_alloc (yy_size_t  );
+void *Logic_ML_realloc (void *,yy_size_t  );
+void Logic_ML_free (void *  );
 
 #define yy_new_buffer yy_create_buffer
 
@@ -1560,9 +1560,9 @@ yyFlexLexer::yyFlexLexer( std::istream* arg_yyin, std::ostream* arg_yyout )
 yyFlexLexer::~yyFlexLexer()
 {
 	delete [] yy_state_buf;
-	MLfree(yy_start_stack  );
+	Logic_ML_free(yy_start_stack  );
 	yy_delete_buffer( YY_CURRENT_BUFFER );
-	MLfree(yy_buffer_stack  );
+	Logic_ML_free(yy_buffer_stack  );
 }
 
 /* The contents of this function are C++ specific, so the () macro is not used.
@@ -1690,7 +1690,7 @@ int yyFlexLexer::yy_get_next_buffer()
 
 				b->yy_ch_buf = (char *)
 					/* Include room in for 2 EOB chars. */
-					MLrealloc((void *) b->yy_ch_buf,b->yy_buf_size + 2  );
+					Logic_ML_realloc((void *) b->yy_ch_buf,b->yy_buf_size + 2  );
 				}
 			else
 				/* Can't grow it, we don't own it. */
@@ -1739,7 +1739,7 @@ int yyFlexLexer::yy_get_next_buffer()
 	if ((yy_size_t) ((yy_n_chars) + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
 		/* Extend the array by 50%, plus the number we really need. */
 		yy_size_t new_size = (yy_n_chars) + number_to_move + ((yy_n_chars) >> 1);
-		YY_CURRENT_BUFFER_LVALUE->yy_ch_buf = (char *) MLrealloc((void *) YY_CURRENT_BUFFER_LVALUE->yy_ch_buf,new_size  );
+		YY_CURRENT_BUFFER_LVALUE->yy_ch_buf = (char *) Logic_ML_realloc((void *) YY_CURRENT_BUFFER_LVALUE->yy_ch_buf,new_size  );
 		if ( ! YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
 			YY_FATAL_ERROR( "out of dynamic memory in yy_get_next_buffer()" );
 	}
@@ -1980,7 +1980,7 @@ int yyFlexLexer::yy_get_next_buffer()
 {
 	YY_BUFFER_STATE b;
     
-	b = (YY_BUFFER_STATE) MLalloc(sizeof( struct yy_buffer_state )  );
+	b = (YY_BUFFER_STATE) Logic_ML_alloc(sizeof( struct yy_buffer_state )  );
 	if ( ! b )
 		YY_FATAL_ERROR( "out of dynamic memory in yy_create_buffer()" );
 
@@ -1989,7 +1989,7 @@ int yyFlexLexer::yy_get_next_buffer()
 	/* yy_ch_buf has to be 2 characters longer than the size given because
 	 * we need to put in 2 end-of-buffer characters.
 	 */
-	b->yy_ch_buf = (char *) MLalloc(b->yy_buf_size + 2  );
+	b->yy_ch_buf = (char *) Logic_ML_alloc(b->yy_buf_size + 2  );
 	if ( ! b->yy_ch_buf )
 		YY_FATAL_ERROR( "out of dynamic memory in yy_create_buffer()" );
 
@@ -2014,9 +2014,9 @@ int yyFlexLexer::yy_get_next_buffer()
 		YY_CURRENT_BUFFER_LVALUE = (YY_BUFFER_STATE) 0;
 
 	if ( b->yy_is_our_buffer )
-		MLfree((void *) b->yy_ch_buf  );
+		Logic_ML_free((void *) b->yy_ch_buf  );
 
-	MLfree((void *) b  );
+	Logic_ML_free((void *) b  );
 }
 
 extern "C" int isatty (int );
@@ -2141,7 +2141,7 @@ void yyFlexLexer::yyensure_buffer_stack(void)
 		 * immediate realloc on the next call.
          */
 		num_to_alloc = 1;
-		(yy_buffer_stack) = (struct yy_buffer_state**)MLalloc
+		(yy_buffer_stack) = (struct yy_buffer_state**)Logic_ML_alloc
 								(num_to_alloc * sizeof(struct yy_buffer_state*)
 								);
 		if ( ! (yy_buffer_stack) )
@@ -2160,7 +2160,7 @@ void yyFlexLexer::yyensure_buffer_stack(void)
 		int grow_size = 8 /* arbitrary grow size */;
 
 		num_to_alloc = (yy_buffer_stack_max) + grow_size;
-		(yy_buffer_stack) = (struct yy_buffer_state**)MLrealloc
+		(yy_buffer_stack) = (struct yy_buffer_state**)Logic_ML_realloc
 								((yy_buffer_stack),
 								num_to_alloc * sizeof(struct yy_buffer_state*)
 								);
@@ -2183,10 +2183,10 @@ void yyFlexLexer::yyensure_buffer_stack(void)
 		new_size = (yy_start_stack_depth) * sizeof( int );
 
 		if ( ! (yy_start_stack) )
-			(yy_start_stack) = (int *) MLalloc(new_size  );
+			(yy_start_stack) = (int *) Logic_ML_alloc(new_size  );
 
 		else
-			(yy_start_stack) = (int *) MLrealloc((void *) (yy_start_stack),new_size  );
+			(yy_start_stack) = (int *) Logic_ML_realloc((void *) (yy_start_stack),new_size  );
 
 		if ( ! (yy_start_stack) )
 			YY_FATAL_ERROR( "out of memory expanding start-condition stack" );
@@ -2263,12 +2263,12 @@ static int yy_flex_strlen (yyconst char * s )
 }
 #endif
 
-void *MLalloc (yy_size_t  size )
+void *Logic_ML_alloc (yy_size_t  size )
 {
 	return (void *) malloc( size );
 }
 
-void *MLrealloc  (void * ptr, yy_size_t  size )
+void *Logic_ML_realloc  (void * ptr, yy_size_t  size )
 {
 	/* The cast to (char *) in the following accommodates both
 	 * implementations that use char* generic pointers, and those
@@ -2280,9 +2280,9 @@ void *MLrealloc  (void * ptr, yy_size_t  size )
 	return (void *) realloc( (char *) ptr, size );
 }
 
-void MLfree (void * ptr )
+void Logic_ML_free (void * ptr )
 {
-	free( (char *) ptr );	/* see MLrealloc() for (char *) cast */
+	free( (char *) ptr );	/* see Logic_ML_realloc() for (char *) cast */
 }
 
 #define YYTABLES_NAME "yytables"
@@ -2291,7 +2291,7 @@ void MLfree (void * ptr )
 
 
 
-MLLexer::MLLexer(istream& is) : yyFlexLexer(&is)
+MLLexer::MLLexer(istream& is) : Logic_ML_FlexLexer(&is)
 {
 }
 
