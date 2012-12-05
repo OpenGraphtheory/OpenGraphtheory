@@ -16,6 +16,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="-lopengtdbg" />
+					<Add option="-L../../lib/Debug" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -29,6 +30,7 @@
 				<Linker>
 					<Add option="-s" />
 					<Add option="-lopengt" />
+					<Add option="-L../../lib/Release" />
 				</Linker>
 			</Target>
 		</Build>
@@ -36,7 +38,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="main.cpp" />
+		<Unit filename="logic.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
