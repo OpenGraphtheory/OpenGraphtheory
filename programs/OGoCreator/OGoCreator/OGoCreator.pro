@@ -6,26 +6,45 @@
 
 QT       += core gui
 
-TARGET = OGoCreator
+     win32:CONFIG(release, debug|release): TARGET = ../../../bin/Release/OGoCreator
+else:win32:CONFIG(debug, debug|release):   TARGET = ../../../bin/Debug/OGoCreator
+else:symbian:                              TARGET = ../../../bin/Release/OGoCreator
+else:unix:CONFIG(debug, debug|release):    TARGET = ../../../bin/Debug/OGoCreator
+else:unix:CONFIG(release, debug|release):  TARGET = ../../../bin/Release/OGoCreator
+
+
+     win32:CONFIG(release, debug|release): OBJECTS_DIR=../../../obj/Release/OGoCreator
+else:win32:CONFIG(debug, debug|release):   OBJECTS_DIR=../../../obj/Debug/OGoCreator
+else:symbian:                              OBJECTS_DIR=../../../obj/Release/OGoCreator
+else:unix:CONFIG(debug, debug|release):    OBJECTS_DIR=../../../obj/Debug/OGoCreator
+else:unix:CONFIG(release, debug|release):  OBJECTS_DIR=../../../obj/Release/OGoCreator
+
+
+
+
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    EditAction.cpp
+        EditAction.cpp
 
 HEADERS  += mainwindow.h \
-    EditAction.h
+         EditAction.h
 
 FORMS    += mainwindow.ui
 
-unix|win32:CONFIG(debug, debug|release): LIBS += -lopengtdbg
-else:unix|win32:CONFIG(release, debug|release): LIBS += -lopengt
+     win32:CONFIG(release, debug|release): LIBS += -logographviewplugin -lopengt -L$$PWD/../../../lib/Release
+else:win32:CONFIG(debug, debug|release):   LIBS += -logographviewplugindbg -lopengtdbg -L$$PWD/../../../lib/Debug
+else:symbian:                              LIBS += -logographviewplugin -lopengt -L$$PWD/../../../lib/Release
+else:unix:CONFIG(debug, debug|release):    LIBS += -logographviewplugindbg -lopengtdbg -L$$PWD/../../../lib/Debug
+else:unix:CONFIG(release, debug|release):  LIBS += -logographviewplugin -lopengt -L$$PWD/../../../lib/Release
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OGoWidget/OGoWidget-build-desktop-Qt_aus_PATH_Release/release/ -logographviewplugin
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OGoWidget/OGoWidget-build-desktop-Qt_aus_PATH_Release/debug/ -logographviewplugin
-else:symbian: LIBS += -logographviewplugin
-else:unix: LIBS += -L$$PWD/../OGoWidget/OGoWidget-build-desktop-Qt_aus_PATH_Release/ -logographviewplugin
+INCLUDEPATH += $$PWD/../OGoWidget/OGoWidget $$PWD/../../../opengt.so/Headers
 
-INCLUDEPATH += $$PWD/../OGoWidget/OGoWidget-build-desktop-Qt_aus_PATH_Release
-DEPENDPATH += $$PWD/../OGoWidget/OGoWidget-build-desktop-Qt_aus_PATH_Release
+#     win32:CONFIG(release, debug|release): DEPENDPATH += $$PWD/../../../lib/Release
+#else:win32:CONFIG(debug, debug|release):   DEPENDPATH += $$PWD/../../../lib/Debug
+#else:symbian:                              DEPENDPATH += $$PWD/../../../lib/Release
+#else:unix:CONFIG(debug, debug|release):    DEPENDPATH += $$PWD/../../../lib/Debug
+#else:unix:CONFIG(release, debug|release):  DEPENDPATH += $$PWD/../../../lib/Release
+
