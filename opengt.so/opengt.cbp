@@ -40,6 +40,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Headers/VertexEdgeFilter.h" />
 		<Unit filename="Headers/algorithms/algorithm.h" />
 		<Unit filename="Headers/algorithms/clique/clique.h" />
 		<Unit filename="Headers/algorithms/color/color.h" />
@@ -101,6 +102,7 @@
 		<Unit filename="Headers/visualize/color.h" />
 		<Unit filename="Headers/visualize/vector2d.h" />
 		<Unit filename="Headers/visualize/vectornd.h" />
+		<Unit filename="Sources/VertexEdgeFilter.cpp" />
 		<Unit filename="Sources/algorithms/algorithm.cpp">
 			<Option weight="49" />
 		</Unit>

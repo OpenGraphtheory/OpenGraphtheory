@@ -11,7 +11,6 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "../OGoWidget/OGoWidget/ogographview.h"
 using namespace OpenGraphtheory;
 
 MainWindow::MainWindow(QWidget *parent) :

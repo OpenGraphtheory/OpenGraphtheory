@@ -3,6 +3,7 @@
     #define __OPENGRAPHTHEORY_ALGORITHMS_PATH_PATH_H
 
     #include "../algorithm.h"
+    #include "../../VertexEdgeFilter.h"
     #include<string>
     #include<map>
     #include<vector>
@@ -16,7 +17,12 @@
                 public:
                     void Run(Graph &G, std::vector<std::string> parameters);
                     void AddPath(Graph &G, Graph::VertexIterator from, Graph::VertexIterator to, std::string pathname);
-                    list<pair<Graph::VertexIterator, Graph::EdgeIterator>* > FindPath(Graph &G, Graph::VertexIterator from, Graph::VertexIterator to);
+                    list<pair<Graph::VertexIterator, Graph::EdgeIterator>* > FindShortestPath(Graph &G, Graph::VertexIterator from, Graph::VertexIterator to,
+                                                                                              VertexFilter *vertexfilter=NULL, EdgeFilter *edgefilter=NULL);
+                    list<pair<Graph::VertexIterator, Graph::EdgeIterator>* > FindPath(Graph &G, Graph::VertexIterator from, Graph::VertexIterator to,
+                                                                                              VertexFilter *vertexfilter=NULL, EdgeFilter *edgefilter=NULL);
+                    set<Graph::VertexIterator> ReachableVertices(Graph& G, Graph::VertexIterator from,
+                                                                 VertexFilter *vertexfilter=NULL, EdgeFilter *edgefilter=NULL);
 
                 protected:
                     static FactoryRegistrator<Algorithm> AlgorithmPathRegistrator;

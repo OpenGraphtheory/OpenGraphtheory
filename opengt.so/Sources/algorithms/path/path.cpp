@@ -18,7 +18,8 @@ namespace OpenGraphtheory
             "path", "Adds a path to the graph", "http://en.wikipedia.org/wiki/Path_%28graph_theory%29"));
 
 
-        list<pair<Graph::VertexIterator, Graph::EdgeIterator>* > AlgorithmPATH::FindPath(Graph &G, Graph::VertexIterator from, Graph::VertexIterator to)
+        list<pair<Graph::VertexIterator, Graph::EdgeIterator>* > AlgorithmPATH::FindPath(Graph &G, Graph::VertexIterator from, Graph::VertexIterator to,
+                                                                                         VertexFilter *vertexfilter, EdgeFilter *edgefilter)
         {
             map<Graph::VertexIterator, float> distance;
             set<Graph::VertexIterator> Q;
@@ -49,21 +50,29 @@ namespace OpenGraphtheory
 
                 for(Graph::EdgeIterator e = v.BeginIncidentEdges(); e != v.EndIncidentEdges(); e++)
                 {
+                    if(edgefilter != NULL)
+                        if(!edgefilter->EdgeAllowed(e))
+                            continue;
+
                     for(Graph::VertexIterator u = e.BeginIncidentVertices(); u != e.EndIncidentVertices(); u++)
-                        if(Q.find(u) != Q.end())
+                        if((Q.find(u) != Q.end()) && !(vertexfilter != NULL && !vertexfilter->VertexAllowed(u)))
                             DijkstraUpdate(v, e, u, distance, &path);
                     for(Graph::VertexIterator u = e.BeginPositiveIncidentVertices(); u != e.EndPositiveIncidentVertices(); u++)
-                        if(Q.find(u) != Q.end())
+                        if((Q.find(u) != Q.end()) && !(vertexfilter != NULL && !vertexfilter->VertexAllowed(u)))
                             DijkstraUpdate(v, e, u, distance, &path);
                 }
 
                 for(Graph::EdgeIterator e = v.BeginPositiveIncidentEdges(); e != v.EndPositiveIncidentEdges(); e++)
                 {
+                    if(edgefilter != NULL)
+                        if(!edgefilter->EdgeAllowed(e))
+                            continue;
+
                     for(Graph::VertexIterator u = e.BeginIncidentVertices(); u != e.EndIncidentVertices(); u++)
-                        if(Q.find(u) != Q.end())
+                        if((Q.find(u) != Q.end()) && !(vertexfilter != NULL && !vertexfilter->VertexAllowed(u)))
                             DijkstraUpdate(v, e, u, distance, &path);
                     for(Graph::VertexIterator u = e.BeginPositiveIncidentVertices(); u != e.EndPositiveIncidentVertices(); u++)
-                        if(Q.find(u) != Q.end())
+                        if((Q.find(u) != Q.end()) && !(vertexfilter != NULL && !vertexfilter->VertexAllowed(u)))
                             DijkstraUpdate(v, e, u, distance, &path);
                 }
 

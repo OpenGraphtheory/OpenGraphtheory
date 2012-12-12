@@ -6,7 +6,7 @@
 #include <QDragLeaveEvent>
 #include <QDragMoveEvent>
 #include <QDropEvent>
-#include "../OGoWidget/OGoWidget/ogographview.h"
+#include "../OGoWidget/ogographview.h"
 #include "../../../opengt.so/Headers/opengt.h"
 #include "../../../opengt.so/Headers/algorithms/clique/clique.h"
 #include "../../../opengt.so/Headers/algorithms/color/color.h"

@@ -6,7 +6,7 @@
 	"../../opengt.so/Headers/opengt.h"
 	"../../opengt.so/Headers/logic/logic.h"
 
-1354314198 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
+1355227546 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
 	<list>
 	<set>
 	<map>
@@ -16,26 +16,33 @@
 	"simple_xml.h"
 	"attributes.h"
 
-1354314198 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/simple_xml.h
+1355227546 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/simple_xml.h
 	<iostream>
 	<sstream>
 	<vector>
 	<list>
 
-1354314199 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
+1355227547 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
 	<string>
 	<iostream>
 	"factory.h"
 	"simple_xml.h"
 
-1354314199 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/factory.h
+1355227547 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/factory.h
 	<string>
 	<map>
 
-1354314425 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/logic/logic.h
+1355227547 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/logic/logic.h
 	"../factory.h"
 	"../opengt.h"
 	<istream>
 	<string>
 	<list>
+
+1355227542 source:/home/viktor/Programming/OpenGraphtheory/programs/logic/logic.cpp
+	<iostream>
+	<fstream>
+	<stdio.h>
+	"../../opengt.so/Headers/opengt.h"
+	"../../opengt.so/Headers/logic/logic.h"
 

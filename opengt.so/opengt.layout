@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Release" />
+	<ActiveTarget name="Debug" />
+	<File name="Headers/VertexEdgeFilter.h" open="0" top="0" tabpos="0">
+		<Cursor position="888" topLine="40" />
+	</File>
 	<File name="Headers/algorithms/algorithm.h" open="0" top="0" tabpos="2">
 		<Cursor position="811" topLine="0" />
 	</File>
@@ -169,6 +172,9 @@
 	<File name="Headers/visualize/vectornd.h" open="0" top="0" tabpos="0">
 		<Cursor position="1383" topLine="1" />
 	</File>
+	<File name="Sources/VertexEdgeFilter.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="423" topLine="27" />
+	</File>
 	<File name="Sources/algorithms/algorithm.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="209" topLine="0" />
 	</File>
@@ -286,10 +292,10 @@
 	<File name="Sources/logic/ComputationTreeLogic/ctl.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="2811" topLine="0" />
 	</File>
-	<File name="Sources/logic/ComputationTreeLogic/ctl_parser.yy" open="1" top="0" tabpos="1">
+	<File name="Sources/logic/ComputationTreeLogic/ctl_parser.yy" open="0" top="0" tabpos="1">
 		<Cursor position="2995" topLine="35" />
 	</File>
-	<File name="Sources/logic/ModalLogic/ml.cpp" open="1" top="1" tabpos="2">
+	<File name="Sources/logic/ModalLogic/ml.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="689" topLine="0" />
 	</File>
 	<File name="Sources/logic/logic.cpp" open="0" top="0" tabpos="3">
