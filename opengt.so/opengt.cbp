@@ -82,6 +82,8 @@
 		<Unit filename="Headers/intermediatesteps/writefile.h" />
 		<Unit filename="Headers/logic/ComputationTreeLogic/ctl.h" />
 		<Unit filename="Headers/logic/ComputationTreeLogic/ctl_lexer.h" />
+		<Unit filename="Headers/logic/FirstOrderLogic/fo.h" />
+		<Unit filename="Headers/logic/FirstOrderLogic/fo_lexer.h" />
 		<Unit filename="Headers/logic/ModalLogic/ml.h" />
 		<Unit filename="Headers/logic/ModalLogic/ml_lexer.h" />
 		<Unit filename="Headers/logic/logic.h" />
@@ -157,6 +159,12 @@
 		<Unit filename="Sources/logic/ComputationTreeLogic/makefile">
 			<Option compiler="gcc" use="1" buildCommand="make" />
 		</Unit>
+		<Unit filename="Sources/logic/FirstOrderLogic/fo.cpp" />
+		<Unit filename="Sources/logic/FirstOrderLogic/fo_lexer.cpp" />
+		<Unit filename="Sources/logic/FirstOrderLogic/fo_lexer.l" />
+		<Unit filename="Sources/logic/FirstOrderLogic/fo_parser.cpp" />
+		<Unit filename="Sources/logic/FirstOrderLogic/fo_parser.yy" />
+		<Unit filename="Sources/logic/FirstOrderLogic/makefile" />
 		<Unit filename="Sources/logic/ModalLogic/makefile" />
 		<Unit filename="Sources/logic/ModalLogic/ml.cpp" />
 		<Unit filename="Sources/logic/ModalLogic/ml_lexer.cpp" />
