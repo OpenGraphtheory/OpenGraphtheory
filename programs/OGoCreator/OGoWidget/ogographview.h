@@ -5,7 +5,7 @@
 #include <QColor>
 #include<QTimer>
 #include <QImage>
-#include "../../../../opengt.so/Headers/opengt.h"
+#include "../../../opengt.so/Headers/opengt.h"
 
 using namespace OpenGraphtheory;
 
