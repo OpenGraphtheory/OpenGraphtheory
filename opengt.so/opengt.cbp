@@ -74,6 +74,7 @@
 		<Unit filename="Headers/generate/random.h" />
 		<Unit filename="Headers/generate/star.h" />
 		<Unit filename="Headers/generate/tree.h" />
+		<Unit filename="Headers/generate/wheel.h" />
 		<Unit filename="Headers/import/import.h" />
 		<Unit filename="Headers/import/tgf.h" />
 		<Unit filename="Headers/intermediatesteps/intermediatesteps.h" />
@@ -143,6 +144,7 @@
 		<Unit filename="Sources/generate/random.cpp" />
 		<Unit filename="Sources/generate/star.cpp" />
 		<Unit filename="Sources/generate/tree.cpp" />
+		<Unit filename="Sources/generate/wheel.cpp" />
 		<Unit filename="Sources/import/import.cpp" />
 		<Unit filename="Sources/import/tgf.cpp" />
 		<Unit filename="Sources/intermediatesteps/intermediate.cpp">

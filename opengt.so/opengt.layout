@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Debug" />
+	<ActiveTarget name="Release" />
 	<File name="Headers/VertexEdgeFilter.h" open="0" top="0" tabpos="0">
 		<Cursor position="888" topLine="40" />
 	</File>
@@ -123,6 +123,9 @@
 	</File>
 	<File name="Headers/logic/ComputationTreeLogic/ctl_lexer.h" open="0" top="0" tabpos="5">
 		<Cursor position="533" topLine="0" />
+	</File>
+	<File name="Headers/logic/FirstOrderLogic/fo.h" open="1" top="0" tabpos="1">
+		<Cursor position="1503" topLine="0" />
 	</File>
 	<File name="Headers/logic/ModalLogic/ml.h" open="0" top="0" tabpos="0">
 		<Cursor position="0" topLine="27" />
@@ -294,6 +297,12 @@
 	</File>
 	<File name="Sources/logic/ComputationTreeLogic/ctl_parser.yy" open="0" top="0" tabpos="1">
 		<Cursor position="2995" topLine="35" />
+	</File>
+	<File name="Sources/logic/FirstOrderLogic/fo.cpp" open="1" top="1" tabpos="2">
+		<Cursor position="1015" topLine="22" />
+	</File>
+	<File name="Sources/logic/FirstOrderLogic/fo_parser.yy" open="1" top="0" tabpos="3">
+		<Cursor position="3251" topLine="71" />
 	</File>
 	<File name="Sources/logic/ModalLogic/ml.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="689" topLine="0" />
