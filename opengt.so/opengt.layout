@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Release" />
+	<ActiveTarget name="Debug" />
 	<File name="Headers/VertexEdgeFilter.h" open="0" top="0" tabpos="0">
 		<Cursor position="888" topLine="40" />
 	</File>
@@ -18,6 +18,9 @@
 	</File>
 	<File name="Headers/algorithms/independentset/independentset.h" open="0" top="0" tabpos="5">
 		<Cursor position="418" topLine="0" />
+	</File>
+	<File name="Headers/algorithms/oddcircle/oddcircle.h" open="1" top="0" tabpos="2">
+		<Cursor position="175" topLine="0" />
 	</File>
 	<File name="Headers/algorithms/path/path.h" open="0" top="0" tabpos="2">
 		<Cursor position="553" topLine="0" />
@@ -124,7 +127,7 @@
 	<File name="Headers/logic/ComputationTreeLogic/ctl_lexer.h" open="0" top="0" tabpos="5">
 		<Cursor position="533" topLine="0" />
 	</File>
-	<File name="Headers/logic/FirstOrderLogic/fo.h" open="1" top="0" tabpos="1">
+	<File name="Headers/logic/FirstOrderLogic/fo.h" open="0" top="0" tabpos="1">
 		<Cursor position="1503" topLine="0" />
 	</File>
 	<File name="Headers/logic/ModalLogic/ml.h" open="0" top="0" tabpos="0">
@@ -192,6 +195,9 @@
 	</File>
 	<File name="Sources/algorithms/independentset/independentset.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="1991" topLine="16" />
+	</File>
+	<File name="Sources/algorithms/oddcircle/oddcircle.cpp" open="1" top="1" tabpos="1">
+		<Cursor position="3014" topLine="59" />
 	</File>
 	<File name="Sources/algorithms/path/path.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="5233" topLine="96" />
@@ -298,10 +304,10 @@
 	<File name="Sources/logic/ComputationTreeLogic/ctl_parser.yy" open="0" top="0" tabpos="1">
 		<Cursor position="2995" topLine="35" />
 	</File>
-	<File name="Sources/logic/FirstOrderLogic/fo.cpp" open="1" top="1" tabpos="2">
+	<File name="Sources/logic/FirstOrderLogic/fo.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="1015" topLine="22" />
 	</File>
-	<File name="Sources/logic/FirstOrderLogic/fo_parser.yy" open="1" top="0" tabpos="3">
+	<File name="Sources/logic/FirstOrderLogic/fo_parser.yy" open="0" top="0" tabpos="3">
 		<Cursor position="3251" topLine="71" />
 	</File>
 	<File name="Sources/logic/ModalLogic/ml.cpp" open="0" top="0" tabpos="2">
