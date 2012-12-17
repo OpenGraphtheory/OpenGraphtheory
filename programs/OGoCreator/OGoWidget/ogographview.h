@@ -25,6 +25,8 @@ class OGoGraphView : public QWidget
     float vertexsize;
     float edgewidth;
     float gridsize;
+    int zoom_x;
+    int zoom_y;
     std::string vertexcoloring;
     std::string edgecoloring;
 

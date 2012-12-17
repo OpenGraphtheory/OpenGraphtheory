@@ -295,3 +295,67 @@ void MainWindow::on_actionSpring_Embed_triggered()
 }
 
 
+
+void MainWindow::on_actionModal_Logic_triggered()
+{
+    bool ok;
+    QString text = QInputDialog::getText(this, "Modal-Logic Model-Checker", "Enter a modal-logic formula",
+                   QLineEdit::Normal, "\\Diamond \\Box (Berlin \\vee Hamburg)", &ok );
+    if ( !ok || text.isEmpty() )
+        return;
+
+    OGoGraphView* gv = static_cast<OGoGraphView*>(ui->tabWidget->currentWidget());
+
+    OpenGraphtheory::Logic::MLModelChecker modelchecker;
+    std::list<std::string> params;
+    params.push_back("mlmodel");
+    modelchecker.ModelCheck(*(gv->getGraph()), text.toUtf8().constData(), params);
+
+    gv->setVertexColoring("mlmodel");
+    gv->resetEdgeColoring();
+}
+
+void MainWindow::on_actionComputation_Tree_Logic_triggered()
+{
+    bool ok;
+    QString text = QInputDialog::getText(this, "Computation-Tree Logic Model-Checker", "Enter a computation-tree-logic formula",
+                   QLineEdit::Normal, "A X (E X (Berlin \\vee Hamburg))", &ok );
+    if ( !ok || text.isEmpty() )
+        return;
+
+    OGoGraphView* gv = static_cast<OGoGraphView*>(ui->tabWidget->currentWidget());
+
+    OpenGraphtheory::Logic::CTLModelChecker modelchecker;
+    std::list<std::string> params;
+    params.push_back("ctlmodel");
+    modelchecker.ModelCheck(*(gv->getGraph()), text.toUtf8().constData(), params);
+
+    gv->setVertexColoring("ctlmodel");
+    gv->resetEdgeColoring();
+}
+
+void MainWindow::on_actionFirst_Order_Predicate_Logic_triggered()
+{
+    bool ok;
+    QString text = QInputDialog::getText(this, "Computation-Tree Logic Model-Checker", "Enter a computation-tree-logic formula",
+                                         QLineEdit::Normal, "\\exists x. \\forall y. (x=y \\vee E(x,y))", &ok );
+    if ( !ok || text.isEmpty() )
+        return;
+
+    OGoGraphView* gv = static_cast<OGoGraphView*>(ui->tabWidget->currentWidget());
+
+    OpenGraphtheory::Logic::FOModelChecker modelchecker;
+    std::stringstream s;
+    s << text.toUtf8().constData();
+    OpenGraphtheory::Logic::FOFormula* formula = static_cast<OpenGraphtheory::Logic::FOFormula*>(modelchecker.Parse(s));
+    if(formula == NULL)
+    {
+        QMessageBox::critical(0, "FO Modelchecker", "Syntax Error");
+    }
+    else
+    {
+        std::map<std::string,OpenGraphtheory::Graph::VertexIterator> var_assignments;
+        QMessageBox::information(0, "Result", formula->Interpretation(*(gv->getGraph()),var_assignments) ? "Yes" : "No");
+        delete formula;
+    }
+}

@@ -95,9 +95,18 @@
     <addaction name="actionPaste"/>
     <addaction name="actionDelete"/>
    </widget>
+   <widget class="QMenu" name="menuLogic">
+    <property name="title">
+     <string>Logic</string>
+    </property>
+    <addaction name="actionModal_Logic"/>
+    <addaction name="actionComputation_Tree_Logic"/>
+    <addaction name="actionFirst_Order_Predicate_Logic"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuAlgorithms"/>
+   <addaction name="menuLogic"/>
    <addaction name="menuLayout"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -243,6 +252,21 @@
   <action name="actionRedo">
    <property name="text">
     <string>Redo</string>
+   </property>
+  </action>
+  <action name="actionModal_Logic">
+   <property name="text">
+    <string>Modal-Logic</string>
+   </property>
+  </action>
+  <action name="actionComputation_Tree_Logic">
+   <property name="text">
+    <string>Computation-Tree Logic</string>
+   </property>
+  </action>
+  <action name="actionFirst_Order_Predicate_Logic">
+   <property name="text">
+    <string>First-Order Predicate Logic</string>
    </property>
   </action>
  </widget>

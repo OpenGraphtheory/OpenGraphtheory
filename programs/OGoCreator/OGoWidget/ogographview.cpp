@@ -47,10 +47,23 @@ OGoGraphView::OGoGraphView(QWidget *parent) :
     setMouseTracking(true);
 }
 
+void OGoGraphView::wheelEvent(QWheelEvent *wheelevent)
+{
+    if(wheelevent->delta() > 0)
+        ZoomingTarget *= 2;
+    if(wheelevent->delta() < 0)
+        ZoomingTarget /= 2;
+    zoom_x = oldx;
+    zoom_y = oldy;
+
+    Timer->start();
+}
+
+
 void OGoGraphView::ZoomTimerTriggered()
 {
     float f_oldx, f_oldy;
-    ScreenToModel(oldx,oldy,f_oldx, f_oldy);
+    ScreenToModel(zoom_x,zoom_y,f_oldx, f_oldy);
 
     if(abs(ZoomingTarget-zoom) < 0.01f)
     {
@@ -65,8 +78,8 @@ void OGoGraphView::ZoomTimerTriggered()
     int newx, newy;
     ModelToScreen(f_oldx,f_oldy,newx,newy);
     // and move the screen there
-    x_offset -= (newx - oldx);
-    y_offset -= (newy - oldy);
+    x_offset -= (newx - zoom_x);
+    y_offset -= (newy - zoom_y);
 
     repaint();
 }
@@ -267,35 +280,6 @@ Graph::VertexIterator OGoGraphView::VertexAt(int x, int y)
     return graph->EndVertices();
 }
 
-void OGoGraphView::wheelEvent(QWheelEvent *wheelevent)
-{
-    if(wheelevent->delta() > 0)
-        ZoomingTarget *= 2;
-    if(wheelevent->delta() < 0)
-        ZoomingTarget /= 2;
-
-    Timer->start();
-
-/*
-    float f_oldx, f_oldy;
-    ScreenToModel(oldx,oldy,f_oldx, f_oldy);
-    // now (f_oldx, f_oldy) is the mouse-coordinate in the model
-
-    if(wheelevent->delta() > 0)
-        zoom *= 1.05;
-    if(wheelevent->delta() < 0)
-        zoom /= 1.05;
-
-    // now see where the model-mouse coordinate from before is now
-    int newx, newy;
-    ModelToScreen(f_oldx,f_oldy,newx,newy);
-    // and move the screen there
-    x_offset -= (newx - oldx);
-    y_offset -= (newy - oldy);
-
-    repaint();
-*/
-}
 
 bool OGoGraphView::selectVertices(QWidget* parent, int count, void callback(QWidget*, OGoGraphView*, vector<Graph::VertexIterator>, Graph*))
 {
