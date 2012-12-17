@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Debug" />
+	<ActiveTarget name="Release" />
 	<File name="Headers/VertexEdgeFilter.h" open="0" top="0" tabpos="0">
 		<Cursor position="888" topLine="40" />
 	</File>
@@ -25,8 +25,8 @@
 	<File name="Headers/algorithms/path/path.h" open="0" top="0" tabpos="2">
 		<Cursor position="553" topLine="0" />
 	</File>
-	<File name="Headers/attributes.h" open="0" top="0" tabpos="0">
-		<Cursor position="227" topLine="12" />
+	<File name="Headers/attributes.h" open="1" top="0" tabpos="5">
+		<Cursor position="585" topLine="1" />
 	</File>
 	<File name="Headers/export/dot.h" open="0" top="0" tabpos="0">
 		<Cursor position="745" topLine="0" />
@@ -76,8 +76,8 @@
 	<File name="Headers/export/xgmml.h" open="0" top="0" tabpos="0">
 		<Cursor position="753" topLine="0" />
 	</File>
-	<File name="Headers/factory.h" open="0" top="0" tabpos="0">
-		<Cursor position="2081" topLine="62" />
+	<File name="Headers/factory.h" open="1" top="0" tabpos="3">
+		<Cursor position="4326" topLine="101" />
 	</File>
 	<File name="Headers/generate/circle.h" open="0" top="0" tabpos="0">
 		<Cursor position="43" topLine="0" />
@@ -196,8 +196,8 @@
 	<File name="Sources/algorithms/independentset/independentset.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="1991" topLine="16" />
 	</File>
-	<File name="Sources/algorithms/oddcircle/oddcircle.cpp" open="1" top="1" tabpos="1">
-		<Cursor position="3014" topLine="59" />
+	<File name="Sources/algorithms/oddcircle/oddcircle.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="3014" topLine="29" />
 	</File>
 	<File name="Sources/algorithms/path/path.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="5233" topLine="96" />
@@ -205,8 +205,8 @@
 	<File name="Sources/algorithms/vertexcover/vertexcover.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="38" topLine="0" />
 	</File>
-	<File name="Sources/attributes.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1792" topLine="29" />
+	<File name="Sources/attributes.cpp" open="1" top="0" tabpos="6">
+		<Cursor position="11245" topLine="357" />
 	</File>
 	<File name="Sources/export/dot.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="355" topLine="7" />
@@ -255,6 +255,9 @@
 	</File>
 	<File name="Sources/export/xgmml.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="370" topLine="15" />
+	</File>
+	<File name="Sources/factory.cpp" open="1" top="0" tabpos="4">
+		<Cursor position="62" topLine="0" />
 	</File>
 	<File name="Sources/generate/circle.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="371" topLine="0" />

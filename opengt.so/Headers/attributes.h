@@ -23,7 +23,7 @@
             map<string, Attribute*> Attributes;
         public:
             ~AttributeCollection();
-            static Factory<Attribute> AttributeFactory;
+            static OpenGraphtheory::Factory<Attribute> AttributeFactory;
 
             void Set(XML* attr);
             bool Add(string name, string type);

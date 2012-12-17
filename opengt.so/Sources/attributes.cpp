@@ -7,7 +7,7 @@
 /// \defgroup arbitraryattributes ''Arbitrary Attributes''
 // @{
 
-    Factory<Attribute> AttributeCollection::AttributeFactory;
+    OpenGraphtheory::Factory<Attribute> AttributeCollection::AttributeFactory;
 
     /// \brief Destructor - it also deletes all Attribute instances it contains (no need to handle this outside of the class)
     AttributeCollection::~AttributeCollection()
@@ -181,8 +181,8 @@ Attribute::~Attribute()
     }
 
     /// \brief Registers the AttributeInstantiator in the Factory immediately when the library is loaded
-    FactoryRegistrator<Attribute> BoolAttributeRegistrator(&AttributeCollection::AttributeFactory, "bool",
-        new DefaultInstantiator<Attribute, BoolAttribute>());
+    OpenGraphtheory::FactoryRegistrator<Attribute> BoolAttributeRegistrator(&AttributeCollection::AttributeFactory, "bool",
+        new OpenGraphtheory::DefaultInstantiator<Attribute, BoolAttribute>());
 
 // @}
 
@@ -229,8 +229,8 @@ Attribute::~Attribute()
     }
 
     /// \brief Registers the AttributeInstantiator in the Factory immediately when the library is loaded
-    FactoryRegistrator<Attribute> IntAttributeRegistrator(&AttributeCollection::AttributeFactory, "int",
-        new DefaultInstantiator<Attribute, IntAttribute>());
+    OpenGraphtheory::FactoryRegistrator<Attribute> IntAttributeRegistrator(&AttributeCollection::AttributeFactory, "int",
+        new OpenGraphtheory::DefaultInstantiator<Attribute, IntAttribute>());
 
 // @}
 
@@ -277,8 +277,8 @@ Attribute::~Attribute()
     }
 
     /// \brief Registers the AttributeInstantiator in the Factory immediately when the library is loaded
-    FactoryRegistrator<Attribute> FloatAttributeRegistrator(&AttributeCollection::AttributeFactory, "float",
-        new DefaultInstantiator<Attribute, FloatAttribute>());
+    OpenGraphtheory::FactoryRegistrator<Attribute> FloatAttributeRegistrator(&AttributeCollection::AttributeFactory, "float",
+        new OpenGraphtheory::DefaultInstantiator<Attribute, FloatAttribute>());
 
 // @}
 
@@ -323,8 +323,8 @@ Attribute::~Attribute()
     }
 
     /// \brief Registers the AttributeInstantiator in the Factory immediately when the library is loaded
-    FactoryRegistrator<Attribute> StringAttributeRegistrator(&AttributeCollection::AttributeFactory, "string",
-        new DefaultInstantiator<Attribute, StringAttribute>());
+    OpenGraphtheory::FactoryRegistrator<Attribute> StringAttributeRegistrator(&AttributeCollection::AttributeFactory, "string",
+        new OpenGraphtheory::DefaultInstantiator<Attribute, StringAttribute>());
 
 // @}
 
@@ -393,7 +393,7 @@ Attribute::~Attribute()
     }
 
     /// \brief Registers the AttributeInstantiator in the Factory immediately when the library is loaded
-    FactoryRegistrator<Attribute> SeqAttributeRegistrator(&AttributeCollection::AttributeFactory, "seq",
-        new DefaultInstantiator<Attribute, SeqAttribute>());
+    OpenGraphtheory::FactoryRegistrator<Attribute> SeqAttributeRegistrator(&AttributeCollection::AttributeFactory, "seq",
+        new OpenGraphtheory::DefaultInstantiator<Attribute, SeqAttribute>());
 
 // @}

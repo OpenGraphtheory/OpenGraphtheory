@@ -24,13 +24,13 @@
 	<vector>
 	<list>
 
-1355227547 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
+1355761289 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
 	<string>
 	<iostream>
 	"factory.h"
 	"simple_xml.h"
 
-1355227547 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/factory.h
+1355761274 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/factory.h
 	<string>
 	<map>
 
@@ -138,7 +138,7 @@
 1355227544 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/vertexcover/vertexcover.cpp
 	"../../../Headers/opengt.h"
 
-1355227544 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/attributes.cpp
+1355761365 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/attributes.cpp
 	"../Headers/attributes.h"
 	"../Headers/factory.h"
 	<cstdlib>
@@ -733,4 +733,17 @@
 	"../opengt.h"
 	"../factory.h"
 	"generate.h"
+
+1355411412 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/oddcircle/oddcircle.cpp
+	"../../../Headers/algorithms/oddcircle/oddcircle.h"
+	<map>
+
+1355411024 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/oddcircle/oddcircle.h
+	"../algorithm.h"
+	<string>
+	<map>
+	<list>
+
+1355761214 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/factory.cpp
+	"../Headers/factory.h"
 
