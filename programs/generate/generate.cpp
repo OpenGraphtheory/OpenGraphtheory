@@ -12,6 +12,8 @@ using namespace OpenGraphtheory;
 using namespace OpenGraphtheory::Generate;
 
 
+
+
 class FactoryMaxNameLength : public OpenGraphtheory::FactoryEnumerator
 {
     unsigned int length;
@@ -22,17 +24,19 @@ class FactoryMaxNameLength : public OpenGraphtheory::FactoryEnumerator
 };
 FactoryMaxNameLength::FactoryMaxNameLength()
 {
-    length = -2;
+    length = 0;
 }
 void FactoryMaxNameLength::Enumerate(string name, string description, string url)
 {
-    if(name.length() > length)
-        length = name.length();
+    if(name.size() > length)
+        length = name.size();
 }
 int FactoryMaxNameLength::GetLength()
 {
     return length;
 }
+
+
 
 class FactoryLister : public OpenGraphtheory::FactoryEnumerator
 {
@@ -49,7 +53,13 @@ FactoryLister::FactoryLister(int Col1Width, ostream &os)
 }
 void FactoryLister::Enumerate(string name, string description, string url)
 {
-    *os << setw(length) << name << "  " << description << "\n" << setw(length) << " " << url << "\n";
+    *os << "      " << name;
+    for(int i = name.length(); i < length; i++)
+        *os << " ";
+    *os << "  " << description << "\n      ";
+    for(int i = 0; i < length; i++)
+        *os << " ";
+    *os << "  " << url << "\n";
 }
 
 
@@ -74,11 +84,11 @@ int main(int argc, char** argv)
 
         FactoryMaxNameLength* l = new FactoryMaxNameLength();
         Generator::GeneratorFactory.Enumerate(l);
-        int length = l->GetLength();
-        delete l;
-        FactoryLister* w = new FactoryLister(length, cerr);
+        FactoryLister* w = new FactoryLister(l->GetLength(), cerr);
         Generator::GeneratorFactory.Enumerate(w);
+        delete l;
         delete w;
+
         return 1;
     }
 

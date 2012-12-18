@@ -94,6 +94,36 @@ void MainWindow::on_actionClose_triggered()
     on_tabWidget_tabCloseRequested(ui->tabWidget->currentIndex());
 }
 
+
+
+
+class ExportFilterEnumerator : public FactoryEnumerator
+{
+    private:
+        QFileDialog* filedialog;
+        QStringList stringlist;
+    public:
+        ExportFilterEnumerator(QFileDialog* target);
+        void Enumerate(std::string name, std::string description, std::string url);
+        QStringList getStringList();
+};
+ExportFilterEnumerator::ExportFilterEnumerator(QFileDialog* target)
+{
+    stringlist.append("Graph eXchange Language (*.gxl) (*.gxl)");
+    filedialog = target;
+}
+QStringList ExportFilterEnumerator::getStringList()
+{
+    return stringlist;
+}
+void ExportFilterEnumerator::Enumerate(std::string name, std::string description, std::string url)
+{
+    stringlist.append(QString((description+" (*." + name+") (*."+name+")").c_str()));
+}
+
+
+
+
 void MainWindow::on_actionSave_as_triggered()
 {
     OGoGraphView* gv = static_cast<OGoGraphView*>(ui->tabWidget->currentWidget());
@@ -103,7 +133,10 @@ void MainWindow::on_actionSave_as_triggered()
     dlg.selectFile(file);
     dlg.setAcceptMode(QFileDialog::AcceptSave);
     dlg.setDefaultSuffix("gxl");
-    dlg.setFilter("Graph eXchange Language Files (*.gxl)");
+    dlg.setFilter("Graph eXchange Language (*.gxl)");
+    ExportFilterEnumerator expfilters(&dlg);
+    OpenGraphtheory::Export::ExportFilter::ExportFilterFactory.Enumerate(&expfilters);
+    dlg.setFilters(expfilters.getStringList());
 
     if(!dlg.exec())
         return;
@@ -112,10 +145,18 @@ void MainWindow::on_actionSave_as_triggered()
     if(selectedfiles.count() == 1)
     {
         QFileInfo fileinfo(selectedfiles[0]);
-        ui->tabWidget->setTabText(ui->tabWidget->currentIndex(), fileinfo.baseName());
-
-        gv->setFileLocation(selectedfiles[0]);
-        on_actionSave_triggered();
+        if(fileinfo.completeSuffix().toUpper() == "GXL")
+        {
+            ui->tabWidget->setTabText(ui->tabWidget->currentIndex(), fileinfo.baseName());
+            gv->setFileLocation(selectedfiles[0]);
+            on_actionSave_triggered();
+        }
+        else
+        {
+            OpenGraphtheory::Export::ExportFilter::Export(*(gv->getGraph()),selectedfiles[0].toStdString(),
+                                                          fileinfo.completeSuffix().toStdString(),
+                                                          gv->getVertexColoring(),gv->getEdgeColoring(),72);
+        }
     }
 }
 

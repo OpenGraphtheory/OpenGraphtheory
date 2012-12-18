@@ -18,6 +18,8 @@
 #include "../../../opengt.so/Headers/algorithms/dominatingset/dominatingset.h"
 #include "../../../opengt.so/Headers/algorithms/path/path.h"
 #include "../../../opengt.so/Headers/transform/springembedder3d.h"
+#include "../../../opengt.so/Headers/export/export.h"
+
 
 namespace Ui {
 class MainWindow;

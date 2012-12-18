@@ -69,6 +69,8 @@ public:
 
     void setVertexColoring(std::string coloringname);
     void setEdgeColoring(std::string coloringname);
+    std::string getVertexColoring();
+    std::string getEdgeColoring();
     void resetVertexColoring();
     void resetEdgeColoring();
 

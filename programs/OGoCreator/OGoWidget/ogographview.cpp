@@ -123,6 +123,17 @@ QString OGoGraphView::getFileLocation()
     return FileLocation;
 }
 
+
+std::string OGoGraphView::getEdgeColoring()
+{
+    return edgecoloring;
+}
+
+std::string OGoGraphView::getVertexColoring()
+{
+    return vertexcoloring;
+}
+
 void OGoGraphView::setEdgeColoring(std::string coloring)
 {
     this -> edgecoloring = coloring;

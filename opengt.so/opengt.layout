@@ -25,7 +25,7 @@
 	<File name="Headers/algorithms/path/path.h" open="0" top="0" tabpos="2">
 		<Cursor position="553" topLine="0" />
 	</File>
-	<File name="Headers/attributes.h" open="1" top="0" tabpos="5">
+	<File name="Headers/attributes.h" open="1" top="0" tabpos="4">
 		<Cursor position="585" topLine="1" />
 	</File>
 	<File name="Headers/export/dot.h" open="0" top="0" tabpos="0">
@@ -77,7 +77,7 @@
 		<Cursor position="753" topLine="0" />
 	</File>
 	<File name="Headers/factory.h" open="1" top="0" tabpos="3">
-		<Cursor position="4326" topLine="101" />
+		<Cursor position="4326" topLine="95" />
 	</File>
 	<File name="Headers/generate/circle.h" open="0" top="0" tabpos="0">
 		<Cursor position="43" topLine="0" />
@@ -104,7 +104,7 @@
 		<Cursor position="564" topLine="0" />
 	</File>
 	<File name="Headers/import/import.h" open="0" top="0" tabpos="0">
-		<Cursor position="392" topLine="0" />
+		<Cursor position="176" topLine="0" />
 	</File>
 	<File name="Headers/import/tgf.h" open="0" top="0" tabpos="0">
 		<Cursor position="37" topLine="0" />
@@ -205,7 +205,7 @@
 	<File name="Sources/algorithms/vertexcover/vertexcover.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="38" topLine="0" />
 	</File>
-	<File name="Sources/attributes.cpp" open="1" top="0" tabpos="6">
+	<File name="Sources/attributes.cpp" open="1" top="0" tabpos="5">
 		<Cursor position="11245" topLine="357" />
 	</File>
 	<File name="Sources/export/dot.cpp" open="0" top="0" tabpos="2">
@@ -256,7 +256,7 @@
 	<File name="Sources/export/xgmml.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="370" topLine="15" />
 	</File>
-	<File name="Sources/factory.cpp" open="1" top="0" tabpos="4">
+	<File name="Sources/factory.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="62" topLine="0" />
 	</File>
 	<File name="Sources/generate/circle.cpp" open="0" top="0" tabpos="0">

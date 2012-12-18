@@ -10,9 +10,8 @@ namespace OpenGraphtheory
 
         class ImportFilter
         {
-            protected:
-                static Factory<ImportFilter> ImportFilterFactory;
             public:
+                static Factory<ImportFilter> ImportFilterFactory;
                 ImportFilter();
                 virtual ~ImportFilter();
 

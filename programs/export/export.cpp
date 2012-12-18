@@ -14,9 +14,6 @@ int main(int argc, char** argv)
 {
 	try
 	{
-		Graph G;
-        cin >> G;
-
         string vertexcoloring = "";
         string edgecoloring = "";
         string format = "";
@@ -42,6 +39,8 @@ int main(int argc, char** argv)
 		{
 		    try
 		    {
+                Graph G;
+                cin >> G;
                 exportfilter->DoExport(G, cout, vertexcoloring, edgecoloring, dpi);
 		    }
 		    catch(...)
@@ -64,21 +63,69 @@ int main(int argc, char** argv)
 	return 0;
 }
 
+
+
+
+
+class FactoryMaxNameLength : public OpenGraphtheory::FactoryEnumerator
+{
+    unsigned int length;
+    public:
+        FactoryMaxNameLength();
+        void Enumerate(string name, string description, string url);
+        int GetLength();
+};
+FactoryMaxNameLength::FactoryMaxNameLength()
+{
+    length = 0;
+}
+void FactoryMaxNameLength::Enumerate(string name, string description, string url)
+{
+    if(name.size() > length)
+        length = name.size();
+}
+int FactoryMaxNameLength::GetLength()
+{
+    return length;
+}
+
+
+
+class FactoryLister : public OpenGraphtheory::FactoryEnumerator
+{
+    int length;
+    ostream* os;
+    public:
+        FactoryLister(int Col1Width, ostream& os);
+        void Enumerate(string name, string description, string url);
+};
+FactoryLister::FactoryLister(int Col1Width, ostream &os)
+{
+    length = Col1Width;
+    this->os = &os;
+}
+void FactoryLister::Enumerate(string name, string description, string url)
+{
+    *os << "      " << name;
+    for(int i = name.length(); i < length; i++)
+        *os << " ";
+    *os << "  " << description << "\n      ";
+    for(int i = 0; i < length; i++)
+        *os << " ";
+    *os << "  " << url << "\n";
+}
+
+
+
 void usage(char* argv0)
 {
-    map<string, ExportFilter*> Filters ;//= ExportFilter::GetExportFilters();
+	cerr << "usage: " << argv0 << " format\n"
+	     << "   where format can be\n";
 
-	cerr << "usage: " << argv0 << " format [sourcefile] [destinationfile]\n"
-	     << "     where format can be\n";
-
-    unsigned int maxlength = 0;
-    for(map<string, ExportFilter*>::iterator i = Filters.begin(); i != Filters.end(); i++)
-        if(i->first.length() > maxlength)
-            maxlength = i->first.length();
-
-    for(map<string, ExportFilter*>::iterator i = Filters.begin(); i != Filters.end(); i++)
-    {
-//        cerr << "          " << i->first << string(maxlength - i->first.length() + 2, ' ') << i->second->Description << "\n";
-//        cerr << "          " << string(maxlength + 2, ' ') << "  " << i->second.URL << "\n";
-    }
+    FactoryMaxNameLength* l = new FactoryMaxNameLength();
+    Export::ExportFilter::ExportFilterFactory.Enumerate(l);
+    FactoryLister* w = new FactoryLister(l->GetLength(), cerr);
+    Export::ExportFilter::ExportFilterFactory.Enumerate(w);
+    delete l;
+    delete w;
 }
