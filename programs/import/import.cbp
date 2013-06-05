@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-fPIC" />
 					<Add directory="/home/viktor/.lib" />
 				</Compiler>
 				<Linker>
@@ -27,6 +28,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-fPIC" />
 					<Add directory="/home/viktor/.lib" />
 				</Compiler>
 				<Linker>

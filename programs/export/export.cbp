@@ -15,6 +15,7 @@
 				<Option parameters="dot foo.gxl" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-fPIC" />
 				</Compiler>
 				<Linker>
 					<Add option="-lopengtdbg" />
@@ -29,6 +30,7 @@
 				<Option parameters="foo.gxl" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-fPIC" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
