@@ -15,6 +15,7 @@
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-fPIC" />
 				</Compiler>
 				<Linker>
 					<Add option="-lpthread -lX11" />
@@ -28,7 +29,10 @@
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
 				<Compiler>
-					<Add option="-O2" />
+					<Add option="-march=core2" />
+					<Add option="-fexpensive-optimizations" />
+					<Add option="-O3" />
+					<Add option="-fPIC" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />

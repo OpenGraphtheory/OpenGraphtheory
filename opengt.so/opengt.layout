@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Release" />
+	<ActiveTarget name="Debug" />
 	<File name="Headers/VertexEdgeFilter.h" open="0" top="0" tabpos="0">
 		<Cursor position="888" topLine="40" />
 	</File>
@@ -206,7 +206,7 @@
 		<Cursor position="38" topLine="0" />
 	</File>
 	<File name="Sources/attributes.cpp" open="1" top="0" tabpos="5">
-		<Cursor position="11245" topLine="357" />
+		<Cursor position="11245" topLine="353" />
 	</File>
 	<File name="Sources/export/dot.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="355" topLine="7" />
