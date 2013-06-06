@@ -250,6 +250,23 @@ namespace OpenGraphtheory
                 return result;
             }
 
+            set<Graph::EdgeIterator> Graph::VertexIterator::CollectIncidentEdges(
+                    bool Undirected, bool Positive, bool Negative)
+            {
+                set<Graph::EdgeIterator> result;
+                if(Undirected)
+                    for(Graph::EdgeIterator e = this->BeginIncidentEdges(); e != EndIncidentEdges(); e++)
+                        result.insert(e);
+                if(Positive)
+                    for(Graph::EdgeIterator e = this->BeginPositiveIncidentEdges(); e != EndPositiveIncidentEdges(); e++)
+                        result.insert(e);
+                if(Negative)
+                    for(Graph::EdgeIterator e = this->BeginNegativeIncidentEdges(); e != EndNegativeIncidentEdges(); e++)
+                        result.insert(e);
+                return result;
+            }
+
+
             set<Graph::VertexIterator> Graph::VertexIterator::UnderlyingNeighborhood()
             {
                 return CollectNeighbors(true,true,true, true,true,true, true,true,true);

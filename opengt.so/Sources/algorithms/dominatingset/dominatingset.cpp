@@ -1,6 +1,5 @@
 
 #include "../../../Headers/algorithms/dominatingset/dominatingset.h"
-#include<set>
 
 using namespace std;
 using namespace OpenGraphtheory;
@@ -40,11 +39,11 @@ namespace OpenGraphtheory
                 if(DominatingSet.find(i) != DominatingSet.end())
                     continue;
 
-                // which vertices can be newly dominated by vertex i?
+                // which vertices can be NEWLY dominated by vertex i?
                 set<Graph::VertexIterator> Dominated = i.CollectNeighbors(1,1,0,1,1,0,0,0,0);
                 if(VerticesCanDominateThemselves)
                     Dominated.insert(i);
-                set<Graph::VertexIterator> removable;
+                set<Graph::VertexIterator> removable; // these are already dominated
                 for(set<Graph::VertexIterator>::iterator j = Dominated.begin(); j != Dominated.end(); j++)
                     if(Dominators[*j] > 0)
                         removable.insert(*j);
@@ -199,7 +198,9 @@ namespace OpenGraphtheory
 
             for(int k = 1; k<=G.NumberOfVertices(); k++)
             {
-                cout << "k = " << k << endl;
+                #ifndef NDEBUG
+                cerr << "k = " << k << endl;
+                #endif
                 if(FindDominatingSet(G, DominatingSet, k))
                     break;
                 DominatingSet.clear();

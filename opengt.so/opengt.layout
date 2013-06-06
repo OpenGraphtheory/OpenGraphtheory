@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Debug" />
+	<ActiveTarget name="Release" />
 	<File name="Headers/VertexEdgeFilter.h" open="0" top="0" tabpos="0">
 		<Cursor position="888" topLine="40" />
 	</File>
 	<File name="Headers/algorithms/algorithm.h" open="0" top="0" tabpos="2">
-		<Cursor position="811" topLine="0" />
+		<Cursor position="741" topLine="0" />
 	</File>
 	<File name="Headers/algorithms/clique/clique.h" open="0" top="0" tabpos="3">
 		<Cursor position="621" topLine="0" />
@@ -14,19 +14,22 @@
 		<Cursor position="479" topLine="0" />
 	</File>
 	<File name="Headers/algorithms/dominatingset/dominatingset.h" open="0" top="0" tabpos="3">
-		<Cursor position="941" topLine="0" />
+		<Cursor position="0" topLine="0" />
 	</File>
 	<File name="Headers/algorithms/independentset/independentset.h" open="0" top="0" tabpos="5">
 		<Cursor position="418" topLine="0" />
 	</File>
-	<File name="Headers/algorithms/oddcircle/oddcircle.h" open="1" top="0" tabpos="2">
+	<File name="Headers/algorithms/oddcircle/oddcircle.h" open="0" top="0" tabpos="2">
 		<Cursor position="175" topLine="0" />
 	</File>
 	<File name="Headers/algorithms/path/path.h" open="0" top="0" tabpos="2">
 		<Cursor position="553" topLine="0" />
 	</File>
-	<File name="Headers/attributes.h" open="1" top="0" tabpos="4">
-		<Cursor position="585" topLine="1" />
+	<File name="Headers/algorithms/vertexcover/vertexcover.h" open="1" top="0" tabpos="2">
+		<Cursor position="817" topLine="0" />
+	</File>
+	<File name="Headers/attributes.h" open="0" top="0" tabpos="4">
+		<Cursor position="585" topLine="0" />
 	</File>
 	<File name="Headers/export/dot.h" open="0" top="0" tabpos="0">
 		<Cursor position="745" topLine="0" />
@@ -76,7 +79,7 @@
 	<File name="Headers/export/xgmml.h" open="0" top="0" tabpos="0">
 		<Cursor position="753" topLine="0" />
 	</File>
-	<File name="Headers/factory.h" open="1" top="0" tabpos="3">
+	<File name="Headers/factory.h" open="0" top="0" tabpos="3">
 		<Cursor position="4326" topLine="95" />
 	</File>
 	<File name="Headers/generate/circle.h" open="0" top="0" tabpos="0">
@@ -140,7 +143,10 @@
 		<Cursor position="498" topLine="0" />
 	</File>
 	<File name="Headers/opengt.h" open="0" top="0" tabpos="0">
-		<Cursor position="2115" topLine="67" />
+		<Cursor position="11225" topLine="231" />
+	</File>
+	<File name="Headers/set_helper.h" open="1" top="0" tabpos="4">
+		<Cursor position="292" topLine="0" />
 	</File>
 	<File name="Headers/transform/aspectscale.h" open="0" top="0" tabpos="0">
 		<Cursor position="557" topLine="0" />
@@ -191,21 +197,21 @@
 		<Cursor position="1772" topLine="11" />
 	</File>
 	<File name="Sources/algorithms/dominatingset/dominatingset.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="9190" topLine="184" />
+		<Cursor position="9059" topLine="182" />
 	</File>
 	<File name="Sources/algorithms/independentset/independentset.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="1991" topLine="16" />
 	</File>
-	<File name="Sources/algorithms/oddcircle/oddcircle.cpp" open="1" top="0" tabpos="1">
+	<File name="Sources/algorithms/oddcircle/oddcircle.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="3014" topLine="29" />
 	</File>
 	<File name="Sources/algorithms/path/path.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="5233" topLine="96" />
 	</File>
-	<File name="Sources/algorithms/vertexcover/vertexcover.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="38" topLine="0" />
+	<File name="Sources/algorithms/vertexcover/vertexcover.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="3365" topLine="56" />
 	</File>
-	<File name="Sources/attributes.cpp" open="1" top="0" tabpos="5">
+	<File name="Sources/attributes.cpp" open="0" top="0" tabpos="5">
 		<Cursor position="11245" topLine="353" />
 	</File>
 	<File name="Sources/export/dot.cpp" open="0" top="0" tabpos="2">
@@ -320,10 +326,13 @@
 		<Cursor position="773" topLine="0" />
 	</File>
 	<File name="Sources/opengt.cpp" open="0" top="0" tabpos="5">
-		<Cursor position="23732" topLine="604" />
+		<Cursor position="11316" topLine="234" />
 	</File>
 	<File name="Sources/processing/components.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="57" topLine="0" />
+	</File>
+	<File name="Sources/set_helper.cpp" open="1" top="1" tabpos="3">
+		<Cursor position="781" topLine="4" />
 	</File>
 	<File name="Sources/simple_xml.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="75" topLine="0" />

@@ -94,6 +94,7 @@
 		<Unit filename="Headers/logic/ModalLogic/ml_lexer.h" />
 		<Unit filename="Headers/logic/logic.h" />
 		<Unit filename="Headers/opengt.h" />
+		<Unit filename="Headers/set_helper.h" />
 		<Unit filename="Headers/simple_xml.h" />
 		<Unit filename="Headers/thread.h" />
 		<Unit filename="Headers/transform/aspectscale.h" />
@@ -185,6 +186,7 @@
 		</Unit>
 		<Unit filename="Sources/opengt.cpp" />
 		<Unit filename="Sources/processing/components.cpp" />
+		<Unit filename="Sources/set_helper.cpp" />
 		<Unit filename="Sources/simple_xml.cpp" />
 		<Unit filename="Sources/thread.cpp" />
 		<Unit filename="Sources/transform/aspectscale.cpp" />
