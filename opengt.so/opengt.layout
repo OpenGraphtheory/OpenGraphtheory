@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Release" />
+	<ActiveTarget name="Debug" />
 	<File name="Headers/VertexEdgeFilter.h" open="0" top="0" tabpos="0">
 		<Cursor position="888" topLine="40" />
 	</File>
@@ -146,7 +146,7 @@
 		<Cursor position="11225" topLine="231" />
 	</File>
 	<File name="Headers/set_helper.h" open="1" top="0" tabpos="4">
-		<Cursor position="292" topLine="0" />
+		<Cursor position="245" topLine="0" />
 	</File>
 	<File name="Headers/transform/aspectscale.h" open="0" top="0" tabpos="0">
 		<Cursor position="557" topLine="0" />
@@ -208,8 +208,8 @@
 	<File name="Sources/algorithms/path/path.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="5233" topLine="96" />
 	</File>
-	<File name="Sources/algorithms/vertexcover/vertexcover.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="3365" topLine="56" />
+	<File name="Sources/algorithms/vertexcover/vertexcover.cpp" open="1" top="1" tabpos="1">
+		<Cursor position="2051" topLine="28" />
 	</File>
 	<File name="Sources/attributes.cpp" open="0" top="0" tabpos="5">
 		<Cursor position="11245" topLine="353" />
@@ -331,8 +331,8 @@
 	<File name="Sources/processing/components.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="57" topLine="0" />
 	</File>
-	<File name="Sources/set_helper.cpp" open="1" top="1" tabpos="3">
-		<Cursor position="781" topLine="4" />
+	<File name="Sources/set_helper.cpp" open="1" top="0" tabpos="3">
+		<Cursor position="748" topLine="0" />
 	</File>
 	<File name="Sources/simple_xml.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="75" topLine="0" />

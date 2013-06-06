@@ -30,20 +30,20 @@ namespace OpenGraphtheory
             {
                 if(VertexCover.find(v) != VertexCover.end()) // v already in VertexCover
                     continue;
-                set<Graph::EdgeIterator> NewlyCoverable = SetHelper::Intersection(v.CollectIncidentEdges(1,1,1), Uncovered);
+                unsigned int NewlyCoverable = SetHelper::IntersectionSize(v.CollectIncidentEdges(1,1,1), Uncovered);
 
-                if(NewlyCoverable.size() > MaxNewlyCoverable)
+                if(NewlyCoverable > MaxNewlyCoverable)
                 {
                     selected = v;
-                    MaxNewlyCoverable = NewlyCoverable.size();
+                    MaxNewlyCoverable = NewlyCoverable;
                 }
 
                 // vertex of degree 1 => select its neighbor
                 // vertex of degree > k => select it
-                if(NewlyCoverable.size() == 1 || NewlyCoverable.size() > k)
+                if(NewlyCoverable == 1 || NewlyCoverable > k)
                 {
                     selected = v;
-                    MaxNewlyCoverable = NewlyCoverable.size();
+                    MaxNewlyCoverable = NewlyCoverable;
                     break;
                 }
             }
