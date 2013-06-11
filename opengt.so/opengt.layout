@@ -19,13 +19,16 @@
 	<File name="Headers/algorithms/independentset/independentset.h" open="0" top="0" tabpos="5">
 		<Cursor position="418" topLine="0" />
 	</File>
+	<File name="Headers/algorithms/maximumflow/maximumflow.h" open="0" top="0" tabpos="0">
+		<Cursor position="240" topLine="0" />
+	</File>
 	<File name="Headers/algorithms/oddcircle/oddcircle.h" open="0" top="0" tabpos="2">
 		<Cursor position="175" topLine="0" />
 	</File>
 	<File name="Headers/algorithms/path/path.h" open="0" top="0" tabpos="2">
 		<Cursor position="553" topLine="0" />
 	</File>
-	<File name="Headers/algorithms/vertexcover/vertexcover.h" open="1" top="0" tabpos="2">
+	<File name="Headers/algorithms/vertexcover/vertexcover.h" open="0" top="0" tabpos="2">
 		<Cursor position="817" topLine="0" />
 	</File>
 	<File name="Headers/attributes.h" open="0" top="0" tabpos="4">
@@ -145,7 +148,7 @@
 	<File name="Headers/opengt.h" open="0" top="0" tabpos="0">
 		<Cursor position="11225" topLine="231" />
 	</File>
-	<File name="Headers/set_helper.h" open="1" top="0" tabpos="4">
+	<File name="Headers/set_helper.h" open="0" top="0" tabpos="3">
 		<Cursor position="245" topLine="0" />
 	</File>
 	<File name="Headers/transform/aspectscale.h" open="0" top="0" tabpos="0">
@@ -202,13 +205,16 @@
 	<File name="Sources/algorithms/independentset/independentset.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="1991" topLine="16" />
 	</File>
+	<File name="Sources/algorithms/maximumflow/maximumflow.cpp" open="1" top="1" tabpos="2">
+		<Cursor position="1583" topLine="5" />
+	</File>
 	<File name="Sources/algorithms/oddcircle/oddcircle.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="3014" topLine="29" />
 	</File>
 	<File name="Sources/algorithms/path/path.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="5233" topLine="96" />
 	</File>
-	<File name="Sources/algorithms/vertexcover/vertexcover.cpp" open="1" top="1" tabpos="1">
+	<File name="Sources/algorithms/vertexcover/vertexcover.cpp" open="1" top="0" tabpos="1">
 		<Cursor position="2051" topLine="28" />
 	</File>
 	<File name="Sources/attributes.cpp" open="0" top="0" tabpos="5">
@@ -326,16 +332,16 @@
 		<Cursor position="773" topLine="0" />
 	</File>
 	<File name="Sources/opengt.cpp" open="0" top="0" tabpos="5">
-		<Cursor position="11316" topLine="234" />
+		<Cursor position="67407" topLine="1833" />
 	</File>
 	<File name="Sources/processing/components.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="57" topLine="0" />
 	</File>
-	<File name="Sources/set_helper.cpp" open="1" top="0" tabpos="3">
+	<File name="Sources/set_helper.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="748" topLine="0" />
 	</File>
-	<File name="Sources/simple_xml.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="75" topLine="0" />
+	<File name="Sources/simple_xml.cpp" open="0" top="0" tabpos="4">
+		<Cursor position="12948" topLine="509" />
 	</File>
 	<File name="Sources/thread.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="22" topLine="0" />

@@ -709,6 +709,22 @@ namespace OpenGraphtheory
             }
         }
 
+        void Graph::AddEdgeWeight(std::map<Graph::EdgeIterator, float> Weight, string name)
+        {
+            for(EdgeIterator e = BeginEdges(); e != EndEdges(); e++)
+            {
+                e.Attributes().Unset(name);
+                if(Weight.find(e) != Weight.end())
+                {
+                    e.Attributes().Add(name, "float");
+                    Attribute* attr = e.Attributes().GetAttribute(name);
+                    FloatAttribute* fattr = dynamic_cast<FloatAttribute*>(attr);
+                    if(fattr != NULL)
+                        fattr->Value = Weight[e];
+                }
+            }
+        }
+
     // @}
 
 	/// \defgroup vertexmanipulation ''Vertex Manipulation''
@@ -1612,6 +1628,8 @@ namespace OpenGraphtheory
 		/// \brief Traverse an XML-structure, create a graph from it and copy it to *this
 		bool Graph::LoadFromXML(XML* root)
 		{
+		    if(root == NULL)
+                throw "Error loading XML Document";
 		    list<XML*> gxl = root->FindChildren("gxl");
 			if(gxl.size() != 1)
 				throw "XML Document must have exactly 1 top element \"gxl\"";
@@ -1832,7 +1850,7 @@ namespace OpenGraphtheory
 		void Graph::LoadFromFile(string filename)
 		{
 			ifstream is(filename.c_str());
-			LoadFromStream(is);
+            LoadFromStream(is);
 		}
 
 		istream& operator>>(istream& is, Graph& G)

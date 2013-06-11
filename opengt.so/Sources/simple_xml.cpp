@@ -467,7 +467,7 @@
 				current = temp->parent;
 
 			}
-			if(current->parent != NULL)
+			if(current != NULL && current->parent != NULL)
 				goto scanning_for_tag;
 
 		return is;

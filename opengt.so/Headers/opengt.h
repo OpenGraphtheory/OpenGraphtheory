@@ -87,6 +87,7 @@
                 void AddEdgeSet(std::set<Graph::EdgeIterator> E, string name);
                 void AddVertexColoring(std::map<Graph::VertexIterator, int> Coloring, string name);
                 void AddEdgeColoring(std::map<Graph::EdgeIterator, int> Coloring, string name);
+                void AddEdgeWeight(std::map<Graph::EdgeIterator, float> Weights, string name);
 
 			/// adding and removing vertices
 			protected:

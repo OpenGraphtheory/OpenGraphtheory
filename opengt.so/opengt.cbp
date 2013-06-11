@@ -11,6 +11,8 @@
 				<Option object_output="../obj/Debug/" />
 				<Option type="3" />
 				<Option compiler="gcc" />
+				<Option parameters="maximumflow /home/viktor/Programming/OpenGT_stuff/wtflow_example.gxl v1 v7 capacity flow" />
+				<Option host_application="../../bin/Debug/graphalgorithm" />
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
 				<Compiler>
@@ -50,6 +52,7 @@
 		<Unit filename="Headers/algorithms/color/color.h" />
 		<Unit filename="Headers/algorithms/dominatingset/dominatingset.h" />
 		<Unit filename="Headers/algorithms/independentset/independentset.h" />
+		<Unit filename="Headers/algorithms/maximumflow/maximumflow.h" />
 		<Unit filename="Headers/algorithms/oddcircle/oddcircle.h" />
 		<Unit filename="Headers/algorithms/path/path.h" />
 		<Unit filename="Headers/algorithms/vertexcover/vertexcover.h" />
@@ -119,6 +122,7 @@
 		<Unit filename="Sources/algorithms/color/color.cpp" />
 		<Unit filename="Sources/algorithms/dominatingset/dominatingset.cpp" />
 		<Unit filename="Sources/algorithms/independentset/independentset.cpp" />
+		<Unit filename="Sources/algorithms/maximumflow/maximumflow.cpp" />
 		<Unit filename="Sources/algorithms/oddcircle/oddcircle.cpp" />
 		<Unit filename="Sources/algorithms/path/path.cpp" />
 		<Unit filename="Sources/algorithms/vertexcover/vertexcover.cpp" />

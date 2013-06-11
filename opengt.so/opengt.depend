@@ -8,7 +8,7 @@
 	<string>
 	<vector>
 
-1370515215 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
+1370946958 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
 	<list>
 	<set>
 	<map>
@@ -134,7 +134,7 @@
 	<map>
 	<vector>
 
-1370518113 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/vertexcover/vertexcover.cpp
+1370519085 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/vertexcover/vertexcover.cpp
 	"../../../Headers/algorithms/vertexcover/vertexcover.h"
 
 1370445735 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/attributes.cpp
@@ -489,7 +489,7 @@
 	<libintl.h>
 	"../../../Headers/logic/ComputationTreeLogic/ctl_lexer.h"
 
-1370515278 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/opengt.cpp
+1370960452 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/opengt.cpp
 	"../Headers/opengt.h"
 	"../Headers/attributes.h"
 	<stdlib.h>
@@ -500,7 +500,7 @@
 	<queue>
 	"../../Headers/opengt.h"
 
-1370445736 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/simple_xml.cpp
+1370957262 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/simple_xml.cpp
 	"../Headers/simple_xml.h"
 
 1370445735 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/thread.cpp
@@ -753,13 +753,23 @@
 	"../../set_helper.h"
 	<vector>
 
-1370518176 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/set_helper.h
+1370518969 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/set_helper.h
 	<set>
 	"../Sources/set_helper.cpp"
 
-1370518215 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/set_helper.cpp
+1370519011 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/set_helper.cpp
 	<set>
 
-1370518026 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/set_helper.cpp
+1370519011 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/set_helper.cpp
 	<set>
+
+1370952245 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/maximumflow/maximumflow.cpp
+	"../../../Headers/algorithms/maximumflow/maximumflow.h"
+
+1370949888 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/maximumflow/maximumflow.h
+	"../algorithm.h"
+	<string>
+	<set>
+	<vector>
+	<map>
 

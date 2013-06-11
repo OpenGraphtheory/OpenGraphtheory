@@ -11,13 +11,14 @@
 				<Option object_output="../../obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option host_application="maximumflow /home/viktor/Programming/OpenGT_stuff/wtflow_example.gxl v1 v7 capacity flow" />
 				<Compiler>
 					<Add option="-g" />
 					<Add option="-fPIC" />
 				</Compiler>
 				<Linker>
 					<Add option="-lopengtdbg" />
-					<Add option="-L../../lib/Debug" />
+					<Add directory="../../lib/Debug" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -32,7 +33,7 @@
 				<Linker>
 					<Add option="-s" />
 					<Add option="-lopengt" />
-					<Add option="-L../../lib/Release" />
+					<Add directory="../../lib/Release" />
 				</Linker>
 			</Target>
 		</Build>
