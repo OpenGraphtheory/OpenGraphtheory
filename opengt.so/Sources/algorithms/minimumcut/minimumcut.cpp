@@ -42,6 +42,19 @@ namespace OpenGraphtheory
                             SourceComponent.insert(e.To());
                         }
                     }
+
+                    set<Graph::EdgeIterator> negincident = v.CollectIncidentEdges(0,0,1);
+                    for(set<Graph::EdgeIterator>::iterator ei = negincident.begin(); ei != negincident.end(); ei++)
+                    {
+                        Graph::EdgeIterator e = *ei;
+                        if(MaximumFlow[e] > 0
+                           && SourceComponent.find(e.From()) == SourceComponent.end())
+                        {
+                            NextRound.insert(e.From());
+                            SourceComponent.insert(e.From());
+                        }
+                    }
+
                     /*
                     set<Graph::EdgeIterator> undirincident = v.CollectIncidentEdges(1,0,0);
                     for(set<Graph::EdgeIterator>::iterator ei = negincident.begin(); ei != negincident.end(); ei++)
@@ -64,15 +77,9 @@ namespace OpenGraphtheory
 
             for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
             {
-                if(     (e.IsDirected()
-                     && (SourceComponent.find(e.From())!=SourceComponent.end())
-                     && (SourceComponent.find(e.To())==SourceComponent.end()))
-                   ||
-                        (e.IsUndirected()
-                     && ((SourceComponent.find(e.From())==SourceComponent.end())
-                        !=(SourceComponent.find(e.To())==SourceComponent.end())))
-                   )
-
+                // if exactly one incident vertex of e is augmenting-path-reachable from "Source"
+                if(  (SourceComponent.find(e.From())==SourceComponent.end())
+                   !=(SourceComponent.find(e.To())==SourceComponent.end()))
                 MinimumCut.insert(e);
             }
         }

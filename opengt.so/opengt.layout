@@ -19,8 +19,11 @@
 	<File name="Headers/algorithms/independentset/independentset.h" open="0" top="0" tabpos="5">
 		<Cursor position="418" topLine="0" />
 	</File>
-	<File name="Headers/algorithms/maximumflow/maximumflow.h" open="0" top="0" tabpos="0">
-		<Cursor position="240" topLine="0" />
+	<File name="Headers/algorithms/maximumflow/maximumflow.h" open="1" top="0" tabpos="2">
+		<Cursor position="1117" topLine="0" />
+	</File>
+	<File name="Headers/algorithms/minimumcut/minimumcut.h" open="1" top="0" tabpos="4">
+		<Cursor position="1611" topLine="0" />
 	</File>
 	<File name="Headers/algorithms/oddcircle/oddcircle.h" open="0" top="0" tabpos="2">
 		<Cursor position="175" topLine="0" />
@@ -205,8 +208,11 @@
 	<File name="Sources/algorithms/independentset/independentset.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="1991" topLine="16" />
 	</File>
-	<File name="Sources/algorithms/maximumflow/maximumflow.cpp" open="1" top="1" tabpos="2">
-		<Cursor position="1583" topLine="5" />
+	<File name="Sources/algorithms/maximumflow/maximumflow.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="2900" topLine="9" />
+	</File>
+	<File name="Sources/algorithms/minimumcut/minimumcut.cpp" open="1" top="1" tabpos="3">
+		<Cursor position="3736" topLine="60" />
 	</File>
 	<File name="Sources/algorithms/oddcircle/oddcircle.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="3014" topLine="29" />
@@ -214,7 +220,7 @@
 	<File name="Sources/algorithms/path/path.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="5233" topLine="96" />
 	</File>
-	<File name="Sources/algorithms/vertexcover/vertexcover.cpp" open="1" top="0" tabpos="1">
+	<File name="Sources/algorithms/vertexcover/vertexcover.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="2051" topLine="28" />
 	</File>
 	<File name="Sources/attributes.cpp" open="0" top="0" tabpos="5">
