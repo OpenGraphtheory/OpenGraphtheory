@@ -321,6 +321,8 @@
                     void RemoveUndirectedConnection(Graph::VertexIterator v);
                     void RemoveOutgoingConnection(Graph::VertexIterator v);
                     void RemoveIncomingConnection(Graph::VertexIterator v);
+
+                    set<Graph::VertexIterator> CollectIncidentVertices(bool Undirected, bool Positive, bool Negative);
             };
 		};
 

@@ -19,10 +19,13 @@
 	<File name="Headers/algorithms/independentset/independentset.h" open="0" top="0" tabpos="5">
 		<Cursor position="418" topLine="0" />
 	</File>
-	<File name="Headers/algorithms/maximumflow/maximumflow.h" open="1" top="0" tabpos="2">
+	<File name="Headers/algorithms/maximumflow/maximumflow.h" open="0" top="0" tabpos="2">
 		<Cursor position="1117" topLine="0" />
 	</File>
-	<File name="Headers/algorithms/minimumcut/minimumcut.h" open="1" top="0" tabpos="4">
+	<File name="Headers/algorithms/maximummatching/maximummatching.h" open="1" top="0" tabpos="1">
+		<Cursor position="210" topLine="0" />
+	</File>
+	<File name="Headers/algorithms/minimumcut/minimumcut.h" open="0" top="0" tabpos="4">
 		<Cursor position="1611" topLine="0" />
 	</File>
 	<File name="Headers/algorithms/oddcircle/oddcircle.h" open="0" top="0" tabpos="2">
@@ -149,10 +152,10 @@
 		<Cursor position="498" topLine="0" />
 	</File>
 	<File name="Headers/opengt.h" open="0" top="0" tabpos="0">
-		<Cursor position="11225" topLine="231" />
+		<Cursor position="14710" topLine="229" />
 	</File>
 	<File name="Headers/set_helper.h" open="0" top="0" tabpos="3">
-		<Cursor position="245" topLine="0" />
+		<Cursor position="728" topLine="0" />
 	</File>
 	<File name="Headers/transform/aspectscale.h" open="0" top="0" tabpos="0">
 		<Cursor position="557" topLine="0" />
@@ -208,11 +211,14 @@
 	<File name="Sources/algorithms/independentset/independentset.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="1991" topLine="16" />
 	</File>
-	<File name="Sources/algorithms/maximumflow/maximumflow.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="2900" topLine="9" />
+	<File name="Sources/algorithms/maximumflow/maximumflow.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="2900" topLine="51" />
 	</File>
-	<File name="Sources/algorithms/minimumcut/minimumcut.cpp" open="1" top="1" tabpos="3">
-		<Cursor position="3736" topLine="60" />
+	<File name="Sources/algorithms/maximummatching/maximummatching.cpp" open="1" top="1" tabpos="2">
+		<Cursor position="6713" topLine="121" />
+	</File>
+	<File name="Sources/algorithms/minimumcut/minimumcut.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="3736" topLine="51" />
 	</File>
 	<File name="Sources/algorithms/oddcircle/oddcircle.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="3014" topLine="29" />
@@ -338,13 +344,13 @@
 		<Cursor position="773" topLine="0" />
 	</File>
 	<File name="Sources/opengt.cpp" open="0" top="0" tabpos="5">
-		<Cursor position="67407" topLine="1833" />
+		<Cursor position="11550" topLine="254" />
 	</File>
 	<File name="Sources/processing/components.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="57" topLine="0" />
 	</File>
-	<File name="Sources/set_helper.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="748" topLine="0" />
+	<File name="Sources/set_helper.cpp" open="1" top="0" tabpos="3">
+		<Cursor position="2246" topLine="37" />
 	</File>
 	<File name="Sources/simple_xml.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="12948" topLine="509" />

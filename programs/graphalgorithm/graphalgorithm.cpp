@@ -17,7 +17,7 @@ int main(int argc, char** argv)
 		Graph G;
 		vector<string> parameters;
 		int argvi = 2;
-	    #define LOADFROMFILE
+	    //#define LOADFROMFILE
 	    #ifdef LOADFROMFILE
         G.LoadFromFile(argv[2]);
         argvi = 3;
@@ -47,7 +47,7 @@ int main(int argc, char** argv)
 
 void usage(char* argv0)
 {
-	cerr << "usage: " << argv0 << " transformation <parameters>\n"
-	     << "     where transformation can be\n";
+	cerr << "usage: " << argv0 << " algorithm <parameters>\n"
+	     << "     where algorithm can be\n";
 }
 

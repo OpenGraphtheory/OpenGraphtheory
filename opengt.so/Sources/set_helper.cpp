@@ -25,6 +25,15 @@ namespace OpenGraphtheory
             return result;
         }
 
+        template<class T> bool IntersectionEmpty(const std::set<T> &A, const std::set<T> &B)
+        {
+            for(typename std::set<T>::iterator a = A.begin(); a != A.end(); a++)
+                if(B.find(*a) != B.end())
+                    return false;
+            return true;
+        }
+
+
         template<class T> std::set<T> SetMinus(const std::set<T> &A, const std::set<T> &B)
         {
             std::set<T> result;
@@ -50,6 +59,22 @@ namespace OpenGraphtheory
                 result.insert(*b);
             return result;
         }
+
+        template<class T> void DestructiveUnion(std::set<T> &A, const std::set<T> &B)
+        {
+            for(typename std::set<T>::iterator b = B.begin(); b != B.end(); b++)
+                A.insert(*b);
+        }
+
+
+        template<class T> bool IsSubset(const std::set<T> &A, const std::set<T> &B)
+        {
+            for(typename std::set<T>::iterator a = A.begin(); a != A.end(); a++)
+                if(B.find(*a) == B.end())
+                    return false;
+            return true;
+        }
+
     }
 }
 

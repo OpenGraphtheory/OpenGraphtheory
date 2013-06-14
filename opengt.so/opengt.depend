@@ -8,7 +8,7 @@
 	<string>
 	<vector>
 
-1370946958 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
+1371219028 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
 	<list>
 	<set>
 	<map>
@@ -489,7 +489,7 @@
 	<libintl.h>
 	"../../../Headers/logic/ComputationTreeLogic/ctl_lexer.h"
 
-1370960452 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/opengt.cpp
+1371218974 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/opengt.cpp
 	"../Headers/opengt.h"
 	"../Headers/attributes.h"
 	<stdlib.h>
@@ -753,14 +753,14 @@
 	"../../set_helper.h"
 	<vector>
 
-1370518969 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/set_helper.h
+1371219975 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/set_helper.h
 	<set>
 	"../Sources/set_helper.cpp"
 
-1370519011 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/set_helper.cpp
+1371220011 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/set_helper.cpp
 	<set>
 
-1370519011 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/set_helper.cpp
+1371215870 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/set_helper.cpp
 	<set>
 
 1370961889 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/maximumflow/maximumflow.cpp
@@ -768,6 +768,17 @@
 
 1371032019 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/maximumflow/maximumflow.h
 	"../algorithm.h"
+	<string>
+	<set>
+	<vector>
+	<map>
+
+1371112452 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/minimumcut/minimumcut.cpp
+	"../../../Headers/algorithms/minimumcut/minimumcut.h"
+
+1371030800 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/minimumcut/minimumcut.h
+	"../algorithm.h"
+	"../maximumflow/maximumflow.h"
 	<string>
 	<set>
 	<vector>
