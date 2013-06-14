@@ -41,19 +41,19 @@
 		<Cursor position="585" topLine="0" />
 	</File>
 	<File name="Headers/export/dot.h" open="0" top="0" tabpos="0">
-		<Cursor position="745" topLine="0" />
+		<Cursor position="782" topLine="0" />
 	</File>
-	<File name="Headers/export/export.h" open="0" top="0" tabpos="12">
-		<Cursor position="2510" topLine="25" />
+	<File name="Headers/export/export.h" open="1" top="0" tabpos="4">
+		<Cursor position="1291" topLine="27" />
 	</File>
 	<File name="Headers/export/gastex.h" open="0" top="0" tabpos="0">
-		<Cursor position="757" topLine="0" />
+		<Cursor position="794" topLine="0" />
 	</File>
 	<File name="Headers/export/gml.h" open="0" top="0" tabpos="0">
-		<Cursor position="745" topLine="0" />
+		<Cursor position="782" topLine="0" />
 	</File>
 	<File name="Headers/export/graphml.h" open="0" top="0" tabpos="0">
-		<Cursor position="761" topLine="0" />
+		<Cursor position="798" topLine="0" />
 	</File>
 	<File name="Headers/export/mpost.h" open="0" top="0" tabpos="13">
 		<Cursor position="629" topLine="6" />
@@ -65,31 +65,31 @@
 		<Cursor position="803" topLine="0" />
 	</File>
 	<File name="Headers/export/povray.h" open="0" top="0" tabpos="0">
-		<Cursor position="757" topLine="0" />
+		<Cursor position="794" topLine="0" />
 	</File>
 	<File name="Headers/export/rgml.h" open="0" top="0" tabpos="0">
-		<Cursor position="749" topLine="0" />
+		<Cursor position="786" topLine="0" />
 	</File>
 	<File name="Headers/export/svg.h" open="0" top="0" tabpos="13">
 		<Cursor position="1307" topLine="0" />
 	</File>
 	<File name="Headers/export/tei.h" open="0" top="0" tabpos="0">
-		<Cursor position="745" topLine="0" />
+		<Cursor position="782" topLine="0" />
 	</File>
 	<File name="Headers/export/tgf.h" open="0" top="0" tabpos="0">
-		<Cursor position="745" topLine="0" />
+		<Cursor position="782" topLine="0" />
 	</File>
 	<File name="Headers/export/tikz.h" open="0" top="0" tabpos="11">
 		<Cursor position="617" topLine="4" />
 	</File>
 	<File name="Headers/export/vrmlgraph.h" open="0" top="0" tabpos="0">
-		<Cursor position="769" topLine="0" />
+		<Cursor position="806" topLine="0" />
 	</File>
 	<File name="Headers/export/xgmml.h" open="0" top="0" tabpos="0">
-		<Cursor position="753" topLine="0" />
+		<Cursor position="790" topLine="0" />
 	</File>
 	<File name="Headers/factory.h" open="0" top="0" tabpos="3">
-		<Cursor position="4326" topLine="95" />
+		<Cursor position="2904" topLine="81" />
 	</File>
 	<File name="Headers/generate/circle.h" open="0" top="0" tabpos="0">
 		<Cursor position="43" topLine="0" />
@@ -214,8 +214,8 @@
 	<File name="Sources/algorithms/maximumflow/maximumflow.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="2900" topLine="51" />
 	</File>
-	<File name="Sources/algorithms/maximummatching/maximummatching.cpp" open="1" top="1" tabpos="2">
-		<Cursor position="6713" topLine="121" />
+	<File name="Sources/algorithms/maximummatching/maximummatching.cpp" open="1" top="0" tabpos="2">
+		<Cursor position="6492" topLine="72" />
 	</File>
 	<File name="Sources/algorithms/minimumcut/minimumcut.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="3736" topLine="51" />
@@ -233,19 +233,19 @@
 		<Cursor position="11245" topLine="353" />
 	</File>
 	<File name="Sources/export/dot.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="355" topLine="7" />
+		<Cursor position="199" topLine="0" />
 	</File>
-	<File name="Sources/export/export.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="1705" topLine="99" />
+	<File name="Sources/export/export.cpp" open="1" top="1" tabpos="5">
+		<Cursor position="598" topLine="18" />
 	</File>
 	<File name="Sources/export/gastex.cpp" open="0" top="0" tabpos="4">
-		<Cursor position="970" topLine="12" />
+		<Cursor position="409" topLine="0" />
 	</File>
 	<File name="Sources/export/gml.cpp" open="0" top="0" tabpos="5">
-		<Cursor position="366" topLine="12" />
+		<Cursor position="403" topLine="5" />
 	</File>
 	<File name="Sources/export/graphml.cpp" open="0" top="0" tabpos="6">
-		<Cursor position="2528" topLine="19" />
+		<Cursor position="410" topLine="1" />
 	</File>
 	<File name="Sources/export/mpost.cpp" open="0" top="0" tabpos="14">
 		<Cursor position="200" topLine="3" />
@@ -253,32 +253,32 @@
 	<File name="Sources/export/pdf.cpp" open="0" top="0" tabpos="15">
 		<Cursor position="6481" topLine="168" />
 	</File>
-	<File name="Sources/export/postscript.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="1337" topLine="0" />
+	<File name="Sources/export/postscript.cpp" open="1" top="0" tabpos="6">
+		<Cursor position="1392" topLine="25" />
 	</File>
 	<File name="Sources/export/povray.cpp" open="0" top="0" tabpos="7">
-		<Cursor position="390" topLine="69" />
+		<Cursor position="427" topLine="3" />
 	</File>
 	<File name="Sources/export/rgml.cpp" open="0" top="0" tabpos="8">
-		<Cursor position="368" topLine="11" />
+		<Cursor position="405" topLine="0" />
 	</File>
 	<File name="Sources/export/svg.cpp" open="0" top="0" tabpos="10">
 		<Cursor position="2632" topLine="41" />
 	</File>
 	<File name="Sources/export/tei.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1955" topLine="13" />
+		<Cursor position="403" topLine="4" />
 	</File>
 	<File name="Sources/export/tgf.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1321" topLine="1" />
+		<Cursor position="403" topLine="0" />
 	</File>
 	<File name="Sources/export/tikz.cpp" open="0" top="0" tabpos="9">
 		<Cursor position="2522" topLine="48" />
 	</File>
 	<File name="Sources/export/vrmlgraph.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="548" topLine="0" />
+		<Cursor position="415" topLine="0" />
 	</File>
 	<File name="Sources/export/xgmml.cpp" open="0" top="0" tabpos="3">
-		<Cursor position="370" topLine="15" />
+		<Cursor position="407" topLine="3" />
 	</File>
 	<File name="Sources/factory.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="62" topLine="0" />
@@ -349,7 +349,7 @@
 	<File name="Sources/processing/components.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="57" topLine="0" />
 	</File>
-	<File name="Sources/set_helper.cpp" open="1" top="0" tabpos="3">
+	<File name="Sources/set_helper.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="2246" topLine="37" />
 	</File>
 	<File name="Sources/simple_xml.cpp" open="0" top="0" tabpos="4">
@@ -389,7 +389,7 @@
 		<Cursor position="10609" topLine="260" />
 	</File>
 	<File name="Sources/visualize/GraphWindow.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="2504" topLine="40" />
+		<Cursor position="4096" topLine="19" />
 	</File>
 	<File name="Sources/visualize/color.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="2133" topLine="38" />

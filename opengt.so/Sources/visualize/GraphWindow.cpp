@@ -91,7 +91,7 @@ namespace OpenGraphtheory
                     else
                         SetColor(0,0,0);
 
-                    FillCircle(x, y, 7);
+                    FillCircle(x, y, 2);
                 }
             }
             Flush();

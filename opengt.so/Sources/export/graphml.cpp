@@ -9,7 +9,7 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportFilterGRAPHML::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring, map<Graph::EdgeIterator, Color>& edgecoloring, float dpi)
+        void ExportFilterGRAPHML::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring, map<Graph::EdgeIterator, Color>& edgecoloring, float dpi, float edgewidth, float vertexradius)
         {
             for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
                 if(e.IsHyperedge() && !e.IsUndirected())

@@ -24,7 +24,7 @@ namespace OpenGraphtheory
         }
 
 
-        void ExportFilter::DoExport(Graph& G, ostream& os, std::string vertexcoloring, std::string edgecoloring, float dpi)
+        void ExportFilter::DoExport(Graph& G, ostream& os, std::string vertexcoloring, std::string edgecoloring, float dpi, float edgewidth, float vertexradius)
         {
             map<Graph::VertexIterator, Color> vcoloring;
             map<Graph::EdgeIterator, Color> ecoloring;
@@ -63,50 +63,51 @@ namespace OpenGraphtheory
                 }
             }
 
-            Export(G, os, vcoloring, ecoloring, dpi);
+            Export(G, os, vcoloring, ecoloring, dpi, edgewidth, vertexradius);
         }
 
 
-        void ExportFilter::DoExport(Graph& G, string FileName, std::string vertexcoloring, std::string edgecoloring, float dpi)
+        void ExportFilter::DoExport(Graph& G, string FileName, std::string vertexcoloring, std::string edgecoloring, float dpi, float edgewidth, float vertexradius)
         {
             ofstream os(FileName.c_str());
-            DoExport(G, os, vertexcoloring, edgecoloring, dpi);
+            DoExport(G, os, vertexcoloring, edgecoloring, dpi, edgewidth, vertexradius);
             os.close();
         }
 
-        string ExportFilter::DoExport(Graph& G, std::string vertexcoloring, std::string edgecoloring, float dpi)
+        string ExportFilter::DoExport(Graph& G, std::string vertexcoloring, std::string edgecoloring, float dpi, float edgewidth, float vertexradius)
         {
             stringstream sstream;
-            DoExport(G, sstream, vertexcoloring, edgecoloring, dpi);
+            DoExport(G, sstream, vertexcoloring, edgecoloring, dpi, edgewidth, vertexradius);
             return sstream.str();
         }
 
 
 
-        void ExportFilter::Export(Graph& G, ostream& os, string format, std::string vertexcoloring, std::string edgecoloring, float dpi)
+        void ExportFilter::Export(Graph& G, ostream& os, string format, std::string vertexcoloring, std::string edgecoloring, float dpi, float edgewidth, float vertexradius)
         {
             ExportFilter* exportfilter = ExportFilter::ExportFilterFactory.Produce(format);
             if(exportfilter == NULL)
                 throw "unknown export-format";
 
-            exportfilter->DoExport(G, os, vertexcoloring, edgecoloring, dpi);
+            exportfilter->DoExport(G, os, vertexcoloring, edgecoloring, dpi, edgewidth, vertexradius);
             delete exportfilter;
         }
 
-        void ExportFilter::Export(Graph& G, string FileName, string format, std::string vertexcoloring, std::string edgecoloring, float dpi)
+        void ExportFilter::Export(Graph& G, string FileName, string format, std::string vertexcoloring, std::string edgecoloring, float dpi, float edgewidth, float vertexradius)
         {
             ExportFilter* exportfilter = ExportFilter::ExportFilterFactory.Produce(format);
             if(exportfilter == NULL)
                 throw "unknown export-format";
 
-            exportfilter->DoExport(G, FileName, vertexcoloring, edgecoloring, dpi);
+            exportfilter->DoExport(G, FileName, vertexcoloring, edgecoloring, dpi, edgewidth, vertexradius);
             delete exportfilter;
         }
 
 
         void GraphicalExportFilter::Export(OpenGraphtheory::Graph& G, std::ostream& os,
                                            map<Graph::VertexIterator, Visualization::Color>& vertexcoloring,
-                                           map<Graph::EdgeIterator, Visualization::Color>& edgecoloring, float dpi)
+                                           map<Graph::EdgeIterator, Visualization::Color>& edgecoloring, float dpi,
+                                           float edgewidth, float vertexradius)
         {
             Graph::VertexIterator v1 = G.BeginVertices();
             vector<float> coordinates = v1.GetCoordinates();
@@ -114,7 +115,7 @@ namespace OpenGraphtheory
             for(v1++; v1 != G.EndVertices(); v1++)
             {
                 coordinates = v1.GetCoordinates();
-                float radius = v1.GetWeight();
+                float radius = vertexradius >= 0 ? vertexradius : v1.GetWeight();
 
                 if(coordinates[0]-radius < minx)
                     minx = coordinates[0]-radius;
@@ -160,7 +161,7 @@ namespace OpenGraphtheory
                     }
                 }
 
-                DeclareVertex(os, v.GetID(), coordinates[0] - minx, coordinates[1] - miny, v.GetWeight(), v.GetLabel());
+                DeclareVertex(os, v.GetID(), coordinates[0] - minx, coordinates[1] - miny, vertexradius >= 0 ? vertexradius : v.GetWeight(), v.GetLabel());
             }
 
             EndDeclaringVertices(os);
@@ -184,7 +185,7 @@ namespace OpenGraphtheory
                 float x2 = ToCoordinates[0] - minx; // + e.To().GetWeight();
                 float y2 = ToCoordinates[1] - miny; // + e.To().GetWeight();
 
-                float Width = e.GetWeight();
+                float Width = edgewidth >= 0.0f ? edgewidth : e.GetWeight();
                 if(Width != LastWidth)
                 {
                     SetLineWidth(os, Width);
@@ -232,7 +233,7 @@ namespace OpenGraphtheory
             {
                 vector<float> Coordinates = v.GetCoordinates();
                 float x = Coordinates[0] - minx, y = Coordinates[1] - miny;
-                float Radius = v.GetWeight();
+                float Radius = vertexradius >= 0 ? vertexradius : v.GetWeight();
 
                 // color
                 if(vertexcoloring.find(v) != vertexcoloring.end())

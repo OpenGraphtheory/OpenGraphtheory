@@ -17,6 +17,8 @@ int main(int argc, char** argv)
         string vertexcoloring = "";
         string edgecoloring = "";
         string format = "";
+        float edgewidth = -1;
+        float vertexradius = -1;
         float dpi = 72;
 		for(int i = 1; i < argc-1; i++)
 		{
@@ -32,6 +34,23 @@ int main(int argc, char** argv)
                 foo << argv[++i];
                 foo >> dpi;
             }
+            else if(string(argv[i]) == "--edgewidth")
+            {
+                stringstream foo;
+                foo << argv[++i];
+                foo >> edgewidth;
+            }
+            else if(string(argv[i]) == "--vertexradius")
+            {
+                stringstream foo;
+                foo << argv[++i];
+                foo >> vertexradius;
+            }
+            else
+            {
+                cerr << "argument not understood: " << argv[i] << "\n";
+            }
+
 		}
 
 		ExportFilter* exportfilter = ExportFilter::ExportFilterFactory.Produce(format);
@@ -41,7 +60,7 @@ int main(int argc, char** argv)
 		    {
                 Graph G;
                 cin >> G;
-                exportfilter->DoExport(G, cout, vertexcoloring, edgecoloring, dpi);
+                exportfilter->DoExport(G, cout, vertexcoloring, edgecoloring, dpi, edgewidth, vertexradius);
 		    }
 		    catch(...)
 		    {

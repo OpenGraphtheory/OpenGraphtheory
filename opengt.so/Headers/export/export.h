@@ -21,12 +21,13 @@
 
                     virtual void Export(OpenGraphtheory::Graph& G, std::ostream& os,
                                 map<Graph::VertexIterator, Visualization::Color>& vertexcoloring,
-                                map<Graph::EdgeIterator, Visualization::Color>& edgecoloring, float dpi=72) = 0;
-                    void DoExport(OpenGraphtheory::Graph& G, ostream& os, std::string vertexcoloring="", std::string edgecoloring="", float dpi=72);
-                    void DoExport(OpenGraphtheory::Graph& G, std::string FileName, std::string vertexcoloring="", std::string edgecoloring="", float dpi=72);
-                    string DoExport(OpenGraphtheory::Graph& G, std::string vertexcoloring="", std::string edgecoloring="", float dpi=72);
-                    static void Export(OpenGraphtheory::Graph& G, std::ostream& os, std::string format, std::string vertexcoloring="", std::string edgecoloring="", float dpi=72);
-                    static void Export(OpenGraphtheory::Graph& G, std::string FileName, std::string format, std::string vertexcoloring="", std::string edgecoloring="", float dpi=72);
+                                map<Graph::EdgeIterator, Visualization::Color>& edgecoloring, float dpi=72,
+                                float edgewidth=-1, float vertexradius=-1) = 0;
+                    void DoExport(OpenGraphtheory::Graph& G, ostream& os, std::string vertexcoloring="", std::string edgecoloring="", float dpi=72, float edgewidth=-1, float vertexradius=-1);
+                    void DoExport(OpenGraphtheory::Graph& G, std::string FileName, std::string vertexcoloring="", std::string edgecoloring="", float dpi=72, float edgewidth=-1, float vertexradius=-1);
+                    string DoExport(OpenGraphtheory::Graph& G, std::string vertexcoloring="", std::string edgecoloring="", float dpi=72, float edgewidth=-1, float vertexradius=-1);
+                    static void Export(OpenGraphtheory::Graph& G, std::ostream& os, std::string format, std::string vertexcoloring="", std::string edgecoloring="", float dpi=72, float edgewidth=-1, float vertexradius=-1);
+                    static void Export(OpenGraphtheory::Graph& G, std::string FileName, std::string format, std::string vertexcoloring="", std::string edgecoloring="", float dpi=72,float edgewidth=-1, float vertexradius=-1);
 
 
             };
@@ -36,7 +37,8 @@
                 public:
                     void Export(OpenGraphtheory::Graph& G, std::ostream& os,
                                 map<Graph::VertexIterator, Visualization::Color>& vertexcoloring,
-                                map<Graph::EdgeIterator, Visualization::Color>& edgecoloring, float dpi=72);
+                                map<Graph::EdgeIterator, Visualization::Color>& edgecoloring, float dpi=72,
+                                float edgewidth=-1, float vertexradius=-1);
 
                     virtual void Begin(ostream &os, float WidthInCm, float HeightInCm, float ResolutionDPI);
                     virtual void End(ostream &os);

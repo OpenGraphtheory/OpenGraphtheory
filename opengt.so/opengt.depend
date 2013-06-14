@@ -34,7 +34,7 @@
 	<string>
 	<map>
 
-1370445735 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/export.cpp
+1371223448 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/export.cpp
 	<iostream>
 	<fstream>
 	<sstream>
@@ -43,7 +43,7 @@
 	<math.h>
 	"../../Headers/export/export.h"
 
-1370445736 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/export.h
+1371222143 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/export.h
 	<string>
 	<ostream>
 	"../factory.h"
@@ -143,37 +143,37 @@
 	<cstdlib>
 	<sstream>
 
-1370445735 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/dot.cpp
+1371222289 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/dot.cpp
 	"../../Headers/export/dot.h"
 
-1370445736 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/dot.h
+1371222312 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/dot.h
 	<ostream>
 	"../opengt.h"
 	"../factory.h"
 	"export.h"
 
-1370445735 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/gastex.cpp
+1371222324 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/gastex.cpp
 	"../../Headers/export/gastex.h"
 
-1370445736 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/gastex.h
+1371222333 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/gastex.h
 	<ostream>
 	"../opengt.h"
 	"../factory.h"
 	"export.h"
 
-1370445735 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/gml.cpp
+1371222342 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/gml.cpp
 	"../../Headers/export/gml.h"
 
-1370445736 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/gml.h
+1371222349 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/gml.h
 	<ostream>
 	"../opengt.h"
 	"../factory.h"
 	"export.h"
 
-1370445735 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/graphml.cpp
+1371222363 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/graphml.cpp
 	"../../Headers/export/graphml.h"
 
-1370445736 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/graphml.h
+1371222375 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/graphml.h
 	<ostream>
 	"../opengt.h"
 	"../factory.h"
@@ -198,7 +198,7 @@
 	"../factory.h"
 	"export.h"
 
-1370445735 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/postscript.cpp
+1371224014 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/postscript.cpp
 	"../../Headers/export/postscript.h"
 
 1370445736 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/postscript.h
@@ -207,20 +207,20 @@
 	"../factory.h"
 	"export.h"
 
-1370445735 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/povray.cpp
+1371222399 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/povray.cpp
 	<math.h>
 	"../../Headers/export/povray.h"
 
-1370445736 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/povray.h
+1371222410 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/povray.h
 	<ostream>
 	"../opengt.h"
 	"../factory.h"
 	"export.h"
 
-1370445735 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/rgml.cpp
+1371222421 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/rgml.cpp
 	"../../Headers/export/rgml.h"
 
-1370445736 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/rgml.h
+1371222427 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/rgml.h
 	<ostream>
 	"../opengt.h"
 	"../factory.h"
@@ -235,19 +235,19 @@
 	"../factory.h"
 	"export.h"
 
-1370445735 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/tei.cpp
+1371222441 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/tei.cpp
 	"../../Headers/export/tei.h"
 
-1370445736 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/tei.h
+1371222449 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/tei.h
 	<ostream>
 	"../opengt.h"
 	"../factory.h"
 	"export.h"
 
-1370445735 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/tgf.cpp
+1371222458 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/tgf.cpp
 	"../../Headers/export/tgf.h"
 
-1370445736 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/tgf.h
+1371222465 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/tgf.h
 	<ostream>
 	"../opengt.h"
 	"../factory.h"
@@ -262,19 +262,19 @@
 	"../factory.h"
 	"export.h"
 
-1370445735 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/vrmlgraph.cpp
+1371222480 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/vrmlgraph.cpp
 	"../../Headers/export/vrmlgraph.h"
 
-1370445736 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/vrmlgraph.h
+1371222485 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/vrmlgraph.h
 	<ostream>
 	"../opengt.h"
 	"../factory.h"
 	"export.h"
 
-1370445735 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/xgmml.cpp
+1371222494 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/xgmml.cpp
 	"../../Headers/export/xgmml.h"
 
-1370445736 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/xgmml.h
+1371222504 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/xgmml.h
 	<ostream>
 	"../opengt.h"
 	"../factory.h"
@@ -598,7 +598,7 @@
 	<math.h>
 	<stdlib.h>
 
-1370445736 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/GraphWindow.cpp
+1371220677 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/GraphWindow.cpp
 	"../../Headers/visualize/GraphWindow.h"
 
 1370445736 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/color.cpp
@@ -760,7 +760,7 @@
 1371220011 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/set_helper.cpp
 	<set>
 
-1371215870 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/set_helper.cpp
+1371220011 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/set_helper.cpp
 	<set>
 
 1370961889 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/maximumflow/maximumflow.cpp
@@ -779,6 +779,17 @@
 1371030800 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/minimumcut/minimumcut.h
 	"../algorithm.h"
 	"../maximumflow/maximumflow.h"
+	<string>
+	<set>
+	<vector>
+	<map>
+
+1371219948 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/maximummatching/maximummatching.cpp
+	"../../../Headers/algorithms/maximummatching/maximummatching.h"
+
+1371219081 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/maximummatching/maximummatching.h
+	"../algorithm.h"
+	"../../set_helper.h"
 	<string>
 	<set>
 	<vector>

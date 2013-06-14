@@ -43,6 +43,7 @@ namespace OpenGraphtheory
         void ExportFilterPOSTSCRIPT::SetLineWidth(ostream &os, float width)
         {
             os << width*ResolutionDPCM << " setlinewidth\n";
+
         }
 
         void ExportFilterPOSTSCRIPT::Line(ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2)
