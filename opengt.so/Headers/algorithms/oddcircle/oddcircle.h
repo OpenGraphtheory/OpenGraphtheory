@@ -15,8 +15,8 @@
             {
                 public:
                     void Run(Graph &G, std::vector<std::string> parameters);
-                    void AddOddCircle(Graph &G, std::string OddCircleName);
-                    list<Graph::VertexIterator> FindOddCircle(Graph &G);
+                    static void AddOddCircle(Graph &G, std::string OddCircleName);
+                    static bool FindOddCircle(Graph &G, std::list<Graph::VertexIterator>& OddCircle);
                 protected:
                     static FactoryRegistrator<Algorithm> AlgorithmOddCircleRegistrator;
             };

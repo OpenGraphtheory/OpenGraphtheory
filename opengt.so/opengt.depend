@@ -34,7 +34,7 @@
 	<string>
 	<map>
 
-1371223448 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/export.cpp
+1371803793 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/export.cpp
 	<iostream>
 	<fstream>
 	<sstream>
@@ -418,7 +418,7 @@
 	"intermediatesteps.h"
 	"../export/export.h"
 
-1370445736 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/intermediatesteps/writefile.cpp
+1371803792 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/intermediatesteps/writefile.cpp
 	<sstream>
 	<fstream>
 	<iomanip>
@@ -733,11 +733,11 @@
 	"../factory.h"
 	"generate.h"
 
-1370445735 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/oddcircle/oddcircle.cpp
+1376648619 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/oddcircle/oddcircle.cpp
 	"../../../Headers/algorithms/oddcircle/oddcircle.h"
 	<map>
 
-1370445736 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/oddcircle/oddcircle.h
+1376648600 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/oddcircle/oddcircle.h
 	"../algorithm.h"
 	<string>
 	<map>
@@ -757,10 +757,10 @@
 	<set>
 	"../Sources/set_helper.cpp"
 
-1371220011 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/set_helper.cpp
+1376649041 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/set_helper.cpp
 	<set>
 
-1371220011 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/set_helper.cpp
+1376649041 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/set_helper.cpp
 	<set>
 
 1370961889 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/maximumflow/maximumflow.cpp
@@ -784,14 +784,26 @@
 	<vector>
 	<map>
 
-1371219948 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/maximummatching/maximummatching.cpp
+1376648902 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/maximummatching/maximummatching.cpp
 	"../../../Headers/algorithms/maximummatching/maximummatching.h"
 
-1371219081 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/maximummatching/maximummatching.h
+1376648950 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/maximummatching/maximummatching.h
+	"maximalmatching.h"
 	"../algorithm.h"
 	"../../set_helper.h"
+	"../oddcircle/oddcircle.h"
 	<string>
 	<set>
 	<vector>
 	<map>
+
+1376648324 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/maximummatching/maximalmatching.cpp
+	"../../../Headers/algorithms/maximummatching/maximalmatching.h"
+
+1376648092 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/maximummatching/maximalmatching.h
+	"../algorithm.h"
+	"../../set_helper.h"
+	<string>
+	<vector>
+	<set>
 

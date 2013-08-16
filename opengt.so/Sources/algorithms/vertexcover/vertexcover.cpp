@@ -104,22 +104,27 @@ namespace OpenGraphtheory
             return TestVertexCover(G, Uncovered, VertexCover, k);
         }
 
-
-        void AlgorithmVERTEXCOVER::AddVertexCover(Graph &G, string VertexCoverName)
+        void AlgorithmVERTEXCOVER::FindMinimumVertexCover(Graph& G, set<Graph::VertexIterator>& VertexCover)
         {
-            set<Graph::VertexIterator> VertexCover;
-
             if(G.NumberOfEdges() <= 0)
                 return;
 
-            for(int k = 1; k<=G.NumberOfVertices(); k++)
+            set<Graph::EdgeIterator> MaximumMatching;
+            AlgorithmMAXIMUMMATCHING::FindMaximumMatching(G, MaximumMatching);
+
+            for(int k = MaximumMatching.size(); k<=G.NumberOfVertices(); k++)
             {
                 cerr << "k = " << k << endl;
                 if(FindVertexCover(G, VertexCover, k))
                     break;
                 VertexCover.clear();
             }
+        }
 
+        void AlgorithmVERTEXCOVER::AddVertexCover(Graph &G, string VertexCoverName)
+        {
+            set<Graph::VertexIterator> VertexCover;
+            FindMinimumVertexCover(G, VertexCover);
             G.AddVertexSet(VertexCover, VertexCoverName);
         }
 

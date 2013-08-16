@@ -16,7 +16,7 @@ namespace OpenGraphtheory
 
         // need to store the edges between a vertex and its predecessor
 
-        list<Graph::VertexIterator> AlgorithmODDCIRCLE::FindOddCircle(Graph &G)
+        bool AlgorithmODDCIRCLE::FindOddCircle(Graph &G, list<Graph::VertexIterator>& OddCircle)
         {
             set<Graph::VertexIterator> Q;
             map<Graph::VertexIterator, pair<Graph::VertexIterator,Graph::EdgeIterator>* > path;
@@ -69,7 +69,6 @@ namespace OpenGraphtheory
             } // while(!Q.empty())
 
 
-            list<Graph::VertexIterator> OddCircle;
             if(ClashFound)
             {
                 set<Graph::VertexIterator> Path1;
@@ -110,17 +109,19 @@ namespace OpenGraphtheory
                 }
             }
 
-            return OddCircle;
+            return ClashFound;
         }
 
         void AlgorithmODDCIRCLE::AddOddCircle(Graph &G, std::string OddCircleName)
         {
-            list<Graph::VertexIterator> oddcircle = FindOddCircle(G);
-
-            set<Graph::VertexIterator> as_set;
-            for(list<Graph::VertexIterator>::iterator i = oddcircle.begin(); i != oddcircle.end(); i++)
-                as_set.insert(*i);
-            G.AddVertexSet(as_set, OddCircleName);
+            list<Graph::VertexIterator> OddCircle;
+            if(FindOddCircle(G, OddCircle))
+            {
+                set<Graph::VertexIterator> as_set;
+                for(list<Graph::VertexIterator>::iterator i = OddCircle.begin(); i != OddCircle.end(); i++)
+                    as_set.insert(*i);
+                G.AddVertexSet(as_set, OddCircleName);
+            }
         }
 
 
