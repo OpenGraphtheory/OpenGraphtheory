@@ -21,8 +21,6 @@
 			public:
 				class Vertex;
 				class Edge;
-				class VertexSet;
-				class EdgeSet;
 				class VertexIterator;
 				class EdgeIterator;
 
@@ -80,6 +78,10 @@
 				Graph::VertexIterator EndVertices();
 				Graph::EdgeIterator BeginEdges();
 				Graph::EdgeIterator EndEdges();
+				Graph::EdgeIterator GetEdge(int ID);
+				Graph::VertexIterator GetVertex(int ID);
+
+				Graph::VertexIterator Fuse(std::set<Graph::VertexIterator> Vertices);
 
             /// management of attributes
 
@@ -187,8 +189,7 @@
                     float Weight;
                     void* Tag;
 
-                    bool Incident(const Graph::Vertex* v) const;
-                    bool UnderlyingIncident(const Graph::Vertex* v) const;
+                    bool Incident(const Graph::Vertex* v, bool Undirected=true, bool Positive=false, bool Negative=false) const;
                     void AddUndirectedConnection(Graph::Vertex* v);
                     void AddOutgoingConnection(Graph::Vertex* v);
                     void AddIncomingConnection(Graph::Vertex* v);
@@ -245,6 +246,10 @@
                     Graph::EdgeIterator EndNegativeIncidentEdges();
 
                     bool Adjacent(const Graph::VertexIterator& to) const;
+                    Graph::EdgeIterator GetEdge(const Graph::VertexIterator& to,
+                        bool UndirectedToUndirected, bool UndirectedToPositive, bool UndirectedToNegative,
+                        bool PositiveToUndirected,   bool PositiveToPositive,   bool PositiveToNegative,
+                        bool NegativeToUndirected,   bool NegativeToPositive,   bool NegativeToNegative);
                     bool UnderlyingAdjacent(const Graph::VertexIterator& to) const;
                     set<Graph::VertexIterator> CollectNeighbors(
                                     bool UndirectedToUndirected, bool UndirectedToPositive, bool UndirectedToNegative,
@@ -305,7 +310,7 @@
                     bool IsEdge();
                     bool IsArc();
                     bool IsHyperedge();
-                    bool Incident(const VertexIterator& v) const;
+                    bool Incident(const VertexIterator& v, bool Undirected=true, bool Positive=false, bool Negative=false) const;
                     bool UnderlyingIncident(const VertexIterator& v) const;
 
                     Graph::VertexIterator BeginIncidentVertices();

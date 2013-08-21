@@ -125,7 +125,9 @@
 		<Unit filename="Sources/algorithms/dominatingset/dominatingset.cpp" />
 		<Unit filename="Sources/algorithms/independentset/independentset.cpp" />
 		<Unit filename="Sources/algorithms/maximumflow/maximumflow.cpp" />
+		<Unit filename="Sources/algorithms/maximummatching/maximalmatching.cpp" />
 		<Unit filename="Sources/algorithms/maximummatching/maximummatching.cpp" />
+		<Unit filename="Sources/algorithms/maximummatching/maximummatchingbipartite.cpp" />
 		<Unit filename="Sources/algorithms/minimumcut/minimumcut.cpp" />
 		<Unit filename="Sources/algorithms/oddcircle/oddcircle.cpp" />
 		<Unit filename="Sources/algorithms/path/path.cpp" />

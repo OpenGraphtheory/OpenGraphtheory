@@ -8,7 +8,7 @@
 	<string>
 	<vector>
 
-1371219028 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
+1377099924 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
 	<list>
 	<set>
 	<map>
@@ -134,7 +134,7 @@
 	<map>
 	<vector>
 
-1370519085 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/vertexcover/vertexcover.cpp
+1377099747 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/vertexcover/vertexcover.cpp
 	"../../../Headers/algorithms/vertexcover/vertexcover.h"
 
 1370445735 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/attributes.cpp
@@ -489,7 +489,7 @@
 	<libintl.h>
 	"../../../Headers/logic/ComputationTreeLogic/ctl_lexer.h"
 
-1371218974 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/opengt.cpp
+1377100262 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/opengt.cpp
 	"../Headers/opengt.h"
 	"../Headers/attributes.h"
 	<stdlib.h>
@@ -746,8 +746,9 @@
 1370445735 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/factory.cpp
 	"../Headers/factory.h"
 
-1370514532 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/vertexcover/vertexcover.h
+1376649376 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/vertexcover/vertexcover.h
 	"../algorithm.h"
+	"../maximummatching/maximummatching.h"
 	<string>
 	<set>
 	"../../set_helper.h"
@@ -784,10 +785,10 @@
 	<vector>
 	<map>
 
-1376648902 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/maximummatching/maximummatching.cpp
+1377099973 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/maximummatching/maximummatching.cpp
 	"../../../Headers/algorithms/maximummatching/maximummatching.h"
 
-1376648950 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/maximummatching/maximummatching.h
+1377099722 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/maximummatching/maximummatching.h
 	"maximalmatching.h"
 	"../algorithm.h"
 	"../../set_helper.h"

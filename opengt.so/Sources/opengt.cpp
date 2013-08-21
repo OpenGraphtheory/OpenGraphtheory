@@ -170,13 +170,13 @@ namespace OpenGraphtheory
             bool Graph::Vertex::UnderlyingAdjacent(const Graph::Vertex* to) const
             {
                 for(list<Graph::Edge*>::const_iterator it = IncidentEdges.begin(); it != IncidentEdges.end(); it++)
-                    if((*it)->UnderlyingIncident(to))
+                    if((*it)->Incident(to,1,1,1))
                         return true;
                 for(list<Graph::Edge*>::const_iterator it = PositiveIncidentEdges.begin(); it != PositiveIncidentEdges.end(); it++)
-                    if((*it)->UnderlyingIncident(to))
+                    if((*it)->Incident(to,1,1,1))
                         return true;
                 for(list<Graph::Edge*>::const_iterator it = NegativeIncidentEdges.begin(); it != NegativeIncidentEdges.end(); it++)
-                    if((*it)->UnderlyingIncident(to))
+                    if((*it)->Incident(to,1,1,1))
                         return true;
                 return false;
             }
@@ -362,6 +362,32 @@ namespace OpenGraphtheory
                 return (*position)->UnderlyingAdjacent(v);
             }
 
+            Graph::EdgeIterator Graph::VertexIterator::GetEdge(const Graph::VertexIterator& to,
+                    bool UndirectedToUndirected, bool UndirectedToPositive, bool UndirectedToNegative,
+                    bool PositiveToUndirected,   bool PositiveToPositive,   bool PositiveToNegative,
+                    bool NegativeToUndirected,   bool NegativeToPositive,   bool NegativeToNegative)
+
+            {
+                if(UndirectedToUndirected || UndirectedToPositive || UndirectedToNegative)
+                    for(Graph::EdgeIterator e = BeginIncidentEdges(); e != EndIncidentEdges(); e++)
+                        if(e.Incident(to,UndirectedToUndirected, UndirectedToPositive, UndirectedToNegative))
+                            return e;
+
+                if(PositiveToUndirected || PositiveToPositive || PositiveToNegative)
+                    for(Graph::EdgeIterator e = BeginPositiveIncidentEdges(); e != EndPositiveIncidentEdges(); e++)
+                        if(e.Incident(to,PositiveToUndirected, PositiveToPositive, PositiveToNegative))
+                            return e;
+
+                if(NegativeToUndirected || NegativeToPositive || NegativeToNegative)
+                    for(Graph::EdgeIterator e = BeginNegativeIncidentEdges(); e != EndNegativeIncidentEdges(); e++)
+                        if(e.Incident(to,NegativeToUndirected, NegativeToPositive, NegativeToNegative))
+                            return e;
+
+                return Owner->EndEdges();
+            }
+
+
+
             void Graph::EdgeIterator::WriteToXml(XML* xml)
             {
 				string ClosingTag = "</edge>\n";
@@ -442,39 +468,34 @@ namespace OpenGraphtheory
             }
 
             /// \brief Test whether the Edge is incident to the given vertex
-            bool Graph::Edge::Incident(const Graph::Vertex* to) const
+            bool Graph::Edge::Incident(const Graph::Vertex* to, bool Undirected, bool Positive, bool Negative) const
             {
-                for(list<Graph::Vertex*>::const_iterator it = IncidentVertices.begin(); it != IncidentVertices.end(); it++)
-                    if(*it == to)
-                        return true;
-                return false;
-            }
+                if(Undirected)
+                    for(list<Graph::Vertex*>::const_iterator it = IncidentVertices.begin(); it != IncidentVertices.end(); it++)
+                        if(*it == to)
+                            return true;
+                if(Positive)
+                    for(list<Graph::Vertex*>::const_iterator it = PositiveIncidentVertices.begin(); it != PositiveIncidentVertices.end(); it++)
+                        if(*it == to)
+                            return true;
+                if(Negative)
+                    for(list<Graph::Vertex*>::const_iterator it = NegativeIncidentVertices.begin(); it != NegativeIncidentVertices.end(); it++)
+                        if(*it == to)
+                            return true;
 
-            bool Graph::Edge::UnderlyingIncident(const Graph::Vertex* to) const
-            {
-                for(list<Graph::Vertex*>::const_iterator it = IncidentVertices.begin(); it != IncidentVertices.end(); it++)
-                    if(*it == to)
-                        return true;
-                for(list<Graph::Vertex*>::const_iterator it = PositiveIncidentVertices.begin(); it != PositiveIncidentVertices.end(); it++)
-                    if(*it == to)
-                        return true;
-                for(list<Graph::Vertex*>::const_iterator it = NegativeIncidentVertices.begin(); it != NegativeIncidentVertices.end(); it++)
-                    if(*it == to)
-                        return true;
                 return false;
             }
 
             /// \brief Test whether the Edge is incident to the given vertex
-            bool Graph::EdgeIterator::Incident(const Graph::VertexIterator& to) const
+            bool Graph::EdgeIterator::Incident(const Graph::VertexIterator& to, bool Undirected, bool Positive, bool Negative) const
             {
                 Vertex* v = Owner->VertexIteratorToPointer(to);
-                return (*position)->Incident(v);
+                return (*position)->Incident(v, Undirected, Positive, Negative);
             }
 
             bool Graph::EdgeIterator::UnderlyingIncident(const Graph::VertexIterator& to) const
             {
-                Vertex* v = Owner->VertexIteratorToPointer(to);
-                return (*position)->UnderlyingIncident(v);
+                return Incident(to, 1, 1, 1);
             }
 
         // @}
@@ -848,6 +869,102 @@ namespace OpenGraphtheory
             result.RemoveVertex(v);
             return result;
         }
+
+
+        Graph::VertexIterator Graph::Fuse(set<Graph::VertexIterator> Vertices)
+        {
+            Graph::VertexIterator result = AddVertex();
+            Graph::Vertex* pResult = VertexIteratorToPointer(result);
+            set<Graph::Vertex*> pVertices;
+            for(set<Graph::VertexIterator>::iterator v = Vertices.begin(); v != Vertices.end(); v++)
+                pVertices.insert(VertexIteratorToPointer(*v));
+
+
+            // Set Coordinates of the resulting vertex (arithmetical middle of the
+            // coordinates of the fused vertices)
+            unsigned int Dimensionality = 0;
+            for(std::set<Graph::VertexIterator>::iterator v = Vertices.begin(); v != Vertices.end(); v++)
+                if(v->GetCoordinates().size() > Dimensionality)
+                    Dimensionality = v->GetCoordinates().size();
+            std::vector<float> ResultCoordinates(Dimensionality, 0.0f);
+            for(std::set<Graph::VertexIterator>::iterator v = Vertices.begin(); v != Vertices.end(); v++)
+            {
+                std::vector<float> vCoordinates = v->GetCoordinates();
+                for(int i = vCoordinates.size()-1; i >= 0; --i)
+                    ResultCoordinates[i] += vCoordinates[i];
+            }
+            for(int i = ResultCoordinates.size()-1; i >= 0; --i)
+                ResultCoordinates[i] /= Vertices.size();
+            result.SetCoordinates(ResultCoordinates);
+
+
+            // Connect all affected edges to the new Vertex
+            set<Graph::EdgeIterator> EdgesThatHaveBecomeLoops;
+            set<Graph::EdgeIterator> AffectedEdges;
+            for(set<Graph::VertexIterator>::iterator v = Vertices.begin(); v != Vertices.end(); v++)
+            {
+                Graph::VertexIterator vi = *v;
+                set<Graph::EdgeIterator> Incident = vi.CollectIncidentEdges(1,1,1);
+                AffectedEdges.insert(Incident.begin(), Incident.end());
+            }
+
+            for(set<Graph::EdgeIterator>::iterator e = AffectedEdges.begin(); e != AffectedEdges.end(); e++)
+            {
+                bool HasBecomeLoop = true;
+                Edge* pe = EdgeIteratorToPointer(*e);
+                for(list<Vertex*>::iterator i = pe->IncidentVertices.begin(); i != pe->IncidentVertices.end(); i++)
+                {
+                    if(pVertices.find(*i) != pVertices.end())
+                    {
+                        *i = pResult;
+                        pResult->IncidentEdges.push_back(pe);
+                    }
+                    else
+                        HasBecomeLoop = false;
+                }
+                for(list<Vertex*>::iterator i = pe->NegativeIncidentVertices.begin(); i != pe->NegativeIncidentVertices.end(); i++)
+                {
+                    if(pVertices.find(*i) != pVertices.end())
+                    {
+                        *i = pResult;
+                        pResult->PositiveIncidentEdges.push_back(pe);
+                    }
+                    else
+                        HasBecomeLoop = false;
+                }
+                for(list<Vertex*>::iterator i = pe->PositiveIncidentVertices.begin(); i != pe->PositiveIncidentVertices.end(); i++)
+                {
+                    if(pVertices.find(*i) != pVertices.end())
+                    {
+                        *i = pResult;
+                        pResult->NegativeIncidentEdges.push_back(pe);
+                    }
+                    else
+                        HasBecomeLoop = false;
+                }
+
+                if(HasBecomeLoop)
+                    EdgesThatHaveBecomeLoops.insert(*e);
+            }
+
+            // Disconnect the fused vertices from the affected edges and also remove them from the graph
+            for(set<Graph::VertexIterator>::iterator v = Vertices.begin(); v != Vertices.end(); v++)
+            {
+                Vertex* vp = VertexIteratorToPointer(*v);
+                vp->IncidentEdges.clear();
+                vp->NegativeIncidentEdges.clear();
+                vp->PositiveIncidentEdges.clear();
+
+                RemoveVertex(*v);
+            }
+
+            // Remove Edges that have become loops
+            for(set<Graph::EdgeIterator>::iterator e = EdgesThatHaveBecomeLoops.begin(); e != EdgesThatHaveBecomeLoops.end(); e++)
+                RemoveEdge(*e);
+
+            return result;
+        }
+
 
 	// @}
 
@@ -1356,6 +1473,31 @@ namespace OpenGraphtheory
 			{
 				return EdgeIterator(this, -1, &Edges, Edges.end());
 			}
+
+			Graph::EdgeIterator Graph::GetEdge(int ID)
+			{
+			    list<Graph::Edge*>::iterator i;
+			    Graph::Edge* e = Edge_ID_to_pointer[ID];
+			    for(i = Edges.begin(); i != Edges.end(); i++)
+                    if(*i == e)
+                        break;
+			    if(i == Edges.end())
+                    ID = -1;
+			    return EdgeIterator(this, ID, &Edges, i);
+            }
+
+			Graph::VertexIterator Graph::GetVertex(int ID)
+			{
+			    list<Graph::Vertex*>::iterator i;
+			    Graph::Vertex* v = Vertex_ID_to_pointer[ID];
+			    for(i = Vertices.begin(); i != Vertices.end(); i++)
+                    if(*i == v)
+                        break;
+
+			    if(i == Vertices.end())
+                    ID = -1;
+			    return VertexIterator(this, ID, &Vertices, i);
+            }
 
 		// @}
 

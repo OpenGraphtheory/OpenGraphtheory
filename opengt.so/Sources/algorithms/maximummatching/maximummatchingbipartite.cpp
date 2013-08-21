@@ -123,10 +123,9 @@ namespace OpenGraphtheory
             return false;
         }
 
-        void AlgorithmMAXIMUMMATCHING::FindMaximumMatchingBipartite(Graph& G, set<Graph::EdgeIterator>& Matching)
+        void AlgorithmMAXIMUMMATCHING::FindMaximumMatchingBipartite(Graph& G, set<Graph::EdgeIterator>& Matching, set<Graph::VertexIterator>& MatchedVertices)
         {
             vector<Graph::EdgeIterator> AugmentingPath;
-            set<Graph::VertexIterator> MatchedVertices;
 
             while(true)
             {

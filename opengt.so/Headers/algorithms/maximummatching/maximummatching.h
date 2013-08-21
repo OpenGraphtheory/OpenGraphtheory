@@ -19,13 +19,14 @@
             {
                 public:
                     void Run(Graph &G, std::vector<std::string> parameters);
-                    static void FindMaximumMatching(Graph& G, std::set<Graph::EdgeIterator>& Matching);
+                    static void FindMaximumMatching(Graph& G, std::set<Graph::EdgeIterator>& Matching, string MatchingName);
                     static void AddMaximumMatching(Graph &G, std::string MatchingName);
 
                 protected:
                     static FactoryRegistrator<Algorithm> AlgorithmMaximumMatchingRegistrator;
 
-                    static void FindMaximumMatchingBipartite(Graph& G, std::set<Graph::EdgeIterator>& Matching);
+                    static void FindMaximumMatching(Graph& G, std::set<Graph::EdgeIterator>& Matching, std::set<Graph::VertexIterator>& MatchedVertices, std::string MatchingName);
+                    static void FindMaximumMatchingBipartite(Graph& G, std::set<Graph::EdgeIterator>& Matching, std::set<Graph::VertexIterator>& MatchedVertices);
 
                     static bool FindAugmentingPath(Graph& G, Graph::VertexIterator Source, std::set<Graph::EdgeIterator>& Matching,
                                          std::set<Graph::VertexIterator>& MatchedVertices, std::vector<Graph::EdgeIterator>& AugmentingPath);
