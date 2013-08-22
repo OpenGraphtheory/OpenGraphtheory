@@ -1,7 +1,6 @@
 
 #include "DisplayWindow.h"
 #include "../opengt.h"
-using namespace OpenGraphtheory;
 
 namespace OpenGraphtheory
 {
@@ -15,8 +14,8 @@ namespace OpenGraphtheory
                 bool ZoomToFit;
                 Graph* DisplayedGraph;
 
-                string VertexColoring;
-                string EdgeColoring;
+                std::string VertexColoring;
+                std::string EdgeColoring;
 
                 float ModelLeft, ModelWidth, ModelTop, ModelHeight;
                 void UpdateModelDimensions();
@@ -26,8 +25,8 @@ namespace OpenGraphtheory
 
             public:
 
-                GraphWindow(int width, int height, Graph* G, string Caption = "http://www.Open-Graphtheory.org", string vertexcoloring = "",
-                            string edgecoloring = "", int gridsize = 1, bool ZoomToFit = false);
+                GraphWindow(int width, int height, Graph* G, std::string Caption = "http://www.Open-Graphtheory.org", std::string vertexcoloring = "",
+                            std::string edgecoloring = "", int gridsize = 1, bool ZoomToFit = false);
 
                 void Display(Graph* G);
                 void Update();

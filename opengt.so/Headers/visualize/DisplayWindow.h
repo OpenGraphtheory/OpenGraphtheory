@@ -1,7 +1,6 @@
 
 #include <iostream>
 #include <map>
-using namespace std;
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <semaphore.h>
@@ -36,7 +35,7 @@ namespace OpenGraphtheory
                 int MouseY;
                 unsigned short MouseButtonStates;
                 unsigned short DeadKeyStates;
-                string caption;
+                std::string caption;
                 unsigned long foregroundcolor;
                 unsigned long backgroundcolor;
                 Colormap cmap;
@@ -66,7 +65,7 @@ namespace OpenGraphtheory
 
             public:
 
-                DisplayWindow(int Width, int Height, string Caption="DisplayWindow", string IconPath="NONE");
+                DisplayWindow(int Width, int Height, std::string Caption="DisplayWindow", std::string IconPath="NONE");
                 ~DisplayWindow();
                 void CloseWindow();
                 void Flush();
@@ -97,11 +96,11 @@ namespace OpenGraphtheory
                 void Circle(int CenterX, int CenterY, int Radius, int LineWidth=1, int LineStyle=LineSolid);
                 void FillCircle(int CenterX, int CenterY, int Radius, int FillStyle=FillSolid);
 
-                void SetFont(string FontName);
-                void WriteText(int x, int y, string Text, bool SolidBackground=true);
+                void SetFont(std::string FontName);
+                void WriteText(int x, int y, std::string Text, bool SolidBackground=true);
 
-                void SaveBitmap(string FileName);
-                void LoadPixmap(int x, int y, string FileName);
+                void SaveBitmap(std::string FileName);
+                void LoadPixmap(int x, int y, std::string FileName);
 
                 // event handlers
                 void (*OnMouseDown) (int X, int Y, MouseButton Button,   unsigned short ButtonStates);
@@ -115,7 +114,7 @@ namespace OpenGraphtheory
                 void (*OnKeyUp)  (int KeyCode, unsigned short DeadKeyStates);
                 void (*OnClose)(bool& AbortClosing);
 
-                void (*OnError)(string ErrorText);
+                void (*OnError)(std::string ErrorText);
 
         };
 

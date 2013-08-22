@@ -25,7 +25,7 @@
                     static FactoryRegistrator<Transformer> TransformerSpringEmbedderRegistrator;
 
 
-                    vector<float> dimension_limits;
+                    std::vector<float> dimension_limits;
                     float c_repel;  // force with which vertices push each other off
                     float c_spring;  // force with which adjacent vertices attract each other
                                                 // must not be 0 (or division by zero error will happen)
@@ -38,7 +38,7 @@
                     int iteration;
                     int nextincrease;
 
-                    void SpringEmbed(Graph& G, vector<float> dimension_limits,
+                    void SpringEmbed(Graph& G, std::vector<float> dimension_limits,
                                      IntermediateSteps::IntermediateStepHandler* intermediatestephandler = NULL);
 
 

@@ -123,9 +123,9 @@ namespace OpenGraphtheory
 
       	Atom wm_delete_window=None;
 
-        map<Display*, DisplayWindow*> WindowRegister;
+        std::map<Display*, DisplayWindow*> WindowRegister;
 
-        DisplayWindow::DisplayWindow(int Width, int Height, string Caption, string IconPath)
+        DisplayWindow::DisplayWindow(int Width, int Height, std::string Caption, std::string IconPath)
         {
             width = Width;
             height = Height;
@@ -364,22 +364,22 @@ namespace OpenGraphtheory
             char buffer[256];
             XGetErrorText(XServer, error->error_code, buffer, 256);
 
-            map<Display*, DisplayWindow*>::iterator win = WindowRegister.find(XServer);
+            std::map<Display*, DisplayWindow*>::iterator win = WindowRegister.find(XServer);
             if(win != WindowRegister.end())
             {
                 DisplayWindow* Window = win->second;
-                void (*Handler)(string ErrorText) = Window->OnError;
+                void (*Handler)(std::string ErrorText) = Window->OnError;
 
                 if(Handler != NULL)
                 {
-                    Handler(string(buffer));
+                    Handler(std::string(buffer));
                     return 0;
                 }
                 else
-                    cerr << "X11 Error: " << buffer << endl;
+                    std::cerr << "X11 Error: " << buffer << std::endl;
             }
             else
-                cerr << "X11 Error: " << buffer << endl;
+                std::cerr << "X11 Error: " << buffer << std::endl;
 
             return 1;
         }
@@ -452,7 +452,7 @@ namespace OpenGraphtheory
             color.pixel = result;
             color.flags = DoRed | DoGreen | DoBlue;
             XQueryColor(XServer, cmap, &color);
-            cout << color.red/256 << " " << color.green/256 << " " << color.blue/256 << "\n";
+            std::cout << color.red/256 << " " << color.green/256 << " " << color.blue/256 << "\n";
             delete(ximage);
             return result;
         }
@@ -481,7 +481,7 @@ namespace OpenGraphtheory
             if( XAllocColor(XServer, cmap, &color) != 0 )
                 SetColor(color.pixel);
             else
-                cerr << "error setting color " << R << " " << G << " " << B << "\n";
+                std::cerr << "error setting color " << R << " " << G << " " << B << "\n";
         }
 
         void DisplayWindow::SetBGColor(unsigned long color)
@@ -706,7 +706,7 @@ namespace OpenGraphtheory
 
 
 
-        void DisplayWindow::SetFont(string FontName)
+        void DisplayWindow::SetFont(std::string FontName)
         {
             sem_wait(&MainSemaphore);
             if(!Close)
@@ -714,7 +714,7 @@ namespace OpenGraphtheory
             sem_post(&MainSemaphore);
         }
 
-        void DisplayWindow::WriteText(int x, int y, string Text, bool SolidBackground)
+        void DisplayWindow::WriteText(int x, int y, std::string Text, bool SolidBackground)
         {
             sem_wait(&MainSemaphore);
             if(!Close)
@@ -727,7 +727,7 @@ namespace OpenGraphtheory
             sem_post(&MainSemaphore);
         }
 
-        void DisplayWindow::SaveBitmap(string FileName)
+        void DisplayWindow::SaveBitmap(std::string FileName)
         {
             sem_wait(&UpdateSemaphore);
             if(!Close)
@@ -736,7 +736,7 @@ namespace OpenGraphtheory
             sem_post(&UpdateSemaphore);
         }
 
-        void DisplayWindow::LoadPixmap(int x, int y, string FileName)
+        void DisplayWindow::LoadPixmap(int x, int y, std::string FileName)
         {
             sem_wait(&MainSemaphore);
             if(!Close)

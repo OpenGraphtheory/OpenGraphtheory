@@ -7,7 +7,7 @@ namespace OpenGraphtheory
     namespace Visualization
     {
 
-        GraphWindow::GraphWindow(int width, int height, Graph* G, string Caption, string vertexcoloring, string edgecoloring, int gridsize, bool ZoomToFit)
+        GraphWindow::GraphWindow(int width, int height, Graph* G, std::string Caption, std::string vertexcoloring, std::string edgecoloring, int gridsize, bool ZoomToFit)
             : DisplayWindow(width, height, Caption)
         {
             ModelLeft = 0;
@@ -36,8 +36,8 @@ namespace OpenGraphtheory
 
                 for(Graph::EdgeIterator e = DisplayedGraph->BeginEdges(); e != DisplayedGraph->EndEdges(); e++)
                 {
-                    vector<float> FromCoordinates = e.From().GetCoordinates();
-                    vector<float> ToCoordinates = e.To().GetCoordinates();
+                    std::vector<float> FromCoordinates = e.From().GetCoordinates();
+                    std::vector<float> ToCoordinates = e.To().GetCoordinates();
                     float x1 = FromCoordinates[0];
                     float y1 = FromCoordinates[1];
                     float x2 = ToCoordinates[0];
@@ -68,7 +68,7 @@ namespace OpenGraphtheory
 
                 for(Graph::VertexIterator v = DisplayedGraph->BeginVertices(); v != DisplayedGraph->EndVertices(); v++)
                 {
-                    vector<float> coordinates = v.GetCoordinates();
+                    std::vector<float> coordinates = v.GetCoordinates();
                     float x = coordinates[0];
                     float y = coordinates[1];
 
@@ -100,7 +100,7 @@ namespace OpenGraphtheory
         void GraphWindow::UpdateModelDimensions()
         {
             Graph::VertexIterator v = DisplayedGraph->BeginVertices();
-            vector<float> coordinates = v.GetCoordinates();
+            std::vector<float> coordinates = v.GetCoordinates();
             float minx = coordinates[0];
             float miny = coordinates[1];
             float maxx = minx;

@@ -1,6 +1,6 @@
 
-#ifndef __ATTRIBUTES_H
-    #define __ATTRIBUTES_H
+#ifndef __OPENGRAPHTHEORY_ATTRIBUTES_H
+    #define __OPENGRAPHTHEORY_ATTRIBUTES_H
 
     #include <string>
     #include <iostream>

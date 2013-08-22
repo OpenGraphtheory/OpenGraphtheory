@@ -1,6 +1,6 @@
 
-#ifndef __SIMPLE_XML_H
-	#define __SIMPLE_XML_H
+#ifndef __OPENGRAPHTHEORY_SIMPLE_XML_H
+	#define __OPENGRAPHTHEORY_SIMPLE_XML_H
 
 	#include<iostream>
 	#include<sstream>

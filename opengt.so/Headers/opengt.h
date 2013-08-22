@@ -1,6 +1,6 @@
 
-#ifndef __OPENGT_H
-	#define __OPENGT_H
+#ifndef __OPENGRAPHTHEORY_OPENGT_H
+	#define __OPENGRAPHTHEORY_OPENGT_H
 
 	#include <list>
 	#include <set>

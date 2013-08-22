@@ -24,7 +24,8 @@
 	#endif
 
 
-	class Mutex {
+	class Mutex
+	{
 		private:
 			#ifdef __unix__
 				pthread_mutex_t mutex;
@@ -46,7 +47,8 @@
 		void ThreadWrapper(void*);
 	#endif
 
-	class Thread {
+	class Thread
+	{
 		#ifdef __unix__
 			friend void* ThreadWrapper(void*);
 		#elif __WIN32__ || _MSC_VER || _Windows || __NT__

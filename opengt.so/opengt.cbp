@@ -153,6 +153,7 @@
 		<Unit filename="Sources/export/vrmlgraph.cpp" />
 		<Unit filename="Sources/export/xgmml.cpp" />
 		<Unit filename="Sources/factory.cpp" />
+		<Unit filename="Sources/factory_templates.cpp" />
 		<Unit filename="Sources/generate/circle.cpp" />
 		<Unit filename="Sources/generate/complete.cpp" />
 		<Unit filename="Sources/generate/generate.cpp">

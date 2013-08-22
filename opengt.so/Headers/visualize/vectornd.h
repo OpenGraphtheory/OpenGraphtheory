@@ -3,7 +3,6 @@
     #define __OPENGRAPHTHEORY_VISUALIZATION_VECTORND_H
 
     #include<vector>
-    using namespace std;
 
     namespace OpenGraphtheory
     {
@@ -13,9 +12,9 @@
             class VectorND
             {
                 public:
-                    vector<float> vec;
+                    std::vector<float> vec;
                     VectorND(int size);
-                    VectorND(const vector<float> vect);
+                    VectorND(const std::vector<float> vect);
                     VectorND(const VectorND& Copy); // Copy Constructor
                     VectorND& operator=(const VectorND &Copy);
                     float operator[](unsigned int index);
