@@ -25,7 +25,7 @@
                     int yylex();
                 public:
                     int yylex(FOParser::semantic_type * lval);
-                    FOLexer(istream& is);
+                    FOLexer(std::istream& is);
             };
 
 

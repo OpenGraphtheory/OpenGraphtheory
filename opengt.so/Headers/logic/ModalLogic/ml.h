@@ -20,8 +20,8 @@
             class MLFormula : public Formula
             {
                 public:
-                    void Interpret(Graph &G, list<std::string> parameters);
-                    virtual set<Graph::VertexIterator> Interpretation(Graph &G) = 0;
+                    void Interpret(Graph &G, std::list<std::string> parameters);
+                    virtual std::set<Graph::VertexIterator> Interpretation(Graph &G) = 0;
             };
 
 
@@ -36,7 +36,7 @@
                     ~ML_Atomic();
                     Formula* Clone();
 
-                    set<Graph::VertexIterator> Interpretation(Graph &G);
+                    std::set<Graph::VertexIterator> Interpretation(Graph &G);
                     virtual bool Satisfies(Graph::VertexIterator v);
             };
 
@@ -47,7 +47,7 @@
                     ~ML_True();
                     Formula* Clone();
 
-                    set<Graph::VertexIterator> Interpretation(Graph &G);
+                    std::set<Graph::VertexIterator> Interpretation(Graph &G);
             };
 
             class ML_False : public MLFormula
@@ -57,7 +57,7 @@
                     ~ML_False();
                     Formula* Clone();
 
-                    set<Graph::VertexIterator> Interpretation(Graph &G);
+                    std::set<Graph::VertexIterator> Interpretation(Graph &G);
             };
 
             class ML_Not : public MLFormula
@@ -69,7 +69,7 @@
                     ~ML_Not();
                     Formula* Clone();
 
-                    set<Graph::VertexIterator> Interpretation(Graph &G);
+                    std::set<Graph::VertexIterator> Interpretation(Graph &G);
             };
 
             class ML_And : public MLFormula
@@ -82,7 +82,7 @@
                     ~ML_And();
                     Formula* Clone();
 
-                    set<Graph::VertexIterator> Interpretation(Graph &G);
+                    std::set<Graph::VertexIterator> Interpretation(Graph &G);
             };
 
             class ML_Or : public MLFormula
@@ -95,7 +95,7 @@
                     ~ML_Or();
                     Formula* Clone();
 
-                    set<Graph::VertexIterator> Interpretation(Graph &G);
+                    std::set<Graph::VertexIterator> Interpretation(Graph &G);
             };
 
             class ML_Box : public MLFormula
@@ -107,7 +107,7 @@
                     ~ML_Box();
                     Formula* Clone();
 
-                    set<Graph::VertexIterator> Interpretation(Graph& G);
+                    std::set<Graph::VertexIterator> Interpretation(Graph& G);
             };
 
             // ====================================================== FORWARDERS
@@ -121,7 +121,7 @@
                     virtual ~ML_Forwarder();
                     Formula* Clone();
 
-                    set<Graph::VertexIterator> Interpretation(Graph& G);
+                    std::set<Graph::VertexIterator> Interpretation(Graph& G);
             };
 
             class ML_Diamond : public ML_Forwarder

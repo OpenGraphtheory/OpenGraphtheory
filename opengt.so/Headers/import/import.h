@@ -15,11 +15,11 @@ namespace OpenGraphtheory
                 ImportFilter();
                 virtual ~ImportFilter();
 
-                virtual Graph Import(istream& is) = 0;
+                virtual Graph Import(std::istream& is) = 0;
 
-                Graph Import(string FileName);
-                static Graph Import(istream& is, string format);
-                static Graph Import(string FileName, string format);
+                Graph Import(std::string FileName);
+                static Graph Import(std::istream& is, std::string format);
+                static Graph Import(std::string FileName, std::string format);
         };
 
     }

@@ -17,7 +17,7 @@
                     static FactoryRegistrator<Generator> GeneratorPathRegistrator;
                 public:
                     GeneratorPATH();
-                    Graph DoGenerate(list<int> parameter);
+                    Graph DoGenerate(std::list<int> parameter);
                     Graph Generate(int n);
             };
 

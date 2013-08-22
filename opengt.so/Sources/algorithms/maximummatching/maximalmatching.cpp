@@ -13,10 +13,9 @@ namespace OpenGraphtheory
             &Algorithm::AlgorithmFactory, "maximalmatching", new DefaultInstantiator<Algorithm, AlgorithmMAXIMALMATCHING>(
             "maximalmatching", "Adds a maximal matching (not necessarily a maximUM matching) to the graph", "http://en.wikipedia.org/wiki/Matching_(graph_theory)"));
 
-        void AlgorithmMAXIMALMATCHING::FindMaximalMatching(Graph& G, set<Graph::EdgeIterator>& Matching)
-        {
-            set<Graph::VertexIterator> MatchedVertices;
 
+        void AlgorithmMAXIMALMATCHING::FindMaximalMatching(Graph& G, set<Graph::EdgeIterator>& Matching, set<Graph::VertexIterator>& MatchedVertices)
+        {
             for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
             {
                 set<Graph::VertexIterator> Incident = e.CollectIncidentVertices(1,1,1);
@@ -27,6 +26,13 @@ namespace OpenGraphtheory
                 }
             }
 
+        }
+
+
+        void AlgorithmMAXIMALMATCHING::FindMaximalMatching(Graph& G, set<Graph::EdgeIterator>& Matching)
+        {
+            set<Graph::VertexIterator> MatchedVertices;
+            FindMaximalMatching(G, Matching, MatchedVertices);
         }
 
 

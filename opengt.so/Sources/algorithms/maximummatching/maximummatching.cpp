@@ -13,8 +13,7 @@ namespace OpenGraphtheory
             &Algorithm::AlgorithmFactory, "maximummatching", new DefaultInstantiator<Algorithm, AlgorithmMAXIMUMMATCHING>(
             "maximummatching", "Adds a maximum matching to the graph", "http://en.wikipedia.org/wiki/Matching_(graph_theory)"));
 
-std::string FOOBAR = "000";
-        void AlgorithmMAXIMUMMATCHING::FindMaximumMatching(Graph& G, set<Graph::EdgeIterator>& Matching, set<Graph::VertexIterator>& MatchedVertices, string MatchName)
+        void AlgorithmMAXIMUMMATCHING::FindMaximumMatching(Graph& G, set<Graph::EdgeIterator>& Matching, set<Graph::VertexIterator>& MatchedVertices)
         {
             // Edmonds algorithm
 
@@ -34,7 +33,7 @@ std::string FOOBAR = "000";
             // compute matching on graph obtained by contracting the odd circle
             set<Graph::EdgeIterator> G2Matching;
             set<Graph::VertexIterator> G2MatchedVertices;
-            FindMaximumMatching(G2, G2Matching, G2MatchedVertices, MatchName);
+            FindMaximumMatching(G2, G2Matching, G2MatchedVertices);
             for(set<Graph::EdgeIterator>::iterator e = G2Matching.begin(); e != G2Matching.end(); e++)
                 Matching.insert(G.GetEdge(e->GetID()));
             for(set<Graph::VertexIterator>::iterator v = G2MatchedVertices.begin(); v != G2MatchedVertices.end(); v++)
@@ -59,6 +58,7 @@ std::string FOOBAR = "000";
                     }
 
                 // rotate the OddCircle list so that the previously selected vertex is at the beginning
+                MatchedVertices.insert(FusedOriginalInG);
                 while(*(OddCircle.begin()) != FusedOriginalInG)
                 {
                     Graph::VertexIterator temp = *(OddCircle.begin());
@@ -80,37 +80,19 @@ std::string FOOBAR = "000";
                 v++;
                 v++;
             }
-
-
-
-
-            G2.AddEdgeSet(G2Matching, MatchName);
-            for(int i = 2; i >= 0; --i)
-                if(FOOBAR[i] < '9')
-                {
-                    FOOBAR[i]++;
-                    break;
-                }
-                else
-                    FOOBAR[i] = '0';
-            ofstream out((string("autobahnen_fused_") + FOOBAR + ".gxl").c_str());
-            out << G2;
-            out.close();
-
-
         }
 
 
-        void AlgorithmMAXIMUMMATCHING::FindMaximumMatching(Graph& G, set<Graph::EdgeIterator>& Matching, string MatchingName)
+        void AlgorithmMAXIMUMMATCHING::FindMaximumMatching(Graph& G, set<Graph::EdgeIterator>& Matching)
         {
             set<Graph::VertexIterator> MatchedVertices;
-            FindMaximumMatching(G, Matching, MatchedVertices, MatchingName);
+            FindMaximumMatching(G, Matching, MatchedVertices);
         }
 
         void AlgorithmMAXIMUMMATCHING::AddMaximumMatching(Graph &G, string MatchingName)
         {
             set<Graph::EdgeIterator> Matching;
-            FindMaximumMatching(G, Matching, MatchingName);
+            FindMaximumMatching(G, Matching);
             G.AddEdgeSet(Matching, MatchingName);
         }
 

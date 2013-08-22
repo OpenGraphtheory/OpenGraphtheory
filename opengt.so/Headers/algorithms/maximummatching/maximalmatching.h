@@ -16,6 +16,7 @@
             {
                 public:
                     void Run(Graph &G, std::vector<std::string> parameters);
+                    static void FindMaximalMatching(Graph& G, std::set<Graph::EdgeIterator>& Matching, std::set<Graph::VertexIterator>& MatchedVertices);
                     static void FindMaximalMatching(Graph& G, std::set<Graph::EdgeIterator>& Matching);
                     static void AddMaximalMatching(Graph &G, std::string MatchingName);
 

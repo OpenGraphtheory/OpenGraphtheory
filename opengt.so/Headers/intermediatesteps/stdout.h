@@ -21,7 +21,7 @@
                 public:
                     IntermediateStepHandlerStdout();
                     ~IntermediateStepHandlerStdout();
-                    void Configure(vector<string> parameters);
+                    void Configure(std::vector<std::string> parameters);
                     void Handle(Graph* G);
             };
 

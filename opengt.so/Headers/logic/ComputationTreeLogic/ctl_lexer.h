@@ -25,7 +25,7 @@
                     int yylex();
                 public:
                     int yylex(CTLParser::semantic_type * lval);
-                    CTLLexer(istream& is);
+                    CTLLexer(std::istream& is);
             };
 
 

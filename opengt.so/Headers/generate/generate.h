@@ -28,7 +28,7 @@
                 protected:
                     virtual OpenGraphtheory::Graph DoGenerate(std::list<int> parameter) = 0;
                 public:
-                    Graph Generate(list<int> parameter);
+                    Graph Generate(std::list<int> parameter);
                     static OpenGraphtheory::Graph Generate(std::string generator, std::list<int> parameter);
             };
 

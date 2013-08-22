@@ -17,7 +17,7 @@
                     static FactoryRegistrator<Generator> GeneratorWheelRegistrator;
                 public:
                     GeneratorWHEEL();
-                    Graph DoGenerate(list<int> parameter);
+                    Graph DoGenerate(std::list<int> parameter);
             };
 
         }

@@ -17,7 +17,7 @@
                     static FactoryRegistrator<Generator> GeneratorCircleRegistrator;
                 public:
                     GeneratorCIRCLE();
-                    Graph DoGenerate(list<int> parameter);
+                    Graph DoGenerate(std::list<int> parameter);
             };
 
         }

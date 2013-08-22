@@ -19,7 +19,7 @@
                     IntermediateStepHandler();
                     virtual ~IntermediateStepHandler();
 
-                    virtual void Configure(vector<string> parameters);
+                    virtual void Configure(std::vector<std::string> parameters);
                     virtual void BeginHandling();
                     virtual void Handle(Graph* G) = 0;
                     virtual void EndHandling();

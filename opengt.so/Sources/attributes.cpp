@@ -4,6 +4,9 @@
 #include <cstdlib>
 #include <sstream>
 
+using namespace std;
+using namespace OpenGraphtheory::XML;
+
 /// \defgroup arbitraryattributes ''Arbitrary Attributes''
 // @{
 

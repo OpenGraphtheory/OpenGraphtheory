@@ -21,7 +21,7 @@
             class FOFormula : public Formula
             {
                 public:
-                    void Interpret(Graph &G, list<std::string> parameters);
+                    void Interpret(Graph &G, std::list<std::string> parameters);
                     virtual bool Interpretation(Graph &G, std::map<std::string, Graph::VertexIterator> &VariableAssignment) = 0;
             };
 

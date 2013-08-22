@@ -17,7 +17,7 @@
                     static FactoryRegistrator<Generator> GeneratorRandomRegistrator;
                 public:
                     GeneratorRANDOM();
-                    Graph DoGenerate(list<int> parameter);
+                    Graph DoGenerate(std::list<int> parameter);
                     Graph Generate(int n, int m);
             };
 

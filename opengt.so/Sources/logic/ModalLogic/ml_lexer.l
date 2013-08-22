@@ -27,13 +27,13 @@
 "("                         {return MLParser::token::OPEN;}
 ")"                         {return MLParser::token::CLOSE;}
 
-[a-zA-Z][0-9a-zA-Z]*        {(*yylval).sval = new(string)(yytext); return MLParser::token::STRING;}
-\"[a-zA-Z][0-9a-zA-Z]*\"    {(*yylval).sval = new(string)(yytext+1,yyleng-2); return MLParser::token::STRING;}
+[a-zA-Z][0-9a-zA-Z]*        {(*yylval).sval = new(std::string)(yytext); return MLParser::token::STRING;}
+\"[a-zA-Z][0-9a-zA-Z]*\"    {(*yylval).sval = new(std::string)(yytext+1,yyleng-2); return MLParser::token::STRING;}
 .                           {}
 
 %%
 
-MLLexer::MLLexer(istream& is) : Logic_ML_FlexLexer(&is)
+MLLexer::MLLexer(std::istream& is) : Logic_ML_FlexLexer(&is)
 {
 }
 

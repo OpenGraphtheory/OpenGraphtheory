@@ -126,6 +126,7 @@ namespace OpenGraphtheory
         void AlgorithmMAXIMUMMATCHING::FindMaximumMatchingBipartite(Graph& G, set<Graph::EdgeIterator>& Matching, set<Graph::VertexIterator>& MatchedVertices)
         {
             vector<Graph::EdgeIterator> AugmentingPath;
+            AlgorithmMAXIMALMATCHING::FindMaximalMatching(G, Matching, MatchedVertices);
 
             while(true)
             {

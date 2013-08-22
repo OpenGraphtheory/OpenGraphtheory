@@ -17,7 +17,7 @@
                     static FactoryRegistrator<Generator> GeneratorCompleteRegistrator;
                 public:
                     GeneratorCOMPLETE();
-                    Graph DoGenerate(list<int> parameter);
+                    Graph DoGenerate(std::list<int> parameter);
             };
 
         }

@@ -1,5 +1,6 @@
 
 #include "../../Headers/logic/logic.h"
+using namespace std;
 
 namespace OpenGraphtheory
 {
@@ -9,7 +10,7 @@ namespace OpenGraphtheory
 
         Factory<ModelChecker> ModelChecker::ModelCheckerFactory;
 
-        void ModelChecker::ModelCheck(Graph& G, std::istream& formula, list<std::string> parameters)
+        void ModelChecker::ModelCheck(Graph& G, istream& formula, list<string> parameters)
         {
             Formula* phi = Parse(formula);
             if(phi != NULL)
@@ -19,7 +20,7 @@ namespace OpenGraphtheory
             }
         }
 
-        void ModelChecker::ModelCheck(Graph& G, std::string formula, list<std::string> parameters)
+        void ModelChecker::ModelCheck(Graph& G, string formula, list<string> parameters)
         {
             stringstream s;
             s << formula;

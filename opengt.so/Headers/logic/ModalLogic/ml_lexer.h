@@ -25,7 +25,7 @@
                     int yylex();
                 public:
                     int yylex(MLParser::semantic_type * lval);
-                    MLLexer(istream& is);
+                    MLLexer(std::istream& is);
             };
 
 

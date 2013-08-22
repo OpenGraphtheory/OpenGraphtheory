@@ -6,66 +6,74 @@
 	#include<sstream>
 	#include<vector>
 	#include<list>
-	using namespace std;
+    #include<string>
+
+    namespace OpenGraphtheory
+    {
+        namespace XML
+        {
 
 
+            class XML_Element  // just a common base-class
+            {
+                public:
+                    virtual void WriteToStream(std::ostream& os, int level) const = 0;
+                    virtual ~XML_Element();
+                    virtual std::string InnerText(bool TrimStrings) const = 0;
 
-	class XML_Element  // just a common base-class
-	{
-		public:
-			virtual void WriteToStream(ostream& os, int level) const = 0;
-			virtual ~XML_Element();
-			virtual string InnerText(bool TrimStrings) const = 0;
+                    static void WriteXmlString(std::ostream& os, std::string str);
+            };
 
-			static void WriteXmlString(ostream& os, string str);
-	};
+            class XML : public XML_Element
+            {
+                public:
+                    std::string name;
+                    std::list<std::pair<std::string,std::string> > attributes;
+                    std::list<XML_Element*> children;
+                    XML* parent;
 
-	class XML : public XML_Element
-	{
-		public:
-			string name;
-			list<pair<string,string> > attributes;
-			list<XML_Element*> children;
-			XML* parent;
+                    XML(XML* Parent=NULL);
+                    XML(std::string name, XML* Parent=NULL);
+                    ~XML();
+                    void WriteToStream(std::ostream&, int level) const;
+                    std::list<XML*> FindChildren(std::string named) const;
+                    std::string GetAttribute(std::string propname, std::string def="") const;
+                    int GetAttributeAsInt(std::string propname, int def=0) const;
+                    float GetAttributeAsFloat(std::string propname, float def=0) const;
+                    std::string InnerText(bool TrimStrings) const;
 
-			XML(XML* Parent=NULL);
-			XML(string name, XML* Parent=NULL);
-			~XML();
-			void WriteToStream(ostream&, int level) const;
-			list<XML*> FindChildren(string named) const;
-			string GetAttribute(string propname, string def="") const;
-			int GetAttributeAsInt(string propname, int def=0) const;
-			float GetAttributeAsFloat(string propname, float def=0) const;
-			string InnerText(bool TrimStrings) const;
+                    void AddChild(XML_Element*);
+                    void AddAttribute(std::string name, std::string value);
+            };
 
-			void AddChild(XML_Element*);
-			void AddAttribute(string name, string value);
-	};
+            class XML_Comment : public XML_Element
+            {
+                public:
+                    XML_Comment();
+                    XML_Comment(std::string text);
 
-	class XML_Comment : public XML_Element
-	{
-		public:
-            XML_Comment();
-            XML_Comment(string text);
+                    std::vector<std::string> text;
+                    void WriteToStream(std::ostream& os, int level) const;
+                    ~XML_Comment();
+                    std::string InnerText(bool TrimStrings) const;
+            };
 
-			vector<string> text;
-			void WriteToStream(ostream& os, int level) const;
-			~XML_Comment();
-			string InnerText(bool TrimStrings) const;
-	};
+            class XML_Text : public XML_Element
+            {
+                public:
+                    XML_Text();
+                    XML_Text(std::string text);
+                    std::list<std::string> text;
+                    void WriteToStream(std::ostream&, int level) const;
+                    ~XML_Text();
+                    std::string InnerText(bool TrimStrings) const;
+            };
 
-	class XML_Text : public XML_Element
-	{
-		public:
-            XML_Text();
-            XML_Text(string text);
-			list<string> text;
-			void WriteToStream(ostream&, int level) const;
-			~XML_Text();
-			string InnerText(bool TrimStrings) const;
-	};
-
-	extern ostream& operator<<(ostream& os, const XML& xml);
-	extern istream& operator>>(istream& is, XML& xml);
+            extern std::ostream& operator<<(std::ostream& os, const XML& xml);
+            extern std::istream& operator>>(std::istream& is, XML& xml);
+            std::string XmlStringToInternalString(std::string);
+            std::string uppercase(std::string);
+        }
+    }
 
 #endif

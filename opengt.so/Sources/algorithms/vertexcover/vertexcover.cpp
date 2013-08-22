@@ -110,7 +110,7 @@ namespace OpenGraphtheory
                 return;
 
             set<Graph::EdgeIterator> MaximumMatching;
-            AlgorithmMAXIMUMMATCHING::FindMaximumMatching(G, MaximumMatching, "");
+            AlgorithmMAXIMUMMATCHING::FindMaximumMatching(G, MaximumMatching);
 
             for(int k = MaximumMatching.size(); k<=G.NumberOfVertices(); k++)
             {

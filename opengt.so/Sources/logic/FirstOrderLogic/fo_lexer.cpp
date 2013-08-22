@@ -1499,12 +1499,12 @@ YY_RULE_SETUP
 case 15:
 YY_RULE_SETUP
 #line 34 "fo_lexer.l"
-{(*yylval).sval = new(string)(yytext); return FOParser::token::STRING;}
+{(*yylval).sval = new(std::string)(yytext); return FOParser::token::STRING;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 35 "fo_lexer.l"
-{(*yylval).sval = new(string)(yytext+1,yyleng-2); return FOParser::token::STRING;}
+{(*yylval).sval = new(std::string)(yytext+1,yyleng-2); return FOParser::token::STRING;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
@@ -2415,7 +2415,7 @@ void Logic_FO_free (void * ptr )
 
 
 
-FOLexer::FOLexer(istream& is) : Logic_FO_FlexLexer(&is)
+FOLexer::FOLexer(std::istream& is) : Logic_FO_FlexLexer(&is)
 {
 }
 

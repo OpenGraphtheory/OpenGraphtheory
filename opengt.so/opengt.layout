@@ -11,7 +11,7 @@
 		<Cursor position="621" topLine="0" />
 	</File>
 	<File name="Headers/algorithms/color/color.h" open="0" top="0" tabpos="5">
-		<Cursor position="479" topLine="0" />
+		<Cursor position="696" topLine="0" />
 	</File>
 	<File name="Headers/algorithms/dominatingset/dominatingset.h" open="0" top="0" tabpos="3">
 		<Cursor position="0" topLine="0" />
@@ -22,8 +22,11 @@
 	<File name="Headers/algorithms/maximumflow/maximumflow.h" open="0" top="0" tabpos="2">
 		<Cursor position="1117" topLine="0" />
 	</File>
+	<File name="Headers/algorithms/maximummatching/maximalmatching.h" open="0" top="0" tabpos="0">
+		<Cursor position="676" topLine="0" />
+	</File>
 	<File name="Headers/algorithms/maximummatching/maximummatching.h" open="0" top="0" tabpos="1">
-		<Cursor position="1191" topLine="0" />
+		<Cursor position="1082" topLine="0" />
 	</File>
 	<File name="Headers/algorithms/minimumcut/minimumcut.h" open="0" top="0" tabpos="4">
 		<Cursor position="1611" topLine="0" />
@@ -32,130 +35,139 @@
 		<Cursor position="175" topLine="0" />
 	</File>
 	<File name="Headers/algorithms/path/path.h" open="0" top="0" tabpos="2">
-		<Cursor position="553" topLine="0" />
+		<Cursor position="2287" topLine="8" />
 	</File>
 	<File name="Headers/algorithms/vertexcover/vertexcover.h" open="0" top="0" tabpos="2">
 		<Cursor position="817" topLine="0" />
 	</File>
-	<File name="Headers/attributes.h" open="0" top="0" tabpos="4">
-		<Cursor position="585" topLine="0" />
+	<File name="Headers/attributes.h" open="0" top="0" tabpos="5">
+		<Cursor position="2195" topLine="66" />
 	</File>
 	<File name="Headers/export/dot.h" open="0" top="0" tabpos="0">
-		<Cursor position="782" topLine="0" />
+		<Cursor position="684" topLine="0" />
 	</File>
 	<File name="Headers/export/export.h" open="0" top="0" tabpos="3">
-		<Cursor position="1291" topLine="27" />
+		<Cursor position="4029" topLine="38" />
 	</File>
 	<File name="Headers/export/gastex.h" open="0" top="0" tabpos="0">
-		<Cursor position="794" topLine="0" />
+		<Cursor position="696" topLine="0" />
 	</File>
 	<File name="Headers/export/gml.h" open="0" top="0" tabpos="0">
-		<Cursor position="782" topLine="0" />
+		<Cursor position="684" topLine="0" />
 	</File>
 	<File name="Headers/export/graphml.h" open="0" top="0" tabpos="0">
-		<Cursor position="798" topLine="0" />
+		<Cursor position="700" topLine="0" />
 	</File>
 	<File name="Headers/export/mpost.h" open="0" top="0" tabpos="13">
-		<Cursor position="629" topLine="6" />
+		<Cursor position="1532" topLine="11" />
 	</File>
-	<File name="Headers/export/pdf.h" open="0" top="0" tabpos="16">
-		<Cursor position="444" topLine="3" />
+	<File name="Headers/export/pdf.h" open="1" top="0" tabpos="5">
+		<Cursor position="128" topLine="9" />
 	</File>
 	<File name="Headers/export/postscript.h" open="0" top="0" tabpos="0">
-		<Cursor position="803" topLine="0" />
+		<Cursor position="1251" topLine="3" />
 	</File>
 	<File name="Headers/export/povray.h" open="0" top="0" tabpos="0">
-		<Cursor position="794" topLine="0" />
+		<Cursor position="696" topLine="0" />
 	</File>
 	<File name="Headers/export/rgml.h" open="0" top="0" tabpos="0">
-		<Cursor position="786" topLine="0" />
+		<Cursor position="688" topLine="0" />
 	</File>
 	<File name="Headers/export/svg.h" open="0" top="0" tabpos="13">
-		<Cursor position="1307" topLine="0" />
+		<Cursor position="1325" topLine="4" />
 	</File>
 	<File name="Headers/export/tei.h" open="0" top="0" tabpos="0">
-		<Cursor position="782" topLine="0" />
+		<Cursor position="684" topLine="0" />
 	</File>
 	<File name="Headers/export/tgf.h" open="0" top="0" tabpos="0">
-		<Cursor position="782" topLine="0" />
+		<Cursor position="684" topLine="0" />
 	</File>
 	<File name="Headers/export/tikz.h" open="0" top="0" tabpos="11">
-		<Cursor position="617" topLine="4" />
+		<Cursor position="1134" topLine="8" />
 	</File>
 	<File name="Headers/export/vrmlgraph.h" open="0" top="0" tabpos="0">
-		<Cursor position="806" topLine="0" />
+		<Cursor position="708" topLine="0" />
 	</File>
 	<File name="Headers/export/xgmml.h" open="0" top="0" tabpos="0">
-		<Cursor position="790" topLine="0" />
+		<Cursor position="692" topLine="0" />
 	</File>
 	<File name="Headers/factory.h" open="0" top="0" tabpos="3">
 		<Cursor position="2904" topLine="81" />
 	</File>
 	<File name="Headers/generate/circle.h" open="0" top="0" tabpos="0">
-		<Cursor position="43" topLine="0" />
+		<Cursor position="553" topLine="0" />
 	</File>
 	<File name="Headers/generate/complete.h" open="0" top="0" tabpos="0">
-		<Cursor position="580" topLine="0" />
+		<Cursor position="563" topLine="0" />
 	</File>
 	<File name="Headers/generate/generate.h" open="0" top="0" tabpos="0">
-		<Cursor position="196" topLine="0" />
+		<Cursor position="836" topLine="0" />
 	</File>
 	<File name="Headers/generate/grid.h" open="0" top="0" tabpos="0">
-		<Cursor position="609" topLine="0" />
+		<Cursor position="543" topLine="0" />
 	</File>
 	<File name="Headers/generate/path.h" open="0" top="0" tabpos="0">
-		<Cursor position="602" topLine="0" />
+		<Cursor position="543" topLine="0" />
 	</File>
 	<File name="Headers/generate/random.h" open="0" top="0" tabpos="0">
-		<Cursor position="619" topLine="0" />
+		<Cursor position="553" topLine="0" />
 	</File>
 	<File name="Headers/generate/star.h" open="0" top="0" tabpos="0">
-		<Cursor position="500" topLine="0" />
+		<Cursor position="543" topLine="0" />
 	</File>
 	<File name="Headers/generate/tree.h" open="0" top="0" tabpos="0">
-		<Cursor position="564" topLine="0" />
+		<Cursor position="524" topLine="0" />
+	</File>
+	<File name="Headers/generate/wheel.h" open="0" top="0" tabpos="0">
+		<Cursor position="548" topLine="0" />
 	</File>
 	<File name="Headers/import/import.h" open="0" top="0" tabpos="0">
-		<Cursor position="176" topLine="0" />
+		<Cursor position="358" topLine="0" />
 	</File>
 	<File name="Headers/import/tgf.h" open="0" top="0" tabpos="0">
-		<Cursor position="37" topLine="0" />
+		<Cursor position="319" topLine="0" />
 	</File>
 	<File name="Headers/intermediatesteps/intermediatesteps.h" open="0" top="0" tabpos="0">
-		<Cursor position="762" topLine="0" />
+		<Cursor position="655" topLine="0" />
 	</File>
 	<File name="Headers/intermediatesteps/show.h" open="0" top="0" tabpos="0">
 		<Cursor position="788" topLine="0" />
 	</File>
 	<File name="Headers/intermediatesteps/stdout.h" open="0" top="0" tabpos="0">
-		<Cursor position="834" topLine="0" />
+		<Cursor position="785" topLine="0" />
 	</File>
 	<File name="Headers/intermediatesteps/writefile.h" open="0" top="0" tabpos="0">
-		<Cursor position="643" topLine="0" />
+		<Cursor position="948" topLine="5" />
 	</File>
 	<File name="Headers/logic/ComputationTreeLogic/ctl.h" open="0" top="0" tabpos="0">
-		<Cursor position="4430" topLine="131" />
+		<Cursor position="4596" topLine="155" />
 	</File>
 	<File name="Headers/logic/ComputationTreeLogic/ctl_lexer.h" open="0" top="0" tabpos="5">
-		<Cursor position="533" topLine="0" />
+		<Cursor position="792" topLine="4" />
 	</File>
 	<File name="Headers/logic/FirstOrderLogic/fo.h" open="0" top="0" tabpos="1">
-		<Cursor position="1503" topLine="0" />
+		<Cursor position="640" topLine="7" />
+	</File>
+	<File name="Headers/logic/FirstOrderLogic/fo_lexer.h" open="0" top="0" tabpos="0">
+		<Cursor position="767" topLine="4" />
 	</File>
 	<File name="Headers/logic/ModalLogic/ml.h" open="0" top="0" tabpos="0">
-		<Cursor position="0" topLine="27" />
+		<Cursor position="3689" topLine="104" />
 	</File>
 	<File name="Headers/logic/ModalLogic/ml_lexer.h" open="0" top="0" tabpos="0">
-		<Cursor position="760" topLine="0" />
+		<Cursor position="752" topLine="4" />
 	</File>
 	<File name="Headers/logic/logic.h" open="0" top="0" tabpos="4">
-		<Cursor position="498" topLine="0" />
+		<Cursor position="975" topLine="9" />
 	</File>
-	<File name="Headers/opengt.h" open="1" top="0" tabpos="3">
-		<Cursor position="10947" topLine="237" />
+	<File name="Headers/opengt.h" open="0" top="0" tabpos="6">
+		<Cursor position="10235" topLine="195" />
 	</File>
 	<File name="Headers/set_helper.h" open="0" top="0" tabpos="3">
 		<Cursor position="728" topLine="0" />
+	</File>
+	<File name="Headers/simple_xml.h" open="1" top="0" tabpos="2">
+		<Cursor position="592" topLine="10" />
 	</File>
 	<File name="Headers/transform/aspectscale.h" open="0" top="0" tabpos="0">
 		<Cursor position="557" topLine="0" />
@@ -214,8 +226,14 @@
 	<File name="Sources/algorithms/maximumflow/maximumflow.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="2900" topLine="51" />
 	</File>
-	<File name="Sources/algorithms/maximummatching/maximummatching.cpp" open="1" top="1" tabpos="1">
-		<Cursor position="3708" topLine="59" />
+	<File name="Sources/algorithms/maximummatching/maximalmatching.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1412" topLine="0" />
+	</File>
+	<File name="Sources/algorithms/maximummatching/maximummatching.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="4302" topLine="57" />
+	</File>
+	<File name="Sources/algorithms/maximummatching/maximummatchingbipartite.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="6071" topLine="108" />
 	</File>
 	<File name="Sources/algorithms/minimumcut/minimumcut.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="3736" topLine="51" />
@@ -226,17 +244,17 @@
 	<File name="Sources/algorithms/path/path.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="5233" topLine="96" />
 	</File>
-	<File name="Sources/algorithms/vertexcover/vertexcover.cpp" open="1" top="0" tabpos="4">
-		<Cursor position="4333" topLine="96" />
+	<File name="Sources/algorithms/vertexcover/vertexcover.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="2738" topLine="87" />
 	</File>
 	<File name="Sources/attributes.cpp" open="0" top="0" tabpos="5">
-		<Cursor position="11245" topLine="353" />
+		<Cursor position="127" topLine="0" />
 	</File>
 	<File name="Sources/export/dot.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="199" topLine="0" />
 	</File>
-	<File name="Sources/export/export.cpp" open="0" top="0" tabpos="4">
-		<Cursor position="598" topLine="18" />
+	<File name="Sources/export/export.cpp" open="1" top="0" tabpos="6">
+		<Cursor position="4084" topLine="81" />
 	</File>
 	<File name="Sources/export/gastex.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="409" topLine="0" />
@@ -250,8 +268,8 @@
 	<File name="Sources/export/mpost.cpp" open="0" top="0" tabpos="14">
 		<Cursor position="200" topLine="3" />
 	</File>
-	<File name="Sources/export/pdf.cpp" open="0" top="0" tabpos="15">
-		<Cursor position="6481" topLine="168" />
+	<File name="Sources/export/pdf.cpp" open="1" top="1" tabpos="4">
+		<Cursor position="5266" topLine="135" />
 	</File>
 	<File name="Sources/export/postscript.cpp" open="0" top="0" tabpos="5">
 		<Cursor position="1392" topLine="25" />
@@ -328,11 +346,17 @@
 	<File name="Sources/logic/ComputationTreeLogic/ctl.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="2811" topLine="0" />
 	</File>
+	<File name="Sources/logic/ComputationTreeLogic/ctl_lexer.l" open="0" top="0" tabpos="0">
+		<Cursor position="1282" topLine="17" />
+	</File>
 	<File name="Sources/logic/ComputationTreeLogic/ctl_parser.yy" open="0" top="0" tabpos="1">
 		<Cursor position="2995" topLine="35" />
 	</File>
 	<File name="Sources/logic/FirstOrderLogic/fo.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="1015" topLine="22" />
+		<Cursor position="782" topLine="19" />
+	</File>
+	<File name="Sources/logic/FirstOrderLogic/fo_lexer.l" open="0" top="0" tabpos="0">
+		<Cursor position="1088" topLine="17" />
 	</File>
 	<File name="Sources/logic/FirstOrderLogic/fo_parser.yy" open="0" top="0" tabpos="3">
 		<Cursor position="3251" topLine="71" />
@@ -340,11 +364,14 @@
 	<File name="Sources/logic/ModalLogic/ml.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="689" topLine="0" />
 	</File>
-	<File name="Sources/logic/logic.cpp" open="0" top="0" tabpos="3">
-		<Cursor position="773" topLine="0" />
+	<File name="Sources/logic/ModalLogic/ml_lexer.l" open="0" top="0" tabpos="0">
+		<Cursor position="1163" topLine="13" />
 	</File>
-	<File name="Sources/opengt.cpp" open="1" top="0" tabpos="2">
-		<Cursor position="56233" topLine="1483" />
+	<File name="Sources/logic/logic.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="539" topLine="0" />
+	</File>
+	<File name="Sources/opengt.cpp" open="1" top="0" tabpos="3">
+		<Cursor position="67046" topLine="1883" />
 	</File>
 	<File name="Sources/processing/components.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="57" topLine="0" />
@@ -352,8 +379,8 @@
 	<File name="Sources/set_helper.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="2246" topLine="37" />
 	</File>
-	<File name="Sources/simple_xml.cpp" open="0" top="0" tabpos="4">
-		<Cursor position="12948" topLine="509" />
+	<File name="Sources/simple_xml.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="801" topLine="9" />
 	</File>
 	<File name="Sources/thread.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="22" topLine="0" />

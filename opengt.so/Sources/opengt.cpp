@@ -4,6 +4,9 @@
 #include <stdlib.h>
 #include <vector>
 
+using namespace std;
+using namespace OpenGraphtheory::XML;
+
 namespace OpenGraphtheory
 {
 
@@ -298,17 +301,17 @@ namespace OpenGraphtheory
                 return CollectNeighbors(false,false,false, false,false,false, false,false,true);
             }
 
-            void Graph::VertexIterator::WriteToXml(XML* xml)
+            void Graph::VertexIterator::WriteToXml(OpenGraphtheory::XML::XML* xml)
             {
-                XML* node = new XML("node");
+                OpenGraphtheory::XML::XML* node = new OpenGraphtheory::XML::XML("node");
                 stringstream s;
                 s << "v" << GetID();
                 node->AddAttribute("id", s.str());
 
                 // Label
-                XML* name = new XML("attr");
+                OpenGraphtheory::XML::XML* name = new OpenGraphtheory::XML::XML("attr");
                 name->AddAttribute("name", "name");
-                XML* str = new XML("string");
+                OpenGraphtheory::XML::XML* str = new OpenGraphtheory::XML::XML("string");
                 str->AddChild(new XML_Text(GetLabel()));
                 name->AddChild(str);
                 node->AddChild(name);
@@ -317,16 +320,16 @@ namespace OpenGraphtheory
                 vector<float> coordinates = GetCoordinates();
                 if(coordinates.size() > 0)
                 {
-                    XML* coords = new XML("attr");
+                    OpenGraphtheory::XML::XML* coords = new OpenGraphtheory::XML::XML("attr");
                     coords->AddAttribute("name", "coordinates");
-                    XML* seq = new XML("seq");
+                    OpenGraphtheory::XML::XML* seq = new OpenGraphtheory::XML::XML("seq");
 
                     for(unsigned int i = 0; i < coordinates.size(); i++)
                     {
-                        XML* flt = new XML("float");
+                        OpenGraphtheory::XML::XML* flt = new OpenGraphtheory::XML::XML("float");
                         stringstream s;
                         s << coordinates[i];
-                        flt->AddChild(new XML_Text(s.str()));
+                        flt->AddChild(new OpenGraphtheory::XML::XML_Text(s.str()));
                         seq->AddChild(flt);
                     }
                     coords->AddChild(seq);
@@ -334,9 +337,9 @@ namespace OpenGraphtheory
                 }
 
                 // weight
-                XML* weight = new XML("attr");
+                OpenGraphtheory::XML::XML* weight = new OpenGraphtheory::XML::XML("attr");
                 weight->AddAttribute("name", "weight");
-                XML* flt = new XML("float");
+                OpenGraphtheory::XML::XML* flt = new OpenGraphtheory::XML::XML("float");
                 stringstream t;
                 t << GetWeight();
                 flt->AddChild(new XML_Text(t.str()));
@@ -388,13 +391,13 @@ namespace OpenGraphtheory
 
 
 
-            void Graph::EdgeIterator::WriteToXml(XML* xml)
+            void Graph::EdgeIterator::WriteToXml(OpenGraphtheory::XML::XML* xml)
             {
 				string ClosingTag = "</edge>\n";
-				XML* edge;
+				OpenGraphtheory::XML::XML* edge;
 				if(!IsHyperedge())
 				{
-				    edge = new XML("edge");
+				    edge = new OpenGraphtheory::XML::XML("edge");
 
 				    stringstream id;
                     id << "e" << GetID();
@@ -412,7 +415,7 @@ namespace OpenGraphtheory
                 }
 				else
 				{
-				    edge = new XML("rel");
+				    edge = new OpenGraphtheory::XML::XML("rel");
 
                     stringstream id;
                     id << "e" << GetID();
@@ -420,7 +423,7 @@ namespace OpenGraphtheory
 
 					for(VertexIterator j = BeginIncidentVertices(); j != EndIncidentVertices(); j++)
 					{
-					    XML* relend = new XML("relend");
+					    OpenGraphtheory::XML::XML* relend = new OpenGraphtheory::XML::XML("relend");
 					    stringstream target;
 					    target << "v" << j.GetID();
 					    relend->AddAttribute("target", target.str());
@@ -428,7 +431,7 @@ namespace OpenGraphtheory
 					}
 					for(VertexIterator j = BeginPositiveIncidentVertices(); j != EndPositiveIncidentVertices(); j++)
 					{
-					    XML* relend = new XML("relend");
+					    OpenGraphtheory::XML::XML* relend = new OpenGraphtheory::XML::XML("relend");
 					    stringstream target;
 					    target << "v" << j.GetID();
 					    relend->AddAttribute("target", target.str());
@@ -436,7 +439,7 @@ namespace OpenGraphtheory
 					}
 					for(VertexIterator j = BeginNegativeIncidentVertices(); j != EndNegativeIncidentVertices(); j++)
 					{
-					    XML* relend = new XML("relend");
+					    OpenGraphtheory::XML::XML* relend = new OpenGraphtheory::XML::XML("relend");
 					    stringstream target;
 					    target << "v" << j.GetID();
 					    relend->AddAttribute("target", target.str());
@@ -445,20 +448,20 @@ namespace OpenGraphtheory
 				}
 
                 // Label
-                XML* name = new XML("attr");
+                OpenGraphtheory::XML::XML* name = new OpenGraphtheory::XML::XML("attr");
                 name->AddAttribute("name", "name");
-                XML* str = new XML("string");
-                str->AddChild(new XML_Text(GetLabel()));
+                OpenGraphtheory::XML::XML* str = new OpenGraphtheory::XML::XML("string");
+                str->AddChild(new OpenGraphtheory::XML::XML_Text(GetLabel()));
                 name->AddChild(str);
                 edge->AddChild(name);
 
                 // weight
-                XML* weight = new XML("attr");
+                OpenGraphtheory::XML::XML* weight = new OpenGraphtheory::XML::XML("attr");
                 weight->AddAttribute("name", "weight");
-                XML* flt = new XML("float");
+                OpenGraphtheory::XML::XML* flt = new OpenGraphtheory::XML::XML("float");
                 stringstream sweight;
                 sweight << GetWeight();
-                flt->AddChild(new XML_Text(sweight.str()));
+                flt->AddChild(new OpenGraphtheory::XML::XML_Text(sweight.str()));
                 weight->AddChild(flt);
                 edge->AddChild(weight);
 
@@ -1784,21 +1787,23 @@ namespace OpenGraphtheory
 
 
 		/// \brief Traverse an XML-structure, create a graph from it and copy it to *this
-		bool Graph::LoadFromXML(XML* root)
+		bool Graph::LoadFromXML(OpenGraphtheory::XML::XML* root)
 		{
 		    if(root == NULL)
                 throw "Error loading XML Document";
-		    list<XML*> gxl = root->FindChildren("gxl");
-			if(gxl.size() != 1)
+		    list<OpenGraphtheory::XML::XML*> gxl = root->FindChildren("gxl");
+			if(gxl.size() > 1)
 				throw "XML Document must have exactly 1 top element \"gxl\"";
+			if(gxl.size() < 1)
+				throw "XML Document contains no element \"gxl\" (document possibly empty)";
 
 		    map<string, Graph::VertexIterator*> Vertex_XML_ID_to_pointer;
 
-			list<XML*> XMLGraph = gxl.front()->FindChildren("graph");
+			list<OpenGraphtheory::XML::XML*> XMLGraph = gxl.front()->FindChildren("graph");
 			if(XMLGraph.size() != 1)
 				throw "XML Document must have exactly 1 \"graph\" element below the top element \"gxl\"";
 
-			XML* pGraph = XMLGraph.front();
+			OpenGraphtheory::XML::XML* pGraph = XMLGraph.front();
 			Graph G;
 
             bool DefaultDirected = true;
@@ -1810,8 +1815,8 @@ namespace OpenGraphtheory
 
 
             /// assign attributes
-			list<XML*> attrs = pGraph->FindChildren("attr");
-			for(list<XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
+			list<OpenGraphtheory::XML::XML*> attrs = pGraph->FindChildren("attr");
+			for(list<OpenGraphtheory::XML::XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
                 G.Attributes().Set(*attr);
 
             if(G.Attributes().HasAttribute("name"))
@@ -1825,15 +1830,15 @@ namespace OpenGraphtheory
             }
 
 			/// load vertices
-			list<XML*> nodes = pGraph->FindChildren("node");
-			for(list<XML*>::iterator node = nodes.begin(); node != nodes.end(); node++)
+			list<OpenGraphtheory::XML::XML*> nodes = pGraph->FindChildren("node");
+			for(list<OpenGraphtheory::XML::XML*>::iterator node = nodes.begin(); node != nodes.end(); node++)
 			{
 				/// create vertex
 				Graph::VertexIterator *v = new VertexIterator(G.AddVertex());
 
 				/// assign attributes
-				list<XML*> attrs = (*node)->FindChildren("attr");
-				for(list<XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
+				list<OpenGraphtheory::XML::XML*> attrs = (*node)->FindChildren("attr");
+				for(list<OpenGraphtheory::XML::XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
                     v->Attributes().Set(*attr);
 
                 if(v->Attributes().HasAttribute("name"))
@@ -1882,8 +1887,8 @@ namespace OpenGraphtheory
 			}
 
 			/// load edges
-			list<XML*> edges = pGraph->FindChildren("edge");
-			for(list<XML*>::iterator edge = edges.begin(); edge != edges.end(); edge++)
+			list<OpenGraphtheory::XML::XML*> edges = pGraph->FindChildren("edge");
+			for(list<OpenGraphtheory::XML::XML*>::iterator edge = edges.begin(); edge != edges.end(); edge++)
 			{
 				string xmlIsdirected = (*edge)->GetAttribute("isdirected", "");
 				bool Directed = DefaultDirected;
@@ -1905,8 +1910,8 @@ namespace OpenGraphtheory
                     e = G.AddEdge(*(from->second), *(to->second));
 
 				/// assign attributes
-				list<XML*> attrs = (*edge)->FindChildren("attr");
-				for(list<XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
+				list<OpenGraphtheory::XML::XML*> attrs = (*edge)->FindChildren("attr");
+				for(list<OpenGraphtheory::XML::XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
                     e.Attributes().Set(*attr);
 
                 if(e.Attributes().HasAttribute("name"))
@@ -1930,14 +1935,14 @@ namespace OpenGraphtheory
             }
 
 			/// load hyperedges
-			list<XML*> rels = pGraph->FindChildren("rel");
-			for(list<XML*>::iterator rel = rels.begin(); rel != rels.end(); rel++)
+			list<OpenGraphtheory::XML::XML*> rels = pGraph->FindChildren("rel");
+			for(list<OpenGraphtheory::XML::XML*>::iterator rel = rels.begin(); rel != rels.end(); rel++)
 			{
 			    EdgeIterator e = G.AddLooseEdge();
 
 				/// collect incident vertices
-				list<XML*> relends = (*rel)->FindChildren("relend");
-				for(list<XML*>::iterator relend = relends.begin(); relend != relends.end(); relend++)
+				list<OpenGraphtheory::XML::XML*> relends = (*rel)->FindChildren("relend");
+				for(list<OpenGraphtheory::XML::XML*>::iterator relend = relends.begin(); relend != relends.end(); relend++)
 				{
 					string xmlTarget = (*relend)->GetAttribute("target", ""); // this is NOT necessarily the ID, that it gets internally!
 					if(xmlTarget == "") // illegal or no ID
@@ -1960,8 +1965,8 @@ namespace OpenGraphtheory
 				}
 
                 /// assign attributes
-				list<XML*> attrs = (*rel)->FindChildren("attr");
-				for(list<XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
+				list<OpenGraphtheory::XML::XML*> attrs = (*rel)->FindChildren("attr");
+				for(list<OpenGraphtheory::XML::XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
                     e.Attributes().Set(*attr);
 
                 if(e.Attributes().HasAttribute("name"))
@@ -1996,7 +2001,7 @@ namespace OpenGraphtheory
 		/// then read the graph from the XML structure using bool Graph::LoadFromXML(XML* root)
 		bool Graph::LoadFromStream(istream& is)
 		{
-			XML *xml = new XML;
+			OpenGraphtheory::XML::XML *xml = new OpenGraphtheory::XML::XML;
 			is >> (*xml);
 			bool result = LoadFromXML(xml);
 			delete xml;
@@ -2017,7 +2022,7 @@ namespace OpenGraphtheory
 			return is;
 		}
 
-		list<Graph> Graph::LoadGraphsFromXML(XML* root)
+		list<Graph> Graph::LoadGraphsFromXML(OpenGraphtheory::XML::XML* root)
 		{
 			if(root->name == "Graph")
 			{
@@ -2030,9 +2035,9 @@ namespace OpenGraphtheory
 
 			if(root->name == "Graphs")
 			{
-				list<XML*> XMLGraphs = root->FindChildren("Graph");
+				list<OpenGraphtheory::XML::XML*> XMLGraphs = root->FindChildren("Graph");
 				list<Graph> result;
-				for(list<XML*>::iterator i = XMLGraphs.begin(); i != XMLGraphs.end(); i++)
+				for(list<OpenGraphtheory::XML::XML*>::iterator i = XMLGraphs.begin(); i != XMLGraphs.end(); i++)
 				{
 					Graph G;
 					G.LoadFromXML(*i);
@@ -2045,7 +2050,7 @@ namespace OpenGraphtheory
 
 		list<Graph> Graph::LoadGraphsFromStream(istream& is)
 		{
-			XML *xml = new XML;
+			OpenGraphtheory::XML::XML* xml = new OpenGraphtheory::XML::XML;
 			is >> *xml;
 			list<Graph> result = LoadGraphsFromXML(xml);
 			delete xml;
@@ -2058,11 +2063,11 @@ namespace OpenGraphtheory
 			os << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 			os << "<!DOCTYPE gxl SYSTEM \"http://www.gupro.de/GXL/gxl-1.0.dtd\">\n";
 
-			XML* gxl = new XML("gxl");
+			OpenGraphtheory::XML::XML* gxl = new OpenGraphtheory::XML::XML("gxl");
 			gxl->AddChild(new XML_Comment("www.Open-Graphtheory.org"));
 			gxl->AddAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
 
-			XML* graph = new XML("graph");
+			OpenGraphtheory::XML::XML* graph = new OpenGraphtheory::XML::XML("graph");
 			stringstream s;
 			s << GetID();
 			graph->AddAttribute("id", s.str());

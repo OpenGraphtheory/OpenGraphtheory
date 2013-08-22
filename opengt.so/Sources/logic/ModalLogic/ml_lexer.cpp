@@ -1375,12 +1375,12 @@ YY_RULE_SETUP
 case 11:
 YY_RULE_SETUP
 #line 30 "ml_lexer.l"
-{(*yylval).sval = new(string)(yytext); return MLParser::token::STRING;}
+{(*yylval).sval = new(std::string)(yytext); return MLParser::token::STRING;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 31 "ml_lexer.l"
-{(*yylval).sval = new(string)(yytext+1,yyleng-2); return MLParser::token::STRING;}
+{(*yylval).sval = new(std::string)(yytext+1,yyleng-2); return MLParser::token::STRING;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
@@ -2291,7 +2291,7 @@ void Logic_ML_free (void * ptr )
 
 
 
-MLLexer::MLLexer(istream& is) : Logic_ML_FlexLexer(&is)
+MLLexer::MLLexer(std::istream& is) : Logic_ML_FlexLexer(&is)
 {
 }
 

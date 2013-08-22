@@ -16,10 +16,10 @@
                 public:
                     void Run(Graph &G, std::vector<std::string> parameters);
 
-                    bool CompleteColoring(Graph& G, map<Graph::VertexIterator, int>& PreColoring, int k);
-                    map<Graph::VertexIterator, int> FindColoring(Graph &G);
-                    bool AddColoring(Graph& G, int k, string ColoringName);
-                    void AddColoring(Graph& G, string ColoringName);
+                    bool CompleteColoring(Graph& G, std::map<Graph::VertexIterator, int>& PreColoring, int k);
+                    std::map<Graph::VertexIterator, int> FindColoring(Graph &G);
+                    bool AddColoring(Graph& G, int k, std::string ColoringName);
+                    void AddColoring(Graph& G, std::string ColoringName);
 
                 protected:
                     static FactoryRegistrator<Algorithm> AlgorithmColoringRegistrator;

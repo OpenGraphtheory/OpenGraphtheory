@@ -53,6 +53,7 @@
 		<Unit filename="Headers/algorithms/dominatingset/dominatingset.h" />
 		<Unit filename="Headers/algorithms/independentset/independentset.h" />
 		<Unit filename="Headers/algorithms/maximumflow/maximumflow.h" />
+		<Unit filename="Headers/algorithms/maximummatching/maximalmatching.h" />
 		<Unit filename="Headers/algorithms/maximummatching/maximummatching.h" />
 		<Unit filename="Headers/algorithms/minimumcut/minimumcut.h" />
 		<Unit filename="Headers/algorithms/oddcircle/oddcircle.h" />

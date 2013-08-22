@@ -12,7 +12,7 @@ namespace OpenGraphtheory
             protected:
                 static FactoryRegistrator<ImportFilter> ImportFilterTgfRegistrator;
             public:
-                Graph Import(istream& is);
+                Graph Import(std::istream& is);
         };
 
     }

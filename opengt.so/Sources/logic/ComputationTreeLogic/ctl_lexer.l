@@ -31,13 +31,13 @@
 "("                         {return CTLParser::token::OPEN;}
 ")"                         {return CTLParser::token::CLOSE;}
 
-[a-zA-Z][0-9a-zA-Z]*        {(*yylval).sval = new(string)(yytext); return CTLParser::token::STRING;}
-\"[a-zA-Z][0-9a-zA-Z]*\"    {(*yylval).sval = new(string)(yytext+1,yyleng-2); return CTLParser::token::STRING;}
+[a-zA-Z][0-9a-zA-Z]*        {(*yylval).sval = new(std::string)(yytext); return CTLParser::token::STRING;}
+\"[a-zA-Z][0-9a-zA-Z]*\"    {(*yylval).sval = new(std::string)(yytext+1,yyleng-2); return CTLParser::token::STRING;}
 .                           {}
 
 %%
 
-CTLLexer::CTLLexer(istream& is) : Logic_CTL_FlexLexer(&is)
+CTLLexer::CTLLexer(std::istream& is) : Logic_CTL_FlexLexer(&is)
 {
 }
 

@@ -16,7 +16,7 @@
             class Formula
             {
                 public:
-                    virtual void Interpret(Graph &G, list<std::string> parameters) = 0;
+                    virtual void Interpret(Graph &G, std::list<std::string> parameters) = 0;
                     virtual Formula* Clone() = 0;
                     virtual ~Formula();
             };
@@ -29,8 +29,8 @@
                     static Factory<ModelChecker> ModelCheckerFactory;
                     virtual ~ModelChecker();
 
-                    void ModelCheck(Graph& G, std::istream& formula, list<std::string> parameters);
-                    void ModelCheck(Graph& G, std::string formula, list<std::string> parameters);
+                    void ModelCheck(Graph& G, std::istream& formula, std::list<std::string> parameters);
+                    void ModelCheck(Graph& G, std::string formula, std::list<std::string> parameters);
 
             };
 

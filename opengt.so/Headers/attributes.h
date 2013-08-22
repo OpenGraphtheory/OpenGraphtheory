@@ -11,8 +11,8 @@
     {
         public:
             virtual ~Attribute();
-            virtual void WriteToXml(XML* xml) = 0;
-            virtual bool LoadFromXml(XML* xml) = 0;
+            virtual void WriteToXml(OpenGraphtheory::XML::XML* xml) = 0;
+            virtual bool LoadFromXml(OpenGraphtheory::XML::XML* xml) = 0;
             virtual Attribute* Clone() = 0;
     };
 
@@ -20,21 +20,21 @@
     {
         friend class Graph;
         protected:
-            map<string, Attribute*> Attributes;
+            std::map<std::string, Attribute*> Attributes;
         public:
             ~AttributeCollection();
             static OpenGraphtheory::Factory<Attribute> AttributeFactory;
 
-            void Set(XML* attr);
-            bool Add(string name, string type);
-            void WriteToXml(XML* xml);
+            void Set(OpenGraphtheory::XML::XML* attr);
+            bool Add(std::string name, std::string type);
+            void WriteToXml(OpenGraphtheory::XML::XML* xml);
 
             void Clear();
-            void Unset(string name);
+            void Unset(std::string name);
             void operator=(const AttributeCollection& attrs);
 
-            bool HasAttribute(string name);
-            Attribute* GetAttribute(string name);
+            bool HasAttribute(std::string name);
+            Attribute* GetAttribute(std::string name);
     };
 
 
@@ -46,8 +46,8 @@
             BoolAttribute();
             BoolAttribute(bool value);
 
-            void WriteToXml(XML* xml);
-            bool LoadFromXml(XML* xml);
+            void WriteToXml(OpenGraphtheory::XML::XML* xml);
+            bool LoadFromXml(OpenGraphtheory::XML::XML* xml);
             Attribute* Clone();
     };
 
@@ -59,8 +59,8 @@
             IntAttribute();
             IntAttribute(int value);
 
-            void WriteToXml(XML* xml);
-            bool LoadFromXml(XML* xml);
+            void WriteToXml(OpenGraphtheory::XML::XML* xml);
+            bool LoadFromXml(OpenGraphtheory::XML::XML* xml);
             Attribute* Clone();
     };
 
@@ -72,35 +72,35 @@
             FloatAttribute();
             FloatAttribute(float value);
 
-            void WriteToXml(XML* xml);
-            bool LoadFromXml(XML* xml);
+            void WriteToXml(OpenGraphtheory::XML::XML* xml);
+            bool LoadFromXml(OpenGraphtheory::XML::XML* xml);
             Attribute* Clone();
     };
 
     class StringAttribute : public Attribute
     {
         public:
-            string Value;
+            std::string Value;
 
             StringAttribute();
-            StringAttribute(string value);
+            StringAttribute(std::string value);
 
-            void WriteToXml(XML* xml);
-            bool LoadFromXml(XML* xml);
+            void WriteToXml(OpenGraphtheory::XML::XML* xml);
+            bool LoadFromXml(OpenGraphtheory::XML::XML* xml);
             Attribute* Clone();
     };
 
     class SeqAttribute : public Attribute
     {
         public:
-            list<Attribute*> Value;
+            std::list<Attribute*> Value;
 
             SeqAttribute();
-            SeqAttribute(const list<Attribute*>& seq);
+            SeqAttribute(const std::list<Attribute*>& seq);
             ~SeqAttribute();
 
-            void WriteToXml(XML* xml);
-            bool LoadFromXml(XML* xml);
+            void WriteToXml(OpenGraphtheory::XML::XML* xml);
+            bool LoadFromXml(OpenGraphtheory::XML::XML* xml);
             Attribute* Clone();
     };
 

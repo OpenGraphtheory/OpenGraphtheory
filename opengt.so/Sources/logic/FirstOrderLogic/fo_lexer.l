@@ -31,13 +31,13 @@
 ","                         {return FOParser::token::COMMA;}
 "."                         {return FOParser::token::DOT;}
 
-[a-zA-Z][0-9a-zA-Z]*        {(*yylval).sval = new(string)(yytext); return FOParser::token::STRING;}
-\"[a-zA-Z][0-9a-zA-Z]*\"    {(*yylval).sval = new(string)(yytext+1,yyleng-2); return FOParser::token::STRING;}
+[a-zA-Z][0-9a-zA-Z]*        {(*yylval).sval = new(std::string)(yytext); return FOParser::token::STRING;}
+\"[a-zA-Z][0-9a-zA-Z]*\"    {(*yylval).sval = new(std::string)(yytext+1,yyleng-2); return FOParser::token::STRING;}
 .                           {}
 
 %%
 
-FOLexer::FOLexer(istream& is) : Logic_FO_FlexLexer(&is)
+FOLexer::FOLexer(std::istream& is) : Logic_FO_FlexLexer(&is)
 {
 }
 

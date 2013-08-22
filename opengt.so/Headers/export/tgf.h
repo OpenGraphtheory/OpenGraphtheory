@@ -17,8 +17,8 @@
                     static FactoryRegistrator<ExportFilter> ExportFilterTgfRegistrator;
                 public:
                     void Export(OpenGraphtheory::Graph& G, std::ostream& os,
-                                map<Graph::VertexIterator, Visualization::Color>& vertexcoloring,
-                                map<Graph::EdgeIterator, Visualization::Color>& edgecoloring, float dpi, float edgewidth, float vertexradius);
+                                std::map<Graph::VertexIterator, Visualization::Color>& vertexcoloring,
+                                std::map<Graph::EdgeIterator, Visualization::Color>& edgecoloring, float dpi, float edgewidth, float vertexradius);
             };
 
         }

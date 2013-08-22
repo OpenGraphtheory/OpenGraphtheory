@@ -21,13 +21,13 @@
 
                     int index;
                     int digits;
-                    string prefix;
-                    string suffix;
+                    std::string prefix;
+                    std::string suffix;
 
                 public:
                     IntermediateStepHandlerWriteFile();
                     ~IntermediateStepHandlerWriteFile();
-                    void Configure(vector<string> parameters);
+                    void Configure(std::vector<std::string> parameters);
                     void Handle(Graph* G);
             };
 
