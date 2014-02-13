@@ -8,7 +8,7 @@ namespace OpenGraphtheory
 {
     namespace Algorithms
     {
-
+/*
         bool AlgorithmMAXIMUMMATCHING::FindAugmentingPath(Graph& G, Graph::VertexIterator Source,
                                 set<Graph::EdgeIterator>& Matching,
                                 set<Graph::VertexIterator>& MatchedVertices,
@@ -148,7 +148,8 @@ namespace OpenGraphtheory
                 AugmentingPath.clear();
             }
         }
+    */
 
-    }
-}
+    } // namespace Algorithms
+} // namespace OpenGraphtheory
 

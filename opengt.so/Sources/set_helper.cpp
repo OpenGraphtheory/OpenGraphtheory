@@ -68,6 +68,32 @@
                 }
 
 
+                template<class T> std::set<T> SymmetricDifference(const std::set<T> &A, const std::set<T> &B)
+                {
+                    typename std::set<T> result;
+                    for(typename std::set<T>::iterator a = A.begin(); a != A.end(); a++)
+                        if(B.find(*a) == B.end())
+                            result.insert(*a);
+                    for(typename std::set<T>::iterator b = B.begin(); b != B.end(); b++)
+                        if(A.find(*b) == A.end())
+                            result.insert(*b);
+                    return result;
+                }
+
+
+                template<class T> void DestructiveSymmetricDifference(std::set<T> &A, const std::set<T> &B)
+                {
+                    for(typename std::set<T>::iterator b = B.begin(); b != B.end(); b++)
+                    {
+                        typename std::set<T>::iterator pos = A.find(*b);
+                        if(pos == A.end())
+                            A.insert(*b);
+                        else
+                            A.erase(pos);
+                    }
+                }
+
+
                 template<class T> bool IsSubset(const std::set<T> &A, const std::set<T> &B)
                 {
                     for(typename std::set<T>::iterator a = A.begin(); a != A.end(); a++)

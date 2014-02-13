@@ -14,6 +14,8 @@
             template<class T> void DestructiveSetMinus(std::set<T> &A, const std::set<T> &B);
             template<class T> std::set<T> Union(const std::set<T> &A, const std::set<T> &B);
             template<class T> void DestructiveUnion(const std::set<T> &A, const std::set<T> &B);
+            template<class T> std::set<T> SymmetricDifference(const std::set<T> &A, const std::set<T> &B);
+            template<class T> void DestructiveSymmetricDifference(const std::set<T> &A, const std::set<T> &B);
             template<class T> bool IsSubset(const std::set<T> &A, const std::set<T> &B);
         }
     }

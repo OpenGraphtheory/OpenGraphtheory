@@ -272,7 +272,7 @@ namespace OpenGraphtheory
 		FO_And::FO_And(FOFormula* phi1, FOFormula* phi2)
 		{
 			if(phi1 == NULL || phi2 == NULL)
-				throw "ML_And::ML_And parameters must not be NULL";
+				throw "FO_And::FO_And parameters must not be NULL";
 			this->phi1 = phi1;
 			this->phi2 = phi2;
 		}
