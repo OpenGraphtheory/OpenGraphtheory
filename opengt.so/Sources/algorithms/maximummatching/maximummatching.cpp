@@ -17,7 +17,7 @@ namespace OpenGraphtheory
         bool AlgorithmMAXIMUMMATCHING::Augment(Graph& G, set<Graph::EdgeIterator>& Matching, set<Graph::VertexIterator>& MatchedVertices)
         {
             // Edmonds algorithm
-
+cout << "init\n"; cout.flush();
             // Register for quick lookups
 
             map<Graph::VertexIterator, Graph::VertexIterator> MatchedVertex;
@@ -26,6 +26,8 @@ namespace OpenGraphtheory
             for(set<Graph::EdgeIterator>::iterator i = Matching.begin(); i != Matching.end(); i++)
             {
                 Graph::EdgeIterator e = *i;
+                if(e == G.EndEdges())
+                    { cout << "EndEdges\n"; cout.flush(); }
                 Graph::VertexIterator from = e.From();
                 Graph::VertexIterator to = e.To();
 
@@ -56,11 +58,12 @@ namespace OpenGraphtheory
 
             // Construct alternating forest
 
+cout << "start\n"; cout.flush();
             while(!OuterVertexQueue.empty())
             {
                 Graph::VertexIterator v = OuterVertexQueue.front();
                 OuterVertexQueue.pop();
-cout << "pop\n"; cout.flush();
+cout << "   pop\n"; cout.flush();
 
                 set<Graph::VertexIterator> vNeighbors = v.CollectNeighbors(1,0,0,0,0,0,0,0,0);
                 for(set<Graph::VertexIterator>::iterator n = vNeighbors.begin(); n != vNeighbors.end(); n++)
@@ -69,7 +72,7 @@ cout << "pop\n"; cout.flush();
                     //         and be in the forest hence). Add n and its match to the forest.
                     if(ForestRoot.find(*n) == ForestRoot.end())
                     {
-cout << "   case 1\n"; cout.flush();
+cout << "      case 1\n"; cout.flush();
                         ForestPredecessor[*n] = v;
                         PredecessorEdge.insert(pair<Graph::VertexIterator, Graph::EdgeIterator>(*n, v.GetEdge(*n, 1,0,0,0,0,0,0,0,0)));
                         ForestRoot[*n] = ForestRoot[v];
@@ -79,6 +82,16 @@ cout << "   case 1\n"; cout.flush();
                         OuterVertices.insert(m);
                         OuterVertexQueue.push(m);
                         ForestPredecessor[m] = *n;
+
+                        if(m == G.EndVertices())
+                            { cout << "EndVertices m\n"; cout.flush(); }
+                        if(*n == G.EndVertices())
+                            { cout << "EndVertices *n\n"; cout.flush(); }
+                        if(MatchedEdge.find(*n) == MatchedEdge.end())
+                            { cout << "*n not in MatchedEdge\n"; cout.flush(); }
+                        if(MatchedEdge[*n] == G.EndEdges())
+                            { cout << "EndEdges MatchedEdge[*n]\n"; cout.flush(); }
+
                         PredecessorEdge.insert(pair<Graph::VertexIterator, Graph::EdgeIterator>(m, MatchedEdge[*n]));
                         ForestRoot[m] = ForestRoot[v];
 
@@ -88,7 +101,7 @@ cout << "   case 1\n"; cout.flush();
                     // Case 2: n is also an outer vertex and has a different root => augmenting path found
                     if(OuterVertices.find(*n) != OuterVertices.end()  &&  ForestRoot[*n] != ForestRoot[v])
                     {
-cout << "   case 2\n"; cout.flush();
+cout << "      case 2\n"; cout.flush();
                         set<Graph::EdgeIterator> AugmentingPath;
 
                         for(Graph::VertexIterator i = v; i != ForestRoot[v]; i = ForestPredecessor[i])
@@ -110,8 +123,8 @@ cout << "   case 2\n"; cout.flush();
                     //         => odd circle found, do blossom-step
                     if(OuterVertices.find(*n) != OuterVertices.end()  &&  ForestRoot[*n] == ForestRoot[v])
                     {
-cout << "   case 3\n"; cout.flush();
-                        // find least common ancestor of v and *n
+cout << "      case 3\n"; cout.flush();
+                        // find least common predecessor of v and *n
                         Graph::VertexIterator LeastCommonPredecessor;
                         set<Graph::VertexIterator> vPredecessors;
                         for(Graph::VertexIterator i = v; i != G.EndVertices(); i = ForestPredecessor[i])
@@ -125,12 +138,12 @@ cout << "   case 3\n"; cout.flush();
                             }
                         }
 
-                        // exchange edges on path from root to least common ancestor
+                        // exchange edges on path from root to least common predecessor
                         // (size stays the same, but blossom step becomes applicable)
                         if(LeastCommonPredecessor != ForestRoot[v])
                         {
                             set<Graph::EdgeIterator> path;
-                            for(Graph::VertexIterator i = LeastCommonPredecessor; i != G.EndVertices(); i = ForestPredecessor[i])
+                            for(Graph::VertexIterator i = LeastCommonPredecessor; i != ForestRoot[v]; i = ForestPredecessor[i])
                                 path.insert(PredecessorEdge[i]);
                             SetHelper::DestructiveSymmetricDifference(Matching, path);
                             MatchedVertices.insert(ForestRoot[v]);
@@ -139,18 +152,34 @@ cout << "   case 3\n"; cout.flush();
 
                         // blossom step: contract the odd circle
                         set<Graph::VertexIterator> OddCircle;
+                        set<Graph::EdgeIterator> OddCircleEdges;
                         OddCircle.insert(LeastCommonPredecessor);
                         for(Graph::VertexIterator i = v; i != LeastCommonPredecessor; i = ForestPredecessor[i])
+                        {
                             OddCircle.insert(i);
+                            OddCircleEdges.insert(PredecessorEdge[i]);
+                        }
                         for(Graph::VertexIterator i = *n; i != LeastCommonPredecessor; i = ForestPredecessor[i])
+                        {
                             OddCircle.insert(i);
+                            OddCircleEdges.insert(PredecessorEdge[i]);
+                        }
                         Graph G2 = G;
-                        Graph::VertexIterator Fused = G2.Fuse(OddCircle); // contract
+                        Graph::VertexIterator Fused = G2.Fuse(OddCircle); // contract circle
 
                         // Restart on G2
-                        MatchedVertices.insert(Fused);
-                        bool result = Augment(G2, Matching, MatchedVertices);
-                        MatchedVertices.erase(Fused);
+                        set<Graph::EdgeIterator> G2Matching;
+                        for(set<Graph::EdgeIterator>::iterator i = Matching.begin(); i != Matching.end(); i++)
+                            if(OddCircleEdges.find(*i) == OddCircleEdges.end())
+                                G2Matching.insert(G2.GetEdge(i->GetID()));
+
+                        set<Graph::VertexIterator> G2MatchedVertices;
+                        G2MatchedVertices.insert(Fused);
+                        for(set<Graph::VertexIterator>::iterator i = MatchedVertices.begin(); i != MatchedVertices.end(); i++)
+                            if(OddCircle.find(*i) == OddCircle.end())
+                                G2MatchedVertices.insert(G2.GetVertex(i->GetID()));
+
+                        bool result = Augment(G2, G2Matching, G2MatchedVertices);
                         return result;
                     }
 
