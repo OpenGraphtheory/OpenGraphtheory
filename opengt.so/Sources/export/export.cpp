@@ -198,7 +198,7 @@ namespace OpenGraphtheory
                     if(LastColor != edgecoloring[e])
                     {
                         LastColor = edgecoloring[e];
-                        SetPenColor(os, edgecoloring[e]);
+                        SetPenColor(os, LastColor);
                     }
                 }
                 else
@@ -206,10 +206,9 @@ namespace OpenGraphtheory
                     if(LastColor != Visualization::Color(0,0,0))
                     {
                         LastColor = Visualization::Color(0,0,0);
-                        SetPenColor(os, Visualization::Color(0,0,0));
+                        SetPenColor(os, LastColor);
                     }
                 }
-
 
                 if(e.IsEdge())
                     Line(os, e.From().GetID(), e.To().GetID(), x1, y1, x2, y2);

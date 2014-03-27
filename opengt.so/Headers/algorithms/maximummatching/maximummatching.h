@@ -26,17 +26,8 @@
                 protected:
                     static FactoryRegistrator<Algorithm> AlgorithmMaximumMatchingRegistrator;
 
-                    static bool Augment(Graph& G, std::set<Graph::EdgeIterator>& Matching, std::set<Graph::VertexIterator>& MatchedVertices);
-                    static void FindMaximumMatching(Graph& G, std::set<Graph::EdgeIterator>& Matching, std::set<Graph::VertexIterator>& MatchedVertices);
-                    //static void FindMaximumMatchingBipartite(Graph& G, std::set<Graph::EdgeIterator>& Matching, std::set<Graph::VertexIterator>& MatchedVertices);
-
-                    //static bool FindAugmentingPath(Graph& G, Graph::VertexIterator Source, std::set<Graph::EdgeIterator>& Matching,
-                    //                     std::set<Graph::VertexIterator>& MatchedVertices, std::vector<Graph::EdgeIterator>& AugmentingPath);
-                    //static bool FindAugmentingPath(Graph& G, std::set<Graph::EdgeIterator>& Matching,
-                    //                     std::set<Graph::VertexIterator>& MatchedVertices,
-                    //                     std::vector<Graph::EdgeIterator>& AugmentingPath);
-                    //static bool FindAugmentingPath(Graph& G, std::set<Graph::EdgeIterator>& Matching,
-                    //                     std::vector<Graph::EdgeIterator>& AugmentingPath);
+                    static bool Augment(Graph& G, std::set<Graph::EdgeIterator>& Matching,
+                                            std::map<Graph::VertexIterator, int> ContractionEquivalenceClass);
             };
         }
     }

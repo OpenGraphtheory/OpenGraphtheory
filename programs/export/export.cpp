@@ -138,8 +138,8 @@ void FactoryLister::Enumerate(string name, string description, string url)
 
 void usage(char* argv0)
 {
-	cerr << "usage: " << argv0 << " format\n"
-	     << "   where format can be\n";
+	cerr << "usage: " << argv0 << " --format <format>\n"
+	     << "   where <format> can be\n";
 
     FactoryMaxNameLength* l = new FactoryMaxNameLength();
     Export::ExportFilter::ExportFilterFactory.Enumerate(l);
