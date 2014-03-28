@@ -362,5 +362,80 @@ namespace OpenGraphtheory
             PutText(os, x, y, text);
         }
 
+
+
+
+        string ExportFilter::SanitizeString(string String)
+        {
+            map<char, string> SpecialCharacterMap = SpecialCharacters();
+            string result;
+            for(string::iterator i = String.begin(); i != String.end(); i++)
+            {
+                if((int)*i == -61)
+                {
+                    i++;
+                    switch((int)*i)
+                    {
+                        // ü
+                        case -68: result += SpecialCharacter_uuml(); break;
+                        // ö
+                        case -74: result += SpecialCharacter_ouml(); break;
+                        // ä
+                        case -92: result += SpecialCharacter_auml(); break;
+                        // Ä
+                        case -124: result += SpecialCharacter_Auml(); break;
+                        // Ö
+                        case -106: result += SpecialCharacter_Ouml(); break;
+                        // Ü
+                        case -100: result += SpecialCharacter_Uuml(); break;
+                        // ß
+                        case -97: result += SpecialCharacter_szlig(); break;
+                    }
+                    continue;
+                }
+
+                if(SpecialCharacterMap.find(*i) != SpecialCharacterMap.end())
+                    result += SpecialCharacterMap[*i];
+                else
+                    result += *i;
+            }
+            return result;
+        }
+
+        map<char, string> ExportFilter::SpecialCharacters()
+        {
+            map<char, string> result;
+            return result;
+        }
+        string ExportFilter::SpecialCharacter_auml()
+        {
+            return "ä";
+        }
+        string ExportFilter::SpecialCharacter_Auml()
+        {
+            return "Ä";
+        }
+        string ExportFilter::SpecialCharacter_uuml()
+        {
+            return "ü";
+        }
+        string ExportFilter::SpecialCharacter_Uuml()
+        {
+            return "Ü";
+        }
+        string ExportFilter::SpecialCharacter_ouml()
+        {
+            return "ö";
+        }
+        string ExportFilter::SpecialCharacter_Ouml()
+        {
+            return "Ö";
+        }
+        string ExportFilter::SpecialCharacter_szlig()
+        {
+            return "ß";
+        }
+
+
     }
 }

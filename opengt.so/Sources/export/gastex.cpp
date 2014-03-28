@@ -24,26 +24,71 @@ namespace OpenGraphtheory
 
 
             os << "% www.Open-Graphtheory.org\n";
-            os << "%\\usepackage{gastex}";
+            os << "%\\usepackage{gastex}\n";
             os << "\\begin{picture}(100,100)(0,0)\n";
 
             /// write vertices
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
                 vector<float> coordinates = v.GetCoordinates();
-                os << "  \\node(n" << v.GetID() << ")(" << coordinates[0] << "," << coordinates[1] << "){" << v.GetLabel() << "}\n";
+                os << "  \\node(n" << v.GetID() << ")(" << coordinates[0] << "," << coordinates[1] << "){" << SanitizeString(v.GetLabel()) << "}\n";
             }
 
             /// write edges
             for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
                 os << "  \\drawedge" << (e.IsEdge()?"[AHnb=0]":"")
-                   << "(n" << e.From().GetID() << ",n" << e.To().GetID() << "){" << e.GetLabel() << "}\n";
+                   << "(n" << e.From().GetID() << ",n" << e.To().GetID() << "){" << SanitizeString(e.GetLabel()) << "}\n";
 
             os << "\\end{picture}\n";
         }
 
         FactoryRegistrator<ExportFilter> ExportFilterGASTEX::ExportFilterGastexRegistrator(&ExportFilter::ExportFilterFactory, "gastex",
             new DefaultInstantiator<ExportFilter, ExportFilterGASTEX>("gastex", "LaTeX package \"GasTeX\"", "http://www.lsv.ens-cachan.fr/~gastin/gastex/"));
+
+
+        map<char, string> ExportFilterGASTEX::SpecialCharacters()
+        {
+            map<char, string> result;
+            result['{'] = "\\{";
+            result['}'] = "\\}";
+            result['&'] = "\\&";
+            result['%'] = "\\%";
+            result['$'] = "\\$";
+            result['#'] = "\\#";
+            result['_'] = "\\_";
+            result['\\'] = "{\\textbackslash}";
+            result['^'] = "{\\textasciicircum}";
+            result['~'] = "{\\textasciitilde}";
+            return result;
+        }
+        string ExportFilterGASTEX::SpecialCharacter_auml()
+        {
+            return "\\\"a";
+        }
+        string ExportFilterGASTEX::SpecialCharacter_Auml()
+        {
+            return "\\\"A";
+        }
+        string ExportFilterGASTEX::SpecialCharacter_uuml()
+        {
+            return "\\\"u";
+        }
+        string ExportFilterGASTEX::SpecialCharacter_Uuml()
+        {
+            return "\\\"U";
+        }
+        string ExportFilterGASTEX::SpecialCharacter_ouml()
+        {
+            return "\\\"o";
+        }
+        string ExportFilterGASTEX::SpecialCharacter_Ouml()
+        {
+            return "\\\"O";
+        }
+        string ExportFilterGASTEX::SpecialCharacter_szlig()
+        {
+            return "{\\ss}";
+        }
 
     }
 }

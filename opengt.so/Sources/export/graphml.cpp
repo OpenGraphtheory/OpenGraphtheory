@@ -18,13 +18,26 @@ namespace OpenGraphtheory
             /// write header
             os << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
             os << "<!-- www.Open-Graphtheory.org -->\n";
-            os << "<graphml xmlns=\"http://graphml.graphdrawing.org/xmlns\">\n";
+            os << "<graphml xmlns=\"http://graphml.graphdrawing.org/xmlns\" xmlns:y=\"http://www.yworks.com/xml/graphml\">\n";
+            os << "  <key for=\"node\" id=\"d6\" yfiles.type=\"nodegraphics\"/>\n";
             os << "  <graph id=\"g" << G.GetID() << "\">\n";
 
             /// write vertices
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                os << "    <node id=\"n" << v.GetID() << "\"/>\n";
+                os << "    <node id=\"n" << v.GetID() << "\">\n";
+                os << "      <data key=\"d6\">\n";
+                os << "        <y:ShapeNode>\n";
+                vector<float> Coordinates = v.GetCoordinates();
+                if(Coordinates.size() >= 2)
+                {
+                    os << "          <y:Geometry height=\"1.0\" width=\"1.0\" x=\"" << Coordinates[0] << "\" "
+                                                                            << "y=\"" << Coordinates[1] << "\"/>\n";
+                }
+                os << "          <y:NodeLabel alignment=\"center\" autoSizePolicy=\"content\" fontFamily=\"Dialog\" fontSize=\"12\" fontStyle=\"plain\" hasBackgroundColor=\"false\" hasLineColor=\"false\" textColor=\"#000000\" visible=\"true\">" << v.GetLabel() << "</y:NodeLabel>\n";
+                os << "        </y:ShapeNode>\n";
+                os << "      </data>\n";
+                os << "    </node>\n";
             }
 
             /// write edges

@@ -29,7 +29,15 @@
                     static void Export(OpenGraphtheory::Graph& G, std::ostream& os, std::string format, std::string vertexcoloring="", std::string edgecoloring="", float dpi=72, float edgewidth=-1, float vertexradius=-1);
                     static void Export(OpenGraphtheory::Graph& G, std::string FileName, std::string format, std::string vertexcoloring="", std::string edgecoloring="", float dpi=72,float edgewidth=-1, float vertexradius=-1);
 
-
+                    std::string SanitizeString(std::string String);
+                    virtual std::map<char, std::string> SpecialCharacters();
+                    virtual std::string SpecialCharacter_auml();
+                    virtual std::string SpecialCharacter_Auml();
+                    virtual std::string SpecialCharacter_ouml();
+                    virtual std::string SpecialCharacter_Ouml();
+                    virtual std::string SpecialCharacter_uuml();
+                    virtual std::string SpecialCharacter_Uuml();
+                    virtual std::string SpecialCharacter_szlig();
             };
 
             class GraphicalExportFilter : public ExportFilter
