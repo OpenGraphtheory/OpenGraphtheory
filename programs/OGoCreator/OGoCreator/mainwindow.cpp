@@ -2,16 +2,19 @@
 #include<QDragLeaveEvent>
 #include<QDragMoveEvent>
 #include<QDropEvent>
-#include <QInputDialog>
+#include <QtWidgets/QInputDialog>
 
 #include <QDesktopServices>
 #include <QUrl>
-#include <QGraphicsView>
-#include <QFileDialog>
+#include <QtWidgets/QGraphicsView>
+#include <QtWidgets/QFileDialog>
+#include <QMimeData>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+
 using namespace OpenGraphtheory;
+using namespace std;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -26,6 +29,9 @@ MainWindow::MainWindow(QWidget *parent) :
     QStringList cmdline_args = QCoreApplication::arguments();
     for(int i = 1; i < cmdline_args.count(); i++)
         OpenGraphFile(cmdline_args[i]);
+
+    //connect(ui->action,SIGNAL(<somesignal>),<someotherobject>,SLOT(closeButton_clicked()));
+    //connect(<someobject>,SIGNAL(<somesignal>),<someotherobject>,SLOT(closeButton_clicked()));
 }
 
 MainWindow::~MainWindow()
@@ -38,7 +44,6 @@ void MainWindow::MakeTab(Graph* graph, QString tabCaption, QString filelocation)
     OGoGraphView *gv = new OGoGraphView(this);
     gv->setFileLocation(filelocation);
     gv->setGraph(graph);
-    gv->setBackground("/home/viktor/Downloads/springfield.jpg");
     int newTabIdx = ui->tabWidget->addTab(gv, tabCaption);
     ui->tabWidget->setCurrentIndex(newTabIdx);
 }
@@ -62,7 +67,6 @@ void MainWindow::on_actionOpen_triggered()
     dlg.setAcceptMode(QFileDialog::AcceptOpen);
     dlg.setDefaultSuffix("gxl");
     dlg.setFileMode(QFileDialog::ExistingFiles);
-    dlg.setFilter("Graph eXchange Language Files (*.gxl)");
 
     if(!dlg.exec())
         return;
@@ -133,10 +137,9 @@ void MainWindow::on_actionSave_as_triggered()
     dlg.selectFile(file);
     dlg.setAcceptMode(QFileDialog::AcceptSave);
     dlg.setDefaultSuffix("gxl");
-    dlg.setFilter("Graph eXchange Language (*.gxl)");
     ExportFilterEnumerator expfilters(&dlg);
     OpenGraphtheory::Export::ExportFilter::ExportFilterFactory.Enumerate(&expfilters);
-    dlg.setFilters(expfilters.getStringList());
+    //dlg.setFilters(expfilters.getStringList());
 
     if(!dlg.exec())
         return;
@@ -214,8 +217,7 @@ void MainWindow::dropEvent(QDropEvent* dropevent)
 }
 
 
-
-
+// ===================================================================================================================================================
 
 
 void MainWindow::on_actionClique_triggered()
@@ -235,6 +237,10 @@ void MainWindow::on_actionClique_triggered()
     gv->resetEdgeColoring();
 }
 
+
+// ===================================================================================================================================================
+
+
 void MainWindow::on_actionColoring_triggered()
 {
     bool ok;
@@ -252,6 +258,10 @@ void MainWindow::on_actionColoring_triggered()
     gv->resetEdgeColoring();
 }
 
+
+// ===================================================================================================================================================
+
+
 void PathVertexSelectionFinished(QWidget* mainwindow, OGoGraphView* gv, vector<Graph::VertexIterator> selectedvertices, Graph* G)
 {
     bool ok;
@@ -267,13 +277,43 @@ void PathVertexSelectionFinished(QWidget* mainwindow, OGoGraphView* gv, vector<G
     gv->repaint();
 }
 
-
 void MainWindow::on_actionPath_triggered()
 {
     OGoGraphView* gv = static_cast<OGoGraphView*>(ui->tabWidget->currentWidget());
 
     gv->selectVertices(this, 2, PathVertexSelectionFinished);
 }
+
+
+// ===================================================================================================================================================
+
+
+void MinCutVertexSelectionFinished(QWidget* mainwindow, OGoGraphView* gv, vector<Graph::VertexIterator> selectedvertices, Graph* G)
+{
+    bool ok;
+    QString text = QInputDialog::getText(mainwindow, "Minimum Cut Algorithm", "Enter a name for the Cut",
+                   QLineEdit::Normal, "Cut", &ok );
+    if ( !ok || text.isEmpty() )
+        return;
+
+    OpenGraphtheory::Algorithms::AlgorithmMINIMUMCUT algo;
+    map<Graph::EdgeIterator, float> capacities;
+    for(Graph::EdgeIterator e = G->BeginEdges(); e != G->EndEdges(); e++)
+        capacities.insert(std::pair<Graph::EdgeIterator, float>(e, e.GetWeight()));
+    algo.AddMinimumCut(*G, selectedvertices[0], selectedvertices[1], capacities, text.toUtf8().constData());
+    gv->setEdgeColoring(text.toUtf8().constData());
+    gv->resetVertexColoring();
+    gv->repaint();
+}
+
+void MainWindow::on_actionMinimum_Cut_triggered()
+{
+    OGoGraphView* gv = static_cast<OGoGraphView*>(ui->tabWidget->currentWidget());
+    gv->selectVertices(this, 2, MinCutVertexSelectionFinished);
+}
+
+
+// ===================================================================================================================================================
 
 
 void MainWindow::on_actionIndependent_Set_triggered()
@@ -293,6 +333,31 @@ void MainWindow::on_actionIndependent_Set_triggered()
     gv->resetEdgeColoring();
 }
 
+
+// ===================================================================================================================================================
+
+
+void MainWindow::on_actionMaximum_Matching_triggered()
+{
+    bool ok;
+    QString text = QInputDialog::getText(this, "Maximum Matching Algorithm", "Enter a name for the Maximum Matching",
+                   QLineEdit::Normal, "MaximumMatching", &ok );
+    if ( !ok || text.isEmpty() )
+        return;
+
+    OGoGraphView* gv = static_cast<OGoGraphView*>(ui->tabWidget->currentWidget());
+
+    OpenGraphtheory::Algorithms::AlgorithmMAXIMUMMATCHING algo;
+    algo.AddMaximumMatching(*(gv->getGraph()), text.toUtf8().constData());
+
+    gv->resetVertexColoring();
+    gv->setEdgeColoring(text.toUtf8().constData());
+}
+
+
+// ===================================================================================================================================================
+
+
 void MainWindow::on_actionDominating_Set_triggered()
 {
     bool ok;
@@ -310,6 +375,8 @@ void MainWindow::on_actionDominating_Set_triggered()
     gv->resetEdgeColoring();
 }
 
+
+// ===================================================================================================================================================
 
 
 RepaintOnChange::RepaintOnChange(OGoGraphView *target) : IntermediateStepHandler()
@@ -336,6 +403,8 @@ void MainWindow::on_actionSpring_Embed_triggered()
 }
 
 
+// ===================================================================================================================================================
+
 
 void MainWindow::on_actionModal_Logic_triggered()
 {
@@ -356,6 +425,10 @@ void MainWindow::on_actionModal_Logic_triggered()
     gv->resetEdgeColoring();
 }
 
+
+// ===================================================================================================================================================
+
+
 void MainWindow::on_actionComputation_Tree_Logic_triggered()
 {
     bool ok;
@@ -374,6 +447,10 @@ void MainWindow::on_actionComputation_Tree_Logic_triggered()
     gv->setVertexColoring("ctlmodel");
     gv->resetEdgeColoring();
 }
+
+
+// ===================================================================================================================================================
+
 
 void MainWindow::on_actionFirst_Order_Predicate_Logic_triggered()
 {
@@ -400,3 +477,6 @@ void MainWindow::on_actionFirst_Order_Predicate_Logic_triggered()
         delete formula;
     }
 }
+
+
+

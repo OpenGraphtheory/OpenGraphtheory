@@ -1,13 +1,11 @@
 #ifndef OGOGRAPHVIEW_H
 #define OGOGRAPHVIEW_H
 
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 #include <QColor>
-#include<QTimer>
+#include <QTimer>
 #include <QImage>
 #include "../../../opengt.so/Headers/opengt.h"
-
-using namespace OpenGraphtheory;
 
 class OGoGraphView : public QWidget
 {
@@ -18,7 +16,7 @@ class OGoGraphView : public QWidget
     int oldx;
     int oldy;
 
-    Graph* graph;
+    OpenGraphtheory::Graph* graph;
     float zoom;
     float x_offset;
     float y_offset;
@@ -33,13 +31,13 @@ class OGoGraphView : public QWidget
 
     enum MouseAction {Nothing, Navigating, DrawingEdge, MovingVertex};
     MouseAction mouseaction;
-    std::set<Graph::VertexIterator> selectedvertices;
+    std::set<OpenGraphtheory::Graph::VertexIterator> selectedvertices;
     QString FileLocation;
 
     int WaitingForVertexSelection;
-    std::vector<Graph::VertexIterator> PendingVertices;
+    std::vector<OpenGraphtheory::Graph::VertexIterator> PendingVertices;
     QWidget* VertexSelectionParent;
-    void (*VertexSelectionCallback)(QWidget*, OGoGraphView*, vector<Graph::VertexIterator>, Graph*);
+    void (*VertexSelectionCallback)(QWidget*, OGoGraphView*, std::vector<OpenGraphtheory::Graph::VertexIterator>, OpenGraphtheory::Graph*);
 
     QImage* Background;
     bool SnapToGrid;
@@ -50,8 +48,8 @@ public:
     OGoGraphView(QWidget *parent = 0);
     ~OGoGraphView();
 
-    void setGraph(Graph* graph);
-    Graph* getGraph();
+    void setGraph(OpenGraphtheory::Graph* graph);
+    OpenGraphtheory::Graph* getGraph();
     void setBackground(QString FilePath);
     void setFileLocation(QString location);
     QString getFileLocation();
@@ -63,7 +61,7 @@ public:
     void mouseMoveEvent(QMouseEvent *);
     void keyReleaseEvent(QKeyEvent *);
 
-    Graph::VertexIterator VertexAt(int, int);
+    OpenGraphtheory::Graph::VertexIterator VertexAt(int, int);
     void ScreenToModel(int, int, float&, float&);
     void ModelToScreen(float, float, int&, int&);
 
@@ -74,7 +72,7 @@ public:
     void resetVertexColoring();
     void resetEdgeColoring();
 
-    bool selectVertices(QWidget*, int, void callback(QWidget*, OGoGraphView*, vector<Graph::VertexIterator>, Graph*));
+    bool selectVertices(QWidget*, int, void callback(QWidget*, OGoGraphView*, std::vector<OpenGraphtheory::Graph::VertexIterator>, OpenGraphtheory::Graph*));
 
 protected:
     void keyPressEvent(QKeyEvent *);

@@ -1,8 +1,8 @@
-#CONFIG      += designer plugin debug_and_release
-CONFIG      += designer plugin
+CONFIG      += plugin
+TEMPLATE    = lib
+QT          += widgets designer
 
 
-#TARGET      = $$qtLibraryTarget(ogographviewplugin)
      win32:CONFIG(release, debug|release): TARGET = ../../../lib/Release/ogographviewplugin
 else:win32:CONFIG(debug, debug|release):   TARGET = ../../../lib/Debug/ogographviewplugindbg
 else:symbian:                              TARGET = ../../../lib/Release/ogographviewplugin
@@ -19,7 +19,7 @@ TEMPLATE    = lib
 
 HEADERS     = ogographviewplugin.h
 SOURCES     = ogographviewplugin.cpp
-#RESOURCES  = icons.qrc
+RESOURCES  = icons.qrc
 #LIBS        += -L. 
 
 target.path = $$[QT_INSTALL_PLUGINS]/designer

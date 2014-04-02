@@ -89,30 +89,6 @@ namespace OpenGraphtheory
                     case '\"':
                         os << "&quot;";
                         break;
-
-/*
-                    case 'ö':
-                        os << "&ouml;";
-                        break;
-                    case 'Ö':
-                        os << "&Ouml;";
-                        break;
-                    case 'ü':
-                        os << "&uuml;";
-                        break;
-                    case 'Ü':
-                        os << "&Uuml;";
-                        break;
-                    case 'ä':
-                        os << "&auml;";
-                        break;
-                    case 'Ä':
-                        os << "&Auml;";
-                        break;
-                    case 'ß':
-                        os << "&szlig;";
-                        break;
-*/
                     default:
                         os << *i;
                         break;

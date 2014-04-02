@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += widgets core gui
 
      win32:CONFIG(release, debug|release): TARGET = ../../../bin/Release/OGoCreator
 else:win32:CONFIG(debug, debug|release):   TARGET = ../../../bin/Debug/OGoCreator
@@ -41,10 +41,3 @@ else:unix:CONFIG(debug, debug|release):    LIBS += -logographviewplugindbg -lope
 else:unix:CONFIG(release, debug|release):  LIBS += -logographviewplugin -lopengt -L$$PWD/../../../lib/Release
 
 INCLUDEPATH += $$PWD/../OGoWidget/OGoWidget $$PWD/../../../opengt.so/Headers
-
-#     win32:CONFIG(release, debug|release): DEPENDPATH += $$PWD/../../../lib/Release
-#else:win32:CONFIG(debug, debug|release):   DEPENDPATH += $$PWD/../../../lib/Debug
-#else:symbian:                              DEPENDPATH += $$PWD/../../../lib/Release
-#else:unix:CONFIG(debug, debug|release):    DEPENDPATH += $$PWD/../../../lib/Debug
-#else:unix:CONFIG(release, debug|release):  DEPENDPATH += $$PWD/../../../lib/Release
-

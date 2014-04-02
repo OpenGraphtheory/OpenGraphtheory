@@ -23,9 +23,9 @@
                     static void FindMinimumCut(Graph& G, std::set<Graph::EdgeIterator>& MinimumCut);
 
                     static void AddMinimumCut(Graph &G, Graph::VertexIterator Source, Graph::VertexIterator Drain,
-                                              std::map<Graph::EdgeIterator, float>& Capacities, std::string FlowName);
-                    static void AddMinimumCut(Graph &G, std::map<Graph::EdgeIterator, float>& Capacities, std::string FlowName);
-                    static void AddMinimumCut(Graph &G, std::string FlowName);
+                                              std::map<Graph::EdgeIterator, float>& Capacities, std::string CutName);
+                    static void AddMinimumCut(Graph &G, std::map<Graph::EdgeIterator, float>& Capacities, std::string CutName);
+                    static void AddMinimumCut(Graph &G, std::string CutName);
 
                 protected:
                     static FactoryRegistrator<Algorithm> AlgorithmMinimumCutRegistrator;

@@ -31,12 +31,12 @@ QWidget *OGoGraphViewPlugin::createWidget(QWidget *parent)
 
 QString OGoGraphViewPlugin::name() const
 {
-    return QLatin1String("OGoGraphView");
+    return "OGoGraphView";
 }
 
 QString OGoGraphViewPlugin::group() const
 {
-    return QLatin1String("");
+    return "";
 }
 
 QIcon OGoGraphViewPlugin::icon() const
@@ -61,7 +61,12 @@ bool OGoGraphViewPlugin::isContainer() const
 
 QString OGoGraphViewPlugin::domXml() const
 {
-    return QLatin1String("<widget class=\"OGoGraphView\" name=\"oGoGraphView\">\n</widget>\n");
+    return QLatin1String(
+         "<ui language=\"c++\">\n"
+         "  <widget class=\"OGoGraphView\" name=\"oGoGraphView\">\n"
+         "  </widget>\n"
+         "</ui>\n"
+    );
 }
 
 QString OGoGraphViewPlugin::includeFile() const
@@ -69,4 +74,4 @@ QString OGoGraphViewPlugin::includeFile() const
     return QLatin1String("ogographview.h");
 }
 
-Q_EXPORT_PLUGIN2(ogographviewplugin, OGoGraphViewPlugin)
+//Q_EXPORT_PLUGIN2(ogographviewplugin, OGoGraphViewPlugin)

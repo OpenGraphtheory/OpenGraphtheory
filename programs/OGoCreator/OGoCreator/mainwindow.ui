@@ -40,7 +40,7 @@
      <x>0</x>
      <y>0</y>
      <width>635</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -80,8 +80,10 @@
     <addaction name="actionClique"/>
     <addaction name="actionIndependent_Set"/>
     <addaction name="actionDominating_Set"/>
+    <addaction name="actionMaximum_Matching"/>
     <addaction name="actionColoring"/>
     <addaction name="actionPath"/>
+    <addaction name="actionMinimum_Cut"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -267,6 +269,16 @@
   <action name="actionFirst_Order_Predicate_Logic">
    <property name="text">
     <string>First-Order Predicate Logic</string>
+   </property>
+  </action>
+  <action name="actionMinimum_Cut">
+   <property name="text">
+    <string>Minimum Cut</string>
+   </property>
+  </action>
+  <action name="actionMaximum_Matching">
+   <property name="text">
+    <string>Maximum Matching</string>
    </property>
   </action>
  </widget>

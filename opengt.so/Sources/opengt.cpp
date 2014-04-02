@@ -81,8 +81,6 @@ namespace OpenGraphtheory
         /// \brief Operator to copy a graph
         void Graph::operator=(const Graph& G)
         {
-		    cout.flush();
-
             Clear();
 
             Label = G.GetLabel();

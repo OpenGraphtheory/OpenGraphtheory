@@ -1,11 +1,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
+#include <QtWidgets/QMainWindow>
 #include <QDragEnterEvent>
 #include <QDragLeaveEvent>
 #include <QDragMoveEvent>
-#include <QMessageBox>
+#include <QtWidgets/QMessageBox>
 #include <QDropEvent>
 #include "../OGoWidget/ogographview.h"
 #include "../../../opengt.so/Headers/opengt.h"
@@ -16,6 +16,8 @@
 #include "../../../opengt.so/Headers/logic/FirstOrderLogic/fo.h"
 #include "../../../opengt.so/Headers/algorithms/independentset/independentset.h"
 #include "../../../opengt.so/Headers/algorithms/dominatingset/dominatingset.h"
+#include "../../../opengt.so/Headers/algorithms/minimumcut/minimumcut.h"
+#include "../../../opengt.so/Headers/algorithms/maximummatching/maximummatching.h"
 #include "../../../opengt.so/Headers/algorithms/path/path.h"
 #include "../../../opengt.so/Headers/transform/springembedder3d.h"
 #include "../../../opengt.so/Headers/export/export.h"
@@ -74,7 +76,11 @@ private slots:
 
     void on_actionFirst_Order_Predicate_Logic_triggered();
 
-    private:
+    void on_actionMinimum_Cut_triggered();
+
+    void on_actionMaximum_Matching_triggered();
+
+private:
     Ui::MainWindow *ui;
 
     void dragEnterEvent(QDragEnterEvent*);
@@ -91,7 +97,7 @@ class RepaintOnChange : public OpenGraphtheory::IntermediateSteps::IntermediateS
         OGoGraphView* target;
     public:
         RepaintOnChange(OGoGraphView* target);
-        void Handle(Graph* G);
+        void Handle(OpenGraphtheory::Graph* G);
 };
 
 

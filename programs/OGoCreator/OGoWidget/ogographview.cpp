@@ -1,11 +1,14 @@
 #include <QMessageBox>
-#include<QColor>
+#include <QColor>
 #include <cmath>
-#include<QKeyEvent>
+#include <QKeyEvent>
 #include <QPainter>
 #include <QWheelEvent>
 #include <QRect>
 #include "ogographview.h"
+
+using namespace std;
+using namespace OpenGraphtheory;
 
 int OGoGraphView::colorsCount = 8;
 QColor OGoGraphView::colors[] = {
