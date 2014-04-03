@@ -29,9 +29,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QStringList cmdline_args = QCoreApplication::arguments();
     for(int i = 1; i < cmdline_args.count(); i++)
         OpenGraphFile(cmdline_args[i]);
-
-    //connect(ui->action,SIGNAL(<somesignal>),<someotherobject>,SLOT(closeButton_clicked()));
-    //connect(<someobject>,SIGNAL(<somesignal>),<someotherobject>,SLOT(closeButton_clicked()));
 }
 
 MainWindow::~MainWindow()
@@ -179,11 +176,6 @@ void MainWindow::on_actionSave_triggered()
 void MainWindow::on_actionBugtracker_triggered()
 {
     QDesktopServices::openUrl((QUrl)("http://sourceforge.net/tracker/?group_id=340258"));
-}
-
-void MainWindow::on_actionChat_triggered()
-{
-    QDesktopServices::openUrl((QUrl)("http://open-graphtheory.org/tinc?key=Qx2yoLKr&channel=266178"));
 }
 
 void MainWindow::on_actionForum_triggered()

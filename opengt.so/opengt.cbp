@@ -90,6 +90,7 @@
 		<Unit filename="Headers/generate/wheel.h" />
 		<Unit filename="Headers/import/import.h" />
 		<Unit filename="Headers/import/tgf.h" />
+		<Unit filename="Headers/import/xgmml.h" />
 		<Unit filename="Headers/intermediatesteps/intermediatesteps.h" />
 		<Unit filename="Headers/intermediatesteps/show.h" />
 		<Unit filename="Headers/intermediatesteps/stdout.h" />
@@ -130,7 +131,6 @@
 		<Unit filename="Sources/algorithms/maximumflow/maximumflow.cpp" />
 		<Unit filename="Sources/algorithms/maximummatching/maximalmatching.cpp" />
 		<Unit filename="Sources/algorithms/maximummatching/maximummatching.cpp" />
-		<Unit filename="Sources/algorithms/maximummatching/maximummatchingbipartite.cpp" />
 		<Unit filename="Sources/algorithms/minimumcut/minimumcut.cpp" />
 		<Unit filename="Sources/algorithms/oddcircle/oddcircle.cpp" />
 		<Unit filename="Sources/algorithms/path/path.cpp" />
@@ -170,6 +170,7 @@
 		<Unit filename="Sources/generate/wheel.cpp" />
 		<Unit filename="Sources/import/import.cpp" />
 		<Unit filename="Sources/import/tgf.cpp" />
+		<Unit filename="Sources/import/xgmml.cpp" />
 		<Unit filename="Sources/intermediatesteps/intermediate.cpp">
 			<Option weight="49" />
 		</Unit>

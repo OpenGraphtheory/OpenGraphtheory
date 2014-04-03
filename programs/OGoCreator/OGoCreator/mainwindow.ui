@@ -71,7 +71,6 @@
     </property>
     <addaction name="actionForum"/>
     <addaction name="actionBugtracker"/>
-    <addaction name="actionChat"/>
    </widget>
    <widget class="QMenu" name="menuAlgorithms">
     <property name="title">
@@ -194,11 +193,6 @@
   <action name="actionBugtracker">
    <property name="text">
     <string>Bugtracker</string>
-   </property>
-  </action>
-  <action name="actionChat">
-   <property name="text">
-    <string>Chat</string>
    </property>
   </action>
   <action name="actionClique">

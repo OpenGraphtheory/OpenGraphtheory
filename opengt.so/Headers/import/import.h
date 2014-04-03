@@ -1,27 +1,32 @@
+#ifndef __OPENGRAPHTHEORY_IMPORT_H
+    #define __OPENGRAPHTHEORY_IMPORT_H
 
-#include <string>
-#include <iostream>
-#include "../opengt.h"
+    #include <fstream>
+    #include <string>
+    #include <iostream>
+    #include "../opengt.h"
 
-namespace OpenGraphtheory
-{
-    namespace Import
+    namespace OpenGraphtheory
     {
-
-        class ImportFilter
+        namespace Import
         {
-            public:
-                static Factory<ImportFilter> ImportFilterFactory;
-                ImportFilter();
-                virtual ~ImportFilter();
 
-                virtual Graph Import(std::istream& is) = 0;
+            class ImportFilter
+            {
+                public:
+                    static Factory<ImportFilter> ImportFilterFactory;
+                    ImportFilter();
+                    virtual ~ImportFilter();
 
-                Graph Import(std::string FileName);
-                static Graph Import(std::istream& is, std::string format);
-                static Graph Import(std::string FileName, std::string format);
-        };
+                    virtual Graph Import(std::istream& is) = 0;
 
+                    Graph Import(std::string FileName);
+                    static Graph Import(std::istream& is, std::string format);
+                    static Graph Import(std::string FileName, std::string format);
+            };
+
+        }
     }
-}
+
+#endif
 

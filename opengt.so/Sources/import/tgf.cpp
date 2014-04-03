@@ -1,8 +1,4 @@
 
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <map>
 #include "../../Headers/import/tgf.h"
 
 using namespace std;
