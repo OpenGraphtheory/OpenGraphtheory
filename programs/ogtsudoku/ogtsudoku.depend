@@ -1,0 +1,54 @@
+# depslib dependency file v1.0
+1354314194 source:/home/viktor/Programming/OpenGraphtheory/programs/ogtsudoku/ogtsudoku.cpp
+	"../../opengt.so/Headers/opengt.h"
+	"../../opengt.so/Headers/algorithms/color/color.h"
+	<iostream>
+
+1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
+	<list>
+	<set>
+	<map>
+	<string>
+	<iostream>
+	<fstream>
+	"simple_xml.h"
+	"attributes.h"
+
+1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/simple_xml.h
+	<iostream>
+	<sstream>
+	<vector>
+	<list>
+	<string>
+
+1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
+	<string>
+	<iostream>
+	"factory.h"
+	"simple_xml.h"
+
+1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/factory.h
+	<string>
+	<map>
+	"../Sources/factory_templates.cpp"
+
+1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/color/color.h
+	"../algorithm.h"
+	<string>
+	<map>
+	<vector>
+
+1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/algorithm.h
+	"../opengt.h"
+	"../factory.h"
+	<string>
+	<vector>
+
+1392029041 source:/home/viktor/Programming/OpenGraphtheory/programs/ogtsudoku/ogtsudoku.cpp
+	"../../opengt.so/Headers/opengt.h"
+	"../../opengt.so/Headers/algorithms/color/color.h"
+	<iostream>
+
+1392029042 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/factory_templates.cpp
+	"../Headers/factory.h"
+

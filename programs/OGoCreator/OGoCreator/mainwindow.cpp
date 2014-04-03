@@ -300,7 +300,7 @@ void MinCutVertexSelectionFinished(QWidget* mainwindow, OGoGraphView* gv, vector
     map<Graph::EdgeIterator, float> capacities;
     for(Graph::EdgeIterator e = G->BeginEdges(); e != G->EndEdges(); e++)
         capacities.insert(std::pair<Graph::EdgeIterator, float>(e, e.GetWeight()));
-    algo.AddMinimumCut(*G, selectedvertices[0], selectedvertices[1], capacities, text.toUtf8().constData());
+    algo.AddMinimumCut(*G, selectedvertices[1], selectedvertices[0], capacities, text.toUtf8().constData());
     gv->setEdgeColoring(text.toUtf8().constData());
     gv->resetVertexColoring();
     gv->repaint();

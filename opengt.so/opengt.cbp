@@ -7,12 +7,13 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="../lib/Debug/libopengtdbg" prefix_auto="1" extension_auto="1" />
+				<Option output="../lib/Debug/opengtdbg" prefix_auto="1" extension_auto="1" />
 				<Option object_output="../obj/Debug/" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option parameters="maximumflow /home/viktor/Programming/OpenGT_stuff/wtflow_example.gxl v1 v7 capacity flow" />
 				<Option host_application="../../bin/Debug/graphalgorithm" />
+				<Option run_host_application_in_terminal="0" />
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
 				<Compiler>
@@ -24,7 +25,7 @@
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="../lib/Release/libopengt" prefix_auto="1" extension_auto="1" />
+				<Option output="../lib/Release/opengt" prefix_auto="1" extension_auto="1" />
 				<Option object_output="../obj/Release/" />
 				<Option type="3" />
 				<Option compiler="gcc" />
@@ -69,6 +70,7 @@
 		<Unit filename="Headers/export/pdf.h" />
 		<Unit filename="Headers/export/postscript.h" />
 		<Unit filename="Headers/export/povray.h" />
+		<Unit filename="Headers/export/prolog.h" />
 		<Unit filename="Headers/export/rgml.h" />
 		<Unit filename="Headers/export/svg.h" />
 		<Unit filename="Headers/export/tei.h" />
@@ -145,6 +147,7 @@
 		<Unit filename="Sources/export/pdf.cpp" />
 		<Unit filename="Sources/export/postscript.cpp" />
 		<Unit filename="Sources/export/povray.cpp" />
+		<Unit filename="Sources/export/prolog.cpp" />
 		<Unit filename="Sources/export/rgml.cpp" />
 		<Unit filename="Sources/export/svg.cpp" />
 		<Unit filename="Sources/export/tei.cpp" />

@@ -2,17 +2,15 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="export" />
-		<Option execution_dir="/home/viktor/Programming/OpenGraphtheory/programs/export" />
+		<Option title="ogtlogic" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="../../bin/Debug/export" prefix_auto="1" extension_auto="1" />
+				<Option output="../../bin/Debug/ogtlogic" prefix_auto="1" extension_auto="1" />
 				<Option object_output="../../obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="dot foo.gxl" />
 				<Compiler>
 					<Add option="-g" />
 					<Add option="-fPIC" />
@@ -23,11 +21,10 @@
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="../../bin/Release/export" prefix_auto="1" extension_auto="1" />
+				<Option output="../../bin/Release/ogtlogic" prefix_auto="1" extension_auto="1" />
 				<Option object_output="../../obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="foo.gxl" />
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-fPIC" />
@@ -41,8 +38,9 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="export.cpp" />
+		<Unit filename="ogtlogic.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />

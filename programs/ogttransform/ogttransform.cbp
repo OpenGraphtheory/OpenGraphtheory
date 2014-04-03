@@ -2,15 +2,16 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="showgraph" />
+		<Option title="ogttransform" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="../../bin/Debug/showgraph" prefix_auto="1" extension_auto="1" />
+				<Option output="../../bin/Debug/ogttransform" prefix_auto="1" extension_auto="1" />
 				<Option object_output="../../obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="springembed foo.gxl" />
 				<Compiler>
 					<Add option="-g" />
 					<Add option="-fPIC" />
@@ -21,7 +22,7 @@
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="../../bin/Release/showgraph" prefix_auto="1" extension_auto="1" />
+				<Option output="../../bin/Release/ogttransform" prefix_auto="1" extension_auto="1" />
 				<Option object_output="../../obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -40,7 +41,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="showgraph.cpp" />
+		<Unit filename="ogttransform.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />

@@ -259,7 +259,7 @@ void OGoGraphView::paintEvent(QPaintEvent *)
         p.drawEllipse(x, y, vertexsize*zoom, vertexsize*zoom);
     }
 
-    if(mouseaction == OGoGraphView::DrawingEdge)
+    if(mouseaction == OGoGraphView::DrawingEdge || mouseaction == OGoGraphView::DrawingArc)
     {
         pen.setWidthF(edgewidth*zoom);
         p.setPen(pen);
@@ -333,7 +333,19 @@ void OGoGraphView::mousePressEvent(QMouseEvent *mouseevent)
     Graph::VertexIterator v = VertexAt(x,y);
     if(v != graph->EndVertices())
     {
-        mouseaction = mouseevent->modifiers() & Qt::ShiftModifier ? OGoGraphView::DrawingEdge : OGoGraphView::MovingVertex;
+        if((mouseevent->modifiers() & Qt::ShiftModifier) && (mouseevent->modifiers() & Qt::AltModifier))
+        {
+            mouseaction = OGoGraphView::DrawingArc;
+        }
+        else if(mouseevent->modifiers() & Qt::ShiftModifier)
+        {
+            mouseaction = OGoGraphView::DrawingEdge;
+        }
+        else
+        {
+            mouseaction = OGoGraphView::MovingVertex;
+        }
+
         if(!(mouseevent->modifiers() & Qt::ControlModifier))
             selectedvertices.clear();
         selectedvertices.insert(v);
@@ -348,13 +360,18 @@ void OGoGraphView::mousePressEvent(QMouseEvent *mouseevent)
 
 void OGoGraphView::mouseReleaseEvent(QMouseEvent *mouseevent)
 {
-    if(mouseaction == OGoGraphView::DrawingEdge)
+    if(mouseaction == OGoGraphView::DrawingEdge || mouseaction == OGoGraphView::DrawingArc)
     {
         Graph::VertexIterator v = VertexAt(mouseevent->x(), mouseevent->y());
         if(v != graph->EndVertices())
         {
             for(set<Graph::VertexIterator>::iterator w = selectedvertices.begin(); w != selectedvertices.end(); w++)
-                graph->AddEdge(v,*w);
+            {
+                if(mouseaction == OGoGraphView::DrawingEdge)
+                    graph->AddEdge(*w,v);
+                else
+                    graph->AddArc(*w,v);
+            }
         }
     }
 
@@ -410,6 +427,7 @@ void OGoGraphView::mouseMoveEvent(QMouseEvent *mouseevent)
         }
 
         case OGoGraphView::DrawingEdge:
+        case OGoGraphView::DrawingArc:
         {
             repaint();
             break;

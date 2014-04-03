@@ -29,7 +29,7 @@ class OGoGraphView : public QWidget
     std::string edgecoloring;
 
 
-    enum MouseAction {Nothing, Navigating, DrawingEdge, MovingVertex};
+    enum MouseAction {Nothing, Navigating, DrawingEdge, DrawingArc, MovingVertex};
     MouseAction mouseaction;
     std::set<OpenGraphtheory::Graph::VertexIterator> selectedvertices;
     QString FileLocation;

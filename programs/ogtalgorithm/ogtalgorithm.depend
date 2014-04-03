@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1392029042 source:/home/viktor/Programming/OpenGraphtheory/programs/graphalgorithm/graphalgorithm.cpp
+1392029042 source:/home/viktor/Programming/OpenGraphtheory/programs/ogtalgorithm/ogtalgorithm.cpp
 	<iostream>
 	<stdlib.h>
 	<list>
