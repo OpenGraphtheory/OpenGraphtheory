@@ -1,6 +1,6 @@
 
-#ifndef __THREAD_H
-	#define __THREAD_H
+#ifndef __OPENGRAPHTHEORY_THREAD_H
+	#define __OPENGRAPHTHEORY_THREAD_H
 
 	#ifdef __unix
 		#ifndef __unix__

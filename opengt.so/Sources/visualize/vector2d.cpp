@@ -1,5 +1,4 @@
 
-#include<math.h>
 #include "../../Headers/visualize/vector2d.h"
 
 namespace OpenGraphtheory

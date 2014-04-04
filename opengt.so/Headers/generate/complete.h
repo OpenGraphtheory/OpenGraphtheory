@@ -1,6 +1,7 @@
 #ifndef __OPENGRAPHTHEORY_GENERATE_COMPLETE_H
     #define __OPENGRAPHTHEORY_GENERATE_COMPLETE_H
 
+    #include <cmath>
     #include <list>
     #include "../opengt.h"
     #include "../factory.h"

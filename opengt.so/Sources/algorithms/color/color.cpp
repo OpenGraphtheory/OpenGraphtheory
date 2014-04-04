@@ -1,6 +1,5 @@
 
 #include "../../../Headers/algorithms/color/color.h"
-#include<map>
 
 using namespace std;
 using namespace OpenGraphtheory;

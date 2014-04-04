@@ -1,5 +1,5 @@
-#ifndef __OPENGRAPHTHEORY_IMPORT_H
-    #define __OPENGRAPHTHEORY_IMPORT_H
+#ifndef __OPENGRAPHTHEORY_IMPORT_IMPORT_H
+    #define __OPENGRAPHTHEORY_IMPORT_IMPORT_H
 
     #include <fstream>
     #include <string>

@@ -3,7 +3,6 @@
     // Many thanks to
     // http://www.thebinaryidiot.com/archives/2010/03/06/flex-bison-cpp-example/
 
-    #include<string>
     #include "../../../Headers/logic/FirstOrderLogic/fo.h"
 
     namespace OpenGraphtheory { namespace Logic { class FOLexer; } }

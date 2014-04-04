@@ -1,8 +1,5 @@
 
 #include "../Headers/attributes.h"
-#include "../Headers/factory.h"
-#include <cstdlib>
-#include <sstream>
 
 using namespace std;
 using namespace OpenGraphtheory::XML;
@@ -211,7 +208,9 @@ Attribute::~Attribute()
     bool IntAttribute::LoadFromXml(XML* xml)
     {
         string innertext = xml->InnerText(true);
-        Value = atoi(innertext.c_str());
+        stringstream s;
+        s << innertext;
+        s >> Value;
         return true;
     }
 
@@ -259,7 +258,9 @@ Attribute::~Attribute()
     bool FloatAttribute::LoadFromXml(XML* xml)
     {
         string innertext = xml->InnerText(true);
-        Value = atof(innertext.c_str());
+        stringstream s;
+        s << innertext;
+        s >> Value;
         return true;
     }
 

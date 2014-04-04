@@ -1,7 +1,4 @@
 
-#include <iostream>
-#include <fstream>
-#include <string>
 #include "../../Headers/intermediatesteps/intermediatesteps.h"
 
 using namespace std;

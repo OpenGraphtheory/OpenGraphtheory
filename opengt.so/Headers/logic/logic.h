@@ -1,6 +1,6 @@
 
-#ifndef __OPENGT_LOGIC_LOGIC_H
-    #define __OPENGT_LOGIC_LOGIC_H
+#ifndef __OPENGRAPHTHEORY_LOGIC_LOGIC_H
+    #define __OPENGRAPHTHEORY_LOGIC_LOGIC_H
 
     #include "../factory.h"
     #include "../opengt.h"

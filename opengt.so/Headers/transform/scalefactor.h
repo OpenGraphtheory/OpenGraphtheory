@@ -2,6 +2,8 @@
     #define __OPENGRAPHTHEORY_TRANSFORM_SCALEFACTOR_H
 
     #include <vector>
+    #include <iostream>
+
     #include "../opengt.h"
     #include "../factory.h"
     #include "transformation.h"

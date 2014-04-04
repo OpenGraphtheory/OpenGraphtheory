@@ -1,7 +1,7 @@
-#include<iostream>
-using namespace std;
-#include<math.h>
+
 #include "../../Headers/visualize/vectornd.h"
+
+using namespace std;
 
 namespace OpenGraphtheory
 {

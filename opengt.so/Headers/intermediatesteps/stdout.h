@@ -1,9 +1,13 @@
 
-#ifndef __OPENGRAPHTHEORY_INTERMEDIATE_STDOUT_H
-    #define __OPENGRAPHTHEORY_INTERMEDIATE_STDOUT_H
+#ifndef __OPENGRAPHTHEORY_INTERMEDIATESTEPS_STDOUT_H
+    #define __OPENGRAPHTHEORY_INTERMEDIATESTEPS_STDOUT_H
 
+    #include <iostream>
+    #include <sstream>
+    #include <map>
     #include<vector>
     #include<string>
+
     #include "intermediatesteps.h"
     #include "../export/export.h"
 

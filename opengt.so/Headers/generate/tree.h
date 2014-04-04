@@ -1,7 +1,9 @@
 #ifndef __OPENGRAPHTHEORY_GENERATE_TREE_H
     #define __OPENGRAPHTHEORY_GENERATE_TREE_H
 
+    #include <cmath>
     #include <list>
+
     #include "../opengt.h"
     #include "../factory.h"
     #include "generate.h"

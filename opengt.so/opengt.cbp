@@ -201,7 +201,6 @@
 			<Option weight="49" />
 		</Unit>
 		<Unit filename="Sources/opengt.cpp" />
-		<Unit filename="Sources/processing/components.cpp" />
 		<Unit filename="Sources/set_helper.cpp" />
 		<Unit filename="Sources/simple_xml.cpp" />
 		<Unit filename="Sources/thread.cpp" />

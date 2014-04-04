@@ -2,6 +2,7 @@
     #define __OPENGRAPHTHEORY_EXPORT_POVRAY_H
 
     #include <ostream>
+    #include <math.h>
     #include "../opengt.h"
     #include "../factory.h"
     #include "export.h"

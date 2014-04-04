@@ -1,11 +1,7 @@
 
 #include "../Headers/opengt.h"
-#include "../Headers/attributes.h"
-#include <stdlib.h>
-#include <vector>
 
 using namespace std;
-using namespace OpenGraphtheory::XML;
 
 namespace OpenGraphtheory
 {
@@ -310,7 +306,7 @@ namespace OpenGraphtheory
                 OpenGraphtheory::XML::XML* name = new OpenGraphtheory::XML::XML("attr");
                 name->AddAttribute("name", "name");
                 OpenGraphtheory::XML::XML* str = new OpenGraphtheory::XML::XML("string");
-                str->AddChild(new XML_Text(GetLabel()));
+                str->AddChild(new OpenGraphtheory::XML::XML_Text(GetLabel()));
                 name->AddChild(str);
                 node->AddChild(name);
 
@@ -340,7 +336,7 @@ namespace OpenGraphtheory
                 OpenGraphtheory::XML::XML* flt = new OpenGraphtheory::XML::XML("float");
                 stringstream t;
                 t << GetWeight();
-                flt->AddChild(new XML_Text(t.str()));
+                flt->AddChild(new OpenGraphtheory::XML::XML_Text(t.str()));
                 weight->AddChild(flt);
                 node->AddChild(weight);
 
@@ -2062,7 +2058,7 @@ namespace OpenGraphtheory
 			os << "<!DOCTYPE gxl SYSTEM \"http://www.gupro.de/GXL/gxl-1.0.dtd\">\n";
 
 			OpenGraphtheory::XML::XML* gxl = new OpenGraphtheory::XML::XML("gxl");
-			gxl->AddChild(new XML_Comment("www.Open-Graphtheory.org"));
+			gxl->AddChild(new OpenGraphtheory::XML::XML_Comment("www.Open-Graphtheory.org"));
 			gxl->AddAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
 
 			OpenGraphtheory::XML::XML* graph = new OpenGraphtheory::XML::XML("graph");

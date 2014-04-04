@@ -2,8 +2,10 @@
 #ifndef __OPENGRAPHTHEORY_INTERMEDIATESTEPS_INTERMEDIATESTEPS_H
     #define __OPENGRAPHTHEORY_INTERMEDIATESTEPS_INTERMEDIATESTEPS_H
 
+    #include <fstream>
     #include <string>
     #include <iostream>
+
     #include "../opengt.h"
     #include "../factory.h"
 

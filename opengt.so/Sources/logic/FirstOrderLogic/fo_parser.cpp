@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 2.5.  */
+/* A Bison parser, made by GNU Bison 2.7.12-4996.  */
 
 /* Skeleton implementation for Bison LALR(1) parsers in C++
    
-      Copyright (C) 2002-2011 Free Software Foundation, Inc.
+      Copyright (C) 2002-2013 Free Software Foundation, Inc.
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -33,29 +33,34 @@
 
 /* First part of user declarations.  */
 
-
-/* Line 293 of lalr1.cc  */
-#line 39 "fo_parser.cpp"
+/* Line 283 of lalr1.cc  */
+#line 38 "fo_parser.cpp"
 
 
 #include "fo_parser.hpp"
 
 /* User implementation prologue.  */
 
-
-/* Line 299 of lalr1.cc  */
-#line 48 "fo_parser.cpp"
+/* Line 289 of lalr1.cc  */
+#line 46 "fo_parser.cpp"
 /* Unqualified %code blocks.  */
-
-/* Line 300 of lalr1.cc  */
-#line 27 "fo_parser.yy"
+/* Line 290 of lalr1.cc  */
+#line 26 "fo_parser.yy"
 
     static int yylex(FOParser::semantic_type * yylval, OpenGraphtheory::Logic::FOLexer &scanner);
 
 
+/* Line 290 of lalr1.cc  */
+#line 55 "fo_parser.cpp"
 
-/* Line 300 of lalr1.cc  */
-#line 59 "fo_parser.cpp"
+
+# ifndef YY_NULL
+#  if defined __cplusplus && 201103L <= __cplusplus
+#   define YY_NULL nullptr
+#  else
+#   define YY_NULL 0
+#  endif
+# endif
 
 #ifndef YY_
 # if defined YYENABLE_NLS && YYENABLE_NLS
@@ -69,25 +74,26 @@
 # endif
 #endif
 
+#define YYRHSLOC(Rhs, K) ((Rhs)[K])
 /* YYLLOC_DEFAULT -- Set CURRENT to span from RHS[1] to RHS[N].
    If N is 0, then set CURRENT to the empty location which ends
    the previous symbol: RHS[0] (always defined).  */
 
-#define YYRHSLOC(Rhs, K) ((Rhs)[K])
-#ifndef YYLLOC_DEFAULT
-# define YYLLOC_DEFAULT(Current, Rhs, N)                               \
- do                                                                    \
-   if (N)                                                              \
-     {                                                                 \
-       (Current).begin = YYRHSLOC (Rhs, 1).begin;                      \
-       (Current).end   = YYRHSLOC (Rhs, N).end;                        \
-     }                                                                 \
-   else                                                                \
-     {                                                                 \
-       (Current).begin = (Current).end = YYRHSLOC (Rhs, 0).end;        \
-     }                                                                 \
- while (false)
-#endif
+# ifndef YYLLOC_DEFAULT
+#  define YYLLOC_DEFAULT(Current, Rhs, N)                               \
+    do                                                                  \
+      if (N)                                                            \
+        {                                                               \
+          (Current).begin  = YYRHSLOC (Rhs, 1).begin;                   \
+          (Current).end    = YYRHSLOC (Rhs, N).end;                     \
+        }                                                               \
+      else                                                              \
+        {                                                               \
+          (Current).begin = (Current).end = YYRHSLOC (Rhs, 0).end;      \
+        }                                                               \
+    while (/*CONSTCOND*/ false)
+# endif
+
 
 /* Suppress unused-variable warnings by "using" E.  */
 #define YYUSE(e) ((void) (e))
@@ -123,9 +129,9 @@ do {					\
 #else /* !YYDEBUG */
 
 # define YYCDEBUG if (false) std::cerr
-# define YY_SYMBOL_PRINT(Title, Type, Value, Location)
-# define YY_REDUCE_PRINT(Rule)
-# define YY_STACK_PRINT()
+# define YY_SYMBOL_PRINT(Title, Type, Value, Location) YYUSE(Type)
+# define YY_REDUCE_PRINT(Rule)        static_cast<void>(0)
+# define YY_STACK_PRINT()             static_cast<void>(0)
 
 #endif /* !YYDEBUG */
 
@@ -137,13 +143,11 @@ do {					\
 #define YYERROR		goto yyerrorlab
 #define YYRECOVERING()  (!!yyerrstatus_)
 
-
-/* Line 382 of lalr1.cc  */
-#line 15 "fo_parser.yy"
+/* Line 357 of lalr1.cc  */
+#line 14 "fo_parser.yy"
 namespace OpenGraphtheory { namespace Logic {
-
-/* Line 382 of lalr1.cc  */
-#line 147 "fo_parser.cpp"
+/* Line 357 of lalr1.cc  */
+#line 151 "fo_parser.cpp"
 
   /// Build a parser object.
   FOParser::FOParser (OpenGraphtheory::Logic::FOLexer &scanner_yyarg, OpenGraphtheory::Logic::FOFormula** result_yyarg)
@@ -172,11 +176,10 @@ namespace OpenGraphtheory { namespace Logic {
   {
     YYUSE (yylocationp);
     YYUSE (yyvaluep);
-    switch (yytype)
-      {
-         default:
-	  break;
-      }
+    std::ostream& yyo = debug_stream ();
+    std::ostream& yyoutput = yyo;
+    YYUSE (yyoutput);
+    YYUSE (yytype);
   }
 
 
@@ -200,14 +203,10 @@ namespace OpenGraphtheory { namespace Logic {
     YYUSE (yymsg);
     YYUSE (yyvaluep);
 
-    YY_SYMBOL_PRINT (yymsg, yytype, yyvaluep, yylocationp);
+    if (yymsg)
+      YY_SYMBOL_PRINT (yymsg, yytype, yyvaluep, yylocationp);
 
-    switch (yytype)
-      {
-  
-	default:
-	  break;
-      }
+    YYUSE (yytype);
   }
 
   void
@@ -264,17 +263,18 @@ namespace OpenGraphtheory { namespace Logic {
     int yychar = yyempty_;
     int yytoken = 0;
 
-    /* State.  */
+    // State.
     int yyn;
     int yylen = 0;
     int yystate = 0;
 
-    /* Error handling.  */
+    // Error handling.
     int yynerrs_ = 0;
     int yyerrstatus_ = 0;
 
     /// Semantic value of the lookahead.
-    semantic_type yylval;
+    static semantic_type yyval_default;
+    semantic_type yylval = yyval_default;
     /// Location of the lookahead.
     location_type yylloc;
     /// The locations where the error started and ended.
@@ -287,6 +287,10 @@ namespace OpenGraphtheory { namespace Logic {
 
     int yyresult;
 
+    // FIXME: This shoud be completely indented.  It is not yet to
+    // avoid gratuitous conflicts when merging into the master branch.
+    try
+      {
     YYCDEBUG << "Starting parse" << std::endl;
 
 
@@ -294,9 +298,9 @@ namespace OpenGraphtheory { namespace Logic {
        yynewstate, since the latter expects the semantical and the
        location values to have been already stored, initialize these
        stacks with a primary value.  */
-    yystate_stack_ = state_stack_type (0);
-    yysemantic_stack_ = semantic_stack_type (0);
-    yylocation_stack_ = location_stack_type (0);
+    yystate_stack_.clear ();
+    yysemantic_stack_.clear ();
+    yylocation_stack_.clear ();
     yysemantic_stack_.push (yylval);
     yylocation_stack_.push (yylloc);
 
@@ -322,10 +326,9 @@ namespace OpenGraphtheory { namespace Logic {
     /* Read a lookahead token.  */
     if (yychar == yyempty_)
       {
-	YYCDEBUG << "Reading a token: ";
-	yychar = yylex (&yylval, scanner);
+        YYCDEBUG << "Reading a token: ";
+        yychar = yylex (&yylval, scanner);
       }
-
 
     /* Convert token to internal form.  */
     if (yychar <= yyeof_)
@@ -397,195 +400,173 @@ namespace OpenGraphtheory { namespace Logic {
     else
       yyval = yysemantic_stack_[0];
 
+    // Compute the default @$.
     {
       slice<location_type, location_stack_type> slice (yylocation_stack_, yylen);
       YYLLOC_DEFAULT (yyloc, slice, yylen);
     }
+
+    // Perform the reduction.
     YY_REDUCE_PRINT (yyn);
     switch (yyn)
       {
-	  case 2:
-
-/* Line 690 of lalr1.cc  */
-#line 51 "fo_parser.yy"
+          case 2:
+/* Line 664 of lalr1.cc  */
+#line 50 "fo_parser.yy"
     { *result = (yysemantic_stack_[(2) - (1)].fval); }
     break;
 
   case 3:
-
-/* Line 690 of lalr1.cc  */
-#line 52 "fo_parser.yy"
+/* Line 664 of lalr1.cc  */
+#line 51 "fo_parser.yy"
     { *result = (yysemantic_stack_[(2) - (1)].fval); }
     break;
 
   case 5:
-
-/* Line 690 of lalr1.cc  */
-#line 55 "fo_parser.yy"
+/* Line 664 of lalr1.cc  */
+#line 54 "fo_parser.yy"
     { (yyval.fval) = (yysemantic_stack_[(1) - (1)].fval); }
     break;
 
   case 6:
-
-/* Line 690 of lalr1.cc  */
-#line 56 "fo_parser.yy"
+/* Line 664 of lalr1.cc  */
+#line 55 "fo_parser.yy"
     { (yyval.fval) = (yysemantic_stack_[(1) - (1)].fval); }
     break;
 
   case 7:
-
-/* Line 690 of lalr1.cc  */
-#line 58 "fo_parser.yy"
+/* Line 664 of lalr1.cc  */
+#line 57 "fo_parser.yy"
     { (yyval.fval) = new FO_Forall((yysemantic_stack_[(4) - (2)].sval), (yysemantic_stack_[(4) - (4)].fval)); }
     break;
 
   case 8:
-
-/* Line 690 of lalr1.cc  */
-#line 59 "fo_parser.yy"
+/* Line 664 of lalr1.cc  */
+#line 58 "fo_parser.yy"
     { (yyval.fval) = new FO_Exists((yysemantic_stack_[(4) - (2)].sval), (yysemantic_stack_[(4) - (4)].fval)); }
     break;
 
   case 9:
-
-/* Line 690 of lalr1.cc  */
-#line 60 "fo_parser.yy"
+/* Line 664 of lalr1.cc  */
+#line 59 "fo_parser.yy"
     { (yyval.fval) = new FO_Forall((yysemantic_stack_[(4) - (2)].sval), (yysemantic_stack_[(4) - (4)].fval)); }
     break;
 
   case 10:
-
-/* Line 690 of lalr1.cc  */
-#line 61 "fo_parser.yy"
+/* Line 664 of lalr1.cc  */
+#line 60 "fo_parser.yy"
     { (yyval.fval) = new FO_Exists((yysemantic_stack_[(4) - (2)].sval), (yysemantic_stack_[(4) - (4)].fval)); }
     break;
 
   case 11:
-
-/* Line 690 of lalr1.cc  */
-#line 65 "fo_parser.yy"
+/* Line 664 of lalr1.cc  */
+#line 64 "fo_parser.yy"
     { (yyval.fval) = new FO_And((yysemantic_stack_[(3) - (1)].fval), (yysemantic_stack_[(3) - (3)].fval)); }
     break;
 
   case 12:
-
-/* Line 690 of lalr1.cc  */
-#line 66 "fo_parser.yy"
+/* Line 664 of lalr1.cc  */
+#line 65 "fo_parser.yy"
     { (yyval.fval) = new FO_And((yysemantic_stack_[(3) - (1)].fval), (yysemantic_stack_[(3) - (3)].fval)); }
     break;
 
   case 13:
-
-/* Line 690 of lalr1.cc  */
-#line 69 "fo_parser.yy"
+/* Line 664 of lalr1.cc  */
+#line 68 "fo_parser.yy"
     { (yyval.fval) = new FO_Or((yysemantic_stack_[(3) - (1)].fval), (yysemantic_stack_[(3) - (3)].fval)); }
     break;
 
   case 14:
-
-/* Line 690 of lalr1.cc  */
-#line 70 "fo_parser.yy"
+/* Line 664 of lalr1.cc  */
+#line 69 "fo_parser.yy"
     { (yyval.fval) = new FO_Or((yysemantic_stack_[(3) - (1)].fval), (yysemantic_stack_[(3) - (3)].fval)); }
     break;
 
   case 15:
-
-/* Line 690 of lalr1.cc  */
-#line 73 "fo_parser.yy"
+/* Line 664 of lalr1.cc  */
+#line 72 "fo_parser.yy"
     { (yyval.fval) = new FO_True(); }
     break;
 
   case 16:
-
-/* Line 690 of lalr1.cc  */
-#line 74 "fo_parser.yy"
+/* Line 664 of lalr1.cc  */
+#line 73 "fo_parser.yy"
     { (yyval.fval) = new FO_False(); }
     break;
 
   case 17:
-
-/* Line 690 of lalr1.cc  */
-#line 75 "fo_parser.yy"
+/* Line 664 of lalr1.cc  */
+#line 74 "fo_parser.yy"
     { (yyval.fval) = (yysemantic_stack_[(1) - (1)].fval); }
     break;
 
   case 18:
-
-/* Line 690 of lalr1.cc  */
-#line 76 "fo_parser.yy"
+/* Line 664 of lalr1.cc  */
+#line 75 "fo_parser.yy"
     { (yyval.fval) = new FO_Not( (yysemantic_stack_[(2) - (2)].fval) ); }
     break;
 
   case 19:
-
-/* Line 690 of lalr1.cc  */
-#line 77 "fo_parser.yy"
+/* Line 664 of lalr1.cc  */
+#line 76 "fo_parser.yy"
     { (yyval.fval) = new FO_Eq((yysemantic_stack_[(3) - (1)].sval), (yysemantic_stack_[(3) - (3)].sval)); }
     break;
 
   case 20:
-
-/* Line 690 of lalr1.cc  */
-#line 78 "fo_parser.yy"
+/* Line 664 of lalr1.cc  */
+#line 77 "fo_parser.yy"
     { (yyval.fval) = new FO_Neq((yysemantic_stack_[(3) - (1)].sval), (yysemantic_stack_[(3) - (3)].sval)); }
     break;
 
   case 21:
-
-/* Line 690 of lalr1.cc  */
-#line 79 "fo_parser.yy"
+/* Line 664 of lalr1.cc  */
+#line 78 "fo_parser.yy"
     { (yyval.fval) = (yysemantic_stack_[(3) - (2)].fval); }
     break;
 
   case 22:
-
-/* Line 690 of lalr1.cc  */
-#line 80 "fo_parser.yy"
+/* Line 664 of lalr1.cc  */
+#line 79 "fo_parser.yy"
     { (yyval.fval) = (yysemantic_stack_[(3) - (2)].fval); }
     break;
 
   case 23:
-
-/* Line 690 of lalr1.cc  */
-#line 81 "fo_parser.yy"
+/* Line 664 of lalr1.cc  */
+#line 80 "fo_parser.yy"
     { (yyval.fval) = new FO_Not( (yysemantic_stack_[(4) - (3)].fval) ); }
     break;
 
   case 24:
-
-/* Line 690 of lalr1.cc  */
-#line 82 "fo_parser.yy"
+/* Line 664 of lalr1.cc  */
+#line 81 "fo_parser.yy"
     { (yyval.fval) = new FO_Not( (yysemantic_stack_[(4) - (3)].fval) ); }
     break;
 
   case 25:
-
-/* Line 690 of lalr1.cc  */
-#line 85 "fo_parser.yy"
+/* Line 664 of lalr1.cc  */
+#line 84 "fo_parser.yy"
     { (yyval.fval) = new FO_Atomic((yysemantic_stack_[(3) - (1)].sval), (yysemantic_stack_[(3) - (3)].pval)); }
     break;
 
   case 26:
-
-/* Line 690 of lalr1.cc  */
-#line 87 "fo_parser.yy"
+/* Line 664 of lalr1.cc  */
+#line 86 "fo_parser.yy"
     { (yyval.pval) = new FO_Parameter((yysemantic_stack_[(2) - (1)].sval), NULL); }
     break;
 
   case 27:
-
-/* Line 690 of lalr1.cc  */
-#line 88 "fo_parser.yy"
+/* Line 664 of lalr1.cc  */
+#line 87 "fo_parser.yy"
     { (yyval.pval) = new FO_Parameter((yysemantic_stack_[(3) - (1)].sval), (yysemantic_stack_[(3) - (3)].pval)); }
     break;
 
 
-
-/* Line 690 of lalr1.cc  */
-#line 586 "fo_parser.cpp"
-	default:
-          break;
+/* Line 664 of lalr1.cc  */
+#line 566 "fo_parser.cpp"
+      default:
+        break;
       }
+
     /* User semantic actions sometimes alter yychar, and that requires
        that yytoken be updated with the new translation.  We take the
        approach of translating immediately before every use of yytoken.
@@ -636,20 +617,19 @@ namespace OpenGraphtheory { namespace Logic {
     yyerror_range[1] = yylloc;
     if (yyerrstatus_ == 3)
       {
-	/* If just tried and failed to reuse lookahead token after an
-	 error, discard it.  */
-
-	if (yychar <= yyeof_)
-	  {
-	  /* Return failure if at end of input.  */
-	  if (yychar == yyeof_)
-	    YYABORT;
-	  }
-	else
-	  {
-	    yydestruct_ ("Error: discarding", yytoken, &yylval, &yylloc);
-	    yychar = yyempty_;
-	  }
+        /* If just tried and failed to reuse lookahead token after an
+           error, discard it.  */
+        if (yychar <= yyeof_)
+          {
+            /* Return failure if at end of input.  */
+            if (yychar == yyeof_)
+              YYABORT;
+          }
+        else
+          {
+            yydestruct_ ("Error: discarding", yytoken, &yylval, &yylloc);
+            yychar = yyempty_;
+          }
       }
 
     /* Else will try to reuse lookahead token after shifting the error
@@ -698,7 +678,7 @@ namespace OpenGraphtheory { namespace Logic {
 
 	/* Pop the current state because it cannot handle the error token.  */
 	if (yystate_stack_.height () == 1)
-	YYABORT;
+	  YYABORT;
 
 	yyerror_range[1] = yylocation_stack_[0];
 	yydestruct_ ("Error: popping",
@@ -746,16 +726,42 @@ namespace OpenGraphtheory { namespace Logic {
     /* Do not reclaim the symbols of the rule which action triggered
        this YYABORT or YYACCEPT.  */
     yypop_ (yylen);
-    while (yystate_stack_.height () != 1)
+    while (1 < yystate_stack_.height ())
       {
-	yydestruct_ ("Cleanup: popping",
-		   yystos_[yystate_stack_[0]],
-		   &yysemantic_stack_[0],
-		   &yylocation_stack_[0]);
-	yypop_ ();
+        yydestruct_ ("Cleanup: popping",
+                     yystos_[yystate_stack_[0]],
+                     &yysemantic_stack_[0],
+                     &yylocation_stack_[0]);
+        yypop_ ();
       }
 
     return yyresult;
+    }
+    catch (...)
+      {
+        YYCDEBUG << "Exception caught: cleaning lookahead and stack"
+                 << std::endl;
+        // Do not try to display the values of the reclaimed symbols,
+        // as their printer might throw an exception.
+        if (yychar != yyempty_)
+          {
+            /* Make sure we have latest lookahead translation.  See
+               comments at user semantic actions for why this is
+               necessary.  */
+            yytoken = yytranslate_ (yychar);
+            yydestruct_ (YY_NULL, yytoken, &yylval, &yylloc);
+          }
+
+        while (1 < yystate_stack_.height ())
+          {
+            yydestruct_ (YY_NULL,
+                         yystos_[yystate_stack_[0]],
+                         &yysemantic_stack_[0],
+                         &yylocation_stack_[0]);
+            yypop_ ();
+          }
+        throw;
+      }
   }
 
   // Generate an error message.
@@ -877,7 +883,7 @@ namespace OpenGraphtheory { namespace Logic {
        3,     3,     3,     4,     4,     3,     2,     3
   };
 
-#if YYDEBUG || YYERROR_VERBOSE || YYTOKEN_TABLE
+#if YYDEBUG
   /* YYTNAME[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
      First, the terminals, then, starting at \a yyntokens_, nonterminals.  */
   const char*
@@ -886,11 +892,10 @@ namespace OpenGraphtheory { namespace Logic {
     "\"end of file\"", "error", "$undefined", "FORALL", "EXISTS", "DOT",
   "COMMA", "AND", "OR", "NOT", "EQ", "NEQ", "_TRUE", "_FALSE", "OPEN",
   "CLOSE", "STRING", "$accept", "S", "FOFORMULA", "ANDS", "ORS",
-  "AFOFORMULA", "RELATION", "PARAMS", 0
+  "AFOFORMULA", "RELATION", "PARAMS", YY_NULL
   };
-#endif
 
-#if YYDEBUG
+
   /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
   const FOParser::rhs_number_type
   FOParser::yyrhs_[] =
@@ -921,9 +926,9 @@ namespace OpenGraphtheory { namespace Logic {
   const unsigned char
   FOParser::yyrline_[] =
   {
-         0,    51,    51,    52,    54,    55,    56,    58,    59,    60,
-      61,    65,    66,    69,    70,    73,    74,    75,    76,    77,
-      78,    79,    80,    81,    82,    85,    87,    88
+         0,    50,    50,    51,    53,    54,    55,    57,    58,    59,
+      60,    64,    65,    68,    69,    72,    73,    74,    75,    76,
+      77,    78,    79,    80,    81,    84,    86,    87
   };
 
   // Print the state stack on the debug stream.
@@ -1010,17 +1015,13 @@ namespace OpenGraphtheory { namespace Logic {
   const unsigned int FOParser::yyuser_token_number_max_ = 271;
   const FOParser::token_number_type FOParser::yyundef_token_ = 2;
 
-
-/* Line 1136 of lalr1.cc  */
-#line 15 "fo_parser.yy"
+/* Line 1135 of lalr1.cc  */
+#line 14 "fo_parser.yy"
 } } // OpenGraphtheory::Logic
-
+/* Line 1135 of lalr1.cc  */
+#line 1023 "fo_parser.cpp"
 /* Line 1136 of lalr1.cc  */
-#line 1020 "fo_parser.cpp"
-
-
-/* Line 1138 of lalr1.cc  */
-#line 90 "fo_parser.yy"
+#line 89 "fo_parser.yy"
 
 
 #include "../../../Headers/logic/FirstOrderLogic/fo_lexer.h"
@@ -1034,4 +1035,3 @@ static int yylex(FOParser::semantic_type * yylval, OpenGraphtheory::Logic::FOLex
 {
     return scanner.yylex(yylval);
 }
-

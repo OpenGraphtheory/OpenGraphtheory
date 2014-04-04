@@ -1,6 +1,5 @@
 
 #include "../../../Headers/algorithms/independentset/independentset.h"
-#include<set>
 
 using namespace std;
 using namespace OpenGraphtheory;

@@ -1,8 +1,4 @@
 
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <map>
 #include "../../Headers/intermediatesteps/show.h"
 
 using namespace std;

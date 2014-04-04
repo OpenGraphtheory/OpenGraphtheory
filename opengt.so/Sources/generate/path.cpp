@@ -1,6 +1,6 @@
 
-#include <list>
 #include "../../Headers/generate/path.h"
+
 using namespace std;
 using namespace OpenGraphtheory;
 

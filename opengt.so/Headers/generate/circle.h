@@ -2,6 +2,7 @@
     #define __OPENGRAPHTHEORY_GENERATE_CIRCLE_H
 
     #include <list>
+    #include <cmath>
     #include "../opengt.h"
     #include "../factory.h"
     #include "generate.h"

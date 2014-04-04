@@ -1,6 +1,6 @@
 
-#include <cmath>
 #include "../../Headers/generate/circle.h"
+
 using namespace std;
 using namespace OpenGraphtheory;
 

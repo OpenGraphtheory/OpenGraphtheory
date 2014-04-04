@@ -1,7 +1,6 @@
 
-#include <cmath>
-#include <list>
 #include "../../Headers/generate/complete.h"
+
 using namespace std;
 using namespace OpenGraphtheory;
 

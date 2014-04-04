@@ -2,6 +2,8 @@
     #define __OPENGRAPHTHEORY_GENERATE_WHEEL_H
 
     #include <list>
+    #include <cmath>
+
     #include "../opengt.h"
     #include "../factory.h"
     #include "generate.h"

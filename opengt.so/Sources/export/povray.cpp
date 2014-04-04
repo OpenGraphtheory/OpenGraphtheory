@@ -1,5 +1,4 @@
 
-#include <math.h>
 #include "../../Headers/export/povray.h"
 
 using namespace std;

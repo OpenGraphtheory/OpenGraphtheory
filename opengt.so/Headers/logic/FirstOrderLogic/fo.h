@@ -2,6 +2,7 @@
 #ifndef __OPENGRAPHTHEORY_LOGIC_FIRSTORDERLOGIC_FO_H
     #define __OPENGRAPHTHEORY_LOGIC_FIRSTORDERLOGIC_FO_H
 
+    #include<string>
 	#include<map>
     #include "../logic.h"
 

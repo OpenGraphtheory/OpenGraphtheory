@@ -8,6 +8,8 @@
 	#include <string>
 	#include <iostream>
 	#include <fstream>
+    #include <vector>
+
 	#include "simple_xml.h"
 	#include "attributes.h"
 

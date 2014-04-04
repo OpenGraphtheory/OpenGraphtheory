@@ -1,6 +1,5 @@
 
 #include "../../../Headers/algorithms/path/path.h"
-#include<map>
 
 using namespace std;
 using namespace OpenGraphtheory;

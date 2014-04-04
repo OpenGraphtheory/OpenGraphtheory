@@ -1,7 +1,4 @@
 
-#include <sstream>
-#include <fstream>
-#include <iomanip>
 #include "../../Headers/intermediatesteps/writefile.h"
 
 using namespace std;

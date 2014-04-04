@@ -1,6 +1,11 @@
 
-#ifndef __OPENGRAPHTHEORY_INTERMEDIATE_SHOW_H
-    #define __OPENGRAPHTHEORY_INTERMEDIATE_SHOW_H
+#ifndef __OPENGRAPHTHEORY_INTERMEDIATESTEPS_SHOW_H
+    #define __OPENGRAPHTHEORY_INTERMEDIATESTEPS_SHOW_H
+
+    #include <iostream>
+    #include <sstream>
+    #include <string>
+    #include <map>
 
     #include "intermediatesteps.h"
     #include "../visualize/GraphWindow.h"

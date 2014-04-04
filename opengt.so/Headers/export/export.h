@@ -1,9 +1,14 @@
 
-#ifndef __OPENGT_EXPORT_EXPORT_H
-    #define __OPENGT_EXPORT_EXPORT_H
+#ifndef __OPENGRAPHTHEORY_EXPORT_EXPORT_H
+    #define __OPENGRAPHTHEORY_EXPORT_EXPORT_H
 
+    #include <iostream>
+    #include <fstream>
+    #include <sstream>
+    #include <list>
+    #include <math.h>
     #include <string>
-    #include <ostream>
+
     #include "../factory.h"
     #include "../opengt.h"
     #include "../visualize/color.h"

@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 2.5.  */
+/* A Bison parser, made by GNU Bison 2.7.12-4996.  */
 
 /* Skeleton interface for Bison LALR(1) parsers in C++
    
-      Copyright (C) 2002-2011 Free Software Foundation, Inc.
+      Copyright (C) 2002-2013 Free Software Foundation, Inc.
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -30,30 +30,32 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
+/**
+ ** \file fo_parser.hpp
+ ** Define the OpenGraphtheory::Logic::parser class.
+ */
+
 /* C++ LALR(1) parser skeleton written by Akim Demaille.  */
 
-#ifndef PARSER_HEADER_H
-# define PARSER_HEADER_H
+#ifndef YY_YY_FO_PARSER_HPP_INCLUDED
+# define YY_YY_FO_PARSER_HPP_INCLUDED
 
 /* "%code requires" blocks.  */
-
-/* Line 35 of lalr1.cc  */
+/* Line 33 of lalr1.cc  */
 #line 1 "fo_parser.yy"
 
 
     // Many thanks to
     // http://www.thebinaryidiot.com/archives/2010/03/06/flex-bison-cpp-example/
 
-    #include<string>
     #include "../../../Headers/logic/FirstOrderLogic/fo.h"
 
     namespace OpenGraphtheory { namespace Logic { class FOLexer; } }
     using namespace OpenGraphtheory::Logic;
 
 
-
-/* Line 35 of lalr1.cc  */
-#line 57 "fo_parser.hpp"
+/* Line 33 of lalr1.cc  */
+#line 59 "fo_parser.hpp"
 
 
 #include <string>
@@ -66,26 +68,11 @@
 # define YYDEBUG 0
 #endif
 
-/* Enabling verbose error messages.  */
-#ifdef YYERROR_VERBOSE
-# undef YYERROR_VERBOSE
-# define YYERROR_VERBOSE 1
-#else
-# define YYERROR_VERBOSE 0
-#endif
-
-/* Enabling the token table.  */
-#ifndef YYTOKEN_TABLE
-# define YYTOKEN_TABLE 0
-#endif
-
-
-/* Line 35 of lalr1.cc  */
-#line 15 "fo_parser.yy"
+/* Line 33 of lalr1.cc  */
+#line 14 "fo_parser.yy"
 namespace OpenGraphtheory { namespace Logic {
-
-/* Line 35 of lalr1.cc  */
-#line 89 "fo_parser.hpp"
+/* Line 33 of lalr1.cc  */
+#line 76 "fo_parser.hpp"
 
   /// A Bison parser.
   class FOParser
@@ -95,18 +82,16 @@ namespace OpenGraphtheory { namespace Logic {
 #ifndef YYSTYPE
     union semantic_type
     {
-
-/* Line 35 of lalr1.cc  */
-#line 21 "fo_parser.yy"
+/* Line 33 of lalr1.cc  */
+#line 20 "fo_parser.yy"
 
     std::string* sval;
     FOFormula* fval;
     FO_Parameter* pval;
 
 
-
-/* Line 35 of lalr1.cc  */
-#line 110 "fo_parser.hpp"
+/* Line 33 of lalr1.cc  */
+#line 95 "fo_parser.hpp"
     };
 #else
     typedef YYSTYPE semantic_type;
@@ -162,6 +147,10 @@ namespace OpenGraphtheory { namespace Logic {
 #endif
 
   private:
+    /// This class is not copyable.
+    FOParser (const FOParser&);
+    FOParser& operator= (const FOParser&);
+
     /// Report a syntax error.
     /// \param loc    where the syntax error is found.
     /// \param msg    a description of the syntax error.
@@ -245,14 +234,12 @@ namespace OpenGraphtheory { namespace Logic {
     /// For a rule, its LHS.
     static const unsigned char yyr1_[];
     /// For a rule, its RHS length.
-    static const unsigned char yyr2_[];
-
-#if YYDEBUG || YYERROR_VERBOSE || YYTOKEN_TABLE
-    /// For a symbol, its name in clear.
-    static const char* const yytname_[];
-#endif
+    static const unsigned char yyr2_[]; 
 
 #if YYDEBUG
+    /// For a symbol, its name in clear.
+    static const char* const yytname_[];
+
     /// A type to store symbol numbers and -1.
     typedef signed char rhs_number_type;
     /// A `-1'-separated list of the rules' RHS.
@@ -278,6 +265,7 @@ namespace OpenGraphtheory { namespace Logic {
 
     /// \brief Reclaim the memory associated to a symbol.
     /// \param yymsg        Why this token is reclaimed.
+    ///                     If null, do not display the symbol, just free it.
     /// \param yytype       The symbol type.
     /// \param yyvaluep     Its semantic value.
     /// \param yylocationp  Its location.
@@ -306,14 +294,12 @@ namespace OpenGraphtheory { namespace Logic {
     OpenGraphtheory::Logic::FOLexer &scanner;
     OpenGraphtheory::Logic::FOFormula** result;
   };
-
-/* Line 35 of lalr1.cc  */
-#line 15 "fo_parser.yy"
+/* Line 33 of lalr1.cc  */
+#line 14 "fo_parser.yy"
 } } // OpenGraphtheory::Logic
-
-/* Line 35 of lalr1.cc  */
-#line 316 "fo_parser.hpp"
-
+/* Line 33 of lalr1.cc  */
+#line 302 "fo_parser.hpp"
 
 
-#endif /* ! defined PARSER_HEADER_H */
+
+#endif /* !YY_YY_FO_PARSER_HPP_INCLUDED  */

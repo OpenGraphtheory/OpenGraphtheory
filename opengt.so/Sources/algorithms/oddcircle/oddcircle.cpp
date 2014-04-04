@@ -1,6 +1,5 @@
 
 #include "../../../Headers/algorithms/oddcircle/oddcircle.h"
-#include<map>
 
 using namespace std;
 using namespace OpenGraphtheory;

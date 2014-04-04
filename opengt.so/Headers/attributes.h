@@ -4,8 +4,11 @@
 
     #include <string>
     #include <iostream>
+    #include <sstream>
+
     #include "factory.h"
     #include "simple_xml.h"
+
 
     class Attribute
     {

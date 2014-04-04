@@ -1,6 +1,5 @@
 
 #include "../../../Headers/algorithms/clique/clique.h"
-#include<set>
 
 using namespace std;
 using namespace OpenGraphtheory;

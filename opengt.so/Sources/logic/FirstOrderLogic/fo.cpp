@@ -1,9 +1,11 @@
 
 #include "../../../Headers/logic/FirstOrderLogic/fo.h"
 #include "../../../Headers/logic/FirstOrderLogic/fo_lexer.h"
+
 using namespace std;
 using namespace OpenGraphtheory;
 using namespace OpenGraphtheory::Logic;
+
 #include "fo_parser.hpp"
 
 

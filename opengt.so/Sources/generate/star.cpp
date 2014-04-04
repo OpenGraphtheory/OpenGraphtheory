@@ -1,7 +1,6 @@
 
-#include <list>
-#include <cmath>
 #include "../../Headers/generate/star.h"
+
 using namespace std;
 using namespace OpenGraphtheory;
 

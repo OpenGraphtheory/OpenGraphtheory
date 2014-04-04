@@ -1,9 +1,13 @@
 
-#ifndef __OPENGRAPHTHEORY_INTERMEDIATE_WRITEFILE_H
-    #define __OPENGRAPHTHEORY_INTERMEDIATE_WRITEFILE_H
+#ifndef __OPENGRAPHTHEORY_INTERMEDIATESTEPS_WRITEFILE_H
+    #define __OPENGRAPHTHEORY_INTERMEDIATESTEPS_WRITEFILE_H
 
-    #include<vector>
-    #include<string>
+    #include <sstream>
+    #include <fstream>
+    #include <iomanip>
+    #include <vector>
+    #include <string>
+
     #include "intermediatesteps.h"
     #include "../export/export.h"
 

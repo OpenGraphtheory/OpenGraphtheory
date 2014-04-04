@@ -2,6 +2,7 @@
 #ifndef __OPENGRAPHTHEORY_GENERATE_GENERATE_H
     #define __OPENGRAPHTHEORY_GENERATE_GENERATE_H
 
+    #include <sstream>
     #include <list>
     #include <string>
     #include "../opengt.h"

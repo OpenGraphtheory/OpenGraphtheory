@@ -1,10 +1,4 @@
 
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string>
-#include <list>
-#include <math.h>
 #include "../../Headers/export/export.h"
 
 using namespace std;

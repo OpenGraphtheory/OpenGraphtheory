@@ -1,6 +1,6 @@
 
-#include <list>
 #include "../../Headers/generate/grid.h"
+
 using namespace std;
 using namespace OpenGraphtheory;
 

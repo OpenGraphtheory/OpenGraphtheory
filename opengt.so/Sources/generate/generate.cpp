@@ -1,6 +1,4 @@
 
-#include <sstream>
-#include <list>
 #include "../../Headers/generate/generate.h"
 
 using namespace std;

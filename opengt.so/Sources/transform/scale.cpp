@@ -1,8 +1,6 @@
 
 #include "../../Headers/transform/scale.h"
 
-#include<iostream>
-
 using namespace std;
 using namespace OpenGraphtheory;
 using namespace OpenGraphtheory::IntermediateSteps;

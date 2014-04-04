@@ -1,7 +1,9 @@
 
-#ifndef __OPENGRAPHTHEORY_VISUALIZATION_VECTORND_H
-    #define __OPENGRAPHTHEORY_VISUALIZATION_VECTORND_H
+#ifndef __OPENGRAPHTHEORY_VISUALIZE_VECTORND_H
+    #define __OPENGRAPHTHEORY_VISUALIZE_VECTORND_H
 
+    #include<iostream>
+    #include<math.h>
     #include<vector>
 
     namespace OpenGraphtheory
