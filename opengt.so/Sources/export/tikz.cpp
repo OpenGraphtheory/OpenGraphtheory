@@ -71,7 +71,7 @@ namespace OpenGraphtheory
 
         void ExportFilterTIKZ::Line(ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2)
         {
-            os << "  \\draw[line width="<<LineWidth<<"cm,-,pencolor] (n" << from_id << ") -- (n" << to_id << ");\n";
+            os << "  \\draw[-,pencolor,line width="<<LineWidth<<"cm] (n" << from_id << ") -- (n" << to_id << ");\n";
         }
 
         void ExportFilterTIKZ::Arrow(ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2)

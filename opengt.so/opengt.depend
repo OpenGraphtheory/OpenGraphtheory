@@ -245,7 +245,7 @@
 	"../factory.h"
 	"export.h"
 
-1392029042 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/tikz.cpp
+1396618441 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/tikz.cpp
 	"../../Headers/export/tikz.h"
 
 1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/tikz.h
@@ -653,12 +653,13 @@
 	"opengt.h"
 	<set>
 
-1392030032 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/logic/FirstOrderLogic/fo.cpp
+1396604937 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/logic/FirstOrderLogic/fo.cpp
 	"../../../Headers/logic/FirstOrderLogic/fo.h"
 	"../../../Headers/logic/FirstOrderLogic/fo_lexer.h"
 	"fo_parser.hpp"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/logic/FirstOrderLogic/fo.h
+1396604943 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/logic/FirstOrderLogic/fo.h
+	<string>
 	<map>
 	"../logic.h"
 
@@ -666,28 +667,25 @@
 	<FlexLexer.h>
 	"../../../Sources/logic/FirstOrderLogic/fo_parser.hpp"
 
-1392029042 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/logic/FirstOrderLogic/fo_parser.hpp
-	<string>
+1396604919 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/logic/FirstOrderLogic/fo_parser.hpp
 	"../../../Headers/logic/FirstOrderLogic/fo.h"
 	<string>
 	<iostream>
 	"stack.hh"
 	"location.hh"
 
-1392029042 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/logic/FirstOrderLogic/stack.hh
+1396604919 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/logic/FirstOrderLogic/stack.hh
 	<deque>
 
-1392029042 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/logic/FirstOrderLogic/location.hh
-	<iostream>
-	<string>
+1396604919 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/logic/FirstOrderLogic/location.hh
 	"position.hh"
 
-1392029042 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/logic/FirstOrderLogic/position.hh
+1396604919 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/logic/FirstOrderLogic/position.hh
+	<algorithm>
 	<iostream>
 	<string>
-	<algorithm>
 
-1392029042 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/logic/FirstOrderLogic/fo_lexer.cpp
+1396604667 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/logic/FirstOrderLogic/fo_lexer.cpp
 	<inttypes.h>
 	<iostream>
 	<errno.h>
@@ -698,7 +696,7 @@
 	"../../../Headers/logic/FirstOrderLogic/fo_lexer.h"
 	<unistd.h>
 
-1392029042 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/logic/FirstOrderLogic/fo_parser.cpp
+1396604919 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/logic/FirstOrderLogic/fo_parser.cpp
 	"fo_parser.hpp"
 	<libintl.h>
 	"../../../Headers/logic/FirstOrderLogic/fo_lexer.h"
@@ -819,4 +817,53 @@
 	<string>
 	"import.h"
 	"../simple_xml.h"
+
+1396617374 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/import/tikz/tikz.cpp
+	"../../../Headers/import/tikz/tikz.h"
+	"../../../Headers/import/tikz/tikz_lexer.h"
+	"tikz_parser.hpp"
+
+1396615907 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/import/tikz/tikz.h
+	<string>
+	<map>
+	"../import.h"
+	"../../visualize/color.h"
+
+1396605755 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/import/tikz/tikz_lexer.h
+	<FlexLexer.h>
+	"../../../Sources/import/tikz/tikz_parser.hpp"
+
+1396619172 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/import/tikz/tikz_parser.hpp
+	"../../../Headers/import/tikz/tikz.h"
+	<string>
+	<iostream>
+	"stack.hh"
+	"location.hh"
+
+1396619172 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/import/tikz/stack.hh
+	<deque>
+
+1396619172 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/import/tikz/location.hh
+	"position.hh"
+
+1396619172 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/import/tikz/position.hh
+	<algorithm>
+	<iostream>
+	<string>
+
+1396618914 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/import/tikz/tikz_lexer.cpp
+	<inttypes.h>
+	<iostream>
+	<errno.h>
+	<cstdlib>
+	<cstdio>
+	<cstring>
+	<FlexLexer.h>
+	"../../../Headers/import/tikz/tikz_lexer.h"
+	<unistd.h>
+
+1396619072 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/import/tikz/tikz_parser.cpp
+	"tikz_parser.hpp"
+	<libintl.h>
+	"../../../Headers/import/tikz/tikz_lexer.h"
 
