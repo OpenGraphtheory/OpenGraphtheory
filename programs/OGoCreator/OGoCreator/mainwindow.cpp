@@ -48,13 +48,20 @@ void MainWindow::MakeTab(Graph* graph, QString tabCaption, QString filelocation)
 void MainWindow::OpenGraphFile(QString filename)
 {
     ui->statusBar->showMessage("Loading " + filename + "...");
+    QFileInfo fileinfo(filename);
+    QString suffix = fileinfo.suffix().toLower();
 
     Graph* gr = new Graph;
-    gr->LoadFromFile(string(filename.toUtf8().constData()));
+    if(suffix == "gxl")
+    {
+        gr->LoadFromFile(string(filename.toUtf8().constData()));
+    }
+    else
+    {
+        (*gr) = Import::ImportFilter::Import(filename.toUtf8().constData(), suffix.toUtf8().constData());
+    }
 
-    QFileInfo fileinfo(filename);
     MakeTab(gr, fileinfo.baseName(), filename);
-
     ui->statusBar->showMessage("");
 }
 

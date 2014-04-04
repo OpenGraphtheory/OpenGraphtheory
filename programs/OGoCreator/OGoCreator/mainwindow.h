@@ -21,6 +21,7 @@
 #include "../../../opengt.so/Headers/algorithms/path/path.h"
 #include "../../../opengt.so/Headers/transform/springembedder3d.h"
 #include "../../../opengt.so/Headers/export/export.h"
+#include "../../../opengt.so/Headers/import/import.h"
 
 
 namespace Ui {
@@ -53,8 +54,6 @@ private slots:
     void on_actionSave_triggered();
 
     void on_actionBugtracker_triggered();
-
-    void on_actionChat_triggered();
 
     void on_actionForum_triggered();
 
