@@ -2,6 +2,7 @@
     #define __OPENGRAPHTHEORY_EXPORT_DOT_H
 
     #include <ostream>
+    #include <iomanip>
     #include "../opengt.h"
     #include "../factory.h"
     #include "export.h"

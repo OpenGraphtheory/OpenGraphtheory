@@ -135,11 +135,12 @@
 1396602478 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/attributes.cpp
 	"../Headers/attributes.h"
 
-1392029042 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/dot.cpp
+1396871690 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/dot.cpp
 	"../../Headers/export/dot.h"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/dot.h
+1396870681 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/dot.h
 	<ostream>
+	<iomanip>
 	"../opengt.h"
 	"../factory.h"
 	"export.h"
@@ -227,7 +228,7 @@
 	"../factory.h"
 	"export.h"
 
-1392029042 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/tei.cpp
+1396861168 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/tei.cpp
 	"../../Headers/export/tei.h"
 
 1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/tei.h
@@ -343,7 +344,7 @@
 	"../factory.h"
 	"generate.h"
 
-1396535729 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/import/import.cpp
+1396866238 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/import/import.cpp
 	"../../Headers/import/import.h"
 
 1396601827 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/import/import.h
@@ -807,7 +808,7 @@
 	"../factory.h"
 	"export.h"
 
-1396538294 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/import/xgmml.cpp
+1396872063 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/import/xgmml.cpp
 	"../../Headers/import/xgmml.h"
 
 1396535810 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/import/xgmml.h
@@ -862,8 +863,68 @@
 	"../../../Headers/import/tikz/tikz_lexer.h"
 	<unistd.h>
 
-1396619072 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/import/tikz/tikz_parser.cpp
+1396619172 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/import/tikz/tikz_parser.cpp
 	"tikz_parser.hpp"
 	<libintl.h>
 	"../../../Headers/import/tikz/tikz_lexer.h"
+
+1396871702 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/import/dot/dot.cpp
+	"../../../Headers/import/dot/dot.h"
+	"../../../Headers/import/dot/dot_lexer.h"
+	"dot_parser.hpp"
+
+1396865729 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/import/dot/dot.h
+	<string>
+	<map>
+	"../import.h"
+	"../../visualize/color.h"
+
+1396862238 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/import/dot/dot_lexer.h
+	<FlexLexer.h>
+	"../../../Sources/import/dot/dot_parser.hpp"
+
+1396866778 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/import/dot/dot_parser.hpp
+	"../../../Headers/import/dot/dot.h"
+	<string>
+	<iostream>
+	"stack.hh"
+	"location.hh"
+
+1396866778 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/import/dot/stack.hh
+	<deque>
+
+1396866778 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/import/dot/location.hh
+	"position.hh"
+
+1396866778 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/import/dot/position.hh
+	<algorithm>
+	<iostream>
+	<string>
+
+1396869692 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/import/dot/dot_lexer.cpp
+	<inttypes.h>
+	<iostream>
+	<errno.h>
+	<cstdlib>
+	<cstdio>
+	<cstring>
+	<FlexLexer.h>
+	"../../../Headers/import/dot/dot_lexer.h"
+	<unistd.h>
+
+1396866778 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/import/dot/dot_parser.cpp
+	"dot_parser.hpp"
+	<libintl.h>
+	"../../../Headers/import/dot/dot_lexer.h"
+
+1396872995 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/import/graphml.cpp
+	"../../Headers/import/graphml.h"
+
+1396872020 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/import/graphml.h
+	<iostream>
+	<sstream>
+	<map>
+	<string>
+	"import.h"
+	"../simple_xml.h"
 

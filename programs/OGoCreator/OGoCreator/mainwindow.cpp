@@ -61,6 +61,18 @@ void MainWindow::OpenGraphFile(QString filename)
         (*gr) = Import::ImportFilter::Import(filename.toUtf8().constData(), suffix.toUtf8().constData());
     }
 
+    // make sure every vertex has 2 coordinates (otherwise, the paint event would crash)
+    for(Graph::VertexIterator v = gr->BeginVertices(); v != gr->EndVertices(); v++)
+    {
+        vector<float> Coordinates = v.GetCoordinates();
+        if(Coordinates.size() < 2)
+        {
+            while(Coordinates.size() < 2)
+                Coordinates.push_back(0);
+           v.SetCoordinates(Coordinates);
+        }
+    }
+
     MakeTab(gr, fileinfo.baseName(), filename);
     ui->statusBar->showMessage("");
 }
@@ -124,7 +136,7 @@ QStringList ExportFilterEnumerator::getStringList()
 {
     return stringlist;
 }
-void ExportFilterEnumerator::Enumerate(std::string name, std::string description, std::string url)
+void ExportFilterEnumerator::Enumerate(std::string name, std::string description, std::string)
 {
     stringlist.append(QString((description+" (*." + name+") (*."+name+")").c_str()));
 }
@@ -383,7 +395,7 @@ RepaintOnChange::RepaintOnChange(OGoGraphView *target) : IntermediateStepHandler
     this->target = target;
 }
 
-void RepaintOnChange::Handle(Graph* G)
+void RepaintOnChange::Handle(Graph*)
 {
     target->repaint();
 }

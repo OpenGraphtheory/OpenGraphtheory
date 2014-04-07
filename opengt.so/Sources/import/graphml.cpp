@@ -1,5 +1,5 @@
 
-#include "../../Headers/import/xgmml.h"
+#include "../../Headers/import/graphml.h"
 
 using namespace std;
 using namespace OpenGraphtheory;
@@ -10,21 +10,23 @@ namespace OpenGraphtheory
     namespace Import
     {
 
-        FactoryRegistrator<ImportFilter> ImportFilterXGMML::ImportFilterXGMMLRegistrator(
-            &ImportFilter::ImportFilterFactory, "xgmml", new DefaultInstantiator<ImportFilter, ImportFilterXGMML>(
-                "xgmml", "eXtensible Graph Markup and Modeling Language","http://cgi5.cs.rpi.edu/research/groups/pb/punin/public_html/XGMML/"));
+        FactoryRegistrator<ImportFilter> ImportFilterGRAPHML::ImportFilterGRAPHMLRegistrator(
+            &ImportFilter::ImportFilterFactory, "graphml", new DefaultInstantiator<ImportFilter, ImportFilterGRAPHML>(
+                "graphml", "GraphML", "http://graphml.graphdrawing.org/"));
 
 
-        Graph ImportFilterXGMML::Import(istream& is)
+        Graph ImportFilterGRAPHML::Import(istream& is)
         {
 			OpenGraphtheory::XML::XML* root = new OpenGraphtheory::XML::XML;
 			is >> (*root);
 
-		    list<OpenGraphtheory::XML::XML*> graphnodes = root->FindChildren("graph");
-			if(graphnodes.size() > 1)
-				throw "XML Document must have exactly 1 top element \"graph\"";
-			if(graphnodes.size() < 1)
-				throw "XML Document contains no element \"graph\" (document possibly empty)";
+		    list<OpenGraphtheory::XML::XML*> graphmlnodes = root->FindChildren("graphml");
+			if(graphmlnodes.size() > 1)
+				throw "XML Document must have exactly 1 top element \"graphml\"";
+			if(graphmlnodes.size() < 1)
+				throw "XML Document contains no element \"graphml\" (document possibly empty)";
+            OpenGraphtheory::XML::XML* graphmlnode = graphmlnodes.front();
+		    list<OpenGraphtheory::XML::XML*> graphnodes = graphmlnode->FindChildren("graph");
             OpenGraphtheory::XML::XML* graphnode = graphnodes.front();
 
 
@@ -32,7 +34,16 @@ namespace OpenGraphtheory
             map<string, Graph::VertexIterator*> Vertex_XML_ID_to_pointer;
 
             // 0 is the default for directed, by the XGMML standard
-            bool Directed = (graphnode->GetAttribute("directed", "0") == "1");
+            string edgedefault = graphnode->GetAttribute("edgedefault", "");
+            bool defaultdirected;
+            if(edgedefault == "directed")
+                defaultdirected = true;
+            else if(edgedefault == "undirected")
+                defaultdirected = false;
+            else
+                throw "graph attribute \"edgedefault\" must be \"directed\" or \"undirected\"";
+
+
 
 			/// load vertices
 			list<OpenGraphtheory::XML::XML*> nodes = graphnode->FindChildren("node");
@@ -41,6 +52,7 @@ namespace OpenGraphtheory
 				/// create vertex
 				Graph::VertexIterator *v = new Graph::VertexIterator(result.AddVertex());
 
+/*
 				v->SetLabel((*node)->GetAttribute("label",""));
 				string sWeight = (*node)->GetAttribute("weight","0");
 				stringstream s;
@@ -63,7 +75,7 @@ namespace OpenGraphtheory
                     if(sAttr != NULL)
                         sAttr->Value = value;
                 }
-
+*/
 				/// assign XML-ID
 				string id = (*node)->GetAttribute("id", "");
 				if(id == "")
@@ -86,6 +98,13 @@ namespace OpenGraphtheory
 					throw "edge with reference to nonexisting node-id";
 
 				/// create edge
+				bool Directed = defaultdirected;
+				string directed = (*edge)->GetAttribute("directed", "");
+				if(directed == "true")
+                    Directed = true;
+                else if(directed == "false")
+                    Directed = false;
+
 				Graph::EdgeIterator e;
 				if(Directed)
                     e = result.AddArc(*(from->second), *(to->second));
@@ -93,7 +112,9 @@ namespace OpenGraphtheory
                     e = result.AddEdge(*(from->second), *(to->second));
 
                 /// assign attributes
+				/*
 				e.SetLabel((*edge)->GetAttribute("label",""));
+				*/
             }
 
 

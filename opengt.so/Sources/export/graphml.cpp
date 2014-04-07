@@ -20,7 +20,7 @@ namespace OpenGraphtheory
             os << "<!-- www.Open-Graphtheory.org -->\n";
             os << "<graphml xmlns=\"http://graphml.graphdrawing.org/xmlns\" xmlns:y=\"http://www.yworks.com/xml/graphml\">\n";
             os << "  <key for=\"node\" id=\"d6\" yfiles.type=\"nodegraphics\"/>\n";
-            os << "  <graph id=\"g" << G.GetID() << "\">\n";
+            os << "  <graph id=\"G\" edgedefault=\"undirected\">\n";
 
             /// write vertices
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)

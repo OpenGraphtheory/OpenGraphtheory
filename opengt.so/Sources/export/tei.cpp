@@ -42,7 +42,7 @@ namespace OpenGraphtheory
         }
 
         FactoryRegistrator<ExportFilter> ExportFilterTEI::ExportFilterTeiRegistrator(&ExportFilter::ExportFilterFactory, "tei",
-            new DefaultInstantiator<ExportFilter, ExportFilterTEI>("gml", "Text Encoding Initiative",
+            new DefaultInstantiator<ExportFilter, ExportFilterTEI>("tei", "Text Encoding Initiative",
                 "http://www.tei-c.org/release/doc/tei-p5-doc/de/html/GD.html"));
 
 

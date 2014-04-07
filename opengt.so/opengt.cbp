@@ -88,6 +88,9 @@
 		<Unit filename="Headers/generate/star.h" />
 		<Unit filename="Headers/generate/tree.h" />
 		<Unit filename="Headers/generate/wheel.h" />
+		<Unit filename="Headers/import/dot/dot.h" />
+		<Unit filename="Headers/import/dot/dot_lexer.h" />
+		<Unit filename="Headers/import/graphml.h" />
 		<Unit filename="Headers/import/import.h" />
 		<Unit filename="Headers/import/tgf.h" />
 		<Unit filename="Headers/import/tikz/tikz.h" />
@@ -170,7 +173,16 @@
 		<Unit filename="Sources/generate/star.cpp" />
 		<Unit filename="Sources/generate/tree.cpp" />
 		<Unit filename="Sources/generate/wheel.cpp" />
-		<Unit filename="Sources/import/import.cpp" />
+		<Unit filename="Sources/import/dot/dot.cpp" />
+		<Unit filename="Sources/import/dot/dot_lexer.cpp" />
+		<Unit filename="Sources/import/dot/dot_lexer.l" />
+		<Unit filename="Sources/import/dot/dot_parser.cpp" />
+		<Unit filename="Sources/import/dot/dot_parser.yy" />
+		<Unit filename="Sources/import/dot/makefile" />
+		<Unit filename="Sources/import/graphml.cpp" />
+		<Unit filename="Sources/import/import.cpp">
+			<Option weight="49" />
+		</Unit>
 		<Unit filename="Sources/import/tgf.cpp" />
 		<Unit filename="Sources/import/tikz/makefile" />
 		<Unit filename="Sources/import/tikz/tikz.cpp" />
