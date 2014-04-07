@@ -49,7 +49,7 @@ namespace OpenGraphtheory
                    << " withrgbcolor (" << (PenColor.Red/256.0f) << ","<< (PenColor.Green/256.0f) << "," << (PenColor.Blue/256.0f) << ");\n";
         }
 
-        void ExportFilterMPOST::Arrow(ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2)
+        void ExportFilterMPOST::Arrow(ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2, float to_radius)
         {
                 os << " drawarrow z" << from_id << " -- z" << to_id
                    << " withrgbcolor (" << (PenColor.Red/256.0f) << ","<< (PenColor.Green/256.0f) << "," << (PenColor.Blue/256.0f) << ");\n";

@@ -22,9 +22,11 @@ namespace OpenGraphtheory
                     throw "Vertex with less than 2 coordinates found";
             }
 
-
             os << "% www.Open-Graphtheory.org\n";
+            os << "% INCOMPATIBLE TO PDFLATEX!!! MUST USE LATEX (DVI)\n";
+            os << "%\\documentclass[a4paper,10pt]{article}\n";
             os << "%\\usepackage{gastex}\n";
+            os << "%\\begin{document}\n";
             os << "\\begin{picture}(100,100)(0,0)\n";
 
             /// write vertices
@@ -40,6 +42,7 @@ namespace OpenGraphtheory
                    << "(n" << e.From().GetID() << ",n" << e.To().GetID() << "){" << SanitizeString(e.GetLabel()) << "}\n";
 
             os << "\\end{picture}\n";
+            os << "%\\end{document}\n";
         }
 
         FactoryRegistrator<ExportFilter> ExportFilterGASTEX::ExportFilterGastexRegistrator(&ExportFilter::ExportFilterFactory, "gastex",

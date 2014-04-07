@@ -12,6 +12,7 @@
     #include "../factory.h"
     #include "../opengt.h"
     #include "../visualize/color.h"
+    #include "../visualize/vector2d.h"
 
     namespace OpenGraphtheory
     {
@@ -65,7 +66,7 @@
 
                     virtual void BeginRenderingEdges(std::ostream &os);
                     virtual void Line(std::ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2);
-                    virtual void Arrow(std::ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2);
+                    virtual void Arrow(std::ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2, float to_radius);
                     virtual void EndRenderingEdges(std::ostream &os);
 
                     virtual void BeginRenderingVertices(std::ostream &os);

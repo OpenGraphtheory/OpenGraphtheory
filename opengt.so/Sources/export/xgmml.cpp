@@ -27,7 +27,8 @@ namespace OpenGraphtheory
                 vector<float> coordinates = v.GetCoordinates();
                 os << "  <node id=\"" << v.GetID() << "\" label=\"" << v.GetLabel()
                    << "\" weight=\"" << v.GetWeight() << "\">\n";
-                os << "    <graphics x=\"" << coordinates[0] << "\" y=\"" << coordinates[1] << "\"/>\n";
+                if(coordinates.size() >= 2)
+                    os << "    <graphics x=\"" << coordinates[0] << "\" y=\"" << coordinates[1] << "\"/>\n";
                 os << "  </node>\n";
             }
 

@@ -38,10 +38,10 @@
 	<map>
 	"../Sources/factory_templates.cpp"
 
-1396602652 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/export.cpp
+1396879981 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/export.cpp
 	"../../Headers/export/export.h"
 
-1396602675 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/export.h
+1396879963 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/export.h
 	<iostream>
 	<fstream>
 	<sstream>
@@ -51,6 +51,7 @@
 	"../factory.h"
 	"../opengt.h"
 	"../visualize/color.h"
+	"../visualize/vector2d.h"
 
 1396601887 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/color.h
 
@@ -163,7 +164,7 @@
 	"../factory.h"
 	"export.h"
 
-1396006078 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/graphml.cpp
+1396873150 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/graphml.cpp
 	"../../Headers/export/graphml.h"
 
 1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/graphml.h
@@ -172,10 +173,10 @@
 	"../factory.h"
 	"export.h"
 
-1392029042 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/mpost.cpp
+1396880331 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/mpost.cpp
 	"../../Headers/export/mpost.h"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/mpost.h
+1396880188 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/mpost.h
 	<ostream>
 	"../opengt.h"
 	"../factory.h"
@@ -249,7 +250,7 @@
 1396618441 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/tikz.cpp
 	"../../Headers/export/tikz.h"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/tikz.h
+1396880153 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/tikz.h
 	<ostream>
 	"../opengt.h"
 	"../factory.h"
@@ -264,7 +265,7 @@
 	"../factory.h"
 	"export.h"
 
-1396535504 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/xgmml.cpp
+1396876350 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/xgmml.cpp
 	"../../Headers/export/xgmml.h"
 
 1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/xgmml.h
@@ -388,7 +389,7 @@
 	"vector2d.h"
 	"color.h"
 
-1396603263 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/vector2d.h
+1396877547 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/vector2d.h
 	<math.h>
 
 1396603058 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/intermediatesteps/stdout.cpp

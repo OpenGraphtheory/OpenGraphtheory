@@ -207,7 +207,10 @@ namespace OpenGraphtheory
                 if(e.IsEdge())
                     Line(os, e.From().GetID(), e.To().GetID(), x1, y1, x2, y2);
                 else
-                    Arrow(os, e.From().GetID(), e.To().GetID(), x1, y1, x2, y2);
+                {
+                    float TargetRadius = vertexradius >= 0 ? vertexradius : e.To().GetWeight();
+                    Arrow(os, e.From().GetID(), e.To().GetID(), x1, y1, x2, y2, TargetRadius);
+                }
 
 
                 if(e.GetLabel() != "")
@@ -313,9 +316,30 @@ namespace OpenGraphtheory
 
         }
 
-        void GraphicalExportFilter::Arrow(ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2)
+        void GraphicalExportFilter::Arrow(ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2, float to_radius)
         {
+            float ArrowHeadAngle = 40.0f / 2.0f;
+            float ArrowHeadLength = 3;
+
+            // intersection with target
+            Visualization::Vector2D intersectionpoint(x2-x1, y2-y1);
+            intersectionpoint = intersectionpoint * ((intersectionpoint.Length()-to_radius) / intersectionpoint.Length());
+            x2 = x1 + intersectionpoint.x;
+            y2 = y1 + intersectionpoint.y;
+
+            Visualization::Vector2D temp(x2-x1, y2-y1);
+            float alpha = temp.Theta();
+
+            float arrowX1 = x2-ArrowHeadLength*cos((alpha-ArrowHeadAngle)*M_PI/180.0);
+            float arrowY1 = y2-ArrowHeadLength*sin((alpha-ArrowHeadAngle)*M_PI/180.0);
+            float arrowX2 = x2-ArrowHeadLength*sin((90-alpha-ArrowHeadAngle)*M_PI/180.0);
+            float arrowY2 = y2-ArrowHeadLength*cos((90-alpha-ArrowHeadAngle)*M_PI/180.0);
+
             Line(os, from_id, to_id, x1, y1, x2, y2);
+            // arrow head
+            Line(os, -1, -1, arrowX1, arrowY1, x2, y2);
+            Line(os, -1, -1, arrowX2, arrowY2, x2, y2);
+            Line(os, -1, -1, arrowX1, arrowY1, arrowX2, arrowY2);
         }
 
         void GraphicalExportFilter::EndRenderingEdges(ostream &os)

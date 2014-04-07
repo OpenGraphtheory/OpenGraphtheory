@@ -21,6 +21,15 @@
                     bool RenderingVertices;
                     bool RenderingEdges;
 
+                    std::map<char, std::string> SpecialCharacters();
+                    std::string SpecialCharacter_auml();
+                    std::string SpecialCharacter_Auml();
+                    std::string SpecialCharacter_ouml();
+                    std::string SpecialCharacter_Ouml();
+                    std::string SpecialCharacter_uuml();
+                    std::string SpecialCharacter_Uuml();
+                    std::string SpecialCharacter_szlig();
+
                 public:
                     void Begin(std::ostream &os, float WidthInCm, float HeightInCm, float ResolutionDPI);
                     void End(std::ostream &os);
@@ -33,7 +42,7 @@
                     void EndRenderingVertices(std::ostream &os);
                     void BeginRenderingEdges(std::ostream& os);
                     void Line(std::ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2);
-                    void Arrow(std::ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2);
+                    void Arrow(std::ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2, float to_radius);
                     void EndRenderingEdges(std::ostream& os);
                     void PutText(std::ostream &os, float x, float y, std::string text);
             };

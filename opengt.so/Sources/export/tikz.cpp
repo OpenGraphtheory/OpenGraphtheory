@@ -12,7 +12,9 @@ namespace OpenGraphtheory
         void ExportFilterTIKZ::Begin(ostream &os, float WidthInCm, float HeightInCm, float ResolutionDPI)
         {
             os << "% www.Open-Graphtheory.org\n";
-            os << "% \\usepackage{tikz}\n";
+            os << "%\\documentclass[a4paper,10pt]{article}\n";
+            os << "%\\usepackage{tikz}\n";
+            os << "%\\begin{document}\n";
             os << "\\begin{tikzpicture}\n";
             //os << "  \\tikzstyle{vertex}=[shape=circle, draw]\n";
             ImageHeight = HeightInCm;
@@ -23,12 +25,13 @@ namespace OpenGraphtheory
         void ExportFilterTIKZ::End(ostream &os)
         {
             os << "\\end{tikzpicture}\n";
+            os << "%\\end{document}\n";
         }
 
         void ExportFilterTIKZ::DeclareVertex(ostream &os, int vertex_id, float x, float y, float radius, string text)
         {
                 os << "  \\node (n" << vertex_id
-                   << ") at (" << x << "cm, " << ImageHeight-y << "cm){" << text << "};\n";
+                   << ") at (" << x << "cm, " << ImageHeight-y << "cm){" << SanitizeString(text) << "};\n";
         }
 
         void ExportFilterTIKZ::SetPenColor(ostream &os, Visualization::Color color)
@@ -74,7 +77,7 @@ namespace OpenGraphtheory
             os << "  \\draw[-,pencolor,line width="<<LineWidth<<"cm] (n" << from_id << ") -- (n" << to_id << ");\n";
         }
 
-        void ExportFilterTIKZ::Arrow(ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2)
+        void ExportFilterTIKZ::Arrow(ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2, float to_radius)
         {
             os << "  \\draw[->,pencolor,line width=" << LineWidth << "cm] (n" << from_id << ") -- (n" << to_id << ");\n";
         }
@@ -87,7 +90,55 @@ namespace OpenGraphtheory
 
         void ExportFilterTIKZ::PutText(ostream &os, float x, float y, string text)
         {
+            text = SanitizeString(text);
+            //...
         }
+
+
+        map<char, string> ExportFilterTIKZ::SpecialCharacters()
+        {
+            map<char, string> result;
+            result['{'] = "\\{";
+            result['}'] = "\\}";
+            result['&'] = "\\&";
+            result['%'] = "\\%";
+            result['$'] = "\\$";
+            result['#'] = "\\#";
+            result['_'] = "\\_";
+            result['\\'] = "{\\textbackslash}";
+            result['^'] = "{\\textasciicircum}";
+            result['~'] = "{\\textasciitilde}";
+            return result;
+        }
+        string ExportFilterTIKZ::SpecialCharacter_auml()
+        {
+            return "\\\"a";
+        }
+        string ExportFilterTIKZ::SpecialCharacter_Auml()
+        {
+            return "\\\"A";
+        }
+        string ExportFilterTIKZ::SpecialCharacter_uuml()
+        {
+            return "\\\"u";
+        }
+        string ExportFilterTIKZ::SpecialCharacter_Uuml()
+        {
+            return "\\\"U";
+        }
+        string ExportFilterTIKZ::SpecialCharacter_ouml()
+        {
+            return "\\\"o";
+        }
+        string ExportFilterTIKZ::SpecialCharacter_Ouml()
+        {
+            return "\\\"O";
+        }
+        string ExportFilterTIKZ::SpecialCharacter_szlig()
+        {
+            return "{\\ss}";
+        }
+
 
         FactoryRegistrator<ExportFilter> ExportFilterTIKZ::ExportFilterTikzRegistrator(&ExportFilter::ExportFilterFactory, "tikz",
             new DefaultInstantiator<ExportFilter, ExportFilterTIKZ>("tikz", "TikZ graphics for LaTeX", "http://en.wikipedia.org/wiki/PGF/TikZ"));

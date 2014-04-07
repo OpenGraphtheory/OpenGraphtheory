@@ -29,7 +29,7 @@
                     void SetLineWidth(std::ostream &os, float Width);
                     void DeclareVertex(std::ostream &os, int vertex_id, float x, float y, float radius, std::string text);
                     void Line(std::ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2);
-                    void Arrow(std::ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2);
+                    void Arrow(std::ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2, float to_radius);
                     void Circle(std::ostream &os, int node_id, float x, float y, float radius);
                     void PutText(std::ostream &os, float x, float y, std::string text);
                     void PutVertexText(std::ostream &os, int node_id, float x, float y, std::string text);

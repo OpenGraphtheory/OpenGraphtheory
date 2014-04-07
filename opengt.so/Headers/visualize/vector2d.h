@@ -29,7 +29,7 @@
                     Vector2D Perpendicular() const;
                     float Length() const;
                     Vector2D Normalized() const;
-                    float Theta() const; // angle between the vector and the x-axis
+                    float Theta() const; // angle between the vector and the x-axis (in degrees)
 
                     static float Distance(const Vector2D& a, const Vector2D& b);
                     static Vector2D Intersection(const Vector2D& a,const Vector2D& b,const Vector2D& c,const Vector2D& d);
