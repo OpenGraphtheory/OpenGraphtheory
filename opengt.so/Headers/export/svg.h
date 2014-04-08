@@ -11,7 +11,7 @@
         namespace Export
         {
 
-            class ExportFilterSVG : public GraphicalExportFilter
+            class GraphRendererSVG : public Visualization::GraphRenderingContextStream
             {
                 protected:
                     static FactoryRegistrator<ExportFilter> ExportFilterSvgRegistrator;
@@ -21,14 +21,15 @@
                     float LineWidth;
 
                 public:
-                    void Begin(std::ostream &os, float WidthInCm, float HeightInCm, float ResolutionDPI);
-                    void End(std::ostream &os);
-                    void SetPenColor(std::ostream &os, Visualization::Color);
-                    void SetBrushColor(std::ostream &os, Visualization::Color);
-                    void SetLineWidth(std::ostream &os, float Width);
-                    void Line(std::ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2);
-                    void Circle(std::ostream &os, int node_id, float x, float y, float radius);
-                    void PutText(std::ostream &os, float x, float y, std::string text);
+                    GraphRendererSVG(std::ostream& os);
+                    void BeginRenderingGraph(float WidthInCm, float HeightInCm, float ResolutionDPI);
+                    void EndRenderingGraph();
+                    void SetPenColor(Visualization::Color);
+                    void SetBrushColor(Visualization::Color);
+                    void SetLineWidth(float Width);
+                    void Line(float x1, float y1, float x2, float y2);
+                    void Circle(float x, float y, float radius);
+                    void PutText(float x, float y, std::string text);
             };
         }
     }

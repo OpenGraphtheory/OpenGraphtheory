@@ -11,6 +11,17 @@
 	<list>
 	"../../opengt.so/Headers/opengt.h"
 	"../../opengt.so/Headers/transform/transformation.h"
+	<iostream>
+	"../../opengt.so/opengt.h"
+	<iostream>
+	<fstream>
+	<stdio.h>
+	"../../opengt.so/opengt.h"
+	<iostream>
+	<stdlib.h>
+	<list>
+	"../../opengt.so/Headers/opengt.h"
+	"../../opengt.so/Headers/transform/transformation.h"
 
 1337355217 /home/viktor/Programming/OpenGraphtheory/opengt.so/opengt.h
 	<list>
@@ -42,13 +53,14 @@
 	<string>
 	<map>
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
+1396604051 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
 	<list>
 	<set>
 	<map>
 	<string>
 	<iostream>
 	<fstream>
+	<vector>
 	"simple_xml.h"
 	"attributes.h"
 
@@ -59,9 +71,10 @@
 	<list>
 	<string>
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
+1396602434 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
 	<string>
 	<iostream>
+	<sstream>
 	"factory.h"
 	"simple_xml.h"
 
@@ -76,7 +89,8 @@
 	"../factory.h"
 	"../intermediatesteps/intermediatesteps.h"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/intermediatesteps/intermediatesteps.h
+1396603028 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/intermediatesteps/intermediatesteps.h
+	<fstream>
 	<string>
 	<iostream>
 	"../opengt.h"
@@ -84,17 +98,4 @@
 
 1392029042 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/factory_templates.cpp
 	"../Headers/factory.h"
-
-1392029042 source:/home/viktor/Programming/OpenGraphtheory/programs/ogttransform/ogttransform.cpp
-	<iostream>
-	"../../opengt.so/opengt.h"
-	<iostream>
-	<fstream>
-	<stdio.h>
-	"../../opengt.so/opengt.h"
-	<iostream>
-	<stdlib.h>
-	<list>
-	"../../opengt.so/Headers/opengt.h"
-	"../../opengt.so/Headers/transform/transformation.h"
 

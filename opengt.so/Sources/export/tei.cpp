@@ -10,7 +10,9 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportFilterTEI::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring, map<Graph::EdgeIterator, Color>& edgecoloring, float dpi, float edgewidth, float vertexradius)
+        void ExportFilterTEI::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring,
+                                     map<Graph::EdgeIterator, Color>& edgecoloring, float dpi, float edgewidth,
+                                     float vertexradius)
         {
             if(G.IsHypergraph())
                 throw "The TEI fileformat doesn\'t support hypergraphs\n";
@@ -18,15 +20,17 @@ namespace OpenGraphtheory
                 throw "The TEI fileformat doesn\'t support mixed graphs\n";
             bool directed = G.IsDirected();
 
+            StringTranslatorXML Translator;
+
             os << "<!-- www.Open-Graphtheory.org -->\n";
             os << "<graph xml:id=\"" << G.GetID() << "\" type=\"" << (directed?"":"un") << "directed\">\n";
-            os << "  <label>" << G.GetLabel() << "</label>\n";
+            os << "  <label>" << Translator.Translate(G.GetLabel()) << "</label>\n";
 
             /// write vertices
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
                 os << "  <node xml:id=\"" << v.GetID() << "\">\n";
-                os << "    <label>" << v.GetLabel() << "</label>\n";
+                os << "    <label>" << Translator.Translate(v.GetLabel()) << "</label>\n";
                 os << "  </node>\n";
             }
 
@@ -34,7 +38,7 @@ namespace OpenGraphtheory
             for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
             {
                 os << "  <arc from=\"#" << e.From().GetID() << "\" to=\"#" << e.To().GetID() << "\">\n";
-                os << "    <label>" << e.GetLabel() << "</label>\n";
+                os << "    <label>" << Translator.Translate(e.GetLabel()) << "</label>\n";
                 os << "  </arc>\n";
             }
 

@@ -25,13 +25,14 @@
 	<string>
 	"../opengt.h"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
+1396604051 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
 	<list>
 	<set>
 	<map>
 	<string>
 	<iostream>
 	<fstream>
+	<vector>
 	"simple_xml.h"
 	"attributes.h"
 
@@ -42,9 +43,10 @@
 	<list>
 	<string>
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
+1396602434 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
 	<string>
 	<iostream>
+	<sstream>
 	"factory.h"
 	"simple_xml.h"
 
@@ -53,7 +55,8 @@
 	<map>
 	"../Sources/factory_templates.cpp"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/import/import.h
+1396601827 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/import/import.h
+	<fstream>
 	<string>
 	<iostream>
 	"../opengt.h"

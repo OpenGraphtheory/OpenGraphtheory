@@ -9,10 +9,12 @@
     #include <math.h>
     #include <string>
 
+    #include "stringtranslator.h"
     #include "../factory.h"
     #include "../opengt.h"
     #include "../visualize/color.h"
     #include "../visualize/vector2d.h"
+    #include "../visualize/renderer.h"
 
     namespace OpenGraphtheory
     {
@@ -34,19 +36,9 @@
                     std::string DoExport(OpenGraphtheory::Graph& G, std::string vertexcoloring="", std::string edgecoloring="", float dpi=72, float edgewidth=-1, float vertexradius=-1);
                     static void Export(OpenGraphtheory::Graph& G, std::ostream& os, std::string format, std::string vertexcoloring="", std::string edgecoloring="", float dpi=72, float edgewidth=-1, float vertexradius=-1);
                     static void Export(OpenGraphtheory::Graph& G, std::string FileName, std::string format, std::string vertexcoloring="", std::string edgecoloring="", float dpi=72,float edgewidth=-1, float vertexradius=-1);
-
-                    std::string SanitizeString(std::string String);
-                    virtual std::map<char, std::string> SpecialCharacters();
-                    virtual std::string SpecialCharacter_auml();
-                    virtual std::string SpecialCharacter_Auml();
-                    virtual std::string SpecialCharacter_ouml();
-                    virtual std::string SpecialCharacter_Ouml();
-                    virtual std::string SpecialCharacter_uuml();
-                    virtual std::string SpecialCharacter_Uuml();
-                    virtual std::string SpecialCharacter_szlig();
             };
 
-            class GraphicalExportFilter : public ExportFilter
+            template<class T> class GraphicalExportFilter : public ExportFilter
             {
                 public:
                     void Export(OpenGraphtheory::Graph& G, std::ostream& os,
@@ -54,31 +46,11 @@
                                 std::map<Graph::EdgeIterator, Visualization::Color>& edgecoloring, float dpi=72,
                                 float edgewidth=-1, float vertexradius=-1);
 
-                    virtual void Begin(std::ostream &os, float WidthInCm, float HeightInCm, float ResolutionDPI);
-                    virtual void End(std::ostream &os);
-                    virtual void SetPenColor(std::ostream &os, Visualization::Color);
-                    virtual void SetBrushColor(std::ostream &os, Visualization::Color);
-                    virtual void SetLineWidth(std::ostream &os, float Width);
-
-                    virtual void BeginDeclaringVertices(std::ostream &os);
-                    virtual void DeclareVertex(std::ostream &os, int vertex_id, float x, float y, float radius, std::string text);
-                    virtual void EndDeclaringVertices(std::ostream &os);
-
-                    virtual void BeginRenderingEdges(std::ostream &os);
-                    virtual void Line(std::ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2);
-                    virtual void Arrow(std::ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2, float to_radius);
-                    virtual void EndRenderingEdges(std::ostream &os);
-
-                    virtual void BeginRenderingVertices(std::ostream &os);
-                    virtual void Circle(std::ostream &os, int node_id, float x, float y, float radius);
-                    virtual void EndRenderingVertices(std::ostream &os);
-
-                    virtual void PutText(std::ostream &os, float x, float y, std::string text);
-                    virtual void PutVertexText(std::ostream &os, int node_id, float x, float y, std::string text);
-                    virtual void PutEdgeText(std::ostream &os, int from_id, int to_id, float x, float y, std::string text);
             };
 
         }
     }
+
+    #include "../../Sources/export/export_templates.cpp"
 
 #endif

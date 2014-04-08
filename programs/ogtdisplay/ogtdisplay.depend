@@ -46,13 +46,14 @@
 	<string>
 	<map>
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
+1396604051 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
 	<list>
 	<set>
 	<map>
 	<string>
 	<iostream>
 	<fstream>
+	<vector>
 	"simple_xml.h"
 	"attributes.h"
 
@@ -63,9 +64,10 @@
 	<list>
 	<string>
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
+1396602434 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
 	<string>
 	<iostream>
+	<sstream>
 	"factory.h"
 	"simple_xml.h"
 
@@ -74,11 +76,11 @@
 	<map>
 	"../Sources/factory_templates.cpp"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/GraphWindow.h
+1396601923 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/GraphWindow.h
 	"DisplayWindow.h"
 	"../opengt.h"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/DisplayWindow.h
+1396601904 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/DisplayWindow.h
 	<iostream>
 	<map>
 	<X11/Xlib.h>
@@ -88,9 +90,10 @@
 	"vector2d.h"
 	"color.h"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/vector2d.h
+1396877547 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/vector2d.h
+	<math.h>
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/color.h
+1396601887 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/color.h
 
 1392029042 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/factory_templates.cpp
 	"../Headers/factory.h"

@@ -15,17 +15,19 @@ namespace OpenGraphtheory
             if(G.IsHypergraph())
                 throw "The XGMML fileformat does not support hypergraphs\n";
 
+            StringTranslatorXML Translator;
+
             os << "<?xml version=\"1.0\"?>\n";
             os << "<!DOCTYPE graph PUBLIC \"-//John Punin//DTD graph description//EN\" \"http://www.cs.rpi.edu/~puninj/XGMML/xgmml.dtd\">\n";
             os << "<!-- www.Open-Graphtheory.org -->\n";
 
-            os << "<graph id=\"" << G.GetID() << "\" label=\"" << G.GetLabel() << "\">\n";
+            os << "<graph id=\"" << G.GetID() << "\" label=\"" << Translator.Translate(G.GetLabel()) << "\">\n";
 
             /// write vertices
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
                 vector<float> coordinates = v.GetCoordinates();
-                os << "  <node id=\"" << v.GetID() << "\" label=\"" << v.GetLabel()
+                os << "  <node id=\"" << v.GetID() << "\" label=\"" << Translator.Translate(v.GetLabel())
                    << "\" weight=\"" << v.GetWeight() << "\">\n";
                 if(coordinates.size() >= 2)
                     os << "    <graphics x=\"" << coordinates[0] << "\" y=\"" << coordinates[1] << "\"/>\n";
@@ -36,7 +38,7 @@ namespace OpenGraphtheory
             for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
             {
                 os << "  <edge source=\"" << e.From().GetID() << "\" target=\""<< e.To().GetID()
-                   << "\" weight=\"" << e.GetWeight() << "\" label=\"" << e.GetLabel() << "\">\n";
+                   << "\" weight=\"" << e.GetWeight() << "\" label=\"" << Translator.Translate(e.GetLabel()) << "\">\n";
                 os << "    <graphics type=\"" << (e.IsEdge()?"line":"arc") << "\"/>\n";
                 os << "  </edge>\n";
             }

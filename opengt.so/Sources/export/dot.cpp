@@ -10,10 +10,14 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportFilterDOT::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring, map<Graph::EdgeIterator, Color>& edgecoloring, float dpi, float edgewidth, float vertexradius)
+        void ExportFilterDOT::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring,
+                                     map<Graph::EdgeIterator, Color>& edgecoloring, float dpi, float edgewidth,
+                                     float vertexradius)
         {
             if(G.IsHypergraph())
                 throw "The DOT fileformat doesn\'t support hypergraphs\n";
+
+            StringTranslator Translator; // should be replaced with an appropriate translator
 
             os << "// www.open-graphtheory.org\n";
             os << "graph gxl2dot {\n";
@@ -26,7 +30,7 @@ namespace OpenGraphtheory
                 if(vertexcoloring.find(v) != vertexcoloring.end())
                     col = vertexcoloring[v];
 
-                os << "\tv" << v.GetID() << " [ label=\"" << v.GetLabel() << "\","
+                os << "\tv" << v.GetID() << " [ label=\"" << Translator.Translate(v.GetLabel()) << "\","
                                          << " width=\"" << (vertexradius >= 0 ? (vertexradius/2.54) : (v.GetWeight()/2.54)) << "\"," // dot uses inches, gxl uses cm
                                          << " color=\"#" << std::hex << std::setw(2) << col.Red
                                                                      << std::setw(2) << col.Green
@@ -53,7 +57,7 @@ namespace OpenGraphtheory
                 if(e.IsEdge())
                 {
                     os << "\tv" << e.From().GetID() << " -- v" << e.To().GetID()
-                       << " [ label=\"" << e.GetLabel()
+                       << " [ label=\"" << Translator.Translate(e.GetLabel())
                        << "\" penwidth=\"" << (edgewidth>=0 ? (edgewidth/2.54) : (e.GetWeight()/2.54))
                        << "\" color=\"#" << std::hex << std::setw(2) << col.Red
                                                      << std::setw(2) << col.Green
@@ -63,7 +67,7 @@ namespace OpenGraphtheory
                 else
                 {
                     os << "\tv" << e.From().GetID() << " -> v" << e.To().GetID()
-                       << " [ label=\"" << e.GetLabel()
+                       << " [ label=\"" << Translator.Translate(e.GetLabel())
                        << "\" penwidth=\"" << (edgewidth>=0 ? (edgewidth/2.54) : (e.GetWeight()/2.54))
                        << "\" color=\"#" << std::hex << std::setw(2) << col.Red
                                                      << std::setw(2) << col.Green

@@ -2,8 +2,6 @@
     #define __OPENGRAPHTHEORY_EXPORT_MPOST_H
 
     #include <ostream>
-    #include "../opengt.h"
-    #include "../factory.h"
     #include "export.h"
 
     namespace OpenGraphtheory
@@ -11,7 +9,7 @@
         namespace Export
         {
 
-            class ExportFilterMPOST : public GraphicalExportFilter
+            class GraphRendererMPOST : public Visualization::GraphRenderingContextStream
             {
                 protected:
                     static FactoryRegistrator<ExportFilter> ExportFilterMpostRegistrator;
@@ -21,20 +19,24 @@
                     Visualization::Color PenColor;
 
                 public:
+                    GraphRendererMPOST(std::ostream& os);
 
-                    void Begin(std::ostream &os, float WidthInCm, float HeightInCm, float ResolutionDPI);
-                    void End(std::ostream &os);
-                    void SetPenColor(std::ostream &os, Visualization::Color);
-                    void SetBrushColor(std::ostream &os, Visualization::Color);
-                    void SetLineWidth(std::ostream &os, float Width);
-                    void DeclareVertex(std::ostream &os, int vertex_id, float x, float y, float radius, std::string text);
-                    void Line(std::ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2);
-                    void Arrow(std::ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2, float to_radius);
-                    void Circle(std::ostream &os, int node_id, float x, float y, float radius);
-                    void PutText(std::ostream &os, float x, float y, std::string text);
-                    void PutVertexText(std::ostream &os, int node_id, float x, float y, std::string text);
-                    void PutEdgeText(std::ostream &os, int from_id, int to_id, float x, float y, std::string text);
+                    void BeginRenderingGraph(float WidthInCm, float HeightInCm, float ResolutionDPI);
+                    void EndRenderingGraph();
 
+                    void DeclareVertex(int vertex_id, float x, float y, float radius, std::string text, Visualization::Color color);
+                    void RenderEdge(int from_id, int to_id, float x1, float y1, float x2, float y2, float width, std::string text, Visualization::Color color);
+                    void RenderArc(int from_id, int to_id, float x1, float y1, float x2, float y2, float width, std::string text, Visualization::Color color);
+                    void RenderVertex(int vertex_id, float x, float y, float radius, std::string text, Visualization::Color color);
+
+                    void SetPenColor(Visualization::Color color);
+                    void SetBrushColor(Visualization::Color color);
+                    void SetLineWidth(float width);
+
+                    void RenderEdge(int from_id, int to_id, float x1, float y1, float x2, float y2);
+                    void RenderArc(int from_id, int to_id, float x1, float y1, float x2, float y2);
+                    void RenderVertex(int node_id, float x, float y, float radius);
+                    void PutText(float x, float y, std::string text);
             };
 
         }

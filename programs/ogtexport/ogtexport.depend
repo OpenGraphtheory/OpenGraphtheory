@@ -5,6 +5,11 @@
 	<stdio.h>
 	"../../opengt.so/Headers/opengt.h"
 	"../../opengt.so/Headers/export/export.h"
+	<iostream>
+	<fstream>
+	<stdio.h>
+	"../../opengt.so/Headers/opengt.h"
+	"../../opengt.so/Headers/export/export.h"
 
 1337344695 /home/viktor/Programming/OpenGraphtheory/opengt.so/opengt.h
 	<list>
@@ -36,13 +41,14 @@
 	<string>
 	<map>
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
+1396604051 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
 	<list>
 	<set>
 	<map>
 	<string>
 	<iostream>
 	<fstream>
+	<vector>
 	"simple_xml.h"
 	"attributes.h"
 
@@ -53,9 +59,10 @@
 	<list>
 	<string>
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
+1396602434 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
 	<string>
 	<iostream>
+	<sstream>
 	"factory.h"
 	"simple_xml.h"
 
@@ -64,22 +71,41 @@
 	<map>
 	"../Sources/factory_templates.cpp"
 
-1396008853 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/export.h
+1396962428 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/export.h
+	<iostream>
+	<fstream>
+	<sstream>
+	<list>
+	<math.h>
 	<string>
-	<ostream>
+	"stringtranslator.h"
 	"../factory.h"
 	"../opengt.h"
 	"../visualize/color.h"
+	"../visualize/vector2d.h"
+	"../visualize/renderer.h"
+	"../../Sources/export/export_templates.cpp"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/color.h
+1396601887 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/color.h
 
 1392029042 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/factory_templates.cpp
 	"../Headers/factory.h"
 
-1395845009 source:/home/viktor/Programming/OpenGraphtheory/programs/ogtexport/ogtexport.cpp
-	<iostream>
-	<fstream>
-	<stdio.h>
-	"../../opengt.so/Headers/opengt.h"
-	"../../opengt.so/Headers/export/export.h"
+1396965224 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/stringtranslator.h
+	<map>
+	<string>
+
+1396877547 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/vector2d.h
+	<math.h>
+
+1396964797 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/renderer.h
+	"../opengt.h"
+	"color.h"
+	"vector2d.h"
+	"../export/stringtranslator.h"
+	<string>
+	<math.h>
+
+1396964721 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/export_templates.cpp
+	"../../Headers/export/export.h"
 

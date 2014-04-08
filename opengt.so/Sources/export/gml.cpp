@@ -10,7 +10,9 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportFilterGML::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring, map<Graph::EdgeIterator, Color>& edgecoloring, float dpi, float edgewidth, float vertexradius)
+        void ExportFilterGML::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring,
+                                     map<Graph::EdgeIterator, Color>& edgecoloring, float dpi, float edgewidth,
+                                     float vertexradius)
         {
             if(G.IsHypergraph())
                 throw "The GML fileformat doesn\'t support hypergraphs\n";
@@ -22,14 +24,16 @@ namespace OpenGraphtheory
                     throw "Vertex with less than 2 coordinates found";
             }
 
+            StringTranslator Translator; // should be replaced with an appropriate translator.
+
             os << "# www.Open-Graphtheory.org\n";
-            os << "graph [ id " << G.GetID() << " label \"" << G.GetLabel() << "\"\n";
+            os << "graph [ id " << G.GetID() << " label \"" << Translator.Translate(G.GetLabel()) << "\"\n";
 
             /// write vertices: node [ id label graphics [ x y ] ]
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
                 vector<float> coordinates = v.GetCoordinates();
-                os << "  node [ id " << v.GetID() << " label \"" << v.GetLabel() << "\"\n";
+                os << "  node [ id " << v.GetID() << " label \"" << Translator.Translate(v.GetLabel()) << "\"\n";
                 os << "    graphics [ x " << coordinates[0] << " y " << coordinates[1] << " ]\n";
                 os << "  ]\n";
             }
@@ -38,7 +42,7 @@ namespace OpenGraphtheory
             for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
             {
                 os << "  edge [ source " << e.From().GetID() << " target " << e.To().GetID()
-                   << " label \"" << e.GetLabel() << "\"\n";
+                   << " label \"" << Translator.Translate(e.GetLabel()) << "\"\n";
                 os << "    graphics [ type " << (e.IsEdge()?"line":"arc") << " ]\n";
                 os << "  ]\n";
             }

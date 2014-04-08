@@ -1,18 +1,24 @@
 # depslib dependency file v1.0
-1354314195 source:/home/viktor/Programming/OpenGraphtheory/programs/ogtlogic/ogtlogic.cpp
+1392029042 source:/home/viktor/Programming/OpenGraphtheory/programs/ogtlogic/ogtlogic.cpp
+	<iostream>
+	<fstream>
+	<stdio.h>
+	"../../opengt.so/Headers/opengt.h"
+	"../../opengt.so/Headers/logic/logic.h"
 	<iostream>
 	<fstream>
 	<stdio.h>
 	"../../opengt.so/Headers/opengt.h"
 	"../../opengt.so/Headers/logic/logic.h"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
+1396604051 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
 	<list>
 	<set>
 	<map>
 	<string>
 	<iostream>
 	<fstream>
+	<vector>
 	"simple_xml.h"
 	"attributes.h"
 
@@ -23,9 +29,10 @@
 	<list>
 	<string>
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
+1396602434 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
 	<string>
 	<iostream>
+	<sstream>
 	"factory.h"
 	"simple_xml.h"
 
@@ -34,19 +41,12 @@
 	<map>
 	"../Sources/factory_templates.cpp"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/logic/logic.h
+1396600809 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/logic/logic.h
 	"../factory.h"
 	"../opengt.h"
 	<istream>
 	<string>
 	<list>
-
-1392029042 source:/home/viktor/Programming/OpenGraphtheory/programs/ogtlogic/ogtlogic.cpp
-	<iostream>
-	<fstream>
-	<stdio.h>
-	"../../opengt.so/Headers/opengt.h"
-	"../../opengt.so/Headers/logic/logic.h"
 
 1392029042 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/factory_templates.cpp
 	"../Headers/factory.h"

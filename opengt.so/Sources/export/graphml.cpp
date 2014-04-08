@@ -9,11 +9,15 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportFilterGRAPHML::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring, map<Graph::EdgeIterator, Color>& edgecoloring, float dpi, float edgewidth, float vertexradius)
+        void ExportFilterGRAPHML::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring,
+                                         map<Graph::EdgeIterator, Color>& edgecoloring, float dpi, float edgewidth,
+                                         float vertexradius)
         {
             for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
                 if(e.IsHyperedge() && !e.IsUndirected())
                     throw "The GraphML fileformat doesn\'t support hyperedges that aren't completely undirected";
+
+            StringTranslatorXML Translator;
 
             /// write header
             os << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
@@ -34,7 +38,8 @@ namespace OpenGraphtheory
                     os << "          <y:Geometry height=\"1.0\" width=\"1.0\" x=\"" << Coordinates[0] << "\" "
                                                                             << "y=\"" << Coordinates[1] << "\"/>\n";
                 }
-                os << "          <y:NodeLabel alignment=\"center\" autoSizePolicy=\"content\" fontFamily=\"Dialog\" fontSize=\"12\" fontStyle=\"plain\" hasBackgroundColor=\"false\" hasLineColor=\"false\" textColor=\"#000000\" visible=\"true\">" << v.GetLabel() << "</y:NodeLabel>\n";
+                os << "          <y:NodeLabel alignment=\"center\" autoSizePolicy=\"content\" fontFamily=\"Dialog\" fontSize=\"12\" fontStyle=\"plain\" hasBackgroundColor=\"false\" hasLineColor=\"false\" textColor=\"#000000\" visible=\"true\">"
+                                 << Translator.Translate(v.GetLabel()) << "</y:NodeLabel>\n";
                 os << "        </y:ShapeNode>\n";
                 os << "      </data>\n";
                 os << "    </node>\n";

@@ -13,16 +13,7 @@ Color Color::DefaultColors[] =
     Color(0x87, 0x22, 0xE5), // purple
     Color(0xFF, 0x33, 0xFF)  // pink
 };
-/* {                           0xE50000, // red
-                               0xF3D510, // yellow
-                               0x34cd20, // green
-                               0x1C23EB, // dark blue
-                               0xF37D23, // orange
-                               0x15CDC7, // light blue
-                               0x8722E5, // purple
-                               0xFF33FF // pink
-                             };
-*/
+
 Color::Color()
 {
     Red = 0;

@@ -8,8 +8,12 @@ namespace OpenGraphtheory
 {
     namespace Export
     {
+        GraphRendererPDF::GraphRendererPDF(ostream& os)
+            : GraphRenderingContextStream(os)
+        {
+        }
 
-        void ExportFilterPDF::Begin(ostream &os, float WidthInCm, float HeightInCm, float ResolutionDPI)
+        void GraphRendererPDF::BeginRenderingGraph(float WidthInCm, float HeightInCm, float ResolutionDPI)
         {
             ImageHeight = HeightInCm;
             ResolutionDPCM = ResolutionDPI / 2.54;
@@ -80,7 +84,7 @@ namespace OpenGraphtheory
             ImageHeight = HeightInCm;
         }
 
-        void ExportFilterPDF::End(ostream &os)
+        void GraphRendererPDF::EndRenderingGraph()
         {
             oss << "Q\r\n";
 
@@ -150,32 +154,32 @@ namespace OpenGraphtheory
             temp_os << (xref_offset+1) << "\r\n";
             temp_os << "%%EOF\r\n";
 
-            os << temp_os.str();
+            (*os) << temp_os.str();
         }
 
-        void ExportFilterPDF::SetPenColor(ostream &os, Visualization::Color color)
+        void GraphRendererPDF::SetPenColor(Visualization::Color color)
         {
             oss << (color.Red/256.0f) << " " << (color.Green/256.0f) << " " << (color.Blue/256.0f) << " RG\r\n";
         }
 
-        void ExportFilterPDF::SetBrushColor(ostream &os, Visualization::Color color)
+        void GraphRendererPDF::SetBrushColor(Visualization::Color color)
         {
             oss << (color.Red/256.0f) << " " << (color.Green/256.0f) << " " << (color.Blue/256.0f) << " rg\r\n";
         }
 
-        void ExportFilterPDF::SetLineWidth(ostream &os, float width)
+        void GraphRendererPDF::SetLineWidth(float width)
         {
             oss << (int)(width*ResolutionDPCM) << " w\r\n";
         }
 
-        void ExportFilterPDF::Line(ostream &os, int from_id, int to_id, float x1, float y1, float x2, float y2)
+        void GraphRendererPDF::Line(float x1, float y1, float x2, float y2)
         {
             oss << (int)(x1*ResolutionDPCM) << " " << (int)((ImageHeight-y1)*ResolutionDPCM) << " m "
                 << (int)(x2*ResolutionDPCM) << " " << (int)((ImageHeight-y2)*ResolutionDPCM) << " l s\r\n";
         }
 
 
-        void ExportFilterPDF::Circle(ostream &os, int node_id, float x, float y, float Radius)
+        void GraphRendererPDF::Circle(float x, float y, float Radius)
         {
             // http://forums.adobe.com/message/2312083
             // WTF, Adobe!? Seriously, WTF!?
@@ -193,12 +197,12 @@ namespace OpenGraphtheory
                 << "f Q\r\n";
         }
 
-        void ExportFilterPDF::PutText(ostream &os, float x, float y, string text)
+        void GraphRendererPDF::PutText(float x, float y, string text)
         {
         }
 
-        FactoryRegistrator<ExportFilter> ExportFilterPDF::ExportFilterPdfRegistrator(&ExportFilter::ExportFilterFactory, "pdf",
-            new DefaultInstantiator<ExportFilter, ExportFilterPDF>("pdf", "Portable Document Format", "http://en.wikipedia.org/wiki/Portable_Document_Format"));
+        FactoryRegistrator<ExportFilter> GraphRendererPDF::ExportFilterPdfRegistrator(&ExportFilter::ExportFilterFactory, "pdf",
+            new DefaultInstantiator<ExportFilter, GraphicalExportFilter<GraphRendererPDF> >("pdf", "Portable Document Format", "http://en.wikipedia.org/wiki/Portable_Document_Format"));
 
     }
 }

@@ -14,11 +14,13 @@ namespace OpenGraphtheory
         {
             os << "\n%  www.Open-Graphtheory.org\n\n";
 
+            StringTranslator Translator; // should be replaced with an appropriate translator
+
             /// write vertices
             os << "?- dynamic(vertex/3).\n";
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                os << "vertex(" << v.GetID() << ", '"<< v.GetLabel() << "', " << v.GetWeight() << ").\n";
+                os << "vertex(" << v.GetID() << ", '"<< Translator.Translate(v.GetLabel()) << "', " << v.GetWeight() << ").\n";
             }
             os << "v(X) :- vertex(X,_,_).\n\n";
 
@@ -28,7 +30,7 @@ namespace OpenGraphtheory
             for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
             {
                 os << (e.IsDirected()?"arc":"edge") << "(" << e.From().GetID() << ", " << e.To().GetID()
-                   << ", '" << e.GetLabel() << "', " << e.GetWeight() << ").\n";
+                   << ", '" << Translator.Translate(e.GetLabel()) << "', " << e.GetWeight() << ").\n";
             }
             os << "a(X,Y) :- arc(X,Y,_,_).\n";
             os << "e(X,Y) :- edge(X,Y,_,_).\n";

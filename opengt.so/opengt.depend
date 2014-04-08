@@ -38,20 +38,23 @@
 	<map>
 	"../Sources/factory_templates.cpp"
 
-1396879981 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/export.cpp
+1396961260 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/export.cpp
 	"../../Headers/export/export.h"
 
-1396879963 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/export.h
+1396962428 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/export.h
 	<iostream>
 	<fstream>
 	<sstream>
 	<list>
 	<math.h>
 	<string>
+	"stringtranslator.h"
 	"../factory.h"
 	"../opengt.h"
 	"../visualize/color.h"
 	"../visualize/vector2d.h"
+	"../visualize/renderer.h"
+	"../../Sources/export/export_templates.cpp"
 
 1396601887 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/color.h
 
@@ -136,72 +139,68 @@
 1396602478 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/attributes.cpp
 	"../Headers/attributes.h"
 
-1396871690 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/dot.cpp
+1396960565 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/dot.cpp
 	"../../Headers/export/dot.h"
 
-1396870681 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/dot.h
+1396960469 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/dot.h
 	<ostream>
 	<iomanip>
 	"../opengt.h"
 	"../factory.h"
 	"export.h"
 
-1396009630 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/gastex.cpp
+1396960608 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/gastex.cpp
 	"../../Headers/export/gastex.h"
 
-1396009669 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/gastex.h
+1396960617 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/gastex.h
 	<ostream>
 	"../opengt.h"
 	"../factory.h"
 	"export.h"
 
-1392029042 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/gml.cpp
+1396960676 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/gml.cpp
 	"../../Headers/export/gml.h"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/gml.h
+1396960629 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/gml.h
 	<ostream>
 	"../opengt.h"
 	"../factory.h"
 	"export.h"
 
-1396873150 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/graphml.cpp
+1396960715 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/graphml.cpp
 	"../../Headers/export/graphml.h"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/graphml.h
+1396960750 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/graphml.h
 	<ostream>
 	"../opengt.h"
 	"../factory.h"
 	"export.h"
 
-1396880331 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/mpost.cpp
+1396965536 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/mpost.cpp
 	"../../Headers/export/mpost.h"
 
-1396880188 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/mpost.h
+1396965568 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/mpost.h
 	<ostream>
-	"../opengt.h"
-	"../factory.h"
 	"export.h"
 
-1392029042 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/pdf.cpp
+1396964856 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/pdf.cpp
 	"../../Headers/export/pdf.h"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/pdf.h
+1396964844 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/pdf.h
 	<ostream>
 	<iomanip>
 	"../opengt.h"
 	"../factory.h"
 	"export.h"
 
-1392029042 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/postscript.cpp
+1396963534 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/postscript.cpp
 	"../../Headers/export/postscript.h"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/postscript.h
+1396964902 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/postscript.h
 	<ostream>
-	"../opengt.h"
-	"../factory.h"
 	"export.h"
 
-1396602745 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/povray.cpp
+1396961234 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/povray.cpp
 	"../../Headers/export/povray.h"
 
 1396602752 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/povray.h
@@ -211,28 +210,28 @@
 	"../factory.h"
 	"export.h"
 
-1392029042 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/rgml.cpp
+1396961384 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/rgml.cpp
 	"../../Headers/export/rgml.h"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/rgml.h
+1396961342 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/rgml.h
 	<ostream>
 	"../opengt.h"
 	"../factory.h"
 	"export.h"
 
-1392029042 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/svg.cpp
+1396963916 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/svg.cpp
 	"../../Headers/export/svg.h"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/svg.h
+1396964914 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/svg.h
 	<ostream>
 	"../opengt.h"
 	"../factory.h"
 	"export.h"
 
-1396861168 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/tei.cpp
+1396961662 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/tei.cpp
 	"../../Headers/export/tei.h"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/tei.h
+1396961673 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/tei.h
 	<ostream>
 	"../opengt.h"
 	"../factory.h"
@@ -241,34 +240,32 @@
 1392029042 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/tgf.cpp
 	"../../Headers/export/tgf.h"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/tgf.h
+1396961689 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/tgf.h
 	<ostream>
 	"../opengt.h"
 	"../factory.h"
 	"export.h"
 
-1396618441 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/tikz.cpp
+1396965041 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/tikz.cpp
 	"../../Headers/export/tikz.h"
 
-1396880153 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/tikz.h
+1396964960 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/tikz.h
 	<ostream>
-	"../opengt.h"
-	"../factory.h"
 	"export.h"
 
 1392029042 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/vrmlgraph.cpp
 	"../../Headers/export/vrmlgraph.h"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/vrmlgraph.h
+1396962106 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/vrmlgraph.h
 	<ostream>
 	"../opengt.h"
 	"../factory.h"
 	"export.h"
 
-1396876350 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/xgmml.cpp
+1396962184 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/xgmml.cpp
 	"../../Headers/export/xgmml.h"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/xgmml.h
+1396962139 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/xgmml.h
 	<ostream>
 	"../opengt.h"
 	"../factory.h"
@@ -586,7 +583,7 @@
 1392029043 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/GraphWindow.cpp
 	"../../Headers/visualize/GraphWindow.h"
 
-1392029043 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/color.cpp
+1396963277 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/color.cpp
 	"../../Headers/visualize/color.h"
 
 1396603254 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/vector2d.cpp
@@ -800,10 +797,10 @@
 1392029042 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/factory_templates.cpp
 	"../Headers/factory.h"
 
-1396519730 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/prolog.cpp
+1396961329 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/prolog.cpp
 	"../../Headers/export/prolog.h"
 
-1396449078 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/prolog.h
+1396961276 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/prolog.h
 	<ostream>
 	"../opengt.h"
 	"../factory.h"
@@ -928,4 +925,28 @@
 	<string>
 	"import.h"
 	"../simple_xml.h"
+
+1396965224 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/stringtranslator.h
+	<map>
+	<string>
+
+1396965910 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/renderer.h
+	"../opengt.h"
+	"color.h"
+	"vector2d.h"
+	"../export/stringtranslator.h"
+	<string>
+	<math.h>
+
+1396964721 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/export_templates.cpp
+	"../../Headers/export/export.h"
+
+1396964721 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/export_templates.cpp
+	"../../Headers/export/export.h"
+
+1396965900 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/renderer.cpp
+	"../../Headers/visualize/renderer.h"
+
+1396965194 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/stringtranslator.cpp
+	"../../Headers/export/stringtranslator.h"
 
