@@ -15,7 +15,7 @@
                     float y;
                     Vector2D(float X, float Y);
                     Vector2D(const Vector2D& Copy); // Copy Constructor
-                    bool operator=(const Vector2D &Copy);
+                    Vector2D operator=(const Vector2D &Copy);
 
                     Vector2D operator+(const Vector2D& Sum) const;
                     Vector2D operator-(const Vector2D& Diff) const;
@@ -24,7 +24,9 @@
 
                     float operator*(const Vector2D& Prod) const; // Euclidian Product
                     Vector2D operator*(float Prod) const;
+                    void operator*=(float Prod);
                     Vector2D operator/(float Div) const;
+                    void operator/=(float Div);
 
                     Vector2D Perpendicular() const;
                     float Length() const;

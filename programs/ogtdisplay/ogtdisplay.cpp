@@ -47,7 +47,7 @@ int main(int argc, char** argv)
 
         /// do your thing
         GraphWindow Win(800, 600, &G, "http://www.Open-Graphtheory.org", vertexcoloring,
-                        edgecoloring, 1, EdgeWidth, VertexRadius);
+                        edgecoloring, EdgeWidth, VertexRadius);
         Win.WaitUntilClosed();
 
 

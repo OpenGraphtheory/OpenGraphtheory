@@ -25,7 +25,7 @@
                 public:
 
                     GraphWindow(int width, int height, Graph* G, std::string Caption = "http://www.Open-Graphtheory.org",
-                                std::string vertexcoloring = "", std::string edgecoloring = "", int gridsize = 1,
+                                std::string vertexcoloring = "", std::string edgecoloring = "",
                                 float EdgeWidth = -1, float VertexRadius = -1);
 
                     void Display(Graph* G);

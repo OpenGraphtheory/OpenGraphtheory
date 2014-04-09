@@ -10,7 +10,7 @@ namespace OpenGraphtheory
     {
 
         GraphWindow::GraphWindow(int width, int height, Graph* G, string Caption, string vertexcoloring,
-                                 string edgecoloring, int gridsize, float EdgeWidth, float VertexRadius)
+                                 string edgecoloring, float EdgeWidth, float VertexRadius)
             : DisplayWindow(width, height, Caption)
         {
             map<Graph::VertexIterator, int> vcoloringInt = G->GetVertexColoring(vertexcoloring);

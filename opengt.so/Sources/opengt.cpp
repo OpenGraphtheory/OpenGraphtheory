@@ -105,7 +105,7 @@ namespace OpenGraphtheory
                 for(list<Graph::Vertex*>::const_iterator j = (*e)->NegativeIncidentVertices.begin(); j != (*e)->NegativeIncidentVertices.end(); j++)
                     OwnNegIncident.push_back(Vertex_ID_to_pointer[(*j)->ID]);
 
-                Graph::EdgeIterator enew = InternalAddEdge(OwnIncident, OwnPosIncident, OwnNegIncident, (*e)->Label, (*e)->Weight, (*e)->Tag, (*e)->ID);
+                Graph::EdgeIterator enew = InternalAddEdge(OwnIncident, OwnNegIncident, OwnPosIncident, (*e)->Label, (*e)->Weight, (*e)->Tag, (*e)->ID);
                 enew.Attributes() = *((*e)->attributes);
             }
         }

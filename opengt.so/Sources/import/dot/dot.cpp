@@ -159,22 +159,27 @@ namespace OpenGraphtheory
             }
             else if(*name == "pos")
             {
-                size_t comma = value->find(',');
-                if(comma >= 0)
+                size_t prevcomma = 0;
+                size_t nextcomma;
+                vector<float> coordinates;
+                do
                 {
-                    string sx = value->substr(0,comma);
-                    string sy = value->substr(comma+1);
+                    nextcomma = value->find(',', prevcomma);
+                    string scoordinate;
+                    if(nextcomma >= 0)
+                        scoordinate = value->substr(prevcomma,nextcomma);
+                    else
+                        scoordinate = value->substr(prevcomma);
+                    prevcomma = nextcomma+1;
 
-                    float x, y;
+                    float coordinate;
                     stringstream s;
-                    s << sx << " " << sy;
-                    s >> x >> y;
+                    s << scoordinate;
+                    s >> coordinate;
 
-                    vector<float> coordinates(2);
-                    coordinates[0] = x;
-                    coordinates[1] = y;
-                    v->SetCoordinates(coordinates);
-                }
+                    coordinates.push_back(coordinate);
+                } while(nextcomma >= 0);
+                v->SetCoordinates(coordinates);
             }
             else // arbitrary attribute
             {

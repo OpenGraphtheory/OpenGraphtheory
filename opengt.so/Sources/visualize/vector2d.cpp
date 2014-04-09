@@ -17,9 +17,11 @@ namespace OpenGraphtheory
             x = Copy.x;
             y = Copy.y;
         }
-        bool Vector2D::operator=(const Vector2D &Copy)
+        Vector2D Vector2D::operator=(const Vector2D &Copy)
         {
-            return (x = Copy.x) && (y = Copy.y);
+            x = Copy.x;
+            y = Copy.y;
+            return *this;
         }
 
 
@@ -55,10 +57,20 @@ namespace OpenGraphtheory
         {
             return Vector2D(x*Prod,y*Prod);
         }
+        void Vector2D::operator*=(float Prod)
+        {
+            x*=Prod;
+            y*=Prod;
+        }
 
         Vector2D Vector2D::operator/(float Div) const
         {
             return Vector2D(x/Div, y/Div);
+        }
+        void Vector2D::operator/=(float Div)
+        {
+            x/=Div;
+            y/=Div;
         }
 
 

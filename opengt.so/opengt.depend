@@ -372,7 +372,7 @@
 	"intermediatesteps.h"
 	"../visualize/GraphWindow.h"
 
-1397038174 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/GraphWindow.h
+1397041647 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/GraphWindow.h
 	"DisplayWindow.h"
 	"renderer.h"
 	"color.h"
@@ -388,7 +388,7 @@
 	"vector2d.h"
 	"color.h"
 
-1396877547 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/vector2d.h
+1397045403 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/vector2d.h
 	<math.h>
 
 1396603058 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/intermediatesteps/stdout.cpp
@@ -474,7 +474,7 @@
 	<libintl.h>
 	"../../../Headers/logic/ComputationTreeLogic/ctl_lexer.h"
 
-1397038368 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/opengt.cpp
+1397044297 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/opengt.cpp
 	"../Headers/opengt.h"
 
 1392029043 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/processing/components.cpp
@@ -582,13 +582,13 @@
 	<math.h>
 	<stdlib.h>
 
-1397036325 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/GraphWindow.cpp
+1397041627 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/GraphWindow.cpp
 	"../../Headers/visualize/GraphWindow.h"
 
-1397038404 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/color.cpp
+1397038895 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/color.cpp
 	"../../Headers/visualize/color.h"
 
-1396603254 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/vector2d.cpp
+1397045324 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/vector2d.cpp
 	"../../Headers/visualize/vector2d.h"
 
 1396603575 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/vectornd.cpp
@@ -868,7 +868,7 @@
 	<libintl.h>
 	"../../../Headers/import/tikz/tikz_lexer.h"
 
-1396871702 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/import/dot/dot.cpp
+1397042987 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/import/dot/dot.cpp
 	"../../../Headers/import/dot/dot.h"
 	"../../../Headers/import/dot/dot_lexer.h"
 	"dot_parser.hpp"
@@ -946,7 +946,7 @@
 1396964721 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/export_templates.cpp
 	"../../Headers/export/export.h"
 
-1396965900 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/renderer.cpp
+1397045141 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/renderer.cpp
 	"../../Headers/visualize/renderer.h"
 
 1396965194 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/stringtranslator.cpp
