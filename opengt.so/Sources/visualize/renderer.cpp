@@ -68,6 +68,8 @@ namespace OpenGraphtheory
             LastPenColor(0,0,0),
             LastBrushColor(0,0,0)
         {
+            OffsetX = 0;
+            OffsetY = 0;
             LastLineWidth = 1;
             Translator = NULL;
         }
@@ -117,6 +119,8 @@ namespace OpenGraphtheory
             }
 
 
+            this->OffsetX = minx;
+            this->OffsetY = miny;
             this->BeginRenderingGraph(maxx-minx, maxy-miny, dpi);
 
 

@@ -1,3 +1,5 @@
+#include <QApplication>
+#include <QDesktopWidget>
 #include <QMessageBox>
 #include <QColor>
 #include <cmath>
@@ -24,9 +26,11 @@ QColor OGoGraphView::colors[] = {
 
 OGoGraphView::OGoGraphView(QWidget *parent) :
     QWidget(parent)
-{
-    zoom = 1.0f;
-    ZoomingTarget = 1.0f;
+{    
+    // set the zoom to the resolution of the monitor in dots-per-centimeter
+    // (division by 2.54 is the conversion from DPI to DPCM)
+    zoom = QApplication::desktop()->physicalDpiX() / 2.54;
+    ZoomingTarget = zoom;
     x_offset = 0.0f;
     y_offset = 0.0f;
 
@@ -34,7 +38,7 @@ OGoGraphView::OGoGraphView(QWidget *parent) :
     edgewidth = 0.7f;
     oldx = 0;
     oldy = 0;
-    gridsize = 5;
+    gridsize = 1.0f;
     Background = NULL;
     SnapToGrid = true;
 
@@ -199,13 +203,20 @@ void OGoGraphView::paintEvent(QPaintEvent *)
             painter.drawLine(i, 0, i, height());
     }
 
+    QPen pen(Qt::darkGray);
+    pen.setWidth(2);
+    painter.setPen(pen);
+    painter.drawLine(0, y_offset, width(), y_offset);
+    painter.drawLine(x_offset, 0, x_offset, height());
+
+
 
     OGoGraphRenderingContext* context = new OGoGraphRenderingContext(this, &painter);
     context->RenderGraph(*graph, vertexcoloring, edgecoloring, 74, -1, -1);
     delete context;
 
 
-    QPen pen(Qt::black);
+    pen.setColor(Qt::black);
     if(mouseaction == OGoGraphView::DrawingEdge || mouseaction == OGoGraphView::DrawingArc)
     {
         pen.setWidthF(edgewidth*zoom);
@@ -420,7 +431,7 @@ void OGoGraphView::keyPressEvent(QKeyEvent *keyevent)
         {
             x_offset = 0;
             y_offset = 0;
-            zoom = 1;
+            zoom = QApplication::desktop()->physicalDpiX() / 2.54;
             repaint();
             break;
         }
@@ -473,6 +484,10 @@ void OGoGraphRenderingContext::SetLineWidth(float width)
 
 void OGoGraphRenderingContext::Line(float x1, float y1, float x2, float y2)
 {
+    x1 += OffsetX;
+    y1 += OffsetY;
+    x2 += OffsetX;
+    y2 += OffsetY;
     int ix1, iy1, ix2, iy2;
     this->target->ModelToScreen(x1,y1, ix1, iy1);
     this->target->ModelToScreen(x2,y2, ix2, iy2);
@@ -482,6 +497,8 @@ void OGoGraphRenderingContext::Line(float x1, float y1, float x2, float y2)
 
 void OGoGraphRenderingContext::Circle(float x, float y, float radius)
 {
+    x += OffsetX;
+    y += OffsetY;
     int ix, iy;
     target->ModelToScreen(x,y,ix,iy);
 

@@ -35,6 +35,8 @@
                     Color LastPenColor;
                     Color LastBrushColor;
                     float LastLineWidth;
+                    float OffsetX;
+                    float OffsetY;
                     Export::StringTranslator* Translator;
 
                     virtual void BeginRenderingGraph(float WidthInCm, float HeightInCm, float ResolutionDPI);
