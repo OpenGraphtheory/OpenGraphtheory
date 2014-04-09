@@ -78,6 +78,22 @@ namespace OpenGraphtheory
                 delete Translator;
         }
 
+        void GraphRenderingContext::RenderGraph(Graph& G, string vertexcoloring, string edgecoloring, float dpi,
+                         float edgewidth, float vertexradius)
+        {
+            map<Graph::VertexIterator, int> vcoloringInt = G.GetVertexColoring(vertexcoloring);
+            map<Graph::VertexIterator, Color> VertexColoring;
+            for(map<Graph::VertexIterator, int>::iterator i = vcoloringInt.begin(); i != vcoloringInt.end(); i++)
+                VertexColoring[i->first] = Color::DefaultColors[i->second < Color::NumDefaultColors ? i->second : 0];
+
+            map<Graph::EdgeIterator, Color> EdgeColoring;
+            map<Graph::EdgeIterator, int> ecoloringInt = G.GetEdgeColoring(edgecoloring);
+            for(map<Graph::EdgeIterator, int>::iterator i = ecoloringInt.begin(); i != ecoloringInt.end(); i++)
+                EdgeColoring[i->first] = Color::DefaultColors[i->second < Color::NumDefaultColors ? i->second : 0];
+
+            RenderGraph(G, VertexColoring, EdgeColoring, dpi, edgewidth, vertexradius);
+        }
+
         void GraphRenderingContext::RenderGraph(Graph& G, std::map<Graph::VertexIterator, Color>& vertexcoloring,
                          std::map<Graph::EdgeIterator, Color>& edgecoloring, float dpi,
                          float edgewidth, float vertexradius)

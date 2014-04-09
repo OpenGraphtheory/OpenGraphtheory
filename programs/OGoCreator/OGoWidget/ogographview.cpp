@@ -174,8 +174,8 @@ void OGoGraphView::paintEvent(QPaintEvent *)
     if(graph == NULL)
         return;
 
-    QPainter p(this);
-    p.fillRect(0,0,width(),height(), Qt::white);
+    QPainter painter(this);
+    painter.fillRect(0,0,width(),height(), Qt::white);
 
     if(Background != NULL)
     {
@@ -183,93 +183,40 @@ void OGoGraphView::paintEvent(QPaintEvent *)
         ModelToScreen(0,0,bg_left,bg_top);
         ModelToScreen(Background->width(), Background->height(), bg_width, bg_height);
 
-        p.drawImage(QRect(bg_left, bg_top, bg_width-bg_left, bg_height-bg_top), *Background);
+        painter.drawImage(QRect(bg_left, bg_top, bg_width-bg_left, bg_height-bg_top), *Background);
     }
 
     // Draw Grid
     if(gridsize * zoom > 6)
     {
-        p.setPen(Qt::lightGray);
+        painter.setPen(Qt::lightGray);
         float increment = gridsize*zoom;
 
         for(float i = fmod(y_offset, increment); i < height(); i += increment)
-            p.drawLine(0, i, width(), i);
+            painter.drawLine(0, i, width(), i);
 
         for(float i = fmod(x_offset, increment); i < width(); i += increment)
-            p.drawLine(i, 0, i, height());
+            painter.drawLine(i, 0, i, height());
     }
 
-    // Draw Edges
+
+    OGoGraphRenderingContext* context = new OGoGraphRenderingContext(this, &painter);
+    context->RenderGraph(*graph, vertexcoloring, edgecoloring, 74, -1, -1);
+    delete context;
+
+
     QPen pen(Qt::black);
-    pen.setWidthF(edgewidth*zoom);
-    p.setPen(pen);
-    for(Graph::EdgeIterator e = graph->BeginEdges(); e != graph->EndEdges(); e++)
-    {
-        vector<float> FromCoordinates = e.From().GetCoordinates();
-        int fx, fy;
-        ModelToScreen(FromCoordinates[0], FromCoordinates[1], fx, fy);
-
-        vector<float> ToCoordinates = e.To().GetCoordinates();
-        int tx, ty;
-        ModelToScreen(ToCoordinates[0], ToCoordinates[1], tx, ty);
-
-        pen.setColor(Qt::black);
-        Attribute* attr = e.Attributes().GetAttribute(edgecoloring);
-        if(attr != NULL)
-        {
-            IntAttribute* iattr = dynamic_cast<IntAttribute*>(attr);
-            if(iattr != NULL)
-                pen.setColor(colors[iattr->Value % colorsCount]);
-            BoolAttribute* battr = dynamic_cast<BoolAttribute*>(attr);
-            if(battr != NULL && battr->Value)
-                pen.setColor(colors[0]);
-        }
-
-        p.setPen(pen);
-        p.drawLine(fx,fy,tx,ty);
-    }
-
-    // Draw Vertices
-    for(Graph::VertexIterator v = graph->BeginVertices(); v != graph->EndVertices(); v++)
-    {
-        vector<float> Coordinates = v.GetCoordinates();
-        int x, y;
-        ModelToScreen(Coordinates[0] - vertexsize/2, Coordinates[1]-vertexsize/2, x, y);
-
-        p.setPen(Qt::black);
-        p.setBrush(Qt::black);
-        Attribute* attr = v.Attributes().GetAttribute(vertexcoloring);
-        if(attr != NULL)
-        {
-            IntAttribute* iattr = dynamic_cast<IntAttribute*>(attr);
-            if(iattr != NULL)
-            {
-                p.setPen(colors[iattr->Value % colorsCount]);
-                p.setBrush(colors[iattr->Value % colorsCount]);
-            }
-            BoolAttribute* battr = dynamic_cast<BoolAttribute*>(attr);
-            if(battr != NULL && battr->Value)
-            {
-                p.setPen(colors[0]);
-                p.setBrush(colors[0]);
-            }
-
-
-        }
-        p.drawEllipse(x, y, vertexsize*zoom, vertexsize*zoom);
-    }
-
     if(mouseaction == OGoGraphView::DrawingEdge || mouseaction == OGoGraphView::DrawingArc)
     {
         pen.setWidthF(edgewidth*zoom);
-        p.setPen(pen);
+        painter.setPen(pen);
         for(set<Graph::VertexIterator>::iterator i = selectedvertices.begin(); i != selectedvertices.end(); i++)
         {
             vector<float> Coordinates = i->GetCoordinates();
             int x, y;
             ModelToScreen(Coordinates[0], Coordinates[1], x, y);
 
-            p.drawLine(x,y,oldx,oldy);
+            painter.drawLine(x,y,oldx,oldy);
         }
     }
 }
@@ -494,8 +441,52 @@ void OGoGraphView::keyReleaseEvent(QKeyEvent*)
 
 
 
+OGoGraphRenderingContext::OGoGraphRenderingContext(OGoGraphView* target, QPainter* painter)
+{
+    this->target = target;
+    this->painter = painter;
+    this->pen = new QPen();
+    painter->setPen(*pen);
+}
 
+OGoGraphRenderingContext::~OGoGraphRenderingContext()
+{
 
+}
+
+void OGoGraphRenderingContext::SetPenColor(OpenGraphtheory::Visualization::Color color)
+{
+    pen->setColor(QColor(color.Red, color.Green, color.Blue));
+    painter->setPen(*pen);
+}
+
+void OGoGraphRenderingContext::SetBrushColor(OpenGraphtheory::Visualization::Color color)
+{
+    painter->setBrush(QColor(color.Red, color.Green, color.Blue));
+}
+
+void OGoGraphRenderingContext::SetLineWidth(float width)
+{
+    pen->setWidthF(width*target->zoom);
+    painter->setPen(*pen);
+}
+
+void OGoGraphRenderingContext::Line(float x1, float y1, float x2, float y2)
+{
+    int ix1, iy1, ix2, iy2;
+    this->target->ModelToScreen(x1,y1, ix1, iy1);
+    this->target->ModelToScreen(x2,y2, ix2, iy2);
+
+    painter->drawLine(ix1,iy1, ix2, iy2);
+}
+
+void OGoGraphRenderingContext::Circle(float x, float y, float radius)
+{
+    int ix, iy;
+    target->ModelToScreen(x,y,ix,iy);
+
+    painter->drawEllipse(ix-radius*target->zoom, iy-radius*target->zoom, 2*radius*target->zoom, 2*radius*target->zoom);
+}
 
 
 

@@ -57,6 +57,8 @@
                     GraphRenderingContext();
                     virtual ~GraphRenderingContext();
 
+                    virtual void RenderGraph(Graph& G, std::string vertexcoloring, std::string edgecoloring, float dpi,
+                                             float edgewidth, float vertexradius);
                     virtual void RenderGraph(Graph& G, std::map<Graph::VertexIterator, Color>& vertexcoloring,
                                              std::map<Graph::EdgeIterator, Color>& edgecoloring, float dpi,
                                              float edgewidth, float vertexradius);
