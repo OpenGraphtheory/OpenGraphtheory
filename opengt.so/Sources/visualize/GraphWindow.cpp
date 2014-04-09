@@ -1,5 +1,7 @@
 
 #include "../../Headers/visualize/GraphWindow.h"
+
+using namespace std;
 using namespace OpenGraphtheory;
 
 namespace OpenGraphtheory
@@ -7,16 +9,23 @@ namespace OpenGraphtheory
     namespace Visualization
     {
 
-        GraphWindow::GraphWindow(int width, int height, Graph* G, std::string Caption, std::string vertexcoloring, std::string edgecoloring, int gridsize, bool ZoomToFit)
+        GraphWindow::GraphWindow(int width, int height, Graph* G, string Caption, string vertexcoloring,
+                                 string edgecoloring, int gridsize, float EdgeWidth, float VertexRadius)
             : DisplayWindow(width, height, Caption)
         {
-            ModelLeft = 0;
-            ModelTop = 0;
-            ModelWidth = width;
-            ModelHeight = height;
-            this -> ZoomToFit = ZoomToFit;
-            this -> VertexColoring = vertexcoloring;
-            this -> EdgeColoring = edgecoloring;
+            map<Graph::VertexIterator, int> vcoloringInt = G->GetVertexColoring(vertexcoloring);
+            map<Graph::VertexIterator, Color> vcoloring;
+            for(map<Graph::VertexIterator, int>::iterator i = vcoloringInt.begin(); i != vcoloringInt.end(); i++)
+                VertexColoring[i->first] = Color::DefaultColors[i->second < Color::NumDefaultColors ? i->second : 0];
+
+            map<Graph::EdgeIterator, Color> ecoloring;
+            map<Graph::EdgeIterator, int> ecoloringInt = G->GetEdgeColoring(edgecoloring);
+            for(map<Graph::EdgeIterator, int>::iterator i = ecoloringInt.begin(); i != ecoloringInt.end(); i++)
+                EdgeColoring[i->first] = Color::DefaultColors[i->second < Color::NumDefaultColors ? i->second : 0];
+
+            this->EdgeWidth = EdgeWidth;
+            this->VertexRadius = VertexRadius;
+
             Display(G);
         }
 
@@ -31,123 +40,91 @@ namespace OpenGraphtheory
             Clear();
             if(DisplayedGraph != NULL)
             {
-                if(ZoomToFit)
-                    UpdateModelDimensions();
-
-                for(Graph::EdgeIterator e = DisplayedGraph->BeginEdges(); e != DisplayedGraph->EndEdges(); e++)
-                {
-                    std::vector<float> FromCoordinates = e.From().GetCoordinates();
-                    std::vector<float> ToCoordinates = e.To().GetCoordinates();
-                    float x1 = FromCoordinates[0];
-                    float y1 = FromCoordinates[1];
-                    float x2 = ToCoordinates[0];
-                    float y2 = ToCoordinates[1];
-
-                    ModelToScreen(x1, y1);
-                    ModelToScreen(x2, y2);
-
-                    if(e.Attributes().HasAttribute(EdgeColoring))
-                    {
-                        IntAttribute* attrEdgeColoring = dynamic_cast<IntAttribute*>(e.Attributes().GetAttribute(EdgeColoring));
-                        if(attrEdgeColoring != NULL)
-                            SetColor(Color::DefaultColors[attrEdgeColoring->Value].Red, Color::DefaultColors[attrEdgeColoring->Value].Green, Color::DefaultColors[attrEdgeColoring->Value].Blue);
-                        BoolAttribute* attrEdgeSet = dynamic_cast<BoolAttribute*>(e.Attributes().GetAttribute(EdgeColoring));
-                        if(attrEdgeSet != NULL)
-                        {
-                            if(attrEdgeSet->Value)
-                                SetColor(Color::DefaultColors[0].Red, Color::DefaultColors[0].Green, Color::DefaultColors[0].Blue);
-                            else
-                                SetColor(0,0,0);
-                        }
-                    }
-                    else
-                        SetColor(0,0,0);
-
-                    Line(x1,y1,x2,y2);
-                }
-
-                for(Graph::VertexIterator v = DisplayedGraph->BeginVertices(); v != DisplayedGraph->EndVertices(); v++)
-                {
-                    std::vector<float> coordinates = v.GetCoordinates();
-                    float x = coordinates[0];
-                    float y = coordinates[1];
-
-                    ModelToScreen(x, y);
-
-                    if(v.Attributes().HasAttribute(VertexColoring))
-                    {
-                        IntAttribute* attrVertexColoring = dynamic_cast<IntAttribute*>(v.Attributes().GetAttribute(VertexColoring));
-                        if(attrVertexColoring != NULL)
-                            SetColor(Color::DefaultColors[attrVertexColoring->Value].Red, Color::DefaultColors[attrVertexColoring->Value].Green, Color::DefaultColors[attrVertexColoring->Value].Blue);
-                        BoolAttribute* attrVertexSet = dynamic_cast<BoolAttribute*>(v.Attributes().GetAttribute(VertexColoring));
-                        if(attrVertexSet != NULL)
-                        {
-                            if(attrVertexSet->Value)
-                                SetColor(Color::DefaultColors[0].Red, Color::DefaultColors[0].Green, Color::DefaultColors[0].Blue);
-                            else
-                                SetColor(0,0,0);
-                        }
-                    }
-                    else
-                        SetColor(0,0,0);
-
-                    FillCircle(x, y, 2);
-                }
+                Visualization::GraphWindowRenderingContext* context = new Visualization::GraphWindowRenderingContext(this);
+                context->RenderGraph(*DisplayedGraph, VertexColoring, EdgeColoring, 75, EdgeWidth, VertexRadius);
+                delete context;
             }
             Flush();
         }
 
-        void GraphWindow::UpdateModelDimensions()
+
+
+        GraphWindowRenderingContext::GraphWindowRenderingContext(GraphWindow* window)
+            : GraphRenderingContext(),
+            PenColor(0,0,0),
+            BrushColor(0,0,0)
         {
-            Graph::VertexIterator v = DisplayedGraph->BeginVertices();
-            std::vector<float> coordinates = v.GetCoordinates();
-            float minx = coordinates[0];
-            float miny = coordinates[1];
-            float maxx = minx;
-            float maxy = miny;
-            for(v++; v != DisplayedGraph->EndVertices(); v++)
-            {
-                coordinates = v.GetCoordinates();
-
-                if(coordinates[0] < minx)
-                    minx = coordinates[0];
-                else if(coordinates[0] > maxx)
-                    maxx = coordinates[0];
-
-                if(coordinates[1] < miny)
-                    miny = coordinates[1];
-                else if(coordinates[1] > maxy)
-                    maxy = coordinates[1];
-            }
-            UpdateModelDimensions(minx, miny, maxx, maxy);
+            this->window = window;
+            this->LineWidth = 0.1;
         }
 
-        void GraphWindow::UpdateModelDimensions(float left, float top, float right, float bottom)
+        void GraphWindowRenderingContext::SetPenColor(Color color)
         {
-            ModelLeft = left;
-            ModelWidth = right - left;
-            ModelTop = top;
-            ModelHeight = bottom - top;
+            PenColor = color;
         }
 
-        void GraphWindow::ModelToScreen(float &x, float &y)
+        void GraphWindowRenderingContext::SetBrushColor(Color color)
         {
-            float scaleX = width / ModelWidth;
-            float scaleY = height / ModelHeight;
+            BrushColor = color;
+        }
+
+        void GraphWindowRenderingContext::SetLineWidth(float width)
+        {
+            LineWidth = width;
+        }
+
+        void GraphWindowRenderingContext::Line(float x1, float y1, float x2, float y2)
+        {
+            float scaleX = window->Width() / ModelWidth;
+            float scaleY = window->Height() / ModelHeight;
             float scale = scaleX < scaleY ? scaleX : scaleY;
 
-            x = (x - ModelLeft) * scale;
-            y = (y - ModelTop) * scale;
+            ModelToScreen(x1, y1);
+            ModelToScreen(x2, y2);
+            window->SetColor(PenColor.Red, PenColor.Green, PenColor.Blue);
+            window->Line((int)x1, (int)y1, (int)x2, (int)y2, (int)(LineWidth*scale));
         }
 
-        void GraphWindow::ScreenToModel(float &x, float &y)
+        void GraphWindowRenderingContext::Circle(float x, float y, float radius)
         {
-            float scaleX = width / ModelWidth;
-            float scaleY = height / ModelHeight;
+            float scaleX = window->Width() / ModelWidth;
+            float scaleY = window->Height() / ModelHeight;
             float scale = scaleX < scaleY ? scaleX : scaleY;
 
-            x = x / scale + ModelLeft;
-            y = y / scale + ModelTop;
+            ModelToScreen(x,y);
+            window->SetColor(BrushColor.Red, BrushColor.Green, BrushColor.Blue);
+            window->FillCircle((int)x,(int)y,(int)(radius*scale));
+        }
+
+        void GraphWindowRenderingContext::PutText(float x, float y, std::string text)
+        {
+            // ....
+        }
+
+        void GraphWindowRenderingContext::BeginRenderingGraph(float WidthInCm, float HeightInCm, float ResolutionDPI)
+        {
+            ModelWidth = WidthInCm;
+            ModelHeight = HeightInCm;
+        }
+
+        void GraphWindowRenderingContext::ModelToScreen(float &x, float &y)
+        {
+            float scaleX = window->Width() / ModelWidth;
+            float scaleY = window->Height() / ModelHeight;
+            float scale = scaleX < scaleY ? scaleX : scaleY;
+
+            x *= scale;
+            y *= scale;
+        }
+
+        void GraphWindowRenderingContext::ScreenToModel(float &x, float &y)
+        {
+            float scaleX = window->Width() / ModelWidth;
+            float scaleY = window->Height() / ModelHeight;
+            float scale = scaleX < scaleY ? scaleX : scaleY;
+
+            x /= scale;
+            y /= scale;
         }
 
     }

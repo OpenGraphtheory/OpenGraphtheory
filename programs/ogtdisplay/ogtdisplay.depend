@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1392029041 source:/home/viktor/Programming/OpenGraphtheory/programs/ogtdisplay/ogtdisplay.cpp
+1397037235 source:/home/viktor/Programming/OpenGraphtheory/programs/ogtdisplay/ogtdisplay.cpp
 	<iostream>
 	<unistd.h>
 	"../../opengt.so/Headers/opengt.h"
@@ -46,7 +46,7 @@
 	<string>
 	<map>
 
-1396604051 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
+1397037686 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
 	<list>
 	<set>
 	<map>
@@ -76,8 +76,10 @@
 	<map>
 	"../Sources/factory_templates.cpp"
 
-1396601923 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/GraphWindow.h
+1397038174 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/GraphWindow.h
 	"DisplayWindow.h"
+	"renderer.h"
+	"color.h"
 	"../opengt.h"
 
 1396601904 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/DisplayWindow.h
@@ -93,8 +95,20 @@
 1396877547 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/vector2d.h
 	<math.h>
 
-1396601887 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/color.h
+1397038090 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/color.h
 
 1392029042 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/factory_templates.cpp
 	"../Headers/factory.h"
+
+1396965910 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/renderer.h
+	"../opengt.h"
+	"color.h"
+	"vector2d.h"
+	"../export/stringtranslator.h"
+	<string>
+	<math.h>
+
+1396965224 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/stringtranslator.h
+	<map>
+	<string>
 

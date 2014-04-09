@@ -2,6 +2,11 @@
 #include "../../Headers/visualize/color.h"
 using namespace OpenGraphtheory::Visualization;
 
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!  ATTENTION!!! IF YOU CHANGE THIS, YOU MUST ALSO  !!
+// !!       CHANGE NumDefaultColors IN color.h         !!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Color Color::DefaultColors[] =
 {
     Color(0xE5, 0x00, 0x00), // red

@@ -23,16 +23,31 @@ int main(int argc, char** argv)
 
         string vertexcoloring = "";
         string edgecoloring = "";
+        float VertexRadius = -1;
+        float EdgeWidth = -1;
         for(int i = 1; i < argc; i++)
         {
             if(string(argv[i]) == "--vertexcoloring" && argc > i+1)
                 vertexcoloring = argv[i+1];
             if(string(argv[i]) == "--edgecoloring" && argc > i+1)
                 edgecoloring = argv[i+1];
+            if(string(argv[i]) == "--edgewidth" && argc > i+1)
+            {
+                stringstream s;
+                s << argv[i+1];
+                s >> EdgeWidth;
+            }
+            if(string(argv[i]) == "--vertexradius" && argc > i+1)
+            {
+                stringstream s;
+                s << argv[i+1];
+                s >> VertexRadius;
+            }
         }
 
         /// do your thing
-        GraphWindow Win(800, 600, &G, "http://www.Open-Graphtheory.org", vertexcoloring, edgecoloring);
+        GraphWindow Win(800, 600, &G, "http://www.Open-Graphtheory.org", vertexcoloring,
+                        edgecoloring, 1, EdgeWidth, VertexRadius);
         Win.WaitUntilClosed();
 
 

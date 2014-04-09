@@ -20,42 +20,15 @@ namespace OpenGraphtheory
 
         void ExportFilter::DoExport(Graph& G, ostream& os, std::string vertexcoloring, std::string edgecoloring, float dpi, float edgewidth, float vertexradius)
         {
+            map<Graph::VertexIterator, int> vcoloringInt = G.GetVertexColoring(vertexcoloring);
             map<Graph::VertexIterator, Color> vcoloring;
+            for(map<Graph::VertexIterator, int>::iterator i = vcoloringInt.begin(); i != vcoloringInt.end(); i++)
+                vcoloring[i->first] = Color::DefaultColors[i->second < Color::NumDefaultColors ? i->second : 0];
+
             map<Graph::EdgeIterator, Color> ecoloring;
-
-            if(vertexcoloring != "")
-            {
-                for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-                {
-                    Attribute* attr = v.Attributes().GetAttribute(vertexcoloring);
-                    IntAttribute* iattr = dynamic_cast<IntAttribute*>(attr);
-                    if(iattr != NULL)
-                        vcoloring[v] = Color::DefaultColors[iattr->Value < 7 ? iattr->Value : 0];
-                    else
-                    {
-                        BoolAttribute* battr = dynamic_cast<BoolAttribute*>(attr);
-                        if(battr != NULL && battr->Value)
-                            vcoloring[v] = Color::DefaultColors[0];
-                    }
-                }
-            }
-
-            if(edgecoloring != "")
-            {
-                for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
-                {
-                    Attribute* attr = e.Attributes().GetAttribute(edgecoloring);
-                    IntAttribute* iattr = dynamic_cast<IntAttribute*>(attr);
-                    if(iattr != NULL)
-                        ecoloring[e] = Color::DefaultColors[iattr->Value < 7 ? iattr->Value : 0];
-                    else
-                    {
-                        BoolAttribute* battr = dynamic_cast<BoolAttribute*>(attr);
-                        if(battr != NULL && battr->Value)
-                            ecoloring[e] = Color::DefaultColors[0];
-                    }
-                }
-            }
+            map<Graph::EdgeIterator, int> ecoloringInt = G.GetEdgeColoring(edgecoloring);
+            for(map<Graph::EdgeIterator, int>::iterator i = ecoloringInt.begin(); i != ecoloringInt.end(); i++)
+                ecoloring[i->first] = Color::DefaultColors[i->second < Color::NumDefaultColors ? i->second : 0];
 
             Export(G, os, vcoloring, ecoloring, dpi, edgewidth, vertexradius);
         }

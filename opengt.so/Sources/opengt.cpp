@@ -743,6 +743,50 @@ namespace OpenGraphtheory
             }
         }
 
+        map<Graph::EdgeIterator, int> Graph::GetEdgeColoring(string name)
+        {
+            map<Graph::EdgeIterator, int> result;
+            if(name != "")
+            {
+                for(Graph::EdgeIterator e = BeginEdges(); e != EndEdges(); e++)
+                {
+                    Attribute* attr = e.Attributes().GetAttribute(name);
+                    IntAttribute* iattr = dynamic_cast<IntAttribute*>(attr);
+                    if(iattr != NULL)
+                        result[e] = iattr->Value;
+                    else
+                    {
+                        BoolAttribute* battr = dynamic_cast<BoolAttribute*>(attr);
+                        if(battr != NULL)
+                            result[e] =  battr->Value ? 1 : 0;
+                    }
+                }
+            }
+            return result;
+        }
+
+        map<Graph::VertexIterator, int> Graph::GetVertexColoring(string name)
+        {
+            map<Graph::VertexIterator, int> result;
+            if(name != "")
+            {
+                for(Graph::VertexIterator v = BeginVertices(); v != EndVertices(); v++)
+                {
+                    Attribute* attr = v.Attributes().GetAttribute(name);
+                    IntAttribute* iattr = dynamic_cast<IntAttribute*>(attr);
+                    if(iattr != NULL)
+                        result[v] = iattr->Value;
+                    else
+                    {
+                        BoolAttribute* battr = dynamic_cast<BoolAttribute*>(attr);
+                        if(battr != NULL)
+                            result[v] = battr->Value ? 1 : 0;
+                    }
+                }
+            }
+            return result;
+        }
+
         void Graph::AddEdgeWeight(std::map<Graph::EdgeIterator, float> Weight, string name)
         {
             for(EdgeIterator e = BeginEdges(); e != EndEdges(); e++)

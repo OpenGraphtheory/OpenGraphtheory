@@ -2,6 +2,8 @@
     #define __OPENGRAPHTHEORY_VISUALIZE_GRAPHWINDOW_H
 
     #include "DisplayWindow.h"
+    #include "renderer.h"
+    #include "color.h"
     #include "../opengt.h"
 
     namespace OpenGraphtheory
@@ -13,22 +15,18 @@
             {
                 protected:
                     int gridsize;
-                    bool ZoomToFit;
                     Graph* DisplayedGraph;
 
-                    std::string VertexColoring;
-                    std::string EdgeColoring;
-
-                    float ModelLeft, ModelWidth, ModelTop, ModelHeight;
-                    void UpdateModelDimensions();
-                    void UpdateModelDimensions(float left, float top, float right, float bottom);
-                    void ModelToScreen(float &x, float& y);
-                    void ScreenToModel(float &x, float& y);
+                    std::map<Graph::VertexIterator, Color> VertexColoring;
+                    std::map<Graph::EdgeIterator, Color> EdgeColoring;
+                    float EdgeWidth;
+                    float VertexRadius;
 
                 public:
 
-                    GraphWindow(int width, int height, Graph* G, std::string Caption = "http://www.Open-Graphtheory.org", std::string vertexcoloring = "",
-                                std::string edgecoloring = "", int gridsize = 1, bool ZoomToFit = false);
+                    GraphWindow(int width, int height, Graph* G, std::string Caption = "http://www.Open-Graphtheory.org",
+                                std::string vertexcoloring = "", std::string edgecoloring = "", int gridsize = 1,
+                                float EdgeWidth = -1, float VertexRadius = -1);
 
                     void Display(Graph* G);
                     void Update();
@@ -38,6 +36,31 @@
 
             };
 
+            class GraphWindowRenderingContext : public GraphRenderingContext
+            {
+                protected:
+                    GraphWindow* window;
+                    float LineWidth;
+                    Color PenColor;
+                    Color BrushColor;
+
+                    float ModelWidth;
+                    float ModelHeight;
+                    void ModelToScreen(float &x, float& y);
+                    void ScreenToModel(float &x, float& y);
+
+                public:
+                    GraphWindowRenderingContext(GraphWindow* window);
+                    void BeginRenderingGraph(float WidthInCm, float HeightInCm, float ResolutionDPI);
+
+                    void SetPenColor(Color color);
+                    void SetBrushColor(Color color);
+                    void SetLineWidth(float width);
+
+                    void Line(float x1, float y1, float x2, float y2);
+                    void Circle(float x, float y, float radius);
+                    void PutText(float x, float y, std::string text);
+            };
 
         }
     }

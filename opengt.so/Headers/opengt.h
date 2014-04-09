@@ -92,6 +92,9 @@
                 void AddEdgeColoring(std::map<Graph::EdgeIterator, int> Coloring, std::string name);
                 void AddEdgeWeight(std::map<Graph::EdgeIterator, float> Weights, std::string name);
 
+                std::map<Graph::EdgeIterator, int> GetEdgeColoring(std::string name);
+                std::map<Graph::VertexIterator, int> GetVertexColoring(std::string name);
+
 			/// adding and removing vertices
 			protected:
 				Graph::VertexIterator InternalAddVertex(std::vector<float> coordinates, std::string label = "", float weight = 0, void* tag = NULL, int ID = -1);

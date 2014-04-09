@@ -8,7 +8,7 @@
 	<string>
 	<vector>
 
-1396604051 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
+1397037686 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
 	<list>
 	<set>
 	<map>
@@ -38,7 +38,7 @@
 	<map>
 	"../Sources/factory_templates.cpp"
 
-1396961260 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/export.cpp
+1397038015 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/export.cpp
 	"../../Headers/export/export.h"
 
 1396962428 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/export.h
@@ -56,7 +56,7 @@
 	"../visualize/renderer.h"
 	"../../Sources/export/export_templates.cpp"
 
-1396601887 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/color.h
+1397038416 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/color.h
 
 1396602830 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/generate/generate.cpp
 	"../../Headers/generate/generate.h"
@@ -176,7 +176,7 @@
 	"../factory.h"
 	"export.h"
 
-1396965536 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/mpost.cpp
+1396966051 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/mpost.cpp
 	"../../Headers/export/mpost.h"
 
 1396965568 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/mpost.h
@@ -372,8 +372,10 @@
 	"intermediatesteps.h"
 	"../visualize/GraphWindow.h"
 
-1396601923 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/GraphWindow.h
+1397038174 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/GraphWindow.h
 	"DisplayWindow.h"
+	"renderer.h"
+	"color.h"
 	"../opengt.h"
 
 1396601904 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/DisplayWindow.h
@@ -472,7 +474,7 @@
 	<libintl.h>
 	"../../../Headers/logic/ComputationTreeLogic/ctl_lexer.h"
 
-1396603832 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/opengt.cpp
+1397038368 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/opengt.cpp
 	"../Headers/opengt.h"
 
 1392029043 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/processing/components.cpp
@@ -580,10 +582,10 @@
 	<math.h>
 	<stdlib.h>
 
-1392029043 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/GraphWindow.cpp
+1397036325 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/GraphWindow.cpp
 	"../../Headers/visualize/GraphWindow.h"
 
-1396963277 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/color.cpp
+1397038404 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/color.cpp
 	"../../Headers/visualize/color.h"
 
 1396603254 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/vector2d.cpp
