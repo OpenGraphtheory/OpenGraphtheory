@@ -2,6 +2,7 @@
     #define __OPENGRAPHTHEORY_EXPORT_RGML_H
 
     #include <ostream>
+    #include "stringtranslator.h"
     #include "../opengt.h"
     #include "../factory.h"
     #include "export.h"

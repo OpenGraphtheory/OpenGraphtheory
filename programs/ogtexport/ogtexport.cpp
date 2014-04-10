@@ -138,8 +138,19 @@ void FactoryLister::Enumerate(string name, string description, string url)
 
 void usage(char* argv0)
 {
-	cerr << "usage: " << argv0 << " --format <format>\n"
-	     << "   where <format> can be\n";
+	cerr << "usage: " << argv0 << " --format <format> [<option>*]\n"
+	     << "   where <option> can be\n"
+	     << "       --vertexcoloring <name>\n"
+	     << "           selects the coloring that is used for the vertices\n"
+	     << "       --edgecoloring <name>\n"
+	     << "           selects the coloring that is used for the edges\n"
+	     << "       --vertexradius <float>\n"
+	     << "           sets a common radius for all vertices (in centimeters)\n"
+	     << "       --edgewidth <float>\n"
+	     << "           sets a common width for all edges (in centimeters)\n"
+	     << "       --dpi <float>\n"
+	     << "           sets the assumed resolution (dots per inch)\n"
+	     << "   and <format> can be\n";
 
     FactoryMaxNameLength* l = new FactoryMaxNameLength();
     Export::ExportFilter::ExportFilterFactory.Enumerate(l);

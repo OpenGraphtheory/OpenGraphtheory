@@ -422,6 +422,7 @@ namespace OpenGraphtheory
 					    target << "v" << j.GetID();
 					    relend->AddAttribute("target", target.str());
 					    relend->AddAttribute("direction", "none");
+					    edge->AddChild(relend);
 					}
 					for(VertexIterator j = BeginPositiveIncidentVertices(); j != EndPositiveIncidentVertices(); j++)
 					{
@@ -430,6 +431,7 @@ namespace OpenGraphtheory
 					    target << "v" << j.GetID();
 					    relend->AddAttribute("target", target.str());
 					    relend->AddAttribute("direction", "out");
+					    edge->AddChild(relend);
 					}
 					for(VertexIterator j = BeginNegativeIncidentVertices(); j != EndNegativeIncidentVertices(); j++)
 					{
@@ -438,6 +440,7 @@ namespace OpenGraphtheory
 					    target << "v" << j.GetID();
 					    relend->AddAttribute("target", target.str());
 					    relend->AddAttribute("direction", "in");
+					    edge->AddChild(relend);
 					}
 				}
 

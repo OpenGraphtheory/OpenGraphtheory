@@ -14,8 +14,8 @@ namespace OpenGraphtheory
                                       map<Graph::EdgeIterator, Color>& edgecoloring, float dpi, float edgewidth,
                                       float vertexradius)
         {
-            if(G.IsHypergraph())
-                throw "The XGMML fileformat does not support hypergraphs\n";
+
+            StringTranslatorXML Translator;
 
             os << "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
             os << "<!-- www.Open-Graphtheory.org -->\n\n";
@@ -48,14 +48,31 @@ namespace OpenGraphtheory
 
             /// write vertices
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-                os << "  <Node rdf:ID=\"n" << v.GetID() << "\"/>\n";
+                os << "  <Node rdf:ID=\"n" << v.GetID() << "\" rgml:label=\"" << Translator.Translate(v.GetLabel()) << "\"/>\n";
 
             /// write edges
             for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
             {
-                os << "\n  <Edge rdf:ID=\"e" << e.GetID() << "\" directed=\"" << (e.IsEdge()?"false":"true") << "\">\n";
+                if(e.IsHyperedge())
+                    continue;
+                os << "\n  <Edge rdf:ID=\"e" << e.GetID() << "\" directed=\"" << (e.IsEdge()?"false":"true") << "\""
+                   << " rgml:label=\"" << Translator.Translate(e.GetLabel()) << "\">\n";
                 os << "    <source rdf:resource=\"#n" << e.From().GetID() << "\"/>\n";
                 os << "    <target rdf:resource=\"#n" << e.To().GetID() << "\"/>\n";
+                os << "  </Edge>\n";
+            }
+
+            /// write hyperedges
+            for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
+            {
+                os << "\n  <Edge rdf:ID=\"e" << e.GetID() << "\""
+                   << " rgml:label=\"" << Translator.Translate(e.GetLabel()) << "\">\n";
+                os << "    <nodes>\n";
+                os << "      <rdf:Seq>\n";
+                for(Graph::VertexIterator inc = e.BeginIncidentVertices(); inc != e.EndIncidentVertices(); inc++)
+                    os << "        <rdf:li rdf:resource=\"#n" << inc.GetID() << "\"/>\n";
+                os << "      </rdf:Seq>\n";
+                os << "    </nodes>\n";
                 os << "  </Edge>\n";
             }
 

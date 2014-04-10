@@ -19,7 +19,7 @@
 	"simple_xml.h"
 	"attributes.h"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/simple_xml.h
+1397121195 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/simple_xml.h
 	<iostream>
 	<sstream>
 	<vector>
@@ -210,11 +210,12 @@
 	"../factory.h"
 	"export.h"
 
-1396961384 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/rgml.cpp
+1397123794 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/rgml.cpp
 	"../../Headers/export/rgml.h"
 
-1396961342 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/rgml.h
+1397123182 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/rgml.h
 	<ostream>
+	"stringtranslator.h"
 	"../opengt.h"
 	"../factory.h"
 	"export.h"
@@ -946,9 +947,31 @@
 1396964721 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/export_templates.cpp
 	"../../Headers/export/export.h"
 
-1397048624 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/renderer.cpp
+1397051199 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/renderer.cpp
 	"../../Headers/visualize/renderer.h"
 
 1396965194 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/stringtranslator.cpp
 	"../../Headers/export/stringtranslator.h"
+
+1397121359 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/import/tei.cpp
+	"../../Headers/import/tei.h"
+
+1397117297 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/import/tei.h
+	<iostream>
+	<sstream>
+	<map>
+	<string>
+	"import.h"
+	"../simple_xml.h"
+
+1397125141 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/import/rgml.cpp
+	"../../Headers/import/rgml.h"
+
+1397121890 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/import/rgml.h
+	<iostream>
+	<sstream>
+	<map>
+	<string>
+	"import.h"
+	"../simple_xml.h"
 

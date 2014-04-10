@@ -1,10 +1,5 @@
 # depslib dependency file v1.0
-1395845009 source:/home/viktor/Programming/OpenGraphtheory/programs/ogtexport/ogtexport.cpp
-	<iostream>
-	<fstream>
-	<stdio.h>
-	"../../opengt.so/Headers/opengt.h"
-	"../../opengt.so/Headers/export/export.h"
+1397121707 source:/home/viktor/Programming/OpenGraphtheory/programs/ogtexport/ogtexport.cpp
 	<iostream>
 	<fstream>
 	<stdio.h>
@@ -52,7 +47,7 @@
 	"simple_xml.h"
 	"attributes.h"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/simple_xml.h
+1397121195 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/simple_xml.h
 	<iostream>
 	<sstream>
 	<vector>
@@ -98,7 +93,7 @@
 1397045403 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/vector2d.h
 	<math.h>
 
-1397047999 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/renderer.h
+1397051184 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/renderer.h
 	"../opengt.h"
 	"color.h"
 	"vector2d.h"

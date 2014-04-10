@@ -93,6 +93,8 @@
 		<Unit filename="Headers/import/dot/dot_lexer.h" />
 		<Unit filename="Headers/import/graphml.h" />
 		<Unit filename="Headers/import/import.h" />
+		<Unit filename="Headers/import/rgml.h" />
+		<Unit filename="Headers/import/tei.h" />
 		<Unit filename="Headers/import/tgf.h" />
 		<Unit filename="Headers/import/tikz/tikz.h" />
 		<Unit filename="Headers/import/tikz/tikz_lexer.h" />
@@ -187,6 +189,8 @@
 		<Unit filename="Sources/import/import.cpp">
 			<Option weight="49" />
 		</Unit>
+		<Unit filename="Sources/import/rgml.cpp" />
+		<Unit filename="Sources/import/tei.cpp" />
 		<Unit filename="Sources/import/tgf.cpp" />
 		<Unit filename="Sources/import/tikz/makefile" />
 		<Unit filename="Sources/import/tikz/tikz.cpp" />
