@@ -98,6 +98,7 @@
 		<Unit filename="Headers/import/tgf.h" />
 		<Unit filename="Headers/import/tikz/tikz.h" />
 		<Unit filename="Headers/import/tikz/tikz_lexer.h" />
+		<Unit filename="Headers/import/vrmlgraph.h" />
 		<Unit filename="Headers/import/xgmml.h" />
 		<Unit filename="Headers/intermediatesteps/intermediatesteps.h" />
 		<Unit filename="Headers/intermediatesteps/show.h" />
@@ -198,6 +199,7 @@
 		<Unit filename="Sources/import/tikz/tikz_lexer.l" />
 		<Unit filename="Sources/import/tikz/tikz_parser.cpp" />
 		<Unit filename="Sources/import/tikz/tikz_parser.yy" />
+		<Unit filename="Sources/import/vrmlgraph.cpp" />
 		<Unit filename="Sources/import/xgmml.cpp" />
 		<Unit filename="Sources/intermediatesteps/intermediate.cpp">
 			<Option weight="49" />

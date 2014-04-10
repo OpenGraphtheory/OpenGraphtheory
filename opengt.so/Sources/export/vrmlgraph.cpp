@@ -21,7 +21,8 @@ namespace OpenGraphtheory
 
             os << "# www.Open-Graphtheory.org\n";
             for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
-                os << e.From().GetID() << " " << e.To().GetID() << "\n";
+                if(e.From() != e.To())
+                    os << e.From().GetID() << " " << e.To().GetID() << "\n";
         }
 
         FactoryRegistrator<ExportFilter> ExportFilterVRMLGRAPH::ExportFilterVrmlgraphRegistrator(&ExportFilter::ExportFilterFactory, "vrmlgraph",
