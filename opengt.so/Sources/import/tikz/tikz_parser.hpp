@@ -107,26 +107,23 @@ namespace OpenGraphtheory { namespace Import {
      BEGINTIKZPICTURE = 258,
      ENDTIKZPICTURE = 259,
      NODE = 260,
-     DRAWNODE = 261,
-     DRAWEDGE = 262,
-     DRAWARC = 263,
-     PENCOLOR = 264,
-     BRUSHCOLOR = 265,
-     OPEN = 266,
-     CLOSE = 267,
-     OPENBRACKET = 268,
-     CLOSEBRACKET = 269,
-     OPENBRACES = 270,
-     CLOSEBRACES = 271,
-     COMMA = 272,
-     SEMICOLON = 273,
-     AT = 274,
-     TO = 275,
-     CM = 276,
-     CIRCLE = 277,
-     BCIRCLE = 278,
-     FLOAT = 279,
-     STRING = 280
+     DRAWEDGE = 261,
+     DRAWARC = 262,
+     PENCOLOR = 263,
+     BRUSHCOLOR = 264,
+     OPEN = 265,
+     CLOSE = 266,
+     OPENBRACKET = 267,
+     CLOSEBRACKET = 268,
+     OPENBRACES = 269,
+     CLOSEBRACES = 270,
+     COMMA = 271,
+     SEMICOLON = 272,
+     AT = 273,
+     TO = 274,
+     CM = 275,
+     FLOAT = 276,
+     STRING = 277
    };
 
     };
@@ -307,7 +304,7 @@ namespace OpenGraphtheory { namespace Import {
 #line 14 "tikz_parser.yy"
 } } // OpenGraphtheory::Import
 /* Line 33 of lalr1.cc  */
-#line 311 "tikz_parser.hpp"
+#line 308 "tikz_parser.hpp"
 
 
 

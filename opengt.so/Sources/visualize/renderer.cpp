@@ -126,10 +126,17 @@ namespace OpenGraphtheory
 
             // Declare Vertices (if necessary)
             this->BeginDeclaringVertices();
+            LastBrushColor = Color(0,0,0);
+            this->SetBrushColor(LastBrushColor);
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
                 coordinates = v.GetCoordinates();
                 Color color = vertexcoloring.find(v) != vertexcoloring.end() ? vertexcoloring[v] : Color(0,0,0);
+                if(color != LastBrushColor)
+                {
+                    this->SetBrushColor(color);
+                    LastBrushColor = color;
+                }
                 float radius = vertexradius >= 0 ? vertexradius : v.GetWeight();
                 string label = Translator != NULL ? Translator->Translate(v.GetLabel()) : v.GetLabel();
                 this->DeclareVertex(v.GetID(),
@@ -144,6 +151,8 @@ namespace OpenGraphtheory
 
             // Render Edges
             this->BeginRenderingEdges();
+            LastPenColor = Color(0,0,0);
+            this->SetPenColor(LastBrushColor);
             for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
             {
                 vector<float> FromCoordinates = e.From().GetCoordinates();
@@ -154,6 +163,11 @@ namespace OpenGraphtheory
                 float y2 = ToCoordinates[1] - miny;
 
                 Color color = edgecoloring.find(e) != edgecoloring.end() ? edgecoloring[e] : Color(0,0,0);
+                if(color != LastPenColor)
+                {
+                    this->SetPenColor(color);
+                    LastPenColor = color;
+                }
                 float LineWidth = edgewidth >= 0.0f ? edgewidth : e.GetWeight();
                 string label = Translator != NULL ? Translator->Translate(e.GetLabel()) : e.GetLabel();
 
@@ -192,11 +206,18 @@ namespace OpenGraphtheory
 
             // Render Vertices
             this->BeginRenderingVertices();
+            LastBrushColor = Color(0,0,0);
+            this->SetBrushColor(LastBrushColor);
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
                 coordinates = v.GetCoordinates();
                 float Radius = vertexradius >= 0 ? vertexradius : v.GetWeight();
                 Color color = vertexcoloring.find(v) != vertexcoloring.end() ? vertexcoloring[v] : Color(0,0,0);
+                if(color != LastBrushColor)
+                {
+                    this->SetBrushColor(color);
+                    LastBrushColor = color;
+                }
                 string label = Translator != NULL ? Translator->Translate(v.GetLabel()) : v.GetLabel();
 
                 this->RenderVertex(v.GetID(),

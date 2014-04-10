@@ -23,17 +23,21 @@
                     GraphRendererTIKZ(std::ostream& os);
                     void BeginRenderingGraph(float WidthInCm, float HeightInCm, float ResolutionDPI);
                     void EndRenderingGraph();
+
                     void SetPenColor(Visualization::Color);
                     void SetBrushColor(Visualization::Color);
                     void SetLineWidth(float Width);
-                    void DeclareVertex(int vertex_id, float x, float y, float radius, std::string text);
+
+                    void DeclareVertex(int vertex_id, float x, float y, float radius, std::string text, Visualization::Color);
+
                     void BeginRenderingVertices();
-                    void RenderVertex(int node_id, float x, float y, float radius);
                     void EndRenderingVertices();
+
                     void BeginRenderingEdges();
-                    void RenderEdge(int from_id, int to_id, float x1, float y1, float x2, float y2);
-                    void RenderArc(int from_id, int to_id, float x1, float y1, float x2, float y2, float to_radius);
+                    void RenderEdge(int from_id, int to_id, float x1, float y1, float x2, float y2, float width, std::string text, Visualization::Color color);
+                    void RenderArc(int from_id, int to_id, float x1, float y1, float x2, float y2, float width, std::string text, Visualization::Color color);
                     void EndRenderingEdges();
+
                     void PutText(float x, float y, std::string text);
             };
 

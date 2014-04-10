@@ -50,9 +50,10 @@
                     std::string* name;
                     float* xCm;
                     float* yCm;
+                    float* diameter;
                     std::string* label;
                 public:
-                    TikzDeclareNode(std::string* name, float* xCm, float* yCm, std::string* label);
+                    TikzDeclareNode(std::string* name, float* xCm, float* yCm, float* diameter, std::string* label);
                     ~TikzDeclareNode();
                     void DoLoad(TikzContext* context);
             };
@@ -74,17 +75,6 @@
                 public:
                     TikzDrawArc(std::string* from, std::string* to, float* linewidth);
                     ~TikzDrawArc();
-                    void DoLoad(TikzContext* context);
-            };
-
-            class TikzDrawNode : public TikzCode
-            {
-                protected:
-                    std::string* name;
-                    float* radius;
-                public:
-                    TikzDrawNode(std::string* name, float* radius);
-                    ~TikzDrawNode();
                     void DoLoad(TikzContext* context);
             };
 

@@ -17,7 +17,7 @@ namespace OpenGraphtheory
 
         void GraphRendererTIKZ::BeginRenderingGraph(float WidthInCm, float HeightInCm, float ResolutionDPI)
         {
-            (*os) << "% www.Open-Graphtheory.org\n";
+            // (*os) << "% www.Open-Graphtheory.org\n";
             (*os) << "%\\documentclass[a4paper,10pt]{article}\n";
             (*os) << "%\\usepackage{tikz}\n";
             (*os) << "%\\begin{document}\n";
@@ -33,21 +33,21 @@ namespace OpenGraphtheory
             (*os) << "%\\end{document}\n";
         }
 
-        void GraphRendererTIKZ::DeclareVertex(int vertex_id, float x, float y, float radius, string text)
+        void GraphRendererTIKZ::DeclareVertex(int vertex_id, float x, float y, float radius, string text, Color color)
         {
-            (*os) << "  \\node (n" << vertex_id
+            (*os) << "  \\node[fill,brushcolor,circle,minimum size=" << 2*radius << "cm] (n" << vertex_id
                   << ") at (" << x << "cm, " << ImageHeight-y << "cm){" << text << "};\n";
         }
 
         void GraphRendererTIKZ::SetPenColor(Visualization::Color color)
         {
-            if(RenderingEdges || RenderingVertices)
+            if(RenderingEdges)
                 (*os) << "  \\definecolor{pencolor}{rgb}{" << (color.Red/256.0f) << ","<< (color.Green/256.0f) << "," << (color.Blue/256.0f) << "}\n";
         }
 
         void GraphRendererTIKZ::SetBrushColor(Visualization::Color color)
         {
-            if(RenderingVertices)
+            if(!RenderingVertices)
                 (*os) << "  \\definecolor{brushcolor}{rgb}{" << (color.Red/256.0f) << ","<< (color.Green/256.0f) << "," << (color.Blue/256.0f) << "}\n";
         }
 
@@ -56,14 +56,10 @@ namespace OpenGraphtheory
             LineWidth = width;
         }
 
+
         void GraphRendererTIKZ::BeginRenderingVertices()
         {
             RenderingVertices = true;
-        }
-
-        void GraphRendererTIKZ::RenderVertex(int node_id, float x, float y, float radius)
-        {
-            (*os) << "  \\draw[fill=brushcolor] (n" << node_id << ") circle (" << radius << "cm);\n";
         }
 
         void GraphRendererTIKZ::EndRenderingVertices()
@@ -72,17 +68,18 @@ namespace OpenGraphtheory
         }
 
 
+
         void GraphRendererTIKZ::BeginRenderingEdges()
         {
             RenderingEdges = true;
         }
 
-        void GraphRendererTIKZ::RenderEdge(int from_id, int to_id, float x1, float y1, float x2, float y2)
+        void GraphRendererTIKZ::RenderEdge(int from_id, int to_id, float x1, float y1, float x2, float y2, float width, std::string text, Color color)
         {
             (*os) << "  \\draw[-,pencolor,line width="<<LineWidth<<"cm] (n" << from_id << ") -- (n" << to_id << ");\n";
         }
 
-        void GraphRendererTIKZ::RenderArc(int from_id, int to_id, float x1, float y1, float x2, float y2, float to_radius)
+        void GraphRendererTIKZ::RenderArc(int from_id, int to_id, float x1, float y1, float x2, float y2, float width, std::string text, Color color)
         {
             (*os) << "  \\draw[->,pencolor,line width=" << LineWidth << "cm] (n" << from_id << ") -- (n" << to_id << ");\n";
         }

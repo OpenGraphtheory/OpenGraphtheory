@@ -71,12 +71,13 @@ namespace OpenGraphtheory
 
 		// --------------------------------------------------------------------------------------------------------
 
-		TikzDeclareNode::TikzDeclareNode(string* name, float* xCm, float* yCm, string* label)
+		TikzDeclareNode::TikzDeclareNode(string* name, float* xCm, float* yCm, float* diameter, string* label)
 		{
             this->name = name;
             this->xCm = xCm;
             this->yCm = yCm;
             this->label = label;
+            this->diameter = diameter;
 		}
 
 		TikzDeclareNode::~TikzDeclareNode()
@@ -85,11 +86,12 @@ namespace OpenGraphtheory
             delete xCm;
             delete yCm;
             delete label;
+            delete diameter;
 		}
 
         void TikzDeclareNode::DoLoad(TikzContext* context)
         {
-            Graph::VertexIterator v = context->G->AddVertex(*xCm, *yCm, label != NULL ? *label : "");
+            Graph::VertexIterator v = context->G->AddVertex(*xCm, *yCm, label != NULL ? *label : "", (*diameter)/2);
             context->nodes[*name] = v;
         }
 
@@ -115,6 +117,7 @@ namespace OpenGraphtheory
             Graph::VertexIterator vto = context->nodes[*to];
             context->G->AddEdge(vfrom, vto, "", *linewidth);
         }
+
 		// --------------------------------------------------------------------------------------------------------
 
 		TikzDrawArc::TikzDrawArc(std::string* from, std::string* to, float* linewidth)
@@ -131,26 +134,6 @@ namespace OpenGraphtheory
             Graph::VertexIterator vfrom = context->nodes[*from];
             Graph::VertexIterator vto = context->nodes[*to];
             context->G->AddArc(vfrom, vto, "", *linewidth);
-        }
-
-		// --------------------------------------------------------------------------------------------------------
-
-		TikzDrawNode::TikzDrawNode(std::string* name, float* radius)
-		{
-            this->name = name;
-            this->radius = radius;
-		}
-
-		TikzDrawNode::~TikzDrawNode()
-		{
-            delete name;
-            delete radius;
-		}
-
-        void TikzDrawNode::DoLoad(TikzContext* context)
-        {
-            Graph::VertexIterator v = context->nodes[*name];
-            v.SetWeight(*radius);
         }
 
 		// --------------------------------------------------------------------------------------------------------

@@ -32,7 +32,6 @@
 %token BEGINTIKZPICTURE
 %token ENDTIKZPICTURE
 %token NODE
-%token DRAWNODE
 %token DRAWEDGE
 %token DRAWARC
 %token PENCOLOR
@@ -50,8 +49,6 @@
 %token AT
 %token TO
 %token CM
-%token CIRCLE
-%token BCIRCLE
 
 %token <fval> FLOAT
 %token <sval> STRING
@@ -66,14 +63,10 @@ TIKZDOCUMENT:                                 { $<tval>$ = NULL; }
        ;
 
 TIKZLINE:
-         NODE OPEN STRING CLOSE AT OPEN FLOAT CM COMMA FLOAT CM CLOSE OPENBRACES STRING CLOSEBRACES SEMICOLON
-                                              { $<tval>$ = new TikzDeclareNode($<sval>3, $<fval>7, $<fval>10, $<sval>14); }
-       | NODE OPEN STRING CLOSE AT OPEN FLOAT CM COMMA FLOAT CM CLOSE OPENBRACES CLOSEBRACES SEMICOLON
-                                              { $<tval>$ = new TikzDeclareNode($<sval>3, $<fval>7, $<fval>10, NULL); }
-       | DRAWNODE OPEN STRING CLOSE BCIRCLE FLOAT CM CLOSEBRACKET SEMICOLON
-                                              { $<tval>$ = new TikzDrawNode($<sval>3, $<fval>7); }
-       | DRAWNODE OPEN STRING CLOSE CIRCLE FLOAT CM CLOSE SEMICOLON
-                                              { $<tval>$ = new TikzDrawNode($<sval>3, $<fval>7); }
+         NODE FLOAT CM CLOSEBRACKET OPEN STRING CLOSE AT OPEN FLOAT CM COMMA FLOAT CM CLOSE OPENBRACES STRING CLOSEBRACES SEMICOLON
+                                              { $<tval>$ = new TikzDeclareNode($<sval>6, $<fval>10, $<fval>13, $<fval>2, $<sval>17); }
+       | NODE FLOAT CM CLOSEBRACKET OPEN STRING CLOSE AT OPEN FLOAT CM COMMA FLOAT CM CLOSE OPENBRACES CLOSEBRACES SEMICOLON
+                                              { $<tval>$ = new TikzDeclareNode($<sval>6, $<fval>10, $<fval>13, $<fval>2, NULL); }
        | DRAWEDGE FLOAT CM CLOSEBRACKET OPEN STRING CLOSE TO OPEN STRING CLOSE SEMICOLON
                                               { $<tval>$ = new TikzDrawEdge($<sval>6, $<sval>10, $<fval>2); }
        | DRAWARC FLOAT CM CLOSEBRACKET OPEN STRING CLOSE TO OPEN STRING CLOSE SEMICOLON

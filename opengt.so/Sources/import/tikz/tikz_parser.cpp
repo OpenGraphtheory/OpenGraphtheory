@@ -412,73 +412,61 @@ namespace OpenGraphtheory { namespace Import {
       {
           case 2:
 /* Line 664 of lalr1.cc  */
-#line 62 "tikz_parser.yy"
+#line 59 "tikz_parser.yy"
     { *result = (yysemantic_stack_[(3) - (2)].tval); }
     break;
 
   case 3:
 /* Line 664 of lalr1.cc  */
-#line 64 "tikz_parser.yy"
+#line 61 "tikz_parser.yy"
     { (yyval.tval) = NULL; }
     break;
 
   case 4:
 /* Line 664 of lalr1.cc  */
-#line 65 "tikz_parser.yy"
+#line 62 "tikz_parser.yy"
     { (yyval.tval) = (yysemantic_stack_[(2) - (2)].tval); (yyval.tval)->PrevLines = (yysemantic_stack_[(2) - (1)].tval); }
     break;
 
   case 5:
 /* Line 664 of lalr1.cc  */
-#line 70 "tikz_parser.yy"
-    { (yyval.tval) = new TikzDeclareNode((yysemantic_stack_[(16) - (3)].sval), (yysemantic_stack_[(16) - (7)].fval), (yysemantic_stack_[(16) - (10)].fval), (yysemantic_stack_[(16) - (14)].sval)); }
+#line 67 "tikz_parser.yy"
+    { (yyval.tval) = new TikzDeclareNode((yysemantic_stack_[(19) - (6)].sval), (yysemantic_stack_[(19) - (10)].fval), (yysemantic_stack_[(19) - (13)].fval), (yysemantic_stack_[(19) - (2)].fval), (yysemantic_stack_[(19) - (17)].sval)); }
     break;
 
   case 6:
 /* Line 664 of lalr1.cc  */
-#line 72 "tikz_parser.yy"
-    { (yyval.tval) = new TikzDeclareNode((yysemantic_stack_[(15) - (3)].sval), (yysemantic_stack_[(15) - (7)].fval), (yysemantic_stack_[(15) - (10)].fval), NULL); }
+#line 69 "tikz_parser.yy"
+    { (yyval.tval) = new TikzDeclareNode((yysemantic_stack_[(18) - (6)].sval), (yysemantic_stack_[(18) - (10)].fval), (yysemantic_stack_[(18) - (13)].fval), (yysemantic_stack_[(18) - (2)].fval), NULL); }
     break;
 
   case 7:
 /* Line 664 of lalr1.cc  */
-#line 74 "tikz_parser.yy"
-    { (yyval.tval) = new TikzDrawNode((yysemantic_stack_[(9) - (3)].sval), (yysemantic_stack_[(9) - (7)].fval)); }
+#line 71 "tikz_parser.yy"
+    { (yyval.tval) = new TikzDrawEdge((yysemantic_stack_[(12) - (6)].sval), (yysemantic_stack_[(12) - (10)].sval), (yysemantic_stack_[(12) - (2)].fval)); }
     break;
 
   case 8:
 /* Line 664 of lalr1.cc  */
-#line 76 "tikz_parser.yy"
-    { (yyval.tval) = new TikzDrawNode((yysemantic_stack_[(9) - (3)].sval), (yysemantic_stack_[(9) - (7)].fval)); }
+#line 73 "tikz_parser.yy"
+    { (yyval.tval) = new TikzDrawArc((yysemantic_stack_[(12) - (6)].sval), (yysemantic_stack_[(12) - (10)].sval), (yysemantic_stack_[(12) - (2)].fval)); }
     break;
 
   case 9:
 /* Line 664 of lalr1.cc  */
-#line 78 "tikz_parser.yy"
-    { (yyval.tval) = new TikzDrawEdge((yysemantic_stack_[(12) - (6)].sval), (yysemantic_stack_[(12) - (10)].sval), (yysemantic_stack_[(12) - (2)].fval)); }
+#line 75 "tikz_parser.yy"
+    { (yyval.tval) = new TikzDefinePencolor((yysemantic_stack_[(8) - (3)].fval), (yysemantic_stack_[(8) - (5)].fval), (yysemantic_stack_[(8) - (7)].fval)); }
     break;
 
   case 10:
 /* Line 664 of lalr1.cc  */
-#line 80 "tikz_parser.yy"
-    { (yyval.tval) = new TikzDrawArc((yysemantic_stack_[(12) - (6)].sval), (yysemantic_stack_[(12) - (10)].sval), (yysemantic_stack_[(12) - (2)].fval)); }
-    break;
-
-  case 11:
-/* Line 664 of lalr1.cc  */
-#line 82 "tikz_parser.yy"
-    { (yyval.tval) = new TikzDefinePencolor((yysemantic_stack_[(8) - (3)].fval), (yysemantic_stack_[(8) - (5)].fval), (yysemantic_stack_[(8) - (7)].fval)); }
-    break;
-
-  case 12:
-/* Line 664 of lalr1.cc  */
-#line 84 "tikz_parser.yy"
+#line 77 "tikz_parser.yy"
     { (yyval.tval) = new TikzDefineBrushcolor((yysemantic_stack_[(8) - (3)].fval), (yysemantic_stack_[(8) - (5)].fval), (yysemantic_stack_[(8) - (7)].fval)); }
     break;
 
 
 /* Line 664 of lalr1.cc  */
-#line 482 "tikz_parser.cpp"
+#line 470 "tikz_parser.cpp"
       default:
         break;
       }
@@ -690,18 +678,17 @@ namespace OpenGraphtheory { namespace Import {
 
   /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
      STATE-NUM.  */
-  const signed char TIKZParser::yypact_ninf_ = -17;
+  const signed char TIKZParser::yypact_ninf_ = -16;
   const signed char
   TIKZParser::yypact_[] =
   {
-         5,   -17,    12,    -3,   -17,   -17,     2,     3,    -9,    -8,
-       4,     6,   -17,    -7,    -5,    -4,     1,    -1,     0,    13,
-      14,    15,    16,    10,    11,    17,   -12,    20,    21,     9,
-      18,    23,    19,    22,    24,    25,    27,    28,    29,    26,
-      30,    36,    40,    31,    32,    33,    45,    44,    39,    41,
-      46,    47,    43,    48,    49,    53,    54,   -17,   -17,    50,
-     -17,   -17,    51,    52,    57,    56,    58,    59,    55,    61,
-      60,   -17,   -17,   -16,    62,    65,   -17,    64,   -17
+         5,   -16,     9,    -3,   -16,   -16,   -11,   -10,    -9,    -1,
+       0,   -16,    -5,    -4,    -2,     1,     2,     4,     6,     7,
+       8,    10,    11,    15,    17,    12,    13,    14,    16,    18,
+      19,    21,    20,    28,    30,    22,    23,    24,    26,    27,
+      32,    33,    39,    40,    41,   -16,   -16,    31,    34,    35,
+      38,    42,    43,    44,    45,    46,    47,   -16,   -16,    49,
+      48,    50,   -15,    53,    51,   -16,    54,   -16
   };
 
   /* YYDEFACT[S] -- default reduction number in state S.  Performed when
@@ -711,27 +698,26 @@ namespace OpenGraphtheory { namespace Import {
   TIKZParser::yydefact_[] =
   {
          0,     3,     0,     0,     1,     2,     0,     0,     0,     0,
-       0,     0,     4,     0,     0,     0,     0,     0,     0,     0,
+       0,     4,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,    11,    12,     0,
-       8,     7,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     9,    10,     0,     0,     0,     6,     0,     5
+       0,     0,     0,     0,     0,     9,    10,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     7,     8,     0,
+       0,     0,     0,     0,     0,     6,     0,     5
   };
 
   /* YYPGOTO[NTERM-NUM].  */
   const signed char
   TIKZParser::yypgoto_[] =
   {
-       -17,   -17,   -17,   -17
+       -16,   -16,   -16,   -16
   };
 
   /* YYDEFGOTO[NTERM-NUM].  */
   const signed char
   TIKZParser::yydefgoto_[] =
   {
-        -1,     2,     3,    12
+        -1,     2,     3,    11
   };
 
   /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
@@ -741,30 +727,28 @@ namespace OpenGraphtheory { namespace Import {
   const unsigned char
   TIKZParser::yytable_[] =
   {
-        74,     5,     6,     7,     8,     9,    10,    11,     1,    75,
-      32,    33,     4,    13,    14,    15,    16,    21,    19,    17,
-      20,    18,    22,    23,    24,    25,    26,    29,    30,    27,
-      28,    34,    35,    36,    38,     0,    31,     0,     0,     0,
-       0,     0,    37,    39,    43,    44,    40,    46,    48,    41,
-      42,    47,    49,    45,    52,    50,    51,    53,    54,    55,
-      59,    56,    57,    58,    62,    63,    60,    61,    68,     0,
-      69,    70,     0,    71,    64,    73,    65,    66,    67,    72,
-      76,    77,    78
+        63,     5,     6,     7,     8,     9,    10,    64,     1,     4,
+      12,    13,    14,    15,    16,    17,    18,    22,    19,    23,
+      24,    27,    20,    21,    25,    28,    26,    29,     0,     0,
+       0,    37,     0,    30,    31,    35,    32,    36,    33,    38,
+      34,    39,    42,    40,    41,    43,    44,    45,    46,    47,
+      48,    49,    50,    54,    55,     0,    51,    52,    53,    61,
+      56,     0,    57,    58,    62,     0,    66,     0,    59,    60,
+      65,    67
   };
 
   /* YYCHECK.  */
   const signed char
   TIKZParser::yycheck_[] =
   {
-        16,     4,     5,     6,     7,     8,     9,    10,     3,    25,
-      22,    23,     0,    11,    11,    24,    24,    21,    25,    15,
-      25,    15,    21,    24,    24,    12,    12,    17,    17,    14,
-      14,    11,    11,    24,    11,    -1,    19,    -1,    -1,    -1,
-      -1,    -1,    24,    24,    17,    17,    24,    21,    12,    25,
-      25,    21,    12,    24,    21,    24,    24,    12,    14,    20,
-      17,    20,    16,    16,    11,    11,    18,    18,    12,    -1,
-      12,    12,    -1,    18,    24,    15,    25,    25,    21,    18,
-      18,    16,    18
+        15,     4,     5,     6,     7,     8,     9,    22,     3,     0,
+      21,    21,    21,    14,    14,    20,    20,    13,    20,    13,
+      13,    10,    21,    21,    16,    10,    16,    10,    -1,    -1,
+      -1,    11,    -1,    21,    21,    16,    22,    16,    22,    11,
+      22,    11,    18,    21,    21,    19,    19,    15,    15,    10,
+      10,    10,    21,    11,    11,    -1,    22,    22,    20,    11,
+      16,    -1,    17,    17,    14,    -1,    15,    -1,    21,    20,
+      17,    17
   };
 
   /* STOS_[STATE-NUM] -- The (internal number of the) accessing
@@ -772,14 +756,13 @@ namespace OpenGraphtheory { namespace Import {
   const unsigned char
   TIKZParser::yystos_[] =
   {
-         0,     3,    27,    28,     0,     4,     5,     6,     7,     8,
-       9,    10,    29,    11,    11,    24,    24,    15,    15,    25,
-      25,    21,    21,    24,    24,    12,    12,    14,    14,    17,
-      17,    19,    22,    23,    11,    11,    24,    24,    11,    24,
-      24,    25,    25,    17,    17,    24,    21,    21,    12,    12,
-      24,    24,    21,    12,    14,    20,    20,    16,    16,    17,
-      18,    18,    11,    11,    24,    25,    25,    21,    12,    12,
-      12,    18,    18,    15,    16,    25,    18,    16,    18
+         0,     3,    24,    25,     0,     4,     5,     6,     7,     8,
+       9,    26,    21,    21,    21,    14,    14,    20,    20,    20,
+      21,    21,    13,    13,    13,    16,    16,    10,    10,    10,
+      21,    21,    22,    22,    22,    16,    16,    11,    11,    11,
+      21,    21,    18,    19,    19,    15,    15,    10,    10,    10,
+      21,    22,    22,    20,    11,    11,    16,    17,    17,    21,
+      20,    11,    14,    15,    22,    17,    15,    17
   };
 
 #if YYDEBUG
@@ -790,7 +773,7 @@ namespace OpenGraphtheory { namespace Import {
   {
          0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
      265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
-     275,   276,   277,   278,   279,   280
+     275,   276,   277
   };
 #endif
 
@@ -798,16 +781,16 @@ namespace OpenGraphtheory { namespace Import {
   const unsigned char
   TIKZParser::yyr1_[] =
   {
-         0,    26,    27,    28,    28,    29,    29,    29,    29,    29,
-      29,    29,    29
+         0,    23,    24,    25,    25,    26,    26,    26,    26,    26,
+      26
   };
 
   /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
   const unsigned char
   TIKZParser::yyr2_[] =
   {
-         0,     2,     3,     0,     2,    16,    15,     9,     9,    12,
-      12,     8,     8
+         0,     2,     3,     0,     2,    19,    18,    12,    12,     8,
+       8
   };
 
 #if YYDEBUG
@@ -817,11 +800,10 @@ namespace OpenGraphtheory { namespace Import {
   const TIKZParser::yytname_[] =
   {
     "\"end of file\"", "error", "$undefined", "BEGINTIKZPICTURE",
-  "ENDTIKZPICTURE", "NODE", "DRAWNODE", "DRAWEDGE", "DRAWARC", "PENCOLOR",
+  "ENDTIKZPICTURE", "NODE", "DRAWEDGE", "DRAWARC", "PENCOLOR",
   "BRUSHCOLOR", "OPEN", "CLOSE", "OPENBRACKET", "CLOSEBRACKET",
   "OPENBRACES", "CLOSEBRACES", "COMMA", "SEMICOLON", "AT", "TO", "CM",
-  "CIRCLE", "BCIRCLE", "FLOAT", "STRING", "$accept", "S", "TIKZDOCUMENT",
-  "TIKZLINE", YY_NULL
+  "FLOAT", "STRING", "$accept", "S", "TIKZDOCUMENT", "TIKZLINE", YY_NULL
   };
 
 
@@ -829,17 +811,16 @@ namespace OpenGraphtheory { namespace Import {
   const TIKZParser::rhs_number_type
   TIKZParser::yyrhs_[] =
   {
-        27,     0,    -1,     3,    28,     4,    -1,    -1,    28,    29,
-      -1,     5,    11,    25,    12,    19,    11,    24,    21,    17,
-      24,    21,    12,    15,    25,    16,    18,    -1,     5,    11,
-      25,    12,    19,    11,    24,    21,    17,    24,    21,    12,
-      15,    16,    18,    -1,     6,    11,    25,    12,    23,    24,
-      21,    14,    18,    -1,     6,    11,    25,    12,    22,    24,
-      21,    12,    18,    -1,     7,    24,    21,    14,    11,    25,
-      12,    20,    11,    25,    12,    18,    -1,     8,    24,    21,
-      14,    11,    25,    12,    20,    11,    25,    12,    18,    -1,
-       9,    15,    24,    17,    24,    17,    24,    16,    -1,    10,
-      15,    24,    17,    24,    17,    24,    16,    -1
+        24,     0,    -1,     3,    25,     4,    -1,    -1,    25,    26,
+      -1,     5,    21,    20,    13,    10,    22,    11,    18,    10,
+      21,    20,    16,    21,    20,    11,    14,    22,    15,    17,
+      -1,     5,    21,    20,    13,    10,    22,    11,    18,    10,
+      21,    20,    16,    21,    20,    11,    14,    15,    17,    -1,
+       6,    21,    20,    13,    10,    22,    11,    19,    10,    22,
+      11,    17,    -1,     7,    21,    20,    13,    10,    22,    11,
+      19,    10,    22,    11,    17,    -1,     8,    14,    21,    16,
+      21,    16,    21,    15,    -1,     9,    14,    21,    16,    21,
+      16,    21,    15,    -1
   };
 
   /* YYPRHS[YYN] -- Index of the first RHS symbol of rule number YYN in
@@ -847,16 +828,16 @@ namespace OpenGraphtheory { namespace Import {
   const unsigned char
   TIKZParser::yyprhs_[] =
   {
-         0,     0,     3,     7,     8,    11,    28,    44,    54,    64,
-      77,    90,    99
+         0,     0,     3,     7,     8,    11,    31,    50,    63,    76,
+      85
   };
 
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
   const unsigned char
   TIKZParser::yyrline_[] =
   {
-         0,    62,    62,    64,    65,    69,    71,    73,    75,    77,
-      79,    81,    83
+         0,    59,    59,    61,    62,    66,    68,    70,    72,    74,
+      76
   };
 
   // Print the state stack on the debug stream.
@@ -923,8 +904,7 @@ namespace OpenGraphtheory { namespace Import {
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
-      15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
-      25
+      15,    16,    17,    18,    19,    20,    21,    22
     };
     if ((unsigned int) t <= yyuser_token_number_max_)
       return translate_table[t];
@@ -933,24 +913,24 @@ namespace OpenGraphtheory { namespace Import {
   }
 
   const int TIKZParser::yyeof_ = 0;
-  const int TIKZParser::yylast_ = 82;
+  const int TIKZParser::yylast_ = 71;
   const int TIKZParser::yynnts_ = 4;
   const int TIKZParser::yyempty_ = -2;
   const int TIKZParser::yyfinal_ = 4;
   const int TIKZParser::yyterror_ = 1;
   const int TIKZParser::yyerrcode_ = 256;
-  const int TIKZParser::yyntokens_ = 26;
+  const int TIKZParser::yyntokens_ = 23;
 
-  const unsigned int TIKZParser::yyuser_token_number_max_ = 280;
+  const unsigned int TIKZParser::yyuser_token_number_max_ = 277;
   const TIKZParser::token_number_type TIKZParser::yyundef_token_ = 2;
 
 /* Line 1135 of lalr1.cc  */
 #line 14 "tikz_parser.yy"
 } } // OpenGraphtheory::Import
 /* Line 1135 of lalr1.cc  */
-#line 952 "tikz_parser.cpp"
+#line 932 "tikz_parser.cpp"
 /* Line 1136 of lalr1.cc  */
-#line 86 "tikz_parser.yy"
+#line 79 "tikz_parser.yy"
 
 
 #include "../../../Headers/import/tikz/tikz_lexer.h"
