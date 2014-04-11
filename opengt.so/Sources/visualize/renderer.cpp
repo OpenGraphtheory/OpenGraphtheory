@@ -133,10 +133,9 @@ namespace OpenGraphtheory
                 coordinates = v.GetCoordinates();
                 Color color = vertexcoloring.find(v) != vertexcoloring.end() ? vertexcoloring[v] : Color(0,0,0);
                 if(color != LastBrushColor)
-                {
                     this->SetBrushColor(color);
-                    LastBrushColor = color;
-                }
+                LastBrushColor = color;
+
                 float radius = vertexradius >= 0 ? vertexradius : v.GetWeight();
                 string label = Translator != NULL ? Translator->Translate(v.GetLabel()) : v.GetLabel();
                 this->DeclareVertex(v.GetID(),
@@ -152,7 +151,9 @@ namespace OpenGraphtheory
             // Render Edges
             this->BeginRenderingEdges();
             LastPenColor = Color(0,0,0);
-            this->SetPenColor(LastBrushColor);
+            this->SetPenColor(LastPenColor);
+            LastLineWidth = 1;
+            this->SetLineWidth(LastLineWidth);
             for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
             {
                 vector<float> FromCoordinates = e.From().GetCoordinates();
@@ -164,11 +165,14 @@ namespace OpenGraphtheory
 
                 Color color = edgecoloring.find(e) != edgecoloring.end() ? edgecoloring[e] : Color(0,0,0);
                 if(color != LastPenColor)
-                {
                     this->SetPenColor(color);
-                    LastPenColor = color;
-                }
+                LastPenColor = color;
+
                 float LineWidth = edgewidth >= 0.0f ? edgewidth : e.GetWeight();
+                if(LineWidth != LastLineWidth)
+                    this->SetLineWidth(LineWidth);
+                LastLineWidth = LineWidth;
+
                 string label = Translator != NULL ? Translator->Translate(e.GetLabel()) : e.GetLabel();
 
                 if(e.IsEdge())
@@ -212,12 +216,12 @@ namespace OpenGraphtheory
             {
                 coordinates = v.GetCoordinates();
                 float Radius = vertexradius >= 0 ? vertexradius : v.GetWeight();
+
                 Color color = vertexcoloring.find(v) != vertexcoloring.end() ? vertexcoloring[v] : Color(0,0,0);
                 if(color != LastBrushColor)
-                {
                     this->SetBrushColor(color);
-                    LastBrushColor = color;
-                }
+                LastBrushColor = color;
+
                 string label = Translator != NULL ? Translator->Translate(v.GetLabel()) : v.GetLabel();
 
                 this->RenderVertex(v.GetID(),
@@ -244,8 +248,6 @@ namespace OpenGraphtheory
 
         void GraphRenderingContext::BeginDeclaringVertices()
         {
-            LastBrushColor = Color(0,0,0);
-            this->SetBrushColor(LastBrushColor);
         }
         void GraphRenderingContext::DeclareVertex(int node_id, float x, float y, float radius, string text, Color color)
         {
@@ -257,30 +259,14 @@ namespace OpenGraphtheory
 
         void GraphRenderingContext::BeginRenderingEdges()
         {
-            LastPenColor = Color(0,0,0);
-            this->SetPenColor(LastPenColor);
-            LastLineWidth = 1;
-            this->SetLineWidth(LastLineWidth);
         }
         void GraphRenderingContext::RenderEdge(int from_id, int to_id, float x1, float y1, float x2, float y2, float width, string text, Color color)
         {
-            if(color != LastPenColor)
-                this->SetPenColor(color);
-            LastPenColor = color;
-            if(width != LastLineWidth)
-                this->SetLineWidth(width);
-            LastLineWidth = width;
             this->Line(x1,y1,x2,y2);
             this->PutText((x1+x2)/2, (y1+y2)/2, text);
         }
         void GraphRenderingContext::RenderArc(int from_id, int to_id, float x1, float y1, float x2, float y2, float width, string text, Color color)
         {
-            if(color != LastPenColor)
-                this->SetPenColor(color);
-            LastPenColor = color;
-            if(width != LastLineWidth)
-                this->SetLineWidth(width);
-            LastLineWidth = width;
             this->Arrow(x1, y1, x2, y2);
             this->PutText((x1+x2)/2, (y1+y2)/2, text);
         }
@@ -291,14 +277,9 @@ namespace OpenGraphtheory
 
         void GraphRenderingContext::BeginRenderingVertices()
         {
-            LastBrushColor = Color(0,0,0);
-            this->SetBrushColor(LastBrushColor);
         }
         void GraphRenderingContext::RenderVertex(int vertex_id, float x, float y, float radius, string text, Color color)
         {
-            if(color != LastBrushColor)
-                this->SetBrushColor(color);
-            LastBrushColor = color;
             this->Circle(x,y,radius);
             this->PutText(x + radius*cos(M_PI/4), y+radius*sin(M_PI/4), text);
         }
