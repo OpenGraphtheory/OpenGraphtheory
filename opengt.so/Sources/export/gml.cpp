@@ -51,7 +51,7 @@ namespace OpenGraphtheory
         }
 
         FactoryRegistrator<ExportFilter> ExportFilterGML::ExportFilterGmlRegistrator(&ExportFilter::ExportFilterFactory, "gml",
-            new DefaultInstantiator<ExportFilter, ExportFilterGML>("gml", "Graph Modeling Language",
+            new DefaultInstantiator<ExportFilter, ExportFilterGML>("gml", "Graph Modelling Language",
                 "http://www.fim.uni-passau.de/en/fim/faculty/chairs/theoretische-informatik/projects.html"));
 
     }

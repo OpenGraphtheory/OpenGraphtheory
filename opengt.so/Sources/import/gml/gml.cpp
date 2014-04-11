@@ -13,7 +13,7 @@ namespace OpenGraphtheory
 
 		FactoryRegistrator<ImportFilter> ImportFilterGML::ImportFilterGMLRegistrator(
 			&ImportFilter::ImportFilterFactory, "gml", new DefaultInstantiator<ImportFilter, ImportFilterGML>(
-				"gml", "Graph Modeling Language",
+				"gml", "Graph Modelling Language",
                 "http://www.fim.uni-passau.de/en/fim/faculty/chairs/theoretische-informatik/projects.html"));
 
 
