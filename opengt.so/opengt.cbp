@@ -91,6 +91,8 @@
 		<Unit filename="Headers/generate/wheel.h" />
 		<Unit filename="Headers/import/dot/dot.h" />
 		<Unit filename="Headers/import/dot/dot_lexer.h" />
+		<Unit filename="Headers/import/gml/gml.h" />
+		<Unit filename="Headers/import/gml/gml_lexer.h" />
 		<Unit filename="Headers/import/graphml.h" />
 		<Unit filename="Headers/import/import.h" />
 		<Unit filename="Headers/import/rgml.h" />
@@ -186,6 +188,12 @@
 		<Unit filename="Sources/import/dot/dot_parser.cpp" />
 		<Unit filename="Sources/import/dot/dot_parser.yy" />
 		<Unit filename="Sources/import/dot/makefile" />
+		<Unit filename="Sources/import/gml/gml.cpp" />
+		<Unit filename="Sources/import/gml/gml_lexer.cpp" />
+		<Unit filename="Sources/import/gml/gml_lexer.l">
+			<Option compiler="gcc" use="0" buildCommand="make" />
+		</Unit>
+		<Unit filename="Sources/import/gml/makefile" />
 		<Unit filename="Sources/import/graphml.cpp" />
 		<Unit filename="Sources/import/import.cpp">
 			<Option weight="49" />

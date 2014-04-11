@@ -26,8 +26,8 @@ namespace OpenGraphtheory
 
             StringTranslator Translator; // should be replaced with an appropriate translator.
 
-            os << "# www.Open-Graphtheory.org\n";
             os << "graph [ id " << G.GetID() << " label \"" << Translator.Translate(G.GetLabel()) << "\"\n";
+            os << "  comment \"www.Open-Graphtheory.org\"\n";
 
             /// write vertices: node [ id label graphics [ x y ] ]
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
@@ -43,7 +43,7 @@ namespace OpenGraphtheory
             {
                 os << "  edge [ source " << e.From().GetID() << " target " << e.To().GetID()
                    << " label \"" << Translator.Translate(e.GetLabel()) << "\"\n";
-                os << "    graphics [ type " << (e.IsEdge()?"line":"arc") << " ]\n";
+                os << "    graphics [ type \"" << (e.IsEdge()?"line":"arc") << "\" ]\n";
                 os << "  ]\n";
             }
 
