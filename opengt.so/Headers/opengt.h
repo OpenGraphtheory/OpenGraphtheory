@@ -95,36 +95,36 @@
 
 			/// adding and removing vertices
 			protected:
-				Graph::VertexIterator InternalAddVertex(std::vector<float> coordinates, std::string label = "", float weight = 0, void* tag = NULL, int ID = -1);
+				Graph::VertexIterator InternalAddVertex(std::vector<float> coordinates, std::string label = "", float weight = 0, int ID = -1);
 				void RemoveVertex(Graph::Vertex* v, bool RemoveIncidentEdges = true);
 			public:
-				Graph::VertexIterator AddVertex(std::string label="", float weight = 0, void* tag = NULL);
-				Graph::VertexIterator AddVertex(float x, std::string label="", float weight = 0, void* tag = NULL);
-				Graph::VertexIterator AddVertex(float x, float y, std::string label="", float weight = 0, void* tag = NULL);
-				Graph::VertexIterator AddVertex(float x, float y, float z, std::string label = "", float weight = 0, void* tag = NULL);
+				Graph::VertexIterator AddVertex(std::string label="", float weight = 0);
+				Graph::VertexIterator AddVertex(float x, std::string label="", float weight = 0);
+				Graph::VertexIterator AddVertex(float x, float y, std::string label="", float weight = 0);
+				Graph::VertexIterator AddVertex(float x, float y, float z, std::string label = "", float weight = 0);
 				void RemoveVertex(Graph::VertexIterator v, bool RemoveIncidentEdges = true);
 				Graph operator-(Graph::VertexIterator v);
 				void operator-=(Graph::VertexIterator v);
 
 			/// adding and removing edges
 			protected:
-				Graph::EdgeIterator InternalAddEdge(const std::list<Graph::Vertex*> &own_vertices, const std::list<Graph::Vertex*> &pFrom, const std::list<Graph::Vertex*> &pTo, std::string label = "", float weight = 1.0, void* tag = NULL, int ID = -1);
-				Graph::EdgeIterator InternalAddEdge(const std::list<Graph::VertexIterator>* vertices = NULL, const std::list<Graph::VertexIterator>* From = NULL, const std::list<Graph::VertexIterator>* To = NULL, std::string label = "", float weight = 1.0, void* tag = NULL, int ID = -1);
+				Graph::EdgeIterator InternalAddEdge(const std::list<Graph::Vertex*> &own_vertices, const std::list<Graph::Vertex*> &pFrom, const std::list<Graph::Vertex*> &pTo, std::string label = "", float weight = 1.0, int ID = -1);
+				Graph::EdgeIterator InternalAddEdge(const std::list<Graph::VertexIterator>* vertices = NULL, const std::list<Graph::VertexIterator>* From = NULL, const std::list<Graph::VertexIterator>* To = NULL, std::string label = "", float weight = 1.0, int ID = -1);
 
-				Graph::EdgeIterator InternalAddEdge(const std::list<Graph::VertexIterator>& vertices, std::string label = "", float weight = 1.0, void* tag = NULL, int ID = -1);
-				Graph::EdgeIterator InternalAddEdge(Graph::VertexIterator a, Graph::VertexIterator b, std::string label = "", float weight = 1.0, void* tag = NULL, int ID = -1);
-				Graph::EdgeIterator InternalAddArc(const std::list<Graph::VertexIterator>& From, const std::list<Graph::VertexIterator>& To, std::string label = "", float weight = 1.0, void* tag = NULL, int ID = -1);
-				Graph::EdgeIterator InternalAddArc( Graph::VertexIterator From, Graph::VertexIterator To, std::string label = "", float weight = 1.0, void* tag = NULL, int ID = -1);
+				Graph::EdgeIterator InternalAddEdge(const std::list<Graph::VertexIterator>& vertices, std::string label = "", float weight = 1.0, int ID = -1);
+				Graph::EdgeIterator InternalAddEdge(Graph::VertexIterator a, Graph::VertexIterator b, std::string label = "", float weight = 1.0, int ID = -1);
+				Graph::EdgeIterator InternalAddArc(const std::list<Graph::VertexIterator>& From, const std::list<Graph::VertexIterator>& To, std::string label = "", float weight = 1.0, int ID = -1);
+				Graph::EdgeIterator InternalAddArc( Graph::VertexIterator From, Graph::VertexIterator To, std::string label = "", float weight = 1.0, int ID = -1);
 				void RemoveEdge(Graph::Edge* pe);
 			public:
-				Graph::EdgeIterator AddEdge(const std::list<Graph::VertexIterator>& vertices, const std::list<Graph::VertexIterator>& From, const std::list<Graph::VertexIterator>& To, std::string label = "", float weight = 1.0, void* tag = NULL);
-				Graph::EdgeIterator AddEdge(const std::list<Graph::VertexIterator>& vertices, std::string label = "", float weight = 1.0, void* tag = NULL);
-				Graph::EdgeIterator AddEdge(Graph::VertexIterator a, Graph::VertexIterator b, std::string label = "", float weight = 1.0, void* tag = NULL);
-				Graph::EdgeIterator AddArc(const std::list<Graph::VertexIterator>& From, const std::list<Graph::VertexIterator>& To, std::string label = "", float weight = 1.0, void* tag = NULL);
-				Graph::EdgeIterator AddArc( Graph::VertexIterator From, Graph::VertexIterator To, std::string label = "", float weight = 1.0, void* tag = NULL);
-				Graph::EdgeIterator AddLoop( Graph::VertexIterator v, std::string label = "", float weight = 1.0, void* tag = NULL);
-				Graph::EdgeIterator AddDirectedLoop( Graph::VertexIterator v, std::string label = "", float weight = 1.0, void* tag = NULL);
-				Graph::EdgeIterator AddLooseEdge(std::string label = "", float weight = 1.0, void* tag = NULL);
+				Graph::EdgeIterator AddEdge(const std::list<Graph::VertexIterator>& vertices, const std::list<Graph::VertexIterator>& From, const std::list<Graph::VertexIterator>& To, std::string label = "", float weight = 1.0);
+				Graph::EdgeIterator AddEdge(const std::list<Graph::VertexIterator>& vertices, std::string label = "", float weight = 1.0);
+				Graph::EdgeIterator AddEdge(Graph::VertexIterator a, Graph::VertexIterator b, std::string label = "", float weight = 1.0);
+				Graph::EdgeIterator AddArc(const std::list<Graph::VertexIterator>& From, const std::list<Graph::VertexIterator>& To, std::string label = "", float weight = 1.0);
+				Graph::EdgeIterator AddArc( Graph::VertexIterator From, Graph::VertexIterator To, std::string label = "", float weight = 1.0);
+				Graph::EdgeIterator AddLoop( Graph::VertexIterator v, std::string label = "", float weight = 1.0);
+				Graph::EdgeIterator AddDirectedLoop( Graph::VertexIterator v, std::string label = "", float weight = 1.0);
+				Graph::EdgeIterator AddLooseEdge(std::string label = "", float weight = 1.0);
 				void RemoveEdge(Graph::EdgeIterator e);
 				Graph operator-(Graph::EdgeIterator v);
 				void operator-=(Graph::EdgeIterator v);
@@ -151,7 +151,7 @@
                 private:
                     int ID;
                 protected:
-                    Vertex(Graph* owner, std::vector<float> coordinates, std::string label = "", float weight = 1, void* tag = NULL);
+                    Vertex(Graph* owner, std::vector<float> coordinates, std::string label = "", float weight = 1);
                     ~Vertex();
                     Graph* Owner;
 
@@ -164,7 +164,6 @@
                     std::vector<float> Coordinates;
                     std::string Label;
                     float Weight;
-                    void* Tag;
 
                     bool Adjacent(const Vertex* v) const;
                     bool UnderlyingAdjacent(const Vertex* v) const;
@@ -177,7 +176,7 @@
                 private:
                     int ID;
                 protected:
-                    Edge(Graph* owner, std::string label, float weight, void* tag);
+                    Edge(Graph* owner, std::string label, float weight);
                     ~Edge();
                     Graph* Owner;
 
@@ -189,7 +188,6 @@
 
                     std::string Label;
                     float Weight;
-                    void* Tag;
 
                     bool Incident(const Graph::Vertex* v, bool Undirected=true, bool Positive=false, bool Negative=false) const;
                     void AddUndirectedConnection(Graph::Vertex* v);
@@ -236,8 +234,6 @@
                     void SetLabel(std::string Label);
                     float GetWeight() const;
                     void SetWeight(float Weight);
-                    void* GetTag() const;
-                    void SetTag(void* Tag);
                     int GetID() const;
 
                     Graph::EdgeIterator BeginIncidentEdges();
@@ -296,8 +292,6 @@
                     void SetLabel(std::string Label);
                     float GetWeight() const;
                     void SetWeight(float Weight);
-                    void* GetTag() const;
-                    void SetTag(void* Tag);
                     int GetID() const;
 
                     Graph::VertexIterator From();

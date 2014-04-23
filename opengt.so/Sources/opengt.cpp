@@ -14,14 +14,13 @@ namespace OpenGraphtheory
 	// @{
 
 		/// \brief Vertex Constructor (protected, accessible for class "Graph")
-		Graph::Vertex::Vertex(Graph* owner, vector<float> coordinates, string label, float weight, void* tag)
+		Graph::Vertex::Vertex(Graph* owner, vector<float> coordinates, string label, float weight)
 		{
 		    attributes = new AttributeCollection();
 			Owner = owner;
 			Coordinates = coordinates;
 			Label = label;
 			Weight = weight;
-			Tag = tag;
 		}
 		Graph::Vertex::~Vertex()
 		{
@@ -29,13 +28,12 @@ namespace OpenGraphtheory
 		}
 
 		/// \brief Edge Constructor (protected, accessible for class "Graph")
-		Graph::Edge::Edge(Graph* owner, string label, float weight, void* tag)
+		Graph::Edge::Edge(Graph* owner, string label, float weight)
 		{
 		    attributes = new AttributeCollection();
 			Owner = owner;
 			Label = label;
 			Weight = weight;
-			Tag = tag;
 		}
 		Graph::Edge::~Edge()
 		{
@@ -85,7 +83,7 @@ namespace OpenGraphtheory
             /// copy vertices
             for(list<Graph::Vertex*>::const_iterator v = G.Vertices.begin(); v != G.Vertices.end(); v++)
             {
-                Graph::VertexIterator vnew = InternalAddVertex((*v)->Coordinates, (*v)->Label, (*v)->Weight, (*v)->Tag, (*v)->ID);
+                Graph::VertexIterator vnew = InternalAddVertex((*v)->Coordinates, (*v)->Label, (*v)->Weight, (*v)->ID);
                 vnew.Attributes() = *((*v)->attributes);
             }
 
@@ -104,7 +102,7 @@ namespace OpenGraphtheory
                 for(list<Graph::Vertex*>::const_iterator j = (*e)->NegativeIncidentVertices.begin(); j != (*e)->NegativeIncidentVertices.end(); j++)
                     OwnNegIncident.push_back(Vertex_ID_to_pointer[(*j)->ID]);
 
-                Graph::EdgeIterator enew = InternalAddEdge(OwnIncident, OwnNegIncident, OwnPosIncident, (*e)->Label, (*e)->Weight, (*e)->Tag, (*e)->ID);
+                Graph::EdgeIterator enew = InternalAddEdge(OwnIncident, OwnNegIncident, OwnPosIncident, (*e)->Label, (*e)->Weight, (*e)->ID);
                 enew.Attributes() = *((*e)->attributes);
             }
         }
@@ -814,9 +812,9 @@ namespace OpenGraphtheory
 
 		/// \brief Internal method: Add a new Vertex to the Graph, ID can be specified
 		/// \return VertexIterator that points to the newly created vertex
-		Graph::VertexIterator Graph::InternalAddVertex(std::vector<float> coordinates, string label, float weight, void* tag, int ID)
+		Graph::VertexIterator Graph::InternalAddVertex(std::vector<float> coordinates, string label, float weight, int ID)
 		{
-			Vertex* v = new Vertex(this, coordinates, label, weight, tag);
+			Vertex* v = new Vertex(this, coordinates, label, weight);
 
 			/// Register ID
 			if(ID <= 0)
@@ -832,38 +830,38 @@ namespace OpenGraphtheory
 
 		/// \brief Add a new Vertex to the graph
 		/// \return VertexIterator that points to the newly created instance
-		Graph::VertexIterator Graph::AddVertex(string label, float weight, void* tag)
+		Graph::VertexIterator Graph::AddVertex(string label, float weight)
 		{
 		    vector<float> coordinates;
-			return InternalAddVertex(coordinates,label,weight, tag, -1);
+			return InternalAddVertex(coordinates,label,weight, -1);
 		}
 
-		Graph::VertexIterator Graph::AddVertex(float x, string label, float weight, void* tag)
+		Graph::VertexIterator Graph::AddVertex(float x, string label, float weight)
 		{
 		    vector<float> coordinates;
 		    coordinates.push_back(x);
-			return InternalAddVertex(coordinates,label,weight, tag, -1);
+			return InternalAddVertex(coordinates,label,weight, -1);
 		}
 
 		/// \brief Add a new Vertex to the graph
 		/// \return VertexIterator that points to the newly created instance
-		Graph::VertexIterator Graph::AddVertex(float x, float y, string label, float weight, void* tag)
+		Graph::VertexIterator Graph::AddVertex(float x, float y, string label, float weight)
 		{
 		    vector<float> coordinates;
 		    coordinates.push_back(x);
 		    coordinates.push_back(y);
-			return InternalAddVertex(coordinates,label,weight, tag, -1);
+			return InternalAddVertex(coordinates,label,weight, -1);
 		}
 
 		/// \brief Add a new Vertex to the graph
 		/// \return VertexIterator that points to the newly created instance
-		Graph::VertexIterator Graph::AddVertex(float x, float y, float z, string label, float weight, void* tag)
+		Graph::VertexIterator Graph::AddVertex(float x, float y, float z, string label, float weight)
 		{
 		    vector<float> coordinates;
 		    coordinates.push_back(x);
 		    coordinates.push_back(y);
 		    coordinates.push_back(z);
-			return InternalAddVertex(coordinates,label,weight, tag, -1);
+			return InternalAddVertex(coordinates,label,weight, -1);
 		}
 
 		/// \brief Internal Method: Remove a vertex from the graph
@@ -1066,9 +1064,9 @@ namespace OpenGraphtheory
         /// \param From Pointers to Vertices that get outgoing connections to the new (Hyper)Edge
         /// \param To Pointers to Vertices that get incoming connections from the new (Hyper)Edge
 		Graph::EdgeIterator Graph::InternalAddEdge(const list<Graph::Vertex*> &pVertices, const list<Graph::Vertex*> &From, const list<Graph::Vertex*> &To,
-                                             string label, float weight, void* tag, int ID)
+                                             string label, float weight, int ID)
 		{
-			Edge* e = new Edge(this, label, weight, tag);
+			Edge* e = new Edge(this, label, weight);
 
             /// Copy Vertex-Pointers into the lists of the edge
             for(list<Graph::Vertex*>::const_iterator it = pVertices.begin(); it != pVertices.end(); it++)
@@ -1095,7 +1093,7 @@ namespace OpenGraphtheory
         /// \param From VertexIterators of Vertices that get outgoing connections to the new (Hyper)Edge
         /// \param To VertexIteratirs of Vertices that get incoming connections from the new (Hyper)Edge
 		Graph::EdgeIterator Graph::InternalAddEdge(const list<Graph::VertexIterator>* vertices, const list<Graph::VertexIterator>* From,
-		                                           const list<Graph::VertexIterator>* To, string label, float weight, void* tag, int ID)
+		                                           const list<Graph::VertexIterator>* To, string label, float weight, int ID)
 		{
 			list<Vertex*> pVertices;
 			if(vertices != NULL)
@@ -1112,44 +1110,44 @@ namespace OpenGraphtheory
 				for(list<VertexIterator>::const_iterator i = To->begin(); i != To->end(); i++)
 					pTo.push_back(VertexIteratorToPointer(*i));
 
-			Graph::EdgeIterator result = InternalAddEdge(pVertices, pFrom, pTo, label, weight, tag, ID);
+			Graph::EdgeIterator result = InternalAddEdge(pVertices, pFrom, pTo, label, weight, ID);
 			return result;
 		}
 
         /// \brief Adds a (Hyper)Edge to the Graph
         /// \param vertices VertexIterators of Vertices that are connected by the new (Hyper)Edge
-		Graph::EdgeIterator Graph::InternalAddEdge(const list<Graph::VertexIterator>& vertices, string label, float weight, void* tag, int ID)
+		Graph::EdgeIterator Graph::InternalAddEdge(const list<Graph::VertexIterator>& vertices, string label, float weight, int ID)
 		{
-			return InternalAddEdge(&vertices, NULL, NULL, label, weight, tag, ID);
+			return InternalAddEdge(&vertices, NULL, NULL, label, weight, ID);
 		}
 
         /// \brief Adds an Edge to the Graph
         /// \param a, b VertexIterators of the Vertices that are connected by the new Edge
-		Graph::EdgeIterator Graph::InternalAddEdge(Graph::VertexIterator a, Graph::VertexIterator b, string label, float weight, void* tag, int ID)
+		Graph::EdgeIterator Graph::InternalAddEdge(Graph::VertexIterator a, Graph::VertexIterator b, string label, float weight, int ID)
 		{
 			list<VertexIterator> s;
 			s.push_back(a);
 			s.push_back(b);
-			return InternalAddEdge(&s, NULL, NULL, label, weight, tag, ID);
+			return InternalAddEdge(&s, NULL, NULL, label, weight, ID);
 		}
 
         /// \brief Adds a Directed (Hyper)Edge to the Graph
         /// \param From VertexIterators of Vertices that get outgoing connections to the new (Hyper)Edge
         /// \param To VertexIteratirs of Vertices that get incoming connections from the new (Hyper)Edge
-		Graph::EdgeIterator Graph::InternalAddArc(const list<Graph::VertexIterator>& From, const list<Graph::VertexIterator>& To, string label, float weight, void* tag, int ID)
+		Graph::EdgeIterator Graph::InternalAddArc(const list<Graph::VertexIterator>& From, const list<Graph::VertexIterator>& To, string label, float weight, int ID)
 		{
-			return InternalAddEdge(NULL, &From, &To, label, weight, tag, ID);
+			return InternalAddEdge(NULL, &From, &To, label, weight,  ID);
 		}
 
         /// \brief Adds a Directed Edge to the Graph
         /// \param From, To VertexIterators of Vertices that are connected by the new Edge
-		Graph::EdgeIterator Graph::InternalAddArc(Graph::VertexIterator From, Graph::VertexIterator To, string label, float weight, void* tag, int ID)
+		Graph::EdgeIterator Graph::InternalAddArc(Graph::VertexIterator From, Graph::VertexIterator To, string label, float weight, int ID)
 		{
 			list<VertexIterator> f;
 			f.push_back(From);
 			list<VertexIterator> t;
 			t.push_back(To);
-			return InternalAddEdge(NULL, &f, &t, label, weight, tag, ID);
+			return InternalAddEdge(NULL, &f, &t, label, weight, ID);
 		}
 
 
@@ -1159,58 +1157,58 @@ namespace OpenGraphtheory
         /// \param From VertexIterators of Vertices that get outgoing connections to the new (Hyper)Edge
         /// \param To VertexIteratirs of Vertices that get incoming connections from the new (Hyper)Edge
 		Graph::EdgeIterator Graph::AddEdge(const list<Graph::VertexIterator>& vertices, const list<Graph::VertexIterator>& from,
-                                      const list<Graph::VertexIterator>& to, string label, float weight, void* tag)
+                                      const list<Graph::VertexIterator>& to, string label, float weight)
 		{
-			return InternalAddEdge(&vertices, &from, &to, label, weight, tag, -1);
+			return InternalAddEdge(&vertices, &from, &to, label, weight, -1);
 		}
 
 		/// \brief Adds a (Hyper)Edge to the Graph
         /// \param vertices VertexIterators of Vertices that are connected by the new (Hyper)Edge
-        Graph::EdgeIterator Graph::AddEdge(const list<Graph::VertexIterator>& vertices, string label, float weight, void* tag)
+        Graph::EdgeIterator Graph::AddEdge(const list<Graph::VertexIterator>& vertices, string label, float weight)
 		{
-			return InternalAddEdge(vertices, label, weight, tag, -1);
+			return InternalAddEdge(vertices, label, weight, -1);
 		}
 
         /// \brief Adds an Edge to the Graph
         /// \param a, b VertexIterators of the Vertices that are connected by the new Edge
-        Graph::EdgeIterator Graph::AddEdge(Graph::VertexIterator a, Graph::VertexIterator b, string label, float weight, void* tag)
+        Graph::EdgeIterator Graph::AddEdge(Graph::VertexIterator a, Graph::VertexIterator b, string label, float weight)
 		{
-			return InternalAddEdge(a, b, label, weight, tag, -1);
+			return InternalAddEdge(a, b, label, weight, -1);
 		}
 
         /// \brief Adds a Directed (Hyper)Edge to the Graph
         /// \param From VertexIterators of Vertices that get outgoing connections to the new (Hyper)Edge
         /// \param To VertexIteratirs of Vertices that get incoming connections from the new (Hyper)Edge
-		Graph::EdgeIterator Graph::AddArc(const list<Graph::VertexIterator>& From, const list<Graph::VertexIterator>& To, string label, float weight, void* tag)
+		Graph::EdgeIterator Graph::AddArc(const list<Graph::VertexIterator>& From, const list<Graph::VertexIterator>& To, string label, float weight)
 		{
-			return InternalAddArc(From, To, label, weight, tag, -1);
+			return InternalAddArc(From, To, label, weight, -1);
 		}
 
         /// \brief Adds a Directed Edge to the Graph
         /// \param From, To VertexIterators of Vertices that are connected by the new Edge
-		Graph::EdgeIterator Graph::AddArc(Graph::VertexIterator From, Graph::VertexIterator To, string label, float weight, void* tag)
+		Graph::EdgeIterator Graph::AddArc(Graph::VertexIterator From, Graph::VertexIterator To, string label, float weight)
 		{
-			return InternalAddArc(From, To, label, weight, tag, -1);
+			return InternalAddArc(From, To, label, weight, -1);
 		}
 
         /// \brief Adds an undirected Loop-Edge to the Graph
         /// \param v VertexIterator of the Vertex that gets the loop
-        Graph::EdgeIterator Graph::AddLoop(Graph::VertexIterator v, string label, float weight, void* tag)
+        Graph::EdgeIterator Graph::AddLoop(Graph::VertexIterator v, string label, float weight)
         {
-            return InternalAddEdge(v,v, label, weight, tag, -1);
+            return InternalAddEdge(v,v, label, weight, -1);
         }
 
         /// \brief Adds a directed Loop-Edge to the Graph
         /// \param v VertexIterator of the Vertex that gets the loop
-        Graph::EdgeIterator Graph::AddDirectedLoop(Graph::VertexIterator v, string label, float weight, void* tag)
+        Graph::EdgeIterator Graph::AddDirectedLoop(Graph::VertexIterator v, string label, float weight)
         {
-            return InternalAddArc(v, v, label, weight, tag, -1);
+            return InternalAddArc(v, v, label, weight, -1);
         }
 
         /// \brief Adds a Loose Edge (an edge with no connection to a vertex) to the Graph
-        Graph::EdgeIterator Graph::AddLooseEdge(string label, float weight, void* tag)
+        Graph::EdgeIterator Graph::AddLooseEdge(string label, float weight)
         {
-            return InternalAddEdge(NULL, NULL, NULL, label, weight, tag, -1);
+            return InternalAddEdge(NULL, NULL, NULL, label, weight, -1);
         }
 
 
@@ -1744,18 +1742,6 @@ namespace OpenGraphtheory
 				(*position)->Weight = weight;
 			}
 
-			/// \brief Accessor-method for reading the Tag of a vertex
-			void* Graph::VertexIterator::GetTag() const
-			{
-				return (*position)->Tag;
-			}
-
-			/// \brief Accessor-method for writing the Tag of a vertex
-			void Graph::VertexIterator::SetTag(void* tag)
-			{
-				(*position)->Tag = tag;
-			}
-
             AttributeCollection& Graph::VertexIterator::Attributes()
             {
                 return *((*position)->attributes);
@@ -1794,18 +1780,6 @@ namespace OpenGraphtheory
 			void Graph::EdgeIterator::SetWeight(float weight)
 			{
 				(*position)->Weight = weight;
-			}
-
-			/// \brief Accessor-method for reading the Tag of an edge
-			void* Graph::EdgeIterator::GetTag() const
-			{
-				return (*position)->Tag;
-			}
-
-			/// \brief Accessor-method for writing the Tag of an edge
-			void Graph::EdgeIterator::SetTag(void* tag)
-			{
-				(*position)->Tag = tag;
 			}
 
             AttributeCollection& Graph::EdgeIterator::Attributes()
