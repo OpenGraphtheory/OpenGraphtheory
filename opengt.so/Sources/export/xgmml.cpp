@@ -21,7 +21,7 @@ namespace OpenGraphtheory
             os << "<!DOCTYPE graph PUBLIC \"-//John Punin//DTD graph description//EN\" \"http://www.cs.rpi.edu/~puninj/XGMML/xgmml.dtd\">\n";
             os << "<!-- www.Open-Graphtheory.org -->\n";
 
-            os << "<graph id=\"" << G.GetID() << "\" label=\"" << Translator.Translate(G.GetLabel()) << "\">\n";
+            os << "<graph label=\"" << Translator.Translate(G.GetLabel()) << "\">\n";
 
             /// write vertices
             for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)

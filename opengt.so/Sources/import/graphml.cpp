@@ -52,30 +52,6 @@ namespace OpenGraphtheory
 				/// create vertex
 				Graph::VertexIterator *v = new Graph::VertexIterator(result.AddVertex());
 
-/*
-				v->SetLabel((*node)->GetAttribute("label",""));
-				string sWeight = (*node)->GetAttribute("weight","0");
-				stringstream s;
-				s << sWeight;
-				float Weight = 0;
-				s >> Weight;
-				v->SetWeight(Weight);
-
-				/// assign attributes
-				list<OpenGraphtheory::XML::XML*> attrs = (*node)->FindChildren("att");
-				for(list<OpenGraphtheory::XML::XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
-				{
-                    string name = (*attr)->GetAttribute("name", "");
-                    string value = (*attr)->GetAttribute("value", "");
-                    v->Attributes().Unset(name);
-                    v->Attributes().Add(name, "string");
-
-                    Attribute* pAttr = v->Attributes().GetAttribute(name);
-                    StringAttribute* sAttr = dynamic_cast<StringAttribute*>(pAttr);
-                    if(sAttr != NULL)
-                        sAttr->Value = value;
-                }
-*/
 				/// assign XML-ID
 				string id = (*node)->GetAttribute("id", "");
 				if(id == "")
@@ -117,7 +93,8 @@ namespace OpenGraphtheory
 				*/
             }
 
-
+            for(map<string, Graph::VertexIterator*>::iterator i = Vertex_XML_ID_to_pointer.begin(); i != Vertex_XML_ID_to_pointer.end(); i++)
+                delete i->second;
 			delete root;
 			return result;
         }

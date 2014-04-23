@@ -44,9 +44,17 @@ namespace OpenGraphtheory
             Generator* gen = GeneratorFactory.Produce(generator);
             if(gen == NULL)
                 throw "unknown generator";
-            Graph result = gen->Generate(parameter);
-            delete gen;
-            return result;
+            try
+            {
+                Graph result = gen->Generate(parameter);
+                delete gen;
+                return result;
+            }
+            catch(...)
+            {
+                delete gen;
+                throw;
+            }
         }
 
     }

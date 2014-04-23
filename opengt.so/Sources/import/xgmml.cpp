@@ -96,7 +96,8 @@ namespace OpenGraphtheory
 				e.SetLabel((*edge)->GetAttribute("label",""));
             }
 
-
+            for(map<string, Graph::VertexIterator*>::iterator i = Vertex_XML_ID_to_pointer.begin(); i != Vertex_XML_ID_to_pointer.end(); i++)
+                delete i->second;
 			delete root;
 			return result;
         }

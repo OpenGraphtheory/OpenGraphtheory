@@ -41,8 +41,16 @@ namespace OpenGraphtheory
             Transformer* trans = Transformer::TransformerFactory.Produce(transformer);
             if(trans == NULL)
                 throw "unknown transformer";
-            trans->Transform(G, parameter, intermediatestephandler);
-            delete trans;
+            try
+            {
+                trans->Transform(G, parameter, intermediatestephandler);
+                delete trans;
+            }
+            catch(...)
+            {
+                delete trans;
+                throw;
+            }
        }
 
     }

@@ -138,6 +138,8 @@ namespace OpenGraphtheory
         {
             delete name;
             delete value;
+            if(PrevParameters != NULL)
+                delete PrevParameters;
         }
 
         void DotParameter::LoadVertex(Graph::VertexIterator* v)
@@ -167,7 +169,7 @@ namespace OpenGraphtheory
                     nextcomma = value->find(',', prevcomma);
                     string scoordinate;
                     if(nextcomma >= 0)
-                        scoordinate = value->substr(prevcomma,nextcomma);
+                        scoordinate = value->substr(prevcomma,nextcomma-prevcomma);
                     else
                         scoordinate = value->substr(prevcomma);
                     prevcomma = nextcomma+1;
@@ -176,9 +178,8 @@ namespace OpenGraphtheory
                     stringstream s;
                     s << scoordinate;
                     s >> coordinate;
-
                     coordinates.push_back(coordinate);
-                } while(nextcomma >= 0);
+                } while(nextcomma != string::npos);
                 v->SetCoordinates(coordinates);
             }
             else // arbitrary attribute

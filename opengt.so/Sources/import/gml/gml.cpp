@@ -163,6 +163,8 @@ namespace OpenGraphtheory
 
         GMLTreeNode::~GMLTreeNode()
         {
+            for(list<pair<string, GMLValue*> >::iterator i = Children.begin(); i != Children.end(); i++)
+                delete i->second;
         }
 
         GMLValueInt::GMLValueInt(int value)

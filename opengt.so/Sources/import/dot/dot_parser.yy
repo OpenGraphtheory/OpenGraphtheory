@@ -45,7 +45,7 @@
 %% // Produktionen
 
 S:
-         GRAPH STRING OPENBRACES DOTDOCUMENT CLOSEBRACES { *result = $<dval>4; }
+         GRAPH STRING OPENBRACES DOTDOCUMENT CLOSEBRACES { delete $<sval>2; *result = $<dval>4; }
        ;
 DOTDOCUMENT:                                  { $<dval>$ = NULL; }
        | DOTDOCUMENT DOTLINE                  { $<dval>$ = $<dval>2; $<dval>$->PrevLines = $<dval>1; }

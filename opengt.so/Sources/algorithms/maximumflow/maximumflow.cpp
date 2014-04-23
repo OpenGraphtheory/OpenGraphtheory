@@ -133,8 +133,8 @@ namespace OpenGraphtheory
 
         void AlgorithmMAXIMUMFLOW::Run(Graph &G, vector<string> parameters)
         {
-            if(parameters.size() <= 0)
-                return;
+            if(parameters.size() < 4)
+                throw "maximum flow algorithm needs 4 parameters (source, drain, capacities, result name)";
 
             string SourceName = parameters[0];
             string DrainName = parameters[1];

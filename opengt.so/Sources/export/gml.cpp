@@ -26,7 +26,7 @@ namespace OpenGraphtheory
 
             StringTranslator Translator; // should be replaced with an appropriate translator.
 
-            os << "graph [ id " << G.GetID() << " label \"" << Translator.Translate(G.GetLabel()) << "\"\n";
+            os << "graph [ label \"" << Translator.Translate(G.GetLabel()) << "\"\n";
             os << "  comment \"www.Open-Graphtheory.org\"\n";
 
             /// write vertices: node [ id label graphics [ x y ] ]

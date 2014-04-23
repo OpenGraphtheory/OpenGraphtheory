@@ -35,7 +35,6 @@
 				std::set<Graph::EdgeIterator*> EIterators;
 
 			protected:
-				int ID;
 				std::string Label;
 				std::list<Graph::Vertex*> Vertices;
 				std::list<Graph::Edge*> Edges;
@@ -50,7 +49,6 @@
 				void Clear();
 				void operator=(const Graph& G);
 
-				int GetID() const;
 				std::string GetLabel() const;
 				void SetLabel(std::string label);
 				int NumberOfVertices() const;

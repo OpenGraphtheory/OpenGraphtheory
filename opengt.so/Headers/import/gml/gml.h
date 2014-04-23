@@ -30,7 +30,7 @@
             {
                 public:
                     GMLTreeNode();
-                    ~GMLTreeNode();
+                    virtual ~GMLTreeNode();
 
                     std::list<std::pair<std::string, GMLValue*> > Children;
             };
@@ -63,7 +63,7 @@
             {
                 public:
                     GMLValueNode(GMLTreeNode* value);
-                    ~GMLValueNode();
+                    virtual ~GMLValueNode();
                     GMLTreeNode* value;
             };
 

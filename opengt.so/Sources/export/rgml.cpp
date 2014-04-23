@@ -26,7 +26,7 @@ namespace OpenGraphtheory
                << "  xmlns:rgml=\"http://purl.org/puninj/2001/05/rgml-schema#\"\n"
                << ">\n\n";
 
-            os << "  <Graph rdf:ID=\"g" << G.GetID() << "\" rgml:directed=\"false\">\n";
+            os << "  <Graph rdf:ID=\"graph\" rgml:directed=\"false\">\n";
 
             /// declare vertices
             os << "    <nodes>\n";

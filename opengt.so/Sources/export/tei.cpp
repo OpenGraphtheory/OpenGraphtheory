@@ -23,7 +23,7 @@ namespace OpenGraphtheory
             StringTranslatorXML Translator;
 
             os << "<!-- www.Open-Graphtheory.org -->\n";
-            os << "<graph xml:id=\"" << G.GetID() << "\" type=\"" << (directed?"":"un") << "directed\">\n";
+            os << "<graph type=\"" << (directed?"":"un") << "directed\">\n";
             os << "  <label>" << Translator.Translate(G.GetLabel()) << "</label>\n";
 
             /// write vertices

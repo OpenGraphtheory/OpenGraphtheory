@@ -11,7 +11,7 @@
 	"../../opengt.so/Headers/opengt.h"
 	"../../opengt.so/Headers/logic/logic.h"
 
-1397037686 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
+1398242416 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
 	<list>
 	<set>
 	<map>
@@ -22,7 +22,7 @@
 	"simple_xml.h"
 	"attributes.h"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/simple_xml.h
+1397121195 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/simple_xml.h
 	<iostream>
 	<sstream>
 	<vector>

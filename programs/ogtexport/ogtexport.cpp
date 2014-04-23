@@ -12,6 +12,7 @@ using namespace OpenGraphtheory::Export;
 void usage(char* argv0);
 int main(int argc, char** argv)
 {
+    ExportFilter* exportfilter = NULL;
 	try
 	{
         string vertexcoloring = "";
@@ -53,29 +54,21 @@ int main(int argc, char** argv)
 
 		}
 
-		ExportFilter* exportfilter = ExportFilter::ExportFilterFactory.Produce(format);
-		if(exportfilter != NULL)
-		{
-		    try
-		    {
-                Graph G;
-                cin >> G;
-                exportfilter->DoExport(G, cout, vertexcoloring, edgecoloring, dpi, edgewidth, vertexradius);
-		    }
-		    catch(...)
-		    {
-		        delete exportfilter;
-		        throw;
-		    }
-		    delete exportfilter;
-		}
-		else
-			usage(argv[0]);
+		exportfilter = ExportFilter::ExportFilterFactory.Produce(format);
+		if(exportfilter == NULL)
+		    throw "unknown export filter";
+
+        Graph G;
+        cin >> G;
+        exportfilter->DoExport(G, cout, vertexcoloring, edgecoloring, dpi, edgewidth, vertexradius);
+        delete exportfilter;
 	}
 	catch(const char* s)
 	{
 		cerr << argv[0] << " ERROR: " << s << "\n";
 		usage(argv[0]);
+		if(exportfilter != NULL)
+		    delete exportfilter;
 		return 1;
 	}
 

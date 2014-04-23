@@ -36,13 +36,13 @@ int main(int argc, char** argv)
 		    {
                 modelchecker-> ModelCheck(G, query, parameters);
                 cout << G;
+                delete modelchecker;
 		    }
 		    catch(...)
 		    {
 		        delete modelchecker;
 		        throw;
 		    }
-		    delete modelchecker;
 		}
 		else
 			usage(argv[0]);

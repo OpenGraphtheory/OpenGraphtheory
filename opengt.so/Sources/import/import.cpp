@@ -33,9 +33,17 @@ namespace OpenGraphtheory
             ImportFilter* import = ImportFilterFactory.Produce(format);
             if(import == NULL)
                 throw "unknown import-format";
-            Graph result = import->Import(is);
-            delete import;
-            return result;
+            try
+            {
+                Graph result = import->Import(is);
+                delete import;
+                return result;
+            }
+            catch(...)
+            {
+                delete import;
+                throw;
+            }
         }
 
         Graph ImportFilter::Import(string FileName, string format)

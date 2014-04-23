@@ -77,7 +77,10 @@ namespace OpenGraphtheory
 
             }
 
-            return DijkstraExtract(from, to, &path);
+            list<pair<Graph::VertexIterator, Graph::EdgeIterator>* > result = DijkstraExtract(from, to, &path);
+            for(map<Graph::VertexIterator, pair<Graph::VertexIterator,Graph::EdgeIterator>* >::iterator i = path.begin(); i != path.end(); i++)
+                delete i->second;
+            return result;
         }
 
         void AlgorithmPATH::DijkstraInit(Graph& G, set<Graph::VertexIterator> &Q, map<Graph::VertexIterator, float>& distance, Graph::VertexIterator from)
@@ -93,7 +96,6 @@ namespace OpenGraphtheory
             if((distance.find(u) == distance.end()) || (e.GetWeight() + distance[v] < distance[u]))
             {
                 distance[u] = distance[v] + e.GetWeight();
-                // MEMORY LEAK!!!
                 (*path)[u] = new pair<Graph::VertexIterator, Graph::EdgeIterator>(v, e);
             }
         }
@@ -103,7 +105,7 @@ namespace OpenGraphtheory
         {
             list<pair<Graph::VertexIterator, Graph::EdgeIterator>* > result;
             for(Graph::VertexIterator i = to; i != from; i = (*path)[i]->first)
-                result.push_front((*path)[i]);
+                result.push_front(new pair<Graph::VertexIterator, Graph::EdgeIterator>((*path)[i]->first, (*path)[i]->second));
             return result;
         }
 
@@ -114,7 +116,10 @@ namespace OpenGraphtheory
 
             set<Graph::EdgeIterator> pathedges;
             for(list<pair<Graph::VertexIterator, Graph::EdgeIterator>* >::iterator i = path.begin(); i != path.end(); i++)
+            {
                 pathedges.insert((*i)->second);
+                delete *i;
+            }
             G.AddEdgeSet(pathedges, PathName);
         }
 

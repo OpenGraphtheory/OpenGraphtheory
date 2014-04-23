@@ -108,6 +108,8 @@ namespace OpenGraphtheory
                 }
             }
 
+            for(map<Graph::VertexIterator, pair<Graph::VertexIterator,Graph::EdgeIterator>* >::iterator i = path.begin(); i != path.end(); i++)
+                delete i->second;
             return ClashFound;
         }
 

@@ -80,7 +80,6 @@ namespace OpenGraphtheory
             Clear();
 
             Label = G.GetLabel();
-            ID = G.GetID();
             *attributes = *(G.attributes);
 
             /// copy vertices
@@ -119,6 +118,8 @@ namespace OpenGraphtheory
             for(set<VertexIterator*>::iterator i = VIterators.begin(); i != VIterators.end(); i++)
                 (*i)->Owner = NULL;
 
+            while(Edges.size() > 0)
+                RemoveEdge(*(Edges.begin()));
             while(Vertices.size() > 0)
                 RemoveVertex(*(Vertices.begin()));
         }
@@ -1681,12 +1682,6 @@ namespace OpenGraphtheory
 		/// \defgroup graphaccessors ''Accessor-Methods for Graph-Attributes''
 		// @{
 
-			/// \brief Accessor-method for the ID of a graph
-			int Graph::GetID() const
-			{
-				return ID;
-			}
-
 			/// \brief Accessor-method for reading the label of a graph
 			string Graph::GetLabel() const
 			{
@@ -2110,8 +2105,6 @@ namespace OpenGraphtheory
 
 			OpenGraphtheory::XML::XML* graph = new OpenGraphtheory::XML::XML("graph");
 			stringstream s;
-			s << GetID();
-			graph->AddAttribute("id", s.str());
 			graph->AddAttribute("edgeids", "true");
 			graph->AddAttribute("edgemode", "defaultundirected");
 			graph->AddAttribute("hypergraph", "true");

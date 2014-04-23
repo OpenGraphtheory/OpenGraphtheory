@@ -413,7 +413,7 @@ namespace OpenGraphtheory { namespace Import {
           case 2:
 /* Line 664 of lalr1.cc  */
 #line 48 "dot_parser.yy"
-    { *result = (yysemantic_stack_[(5) - (4)].dval); }
+    { delete (yysemantic_stack_[(5) - (2)].sval); *result = (yysemantic_stack_[(5) - (4)].dval); }
     break;
 
   case 3:
