@@ -10,23 +10,23 @@ int main(int argc, char** argv)
 {
 	try
 	{
-		Graph G;
+		Graph G1;
+		Graph G2;
+		Graph* pG1 = &G1;
+		Graph* pG2 = &G2;
 
         /// select input source
-        if(!isatty(fileno(stdin)))
-            cin >> G;
-        else
-            if(argc > 1)
-                G.LoadFromFile(argv[1]);
-            else
-                throw "no input source specified";
 
         string vertexcoloring = "";
         string edgecoloring = "";
         float VertexRadius = -1;
         float EdgeWidth = -1;
+        bool autoclose = true;
+
         for(int i = 1; i < argc; i++)
         {
+            if(string(argv[i]) == "--noclose")
+                autoclose = false;
             if(string(argv[i]) == "--vertexcoloring" && argc > i+1)
                 vertexcoloring = argv[i+1];
             if(string(argv[i]) == "--edgecoloring" && argc > i+1)
@@ -45,13 +45,26 @@ int main(int argc, char** argv)
             }
         }
 
-
-        GraphWindow Win(800, 600, &G, "http://www.Open-Graphtheory.org", vertexcoloring,
+        GraphWindow Win(800, 600, NULL, "http://www.Open-Graphtheory.org", vertexcoloring,
                         edgecoloring, EdgeWidth, VertexRadius);
-        Win.WaitUntilClosed();
 
+        do
+        {
+            try
+            {
+                cin >> *pG2;
+                Win.Display(pG2);
+                cout << *pG2;
 
-        cout << G;
+                Graph* temp = pG1;
+                pG1 = pG2;
+                pG2 = temp;
+            }
+            catch(...) { }
+        } while(!cin.eof());
+
+        if(!autoclose)
+            Win.WaitUntilClosed();
 	}
 	catch(const char* s)
 	{

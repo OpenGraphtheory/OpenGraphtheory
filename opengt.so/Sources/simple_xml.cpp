@@ -462,7 +462,8 @@ namespace OpenGraphtheory
             closing_tag:
                 str = XmlStringToInternalString( read_until(is, "", "> \t\n") );
                 skip_until(is, ">", "<", '>');
-                if(str == current->name)
+                if(str == current->name // Correct Case - opening and closing tag match
+                || str == "") // EOF case (at the end of the stream, the reader generates </> tags infinitely)
                 {
                     current = current->parent;
                 }

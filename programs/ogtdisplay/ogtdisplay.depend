@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1397041606 source:/home/viktor/Programming/OpenGraphtheory/programs/ogtdisplay/ogtdisplay.cpp
+1398343843 source:/home/viktor/Programming/OpenGraphtheory/programs/ogtdisplay/ogtdisplay.cpp
 	<iostream>
 	<unistd.h>
 	"../../opengt.so/Headers/opengt.h"
@@ -76,13 +76,13 @@
 	<map>
 	"../Sources/factory_templates.cpp"
 
-1397041647 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/GraphWindow.h
+1398343767 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/GraphWindow.h
 	"DisplayWindow.h"
 	"renderer.h"
 	"color.h"
 	"../opengt.h"
 
-1396601904 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/DisplayWindow.h
+1398333845 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/DisplayWindow.h
 	<iostream>
 	<map>
 	<X11/Xlib.h>

@@ -16,6 +16,7 @@
                 protected:
                     int gridsize;
                     Graph* DisplayedGraph;
+                    sem_t GUpdateSemaphore;
 
                     std::map<Graph::VertexIterator, Color> VertexColoring;
                     std::map<Graph::EdgeIterator, Color> EdgeColoring;
@@ -27,13 +28,13 @@
                     GraphWindow(int width, int height, Graph* G, std::string Caption = "http://www.Open-Graphtheory.org",
                                 std::string vertexcoloring = "", std::string edgecoloring = "",
                                 float EdgeWidth = -1, float VertexRadius = -1);
+                    virtual ~GraphWindow();
 
                     void Display(Graph* G);
                     void Update();
 
                     void (*OnVertexMouseDown) (Graph::VertexIterator v, MouseButton Button,   unsigned short ButtonStates);
                     void (*OnVertexMouseUp)   (Graph::VertexIterator v, MouseButton Button,   unsigned short ButtonStates);
-
             };
 
             class GraphWindowRenderingContext : public GraphRenderingContext

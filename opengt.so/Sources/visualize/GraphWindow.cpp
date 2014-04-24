@@ -25,18 +25,27 @@ namespace OpenGraphtheory
 
             this->EdgeWidth = EdgeWidth;
             this->VertexRadius = VertexRadius;
+            sem_init(&GUpdateSemaphore, 0, 1);
 
             Display(G);
         }
 
+        GraphWindow::~GraphWindow()
+        {
+            sem_destroy(&GUpdateSemaphore);
+        }
+
         void GraphWindow::Display(Graph* G)
         {
+            sem_wait(&GUpdateSemaphore);
             DisplayedGraph = G;
+            sem_post(&GUpdateSemaphore);
             Update();
         }
 
         void GraphWindow::Update()
         {
+            sem_wait(&GUpdateSemaphore);
             Clear();
             if(DisplayedGraph != NULL)
             {
@@ -45,6 +54,7 @@ namespace OpenGraphtheory
                 delete context;
             }
             Flush();
+            sem_post(&GUpdateSemaphore);
         }
 
 

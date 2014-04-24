@@ -22,6 +22,7 @@ namespace OpenGraphtheory
 
         IntermediateStepHandlerShow::~IntermediateStepHandlerShow()
         {
+            win->OnClose = NULL;
             if(win != NULL)
                 delete win;
         }
@@ -29,6 +30,12 @@ namespace OpenGraphtheory
         void IntermediateStepHandlerShow::Configure(vector<string> parameters)
         {
             win = new GraphWindow(800, 600, NULL, "http://www.Open-Graphtheory.org");
+            win->OnClose = this->StopClose;
+        }
+
+        void IntermediateStepHandlerShow::StopClose(bool& AbortClose)
+        {
+            AbortClose = true;
         }
 
         void IntermediateStepHandlerShow::Handle(Graph* G)
@@ -36,6 +43,5 @@ namespace OpenGraphtheory
             if(win != NULL)
                 win->Display(G);
         }
-
     }
 }

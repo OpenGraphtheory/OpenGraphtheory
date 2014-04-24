@@ -20,6 +20,7 @@
                 protected:
                     static FactoryRegistrator<IntermediateStepHandler> IntermediateStepHandlerShowRegistrator;
                     OpenGraphtheory::Visualization::GraphWindow* win;
+                    static void StopClose(bool& AbortClose);
                 public:
                     IntermediateStepHandlerShow();
                     ~IntermediateStepHandlerShow();
