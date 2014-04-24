@@ -56,7 +56,7 @@
 	"../visualize/renderer.h"
 	"../../Sources/export/export_templates.cpp"
 
-1397038416 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/color.h
+1398346431 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/color.h
 
 1398251554 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/generate/generate.cpp
 	"../../Headers/generate/generate.h"
@@ -373,7 +373,7 @@
 	"intermediatesteps.h"
 	"../visualize/GraphWindow.h"
 
-1398343767 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/GraphWindow.h
+1398345839 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/GraphWindow.h
 	"DisplayWindow.h"
 	"renderer.h"
 	"color.h"
@@ -583,10 +583,10 @@
 	<math.h>
 	<stdlib.h>
 
-1398343729 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/GraphWindow.cpp
+1398345853 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/GraphWindow.cpp
 	"../../Headers/visualize/GraphWindow.h"
 
-1397038895 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/color.cpp
+1398346417 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/color.cpp
 	"../../Headers/visualize/color.h"
 
 1397045324 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/vector2d.cpp
@@ -599,12 +599,12 @@
 	"DisplayWindow.h"
 	"../../Headers/visualize/DisplayWindow.h"
 
-1392029042 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/logic/ModalLogic/ml.cpp
+1398346323 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/logic/ModalLogic/ml.cpp
 	"../../../Headers/logic/ModalLogic/ml.h"
 	"../../../Headers/logic/ModalLogic/ml_lexer.h"
 	"ml_parser.hpp"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/logic/ModalLogic/ml.h
+1398346514 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/logic/ModalLogic/ml.h
 	"../logic.h"
 
 1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/logic/ModalLogic/ml_lexer.h

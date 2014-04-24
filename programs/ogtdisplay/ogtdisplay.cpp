@@ -45,8 +45,10 @@ int main(int argc, char** argv)
             }
         }
 
+
         GraphWindow Win(800, 600, NULL, "http://www.Open-Graphtheory.org", vertexcoloring,
                         edgecoloring, EdgeWidth, VertexRadius);
+
 
         do
         {

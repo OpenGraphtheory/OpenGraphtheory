@@ -261,7 +261,8 @@ using namespace OpenGraphtheory::Logic;
 
     ML_Forwarder::~ML_Forwarder()
     {
-
+        if(forwarded != NULL)
+            delete forwarded;
     }
 
     set<Graph::VertexIterator> ML_Forwarder::Interpretation(Graph& G)

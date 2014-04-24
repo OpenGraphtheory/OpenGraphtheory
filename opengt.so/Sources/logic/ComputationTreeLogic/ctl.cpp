@@ -374,7 +374,8 @@ using namespace OpenGraphtheory::Logic;
 
     CTL_Forwarder::~CTL_Forwarder()
     {
-
+        if(forwarded != NULL)
+            delete forwarded;
     }
 
     set<Graph::VertexIterator> CTL_Forwarder::Interpretation(Graph& G)

@@ -18,8 +18,8 @@
                     Graph* DisplayedGraph;
                     sem_t GUpdateSemaphore;
 
-                    std::map<Graph::VertexIterator, Color> VertexColoring;
-                    std::map<Graph::EdgeIterator, Color> EdgeColoring;
+                    std::string VertexColoring;
+                    std::string EdgeColoring;
                     float EdgeWidth;
                     float VertexRadius;
 

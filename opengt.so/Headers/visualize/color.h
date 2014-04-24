@@ -26,7 +26,7 @@
 
                     int ToInt();
                     static Color DefaultColors[];
-                    static const int NumDefaultColors = 7;
+                    static const int NumDefaultColors = 8;
             };
 
         }

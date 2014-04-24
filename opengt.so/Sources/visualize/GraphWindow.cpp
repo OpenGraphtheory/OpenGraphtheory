@@ -13,16 +13,8 @@ namespace OpenGraphtheory
                                  string edgecoloring, float EdgeWidth, float VertexRadius)
             : DisplayWindow(width, height, Caption)
         {
-            map<Graph::VertexIterator, int> vcoloringInt = G->GetVertexColoring(vertexcoloring);
-            map<Graph::VertexIterator, Color> vcoloring;
-            for(map<Graph::VertexIterator, int>::iterator i = vcoloringInt.begin(); i != vcoloringInt.end(); i++)
-                VertexColoring[i->first] = Color::DefaultColors[i->second < Color::NumDefaultColors ? i->second : 0];
-
-            map<Graph::EdgeIterator, Color> ecoloring;
-            map<Graph::EdgeIterator, int> ecoloringInt = G->GetEdgeColoring(edgecoloring);
-            for(map<Graph::EdgeIterator, int>::iterator i = ecoloringInt.begin(); i != ecoloringInt.end(); i++)
-                EdgeColoring[i->first] = Color::DefaultColors[i->second < Color::NumDefaultColors ? i->second : 0];
-
+            this->VertexColoring = vertexcoloring;
+            this->EdgeColoring = edgecoloring;
             this->EdgeWidth = EdgeWidth;
             this->VertexRadius = VertexRadius;
             sem_init(&GUpdateSemaphore, 0, 1);
@@ -49,8 +41,19 @@ namespace OpenGraphtheory
             Clear();
             if(DisplayedGraph != NULL)
             {
+                map<Graph::VertexIterator, int> vcoloringInt = DisplayedGraph->GetVertexColoring(VertexColoring);
+                map<Graph::VertexIterator, Color> vcoloring;
+                for(map<Graph::VertexIterator, int>::iterator i = vcoloringInt.begin(); i != vcoloringInt.end(); i++)
+                    vcoloring[i->first] = Color::DefaultColors[i->second < Color::NumDefaultColors ? i->second : 0];
+
+                map<Graph::EdgeIterator, Color> ecoloring;
+                map<Graph::EdgeIterator, int> ecoloringInt = DisplayedGraph->GetEdgeColoring(EdgeColoring);
+                for(map<Graph::EdgeIterator, int>::iterator i = ecoloringInt.begin(); i != ecoloringInt.end(); i++)
+                    ecoloring[i->first] = Color::DefaultColors[i->second < Color::NumDefaultColors ? i->second : 0];
+
+
                 Visualization::GraphWindowRenderingContext* context = new Visualization::GraphWindowRenderingContext(this);
-                context->RenderGraph(*DisplayedGraph, VertexColoring, EdgeColoring, 75, EdgeWidth, VertexRadius);
+                context->RenderGraph(*DisplayedGraph, vcoloring, ecoloring, 75, EdgeWidth, VertexRadius);
                 delete context;
             }
             Flush();

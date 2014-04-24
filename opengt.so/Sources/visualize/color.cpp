@@ -9,6 +9,7 @@ using namespace OpenGraphtheory::Visualization;
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Color Color::DefaultColors[] =
 {
+    Color(0x00, 0x00, 0x00), // black
     Color(0xE5, 0x00, 0x00), // red
     Color(0xF3, 0xD5, 0x10), // yellow
     Color(0x34, 0xCD, 0x20), // green
