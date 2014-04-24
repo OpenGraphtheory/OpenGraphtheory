@@ -1,17 +1,12 @@
 # depslib dependency file v1.0
-1392029042 source:/home/viktor/Programming/OpenGraphtheory/programs/ogtlogic/ogtlogic.cpp
-	<iostream>
-	<fstream>
-	<stdio.h>
-	"../../opengt.so/Headers/opengt.h"
-	"../../opengt.so/Headers/logic/logic.h"
+1398251394 source:/home/viktor/Programming/OpenGraphtheory/programs/ogtlogic/ogtlogic.cpp
 	<iostream>
 	<fstream>
 	<stdio.h>
 	"../../opengt.so/Headers/opengt.h"
 	"../../opengt.so/Headers/logic/logic.h"
 
-1398242416 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
+1398327727 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
 	<list>
 	<set>
 	<map>

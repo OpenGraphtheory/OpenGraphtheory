@@ -65,6 +65,7 @@
 
                     void SetColor(unsigned long color);
                     void SetBGColor(unsigned long color);
+                    void CloseWindow(bool AlreadyHaveSemaphore);
 
                 public:
 

@@ -1376,20 +1376,23 @@ namespace OpenGraphtheory
 		Graph::EdgeIterator::EdgeIterator(const Graph::EdgeIterator& i)
 		{
 			ID = i.ID;
-			Owner = i.Owner;
 			iterating = i.iterating;
-			position = i.position;
-			// this is why no default-constructor is used
+
+            Owner = i.Owner;
 			if(Owner != NULL)
+            {
+            	position = i.position; // otherwise, i.position is uninitialized
                 Owner->EIterators.insert(this);
+            }
 		}
 
 		void Graph::EdgeIterator::operator=(const Graph::EdgeIterator& i)
 		{
 			ID = i.ID;
 			iterating = i.iterating;
-			position = i.position;
-			// this is why no default-constructor is used
+			if(i.Owner != NULL) // otherwise, i.position is uninitialized
+                position = i.position;
+
 			if(Owner != i.Owner)
 			{
                 if(Owner != NULL)
@@ -1402,15 +1405,19 @@ namespace OpenGraphtheory
 
 		Graph::EdgeIterator::~EdgeIterator()
 		{
-			Owner->EIterators.erase(this);
+            if(Owner != NULL)
+                Owner->EIterators.erase(this);
 		}
 
 		void Graph::EdgeIterator::operator++(int)
 		{
-			if(++position == iterating->end())
-				ID = -1;
-            else
-                ID = (*position)->ID;
+            if(iterating != NULL)
+            {
+                if(++position == iterating->end())
+                    ID = -1;
+                else
+                    ID = (*position)->ID;
+            }
 		}
 
 		Graph::EdgeIterator Graph::EdgeIterator::operator+(int n) const

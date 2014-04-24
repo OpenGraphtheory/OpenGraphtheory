@@ -219,10 +219,11 @@ namespace OpenGraphtheory
                 sem_post(&pWin->MainSemaphore);
                 nanosleep(&SleepTime,NULL);
             }
+            pWin->CloseWindow(true);
+
             sem_post(&pWin->MainSemaphore);
             sem_post(&pWin->QuittingSemaphore);
 
-            pWin->CloseWindow();
             return NULL;
         }
 
@@ -285,7 +286,7 @@ namespace OpenGraphtheory
                         if(OnClose != NULL)
                             OnClose(AbortClose);
                         if(!AbortClose)
-                            CloseWindow();
+                            CloseWindow(true);
                     }
                     break;
 
@@ -387,7 +388,7 @@ namespace OpenGraphtheory
 
         DisplayWindow::~DisplayWindow()
         {
-            CloseWindow();
+            CloseWindow(false);
             WindowRegister.erase(XServer);
 
             if( pthread_join(Thread,NULL))
@@ -398,9 +399,11 @@ namespace OpenGraphtheory
             XCloseDisplay(XServer);
         }
 
-        void DisplayWindow::CloseWindow()
+        void DisplayWindow::CloseWindow(bool AlreadyHaveSemaphore)
         {
-            sem_wait(&MainSemaphore);
+            if(!AlreadyHaveSemaphore)
+                sem_wait(&MainSemaphore);
+
             if(!Close)
             {
                 Close = true;
@@ -413,8 +416,15 @@ namespace OpenGraphtheory
                 XDestroyWindow(XServer, Win);
                 XFlush(XServer);
             }
-            sem_post(&MainSemaphore);
+
+            if(!AlreadyHaveSemaphore)
+                sem_post(&MainSemaphore);
         }
+        void DisplayWindow::CloseWindow()
+        {
+            CloseWindow(false);
+        }
+
 
         bool DisplayWindow::Closed()
         {
@@ -428,7 +438,7 @@ namespace OpenGraphtheory
         {
             timespec SleepTime;
             SleepTime.tv_sec = 0;
-            SleepTime.tv_nsec =  500000000; //  1/20 seconds
+            SleepTime.tv_nsec =  50000000; //  1/20 seconds
 
             while(!Closed())
                 nanosleep(&SleepTime,NULL);

@@ -65,7 +65,7 @@ namespace OpenGraphtheory
                         {
                             NextRound.insert(e.From());
                             Predecessor[e.From()] = v;
-                            EdgeToPredecessor.insert(pair<Graph::VertexIterator, Graph::EdgeIterator>(e.From(), e));
+                            EdgeToPredecessor[e.From()] = e;
                         }
                     }
                     */
@@ -152,13 +152,13 @@ namespace OpenGraphtheory
 
         void AlgorithmMINIMUMCUT::Run(Graph &G, vector<string> parameters)
         {
-            if(parameters.size() <= 0)
-                return;
+            if(parameters.size() < 3)
+                throw "minimum cut algorithm needs 3 parameters (source, drain, result name [, capacities name])";
 
             string SourceName = parameters[0];
             string DrainName = parameters[1];
-            string CapacitiesName = parameters[2];
-            string MinimumCutName = parameters[3];
+            string MinimumCutName = parameters[2];
+            string CapacitiesName = parameters.size() > 3 ? parameters[3] : "";
 
             Graph::VertexIterator Source = G.EndVertices();
             Graph::VertexIterator Drain = G.EndVertices();
@@ -173,12 +173,19 @@ namespace OpenGraphtheory
             map<Graph::EdgeIterator, float> Capacities;
             for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
             {
-                Attribute* attr = e.Attributes().GetAttribute(CapacitiesName);
-                FloatAttribute* fattr = dynamic_cast<FloatAttribute*>(attr);
-                if(fattr != NULL)
-                    Capacities[e] = fattr->Value;
+                if(CapacitiesName != "")
+                {
+                    Attribute* attr = e.Attributes().GetAttribute(CapacitiesName);
+                    FloatAttribute* fattr = dynamic_cast<FloatAttribute*>(attr);
+                    if(fattr != NULL)
+                        Capacities[e] = fattr->Value;
+                    else
+                        Capacities[e] = 0;
+                }
                 else
-                    Capacities[e] = 0;
+                {
+                    Capacities[e] = e.GetWeight();
+                }
             }
 
             if(Source != G.EndVertices() && Drain != G.EndVertices())

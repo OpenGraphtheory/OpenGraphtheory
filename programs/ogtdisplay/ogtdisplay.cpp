@@ -45,13 +45,12 @@ int main(int argc, char** argv)
             }
         }
 
-        /// do your thing
+
         GraphWindow Win(800, 600, &G, "http://www.Open-Graphtheory.org", vertexcoloring,
                         edgecoloring, EdgeWidth, VertexRadius);
         Win.WaitUntilClosed();
 
 
-		/// select output destination
         cout << G;
 	}
 	catch(const char* s)

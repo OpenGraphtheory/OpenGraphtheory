@@ -209,7 +209,7 @@
                     std::list<Graph::Vertex*>* iterating;
                     std::list<Graph::Vertex*>::iterator position;
                     VertexIterator(Graph* owner, int id, std::list<Graph::Vertex*>* Iterating, std::list<Graph::Vertex*>::iterator position);
-                    bool IteratorIsValid;
+                    //bool IteratorIsValid;
 
                 public:
                     VertexIterator();
@@ -269,7 +269,7 @@
                     std::list<Graph::Edge*>* iterating;
                     std::list<Graph::Edge*>::iterator position;
                     EdgeIterator(Graph* owner, int id, std::list<Graph::Edge*>* Iterating, std::list<Graph::Edge*>::iterator position);
-                    bool IsValid;
+                    //bool IsValid;
 
                 public:
                     EdgeIterator();
