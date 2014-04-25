@@ -426,7 +426,7 @@
 	<string>
 	<list>
 
-1392029042 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/logic/ComputationTreeLogic/ctl.cpp
+1398347198 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/logic/ComputationTreeLogic/ctl.cpp
 	"../../../Headers/logic/ComputationTreeLogic/ctl.h"
 	"../../../Headers/logic/ComputationTreeLogic/ctl_lexer.h"
 	"ctl_parser.hpp"
@@ -1012,4 +1012,41 @@
 	"../../../Headers/import/gml/gml_lexer.h"
 	"../../../Headers/import/gml/gml.h"
 	<unistd.h>
+
+1398435768 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/clique/clique_tw.cpp
+	"../../../Headers/algorithms/clique/clique_tw.h"
+
+1398435700 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/clique/clique_tw.h
+	"../algorithm.h"
+	"../treewidth/treewidth.h"
+	<string>
+	<set>
+	<vector>
+
+1398436319 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/treewidth/treewidth.h
+	"../../opengt.h"
+	"../algorithm.h"
+	"../vertexcover/vertexcoverAPX2.h"
+	<set>
+	"../../../Sources/algorithms/treewidth/treewidth_templates.cpp"
+
+1398435296 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/vertexcover/vertexcoverAPX2.h
+	"../algorithm.h"
+	"../maximummatching/maximummatching.h"
+	<string>
+	<set>
+	"../../set_helper.h"
+	<vector>
+
+1398436063 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/treewidth/treewidth.cpp
+	"../../../Headers/algorithms/treewidth/treewidth.h"
+
+1398435603 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/vertexcover/vertexcoverAPX2.cpp
+	"../../../Headers/algorithms/vertexcover/vertexcoverAPX2.h"
+
+1398436531 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/treewidth/treewidth_templates.cpp
+	"../../../Headers/algorithms/treewidth/treewidth.h"
+
+1398436531 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/treewidth/treewidth_templates.cpp
+	"../../../Headers/algorithms/treewidth/treewidth.h"
 

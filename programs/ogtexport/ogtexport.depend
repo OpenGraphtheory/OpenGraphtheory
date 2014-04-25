@@ -81,7 +81,7 @@
 	"../visualize/renderer.h"
 	"../../Sources/export/export_templates.cpp"
 
-1397038416 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/color.h
+1398346431 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/color.h
 
 1392029042 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/factory_templates.cpp
 	"../Headers/factory.h"
