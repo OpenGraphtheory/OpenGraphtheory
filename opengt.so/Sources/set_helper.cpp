@@ -102,6 +102,11 @@
                     return true;
                 }
 
+                template<class T> bool SetsEqual(const std::set<T> &A, const std::set<T> &B)
+                {
+                    return IsSubset(A,B) && IsSubset(B,A);
+                }
+
             }
         }
 

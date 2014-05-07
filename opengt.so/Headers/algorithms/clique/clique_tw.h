@@ -19,6 +19,8 @@
                     protected:
                         static FactoryRegistrator<Algorithm> AlgorithmCliqueTWRegistrator;
 
+                        std::set<Graph::VertexIterator>* HandleLeafNode(Graph& G, Graph::VertexIterator Introduced);
+
                         std::set<Graph::VertexIterator>* HandleIntroduceNode(Graph& G, std::set<Graph::VertexIterator>* SubtreeResult, std::set<Graph::VertexIterator>& Bag, Graph::VertexIterator Introduced);
                         std::set<Graph::VertexIterator>* HandleForgetNode(Graph& G, std::set<Graph::VertexIterator>* SubtreeResult, std::set<Graph::VertexIterator>& Bag, Graph::VertexIterator Introduced);
                         std::set<Graph::VertexIterator>* HandleJoinNode(Graph& G, std::set<Graph::VertexIterator>* Subtree1Result, std::set<Graph::VertexIterator>* Subtree2Result, std::set<Graph::VertexIterator>& Bag);

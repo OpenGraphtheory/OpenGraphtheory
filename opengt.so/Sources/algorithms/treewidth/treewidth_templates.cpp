@@ -18,6 +18,19 @@
                 {
                 }
 
+                template<class T> T* TreewidthBasedAlgorithm<T>::HandleEmptyBag(Graph& G)
+                {
+                    return NULL;
+                }
+
+                template<class T> T* TreewidthBasedAlgorithm<T>::HandleLeafNode(Graph& G, Graph::VertexIterator Introduced)
+                {
+                    T* EmptyBagResult = HandleEmptyBag(G);
+                    std::set<Graph::VertexIterator> Bag;
+                    Bag.insert(Introduced);
+                    return HandleIntroduceNode(G, EmptyBagResult, Bag, Introduced);
+                }
+
                 template<class T> std::pair<T*, std::set<Graph::VertexIterator> > TreewidthBasedAlgorithm<T>::Run(Graph& G, NiceTreeDecomposition* Decomposition)
                 {
                     IntroduceNode* inode = dynamic_cast<IntroduceNode*>(Decomposition);
@@ -30,7 +43,7 @@
                         {
                             std::set<Graph::VertexIterator> Bag;
                             Bag.insert(inode->IntroducedNode);
-                            T* result = this->HandleIntroduceNode(G, NULL, Bag, inode->IntroducedNode);
+                            T* result = this->HandleLeafNode(G, inode->IntroducedNode);
                             return std::pair<T*, std::set<Graph::VertexIterator> >(result, Bag);
                         }
                         else

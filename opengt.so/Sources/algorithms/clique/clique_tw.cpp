@@ -51,15 +51,15 @@ namespace OpenGraphtheory
                 return false;
             }
 
+            set<Graph::VertexIterator>* AlgorithmCLIQUE_TW::HandleLeafNode(Graph& G, Graph::VertexIterator IntroducedNode)
+            {
+                set<Graph::VertexIterator>* result = new set<Graph::VertexIterator>;
+                result->insert(IntroducedNode);
+                return result;
+            }
+
             set<Graph::VertexIterator>* AlgorithmCLIQUE_TW::HandleIntroduceNode(Graph& G, set<Graph::VertexIterator>* SubtreeResult, set<Graph::VertexIterator>& Bag, Graph::VertexIterator IntroducedNode)
             {
-                if(SubtreeResult == NULL)
-                {
-                    set<Graph::VertexIterator>* result = new set<Graph::VertexIterator>;
-                    result->insert(IntroducedNode);
-                    return result;
-                }
-
                 set<Graph::VertexIterator> Candidates;
                 for(set<Graph::VertexIterator>::iterator i = Bag.begin(); i != Bag.end(); i++)
                     if( i->UnderlyingAdjacent(IntroducedNode) )

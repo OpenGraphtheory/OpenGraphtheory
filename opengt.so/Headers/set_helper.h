@@ -17,6 +17,7 @@
             template<class T> std::set<T> SymmetricDifference(const std::set<T> &A, const std::set<T> &B);
             template<class T> void DestructiveSymmetricDifference(const std::set<T> &A, const std::set<T> &B);
             template<class T> bool IsSubset(const std::set<T> &A, const std::set<T> &B);
+            template<class T> bool SetsEqual(const std::set<T> &A, const std::set<T> &B);
         }
     }
 

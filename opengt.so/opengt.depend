@@ -733,14 +733,14 @@
 	"../../set_helper.h"
 	<vector>
 
-1396601792 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/set_helper.h
+1398696202 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/set_helper.h
 	<set>
 	"../Sources/set_helper.cpp"
 
-1392297168 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/set_helper.cpp
+1398696172 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/set_helper.cpp
 	"../Headers/set_helper.h"
 
-1392297168 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/set_helper.cpp
+1398696172 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/set_helper.cpp
 	"../Headers/set_helper.h"
 
 1398331729 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/maximumflow/maximumflow.cpp
@@ -1013,17 +1013,17 @@
 	"../../../Headers/import/gml/gml.h"
 	<unistd.h>
 
-1398435768 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/clique/clique_tw.cpp
+1399453977 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/clique/clique_tw.cpp
 	"../../../Headers/algorithms/clique/clique_tw.h"
 
-1398435700 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/clique/clique_tw.h
+1399461595 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/clique/clique_tw.h
 	"../algorithm.h"
 	"../treewidth/treewidth.h"
 	<string>
 	<set>
 	<vector>
 
-1398436319 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/treewidth/treewidth.h
+1399466863 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/treewidth/treewidth.h
 	"../../opengt.h"
 	"../algorithm.h"
 	"../vertexcover/vertexcoverAPX2.h"
@@ -1044,9 +1044,19 @@
 1398435603 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/vertexcover/vertexcoverAPX2.cpp
 	"../../../Headers/algorithms/vertexcover/vertexcoverAPX2.h"
 
-1398436531 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/treewidth/treewidth_templates.cpp
+1399467085 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/treewidth/treewidth_templates.cpp
 	"../../../Headers/algorithms/treewidth/treewidth.h"
 
-1398436531 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/treewidth/treewidth_templates.cpp
+1399454023 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/treewidth/treewidth_templates.cpp
 	"../../../Headers/algorithms/treewidth/treewidth.h"
+
+1399466826 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/dominatingset/dominatingset_tw.cpp
+	"../../../Headers/algorithms/dominatingset/dominatingset_tw.h"
+
+1399466850 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/dominatingset/dominatingset_tw.h
+	"../algorithm.h"
+	"../treewidth/treewidth.h"
+	<string>
+	<set>
+	<vector>
 

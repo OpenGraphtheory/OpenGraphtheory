@@ -71,6 +71,9 @@
                 {
                     protected:
 
+                        virtual T* HandleEmptyBag(Graph& G);
+                        virtual T* HandleLeafNode(Graph& G, Graph::VertexIterator Introduced);
+
                         virtual T* HandleIntroduceNode(Graph& G, T* SubtreeResult, std::set<Graph::VertexIterator>& Bag, Graph::VertexIterator Introduced) = 0;
                         virtual T* HandleForgetNode(Graph& G, T* SubtreeResult, std::set<Graph::VertexIterator>& Bag, Graph::VertexIterator Introduced) = 0;
                         virtual T* HandleJoinNode(Graph& G, T* Subtree1Result, T* Subtree2Result, std::set<Graph::VertexIterator>& Bag) = 0;
