@@ -20,8 +20,9 @@
                     static void FindVertexCover(Graph& G, std::set<Graph::VertexIterator>& VertexCover);
                     static void AddVertexCover(Graph &G, std::string VertexCoverName);
 
+                    float ApproximationQuality(const Graph& G);
                 protected:
-                    static FactoryRegistrator<Algorithm> AlgorithmVertexCoverAPX2Registrator;
+                    static MultiFactoryRegistrator<Algorithm> AlgorithmVertexCoverAPX2Registrator;
             };
         }
     }

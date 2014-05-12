@@ -22,7 +22,7 @@
                     void AddColoring(Graph& G, std::string ColoringName);
 
                 protected:
-                    static FactoryRegistrator<Algorithm> AlgorithmColoringRegistrator;
+                    static MultiFactoryRegistrator<Algorithm> AlgorithmColoringRegistrator;
 
             };
         }

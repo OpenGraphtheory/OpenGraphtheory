@@ -22,7 +22,7 @@
                                          std::map<Graph::EdgeIterator, float>& Capacities, std::string FlowName);
 
                 protected:
-                    static FactoryRegistrator<Algorithm> AlgorithmMaximumFlowRegistrator;
+                    static MultiFactoryRegistrator<Algorithm> AlgorithmMaximumFlowRegistrator;
                     static bool FindAugmentingPath(Graph& G, Graph::VertexIterator Source, Graph::VertexIterator Drain,
                                          std::map<Graph::EdgeIterator, float>& Capacities, std::map<Graph::EdgeIterator, float>& Flow,
                                          std::vector<Graph::EdgeIterator>& AugmentingPath);

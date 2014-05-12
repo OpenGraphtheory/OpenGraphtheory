@@ -1,35 +1,46 @@
 
 #include "../Headers/thread.h"
 
-Mutex::Mutex() {
+// ============================================================= Mutex
+
+Mutex::Mutex()
+{
 	#ifdef __unix__
 		pthread_mutex_init(&mutex, NULL);
 	#elif __WIN32__ || _MSC_VER || _Windows || __NT__
 		InitializeCriticalSection(&mutex);
 	#endif
 }
-Mutex::~Mutex() {
+
+Mutex::~Mutex()
+{
 	#ifdef __unix__
 		pthread_mutex_destroy(&mutex);
 	#elif __WIN32__ || _MSC_VER || _Windows || __NT__
 		DeleteCriticalSection(&mutex);
 	#endif
 }
-void Mutex::Lock() {
+
+void Mutex::Lock()
+{
 	#ifdef __unix__
 		pthread_mutex_lock(&mutex);
 	#elif __WIN32__ || _MSC_VER || _Windows || __NT__
 		EnterCriticalSection(&mutex);
 	#endif
 }
-void Mutex::Unlock() {
+
+void Mutex::Unlock()
+{
 	#ifdef __unix__
 		pthread_mutex_unlock(&mutex);
 	#elif __WIN32__ || _MSC_VER || _Windows || __NT__
 		LeaveCriticalSection(&mutex);
 	#endif
 }
-bool Mutex::TryLock() {
+
+bool Mutex::TryLock()
+{
 	#ifdef __unix__
 		return pthread_mutex_trylock(&mutex);
 	#elif __WIN32__ || _MSC_VER || _Windows || __NT__
@@ -38,69 +49,155 @@ bool Mutex::TryLock() {
 }
 
 
-#ifdef __unix__
-	void* ThreadWrapper(void* t) {
-#elif __WIN32__ || _MSC_VER || _Windows || __NT__
-	__cdecl void ThreadWrapper(void* t) {
-#endif
-	Thread* thread = (Thread*)(t);
-	thread->Lock();
-	thread->state = Thread::Initializing;
-	thread->Init();
-	thread->state = Thread::Running;
-	thread->Unlock();
-	thread->RunThread();
-	thread->Lock();
-	thread->state = Thread::Cleaning;
-	thread->Cleanup();
-	thread->state = Thread::Finished;
-	thread->Unlock();
-	#ifdef __unix__
-		return NULL;
-	#endif
-}
+// ============================================================= ConditionVariable
 
-void Thread::Start() {
+
+ConditionVariable::ConditionVariable()
+    : Mutex()
+{
 	#ifdef __unix__
-		pthread_create(&thread, NULL, &ThreadWrapper, this);
-		pthread_detach(thread);
+        pthread_cond_init(&cond, NULL);
 	#elif __WIN32__ || _MSC_VER || _Windows || __NT__
-		thread = _beginthread(ThreadWrapper, 0, this);
 	#endif
 }
 
-void Thread::Terminate() {
-	Lock();
-	if(state == Running) {
-		state = Terminating;
-		#ifdef __unix__
-			pthread_cancel(thread);
-		#elif __WIN32__ || _MSC_VER || _Windows || __NT__
-			TerminateThread((void*)(thread),0);
-		#endif
-		state = Cleaning;
-		Cleanup();
-		state = Terminated;
-	}
+ConditionVariable::~ConditionVariable()
+{
+	#ifdef __unix__
+        pthread_cond_destroy(&cond);
+	#elif __WIN32__ || _MSC_VER || _Windows || __NT__
+	#endif
+}
+
+bool ConditionVariable::Wait()
+{
+	#ifdef __unix__
+        return pthread_cond_wait(&cond,&mutex) == 0;
+	#elif __WIN32__ || _MSC_VER || _Windows || __NT__
+	#endif
+}
+
+void ConditionVariable::Signal()
+{
+    Lock();
+	#ifdef __unix__
+	    pthread_cond_signal(&cond);
+	#elif __WIN32__ || _MSC_VER || _Windows || __NT__
+	#endif
 	Unlock();
 }
 
-Thread::State Thread::GetState() {
-	return state;
+
+// ============================================================= Thread
+
+
+ThreadContext::ThreadContext(Thread* threadObject, void* parameter, ConditionVariable* threadFinishedSignal)
+{
+    this->threadObject = threadObject;
+    this->parameter = parameter;
+    this->threadFinishedSignal = threadFinishedSignal;
 }
 
-Thread::~Thread() {
+
+void ThreadContext::Execute()
+{
+    try
+    {
+        this->threadObject->RunThread(parameter);
+    }
+    catch(...)
+    {
+        if(threadFinishedSignal != NULL)
+            threadFinishedSignal->Signal();
+        throw;
+    }
+
+    if(threadFinishedSignal != NULL)
+        threadFinishedSignal->Signal();
+
+}
+
+
+// ============================================================= Thread
+
+
+
+#ifdef __unix__
+	void* ThreadWrapper(void* t)
+#elif __WIN32__ || _MSC_VER || _Windows || __NT__
+	__cdecl void ThreadWrapper(void* t)
+#endif
+{
+    ThreadContext* threadcontext = (ThreadContext*)(t);
+    try
+    {
+        threadcontext->Execute();
+    }
+    catch(...)
+    {
+        delete threadcontext;
+        throw;
+    }
+
+    delete threadcontext; // instantiated in Thread::Start
+    #ifdef __unix__
+        return NULL;
+        // pthread_exit(NULL);
+    #endif
+}
+
+void Thread::Start(void* parameter, ConditionVariable* threadFinishedSignal)
+{
+    ThreadContext* context = new ThreadContext(this, parameter, threadFinishedSignal); // deleted in ThreadWrapper
+	#ifdef __unix__
+		pthread_create(&thread, NULL, &ThreadWrapper, context);
+		//pthread_detach(thread);
+	#elif __WIN32__ || _MSC_VER || _Windows || __NT__
+		thread = _beginthread(ThreadWrapper, 0, context);
+	#endif
+}
+
+void Thread::Terminate()
+{
+	#ifdef __unix__
+		pthread_cancel(thread);
+	#elif __WIN32__ || _MSC_VER || _Windows || __NT__
+		TerminateThread((void*)(thread),0);
+	#endif
+}
+
+void Thread::TestTermination()
+{
+	#ifdef __unix__
+        pthread_testcancel();
+	#elif __WIN32__ || _MSC_VER || _Windows || __NT__
+	#endif
+}
+
+Thread::~Thread()
+{
 	Terminate();
 }
 
-void Thread::Lock() {
+void Thread::Lock()
+{
 	mutex.Lock();
 }
 
-void Thread::Unlock() {
+void Thread::Unlock()
+{
 	mutex.Unlock();
 }
 
-bool Thread::TryLock() {
+bool Thread::TryLock()
+{
 	return mutex.TryLock();
+}
+
+void Thread::Join()
+{
+	#ifdef __unix__
+        pthread_join(thread, NULL);
+	#elif __WIN32__ || _MSC_VER || _Windows || __NT__
+	#endif
 }

@@ -25,7 +25,7 @@
                                                                  VertexFilter *vertexfilter=NULL, EdgeFilter *edgefilter=NULL);
 
                 protected:
-                    static FactoryRegistrator<Algorithm> AlgorithmPathRegistrator;
+                    static MultiFactoryRegistrator<Algorithm> AlgorithmPathRegistrator;
 
                     void DijkstraInit(Graph& G, std::set<Graph::VertexIterator> &Q, std::map<Graph::VertexIterator, float>& distance, Graph::VertexIterator from);
                     void DijkstraUpdate(Graph::VertexIterator v, Graph::EdgeIterator e, Graph::VertexIterator u, std::map<Graph::VertexIterator, float> &distance,

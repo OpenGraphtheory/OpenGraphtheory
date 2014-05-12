@@ -26,7 +26,7 @@
 
 	class Mutex
 	{
-		private:
+		protected:
 			#ifdef __unix__
 				pthread_mutex_t mutex;
 			#elif __WIN32__ || _MSC_VER || _Windows || __NT__
@@ -41,11 +41,34 @@
 			void Unlock();
 	};
 
-	#ifdef __unix__
-		void* ThreadWrapper(void*);
-	#elif __WIN32__ || _MSC_VER || _Windows || __NT__
-		void ThreadWrapper(void*);
-	#endif
+	class ConditionVariable : public Mutex
+	{
+        protected:
+			#ifdef __unix__
+				pthread_cond_t cond;
+			#elif __WIN32__ || _MSC_VER || _Windows || __NT__
+				//CRITICAL_SECTION mutex;
+			#endif
+        public:
+            ConditionVariable();
+            ~ConditionVariable();
+
+            bool Wait();
+            void Signal();
+	};
+
+
+    class Thread;
+    class ThreadContext
+    {
+        protected:
+            void* parameter;
+            ConditionVariable* threadFinishedSignal;
+            Thread* threadObject;
+        public:
+            ThreadContext(Thread* threadObject, void* parameter, ConditionVariable* threadFinishedSignal);
+            void Execute();
+    };
 
 	class Thread
 	{
@@ -54,25 +77,22 @@
 		#elif __WIN32__ || _MSC_VER || _Windows || __NT__
 			friend void ThreadWrapper(void*);
 		#endif
+		friend class ThreadContext;
 
-		public:
-			enum State {Initializing, Running, Cleaning, Finished, Terminating, Terminated};
 		protected:
 			Mutex mutex;
-			State state;
 			#ifdef __unix__
 				pthread_t thread;
 			#elif __WIN32__ || _MSC_VER || _Windows || __NT__
 				uintptr_t thread;
 			#endif
 
-			virtual void Init() {}
-			virtual void RunThread() = 0;
-			virtual void Cleanup() {}
+			virtual void RunThread(void* parameter) = 0;
+			void Start(void* parameter, ConditionVariable* threadFinishedSignal = NULL);
 		public:
-			void Start();
 			void Terminate();
-			State GetState();
+			void TestTermination();
+			void Join();
 
 			void Lock();
 			void Unlock();

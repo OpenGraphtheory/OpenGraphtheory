@@ -3,6 +3,7 @@
     #define __OPENGRAPHTHEORY_ALGORITHMS_DOMINATINGSET_DOMINATINGSET_TW_H
 
     #include "../algorithm.h"
+    #include "../../set_helper.h"
     #include "../treewidth/treewidth.h"
     #include<string>
     #include<set>
@@ -29,7 +30,7 @@
                         void HandleRootNode(Graph& G, DominatingSetTWData* RootResult, std::vector<std::string> parameters);
 
 
-                        static FactoryRegistrator<Algorithm> AlgorithmDominatingSetTWRegistrator;
+                        static MultiFactoryRegistrator<Algorithm> AlgorithmDominatingSetTWRegistrator;
                     public:
                         AlgorithmDOMINATINGSET_TW();
 

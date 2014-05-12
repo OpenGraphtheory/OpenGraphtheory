@@ -24,7 +24,7 @@
                     static void AddMaximumMatching(Graph &G, std::string MatchingName);
 
                 protected:
-                    static FactoryRegistrator<Algorithm> AlgorithmMaximumMatchingRegistrator;
+                    static MultiFactoryRegistrator<Algorithm> AlgorithmMaximumMatchingRegistrator;
 
                     static bool Augment(Graph& G, std::set<Graph::EdgeIterator>& Matching,
                                             std::map<Graph::VertexIterator, int> ContractionEquivalenceClass);

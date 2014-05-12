@@ -21,7 +21,7 @@
                     static void AddMaximalMatching(Graph &G, std::string MatchingName);
 
                 protected:
-                    static FactoryRegistrator<Algorithm> AlgorithmMaximalMatchingRegistrator;
+                    static MultiFactoryRegistrator<Algorithm> AlgorithmMaximalMatchingRegistrator;
             };
         }
     }

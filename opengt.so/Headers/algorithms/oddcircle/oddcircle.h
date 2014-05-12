@@ -18,7 +18,7 @@
                     static void AddOddCircle(Graph &G, std::string OddCircleName);
                     static bool FindOddCircle(Graph &G, std::list<Graph::VertexIterator>& OddCircle);
                 protected:
-                    static FactoryRegistrator<Algorithm> AlgorithmOddCircleRegistrator;
+                    static MultiFactoryRegistrator<Algorithm> AlgorithmOddCircleRegistrator;
             };
         }
     }

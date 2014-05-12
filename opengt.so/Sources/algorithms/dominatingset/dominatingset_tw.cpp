@@ -12,9 +12,9 @@ namespace OpenGraphtheory
         namespace Treewidth
         {
 
-            FactoryRegistrator<Algorithm> AlgorithmDOMINATINGSET_TW::AlgorithmDominatingSetTWRegistrator(
-                &Algorithm::AlgorithmFactory, "dominatingsettw", new DefaultInstantiator<Algorithm, AlgorithmDOMINATINGSET_TW>(
-                "dominatingsettw", "Adds a dominating set to the graph using the treewidth-based method", "http://en.wikipedia.org/wiki/Dominating_set"));
+            MultiFactoryRegistrator<Algorithm> AlgorithmDOMINATINGSET_TW::AlgorithmDominatingSetTWRegistrator(
+                &Algorithm::AlgorithmFactory, "dominatingset", new DefaultInstantiator<Algorithm, AlgorithmDOMINATINGSET_TW>(
+                "dominatingset", "Adds a dominating set to the graph using the treewidth-based method", "http://en.wikipedia.org/wiki/Dominating_set"));
 
             AlgorithmDOMINATINGSET_TW::AlgorithmDOMINATINGSET_TW()
                 : TreewidthBasedAlgorithm()
@@ -76,16 +76,17 @@ namespace OpenGraphtheory
                 for(DominatingSetTWData::iterator d2 = SubtreeResult2->begin(); d2 != SubtreeResult2->end(); d2++)
                 {
                     bool IsInIntersection = false;
+                    set<Graph::VertexIterator> D;
                     for(DominatingSetTWData::iterator d1 = SubtreeResult1->begin(); d1 != SubtreeResult1->end(); d1++)
                         if(SetHelper::SetsEqual(d1->second, d2->second)
                         && SetHelper::SetsEqual(SetHelper::Intersection(d1->first, Bag), SetHelper::Intersection(d2->first, Bag)))
                         {
                             IsInIntersection = true;
-                            SetHelper::DestructiveUnion(d2->first, d1->first);
+                            D = SetHelper::Union(d2->first, d1->first);
                             break;
                         }
                     if(IsInIntersection)
-                        result->insert(DominatingSetTWData::value_type(d2->first,d2->second));
+                        result->insert(DominatingSetTWData::value_type(D,d2->second));
                 }
 
                 delete SubtreeResult1;

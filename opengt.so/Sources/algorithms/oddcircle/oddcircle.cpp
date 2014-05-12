@@ -9,7 +9,7 @@ namespace OpenGraphtheory
     namespace Algorithms
     {
 
-        FactoryRegistrator<Algorithm> AlgorithmODDCIRCLE::AlgorithmOddCircleRegistrator(
+        MultiFactoryRegistrator<Algorithm> AlgorithmODDCIRCLE::AlgorithmOddCircleRegistrator(
             &Algorithm::AlgorithmFactory, "oddcircle", new DefaultInstantiator<Algorithm, AlgorithmODDCIRCLE>(
             "oddcircle", "Adds an odd circle to the graph", "http://en.wikipedia.org/wiki/Bipartite_graph#Characterization"));
 

@@ -9,7 +9,7 @@ namespace OpenGraphtheory
     namespace Algorithms
     {
 
-        FactoryRegistrator<Algorithm> AlgorithmMINIMUMCUT::AlgorithmMinimumCutRegistrator(
+        MultiFactoryRegistrator<Algorithm> AlgorithmMINIMUMCUT::AlgorithmMinimumCutRegistrator(
             &Algorithm::AlgorithmFactory, "minimumcut", new DefaultInstantiator<Algorithm, AlgorithmMINIMUMCUT>(
             "minimumcut", "Adds a minimum cut to the graph", "http://en.wikipedia.org/wiki/Minimum_cut"));
 

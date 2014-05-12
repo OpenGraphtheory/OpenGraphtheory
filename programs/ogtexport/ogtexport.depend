@@ -61,9 +61,10 @@
 	"factory.h"
 	"simple_xml.h"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/factory.h
+1399470167 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/factory.h
 	<string>
 	<map>
+	<set>
 	"../Sources/factory_templates.cpp"
 
 1396962428 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/export.h
@@ -83,7 +84,7 @@
 
 1398346431 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/color.h
 
-1392029042 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/factory_templates.cpp
+1399470669 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/factory_templates.cpp
 	"../Headers/factory.h"
 
 1396965224 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/stringtranslator.h

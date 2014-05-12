@@ -17,7 +17,7 @@
                 class AlgorithmCLIQUE_TW : public TreewidthBasedAlgorithm<std::set<Graph::VertexIterator> >
                 {
                     protected:
-                        static FactoryRegistrator<Algorithm> AlgorithmCliqueTWRegistrator;
+                        static MultiFactoryRegistrator<Algorithm> AlgorithmCliqueTWRegistrator;
 
                         std::set<Graph::VertexIterator>* HandleLeafNode(Graph& G, Graph::VertexIterator Introduced);
 

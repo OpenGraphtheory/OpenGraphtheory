@@ -9,7 +9,7 @@ namespace OpenGraphtheory
     namespace Algorithms
     {
 
-        FactoryRegistrator<Algorithm> AlgorithmDOMINATINGSET::AlgorithmDominatingSetRegistrator(
+        MultiFactoryRegistrator<Algorithm> AlgorithmDOMINATINGSET::AlgorithmDominatingSetRegistrator(
             &Algorithm::AlgorithmFactory, "dominatingset", new DefaultInstantiator<Algorithm, AlgorithmDOMINATINGSET>(
             "dominatingset", "Adds a dominating set to the graph", "http://en.wikipedia.org/wiki/Dominating_set"));
 
@@ -209,7 +209,7 @@ namespace OpenGraphtheory
         void AlgorithmDOMINATINGSET::Run(Graph &G, vector<string> parameters)
         {
             if(parameters.size() <= 0)
-                return;
+                throw "Dominating-Set Algorithm needs 1 parameter (name of result)";
 
             string DominatingSetName =  parameters[0];
             AddDominatingSet(G, DominatingSetName);

@@ -9,7 +9,7 @@ namespace OpenGraphtheory
     namespace Algorithms
     {
 
-        FactoryRegistrator<Algorithm> AlgorithmCLIQUE::AlgorithmCliqueRegistrator(
+        MultiFactoryRegistrator<Algorithm> AlgorithmCLIQUE::AlgorithmCliqueRegistrator(
             &Algorithm::AlgorithmFactory, "clique", new DefaultInstantiator<Algorithm, AlgorithmCLIQUE>(
             "clique", "Adds a clique to the graph", "http://en.wikipedia.org/wiki/Clique_(graph_theory)"));
 

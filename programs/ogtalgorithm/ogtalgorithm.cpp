@@ -12,42 +12,53 @@ using namespace OpenGraphtheory::Algorithms;
 void usage(char* argv0);
 int main(int argc, char** argv)
 {
-    Algorithm* algo = NULL;
+    set<Algorithm*> algos;
+    int result = 0;
 	try
 	{
 		Graph G;
 		vector<string> parameters;
 		int argvi = 2;
-	    //#define LOADFROMFILE
-	    #ifdef LOADFROMFILE
-        G.LoadFromFile(argv[2]);
-        argvi = 3;
-	    #else
         cin >> G;
-        #endif
+        float MinApproximationQuality = 1.0;
 
 		for(; argvi < argc; argvi++)
-            parameters.push_back(string(argv[argvi]));
+		{
+            if(string(argv[argvi]) == "--quality" && argc > argvi+1)
+            {
+                float temp = atof(argv[++argvi]);
+                if(temp < 1.0f)
+                    temp = 1.0f;
+                MinApproximationQuality = 1.0f / temp;
+            }
+            else
+            {
+                parameters.push_back(string(argv[argvi]));
+            }
+        }
+
 
         if(argc < 2)
             throw "no algorithm selected";
-        algo = Algorithm::AlgorithmFactory.Produce(argv[1]);
-        if(algo == NULL)
-            throw "unknown algorithm";
-        algo->Run(G, parameters);
-        cout << G;
-        delete algo;
+        algos = Algorithm::AlgorithmFactory.Produce(argv[1]);
+
+        Algorithm::RunParallel(algos, G, parameters, MinApproximationQuality);
+        //cout << G;
 	}
 	catch(const char* s)
 	{
 		cerr << argv[0] << " ERROR: " << s << "\n";
 		usage(argv[0]);
-		if(algo != NULL)
-		    delete algo;
-		return 1;
+		result = 1;
 	}
 
-	return 0;
+    while(algos.size() > 0)
+    {
+        delete *(algos.begin());
+        algos.erase(algos.begin());
+    }
+
+	return result;
 }
 
 

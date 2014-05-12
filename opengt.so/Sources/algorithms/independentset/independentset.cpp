@@ -9,10 +9,10 @@ namespace OpenGraphtheory
     namespace Algorithms
     {
 
-        FactoryRegistrator<Algorithm> AlgorithmINDEPENDENTSET::AlgorithmIndependentsetRegistrator(
+        MultiFactoryRegistrator<Algorithm> AlgorithmINDEPENDENTSET::AlgorithmIndependentsetRegistrator(
             &Algorithm::AlgorithmFactory, "independentset", new DefaultInstantiator<Algorithm, AlgorithmINDEPENDENTSET>(
             "independentset", "Adds an independent set to the graph", "http://en.wikipedia.org/wiki/Independent_set_(graph_theory)"));
-        FactoryRegistrator<Algorithm> AlgorithmINDEPENDENTSET::AlgorithmStablesetRegistrator(
+        MultiFactoryRegistrator<Algorithm> AlgorithmINDEPENDENTSET::AlgorithmStablesetRegistrator(
             &Algorithm::AlgorithmFactory, "stableset", new DefaultInstantiator<Algorithm, AlgorithmINDEPENDENTSET>(
             "stableset", "Adds a stable set (also known as independent set) to the graph", "http://en.wikipedia.org/wiki/Independent_set_(graph_theory)"));
 

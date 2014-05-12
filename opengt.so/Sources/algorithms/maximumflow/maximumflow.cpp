@@ -9,7 +9,7 @@ namespace OpenGraphtheory
     namespace Algorithms
     {
 
-        FactoryRegistrator<Algorithm> AlgorithmMAXIMUMFLOW::AlgorithmMaximumFlowRegistrator(
+        MultiFactoryRegistrator<Algorithm> AlgorithmMAXIMUMFLOW::AlgorithmMaximumFlowRegistrator(
             &Algorithm::AlgorithmFactory, "maximumflow", new DefaultInstantiator<Algorithm, AlgorithmMAXIMUMFLOW>(
             "maximumflow", "Adds a maximum flow to the graph", "http://en.wikipedia.org/wiki/Maximum_flow_problem"));
 

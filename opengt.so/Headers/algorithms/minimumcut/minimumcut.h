@@ -28,7 +28,7 @@
                     static void AddMinimumCut(Graph &G, std::string CutName);
 
                 protected:
-                    static FactoryRegistrator<Algorithm> AlgorithmMinimumCutRegistrator;
+                    static MultiFactoryRegistrator<Algorithm> AlgorithmMinimumCutRegistrator;
             };
         }
     }

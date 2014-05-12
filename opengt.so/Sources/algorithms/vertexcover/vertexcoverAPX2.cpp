@@ -8,9 +8,9 @@ namespace OpenGraphtheory
 {
     namespace Algorithms
     {
-        FactoryRegistrator<Algorithm> AlgorithmVERTEXCOVER_APX2::AlgorithmVertexCoverAPX2Registrator(
-            &Algorithm::AlgorithmFactory, "vertexcoverapx2", new DefaultInstantiator<Algorithm, AlgorithmVERTEXCOVER_APX2>(
-            "vertexcoverapx2", "Adds an vertex cover approximation to the graph", "http://en.wikipedia.org/wiki/Vertex_cover"));
+        MultiFactoryRegistrator<Algorithm> AlgorithmVERTEXCOVER_APX2::AlgorithmVertexCoverAPX2Registrator(
+            &Algorithm::AlgorithmFactory, "vertexcover", new DefaultInstantiator<Algorithm, AlgorithmVERTEXCOVER_APX2>(
+            "vertexcover", "Adds an vertex cover approximation to the graph", "http://en.wikipedia.org/wiki/Vertex_cover"));
 
         void AlgorithmVERTEXCOVER_APX2::FindVertexCover(Graph& G, set<Graph::VertexIterator>& VertexCover)
         {
@@ -39,6 +39,11 @@ namespace OpenGraphtheory
 
             string VertexCoverName =  parameters[0];
             AddVertexCover(G, VertexCoverName);
+        }
+
+        float AlgorithmVERTEXCOVER_APX2::ApproximationQuality(const Graph&)
+        {
+            return 0.5;
         }
 
     }

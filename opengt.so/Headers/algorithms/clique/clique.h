@@ -11,7 +11,7 @@
     {
         namespace Algorithms
         {
-            class AlgorithmCLIQUE : public Algorithm
+            class AlgorithmCLIQUE : public ExactAlgorithm
             {
                 public:
                     void Run(Graph &G, std::vector<std::string> parameters);
@@ -19,7 +19,7 @@
                     void AddClique(Graph &G, std::string CliqueName);
 
                 protected:
-                    static FactoryRegistrator<Algorithm> AlgorithmCliqueRegistrator;
+                    static MultiFactoryRegistrator<Algorithm> AlgorithmCliqueRegistrator;
                     bool TestClique(std::set<Graph::VertexIterator>& Clique, std::set<Graph::VertexIterator>& Candidates, unsigned int k, bool CliqueOrIndependentSet = true);
             };
         }

@@ -18,8 +18,8 @@
                     bool FindIndependentSet(Graph& G, std::set<Graph::VertexIterator>& IndependentSet, unsigned int k);
                     void AddIndependentSet(Graph &G, std::string IndependentSetName);
                 protected:
-                    static FactoryRegistrator<Algorithm> AlgorithmIndependentsetRegistrator;
-                    static FactoryRegistrator<Algorithm> AlgorithmStablesetRegistrator;
+                    static MultiFactoryRegistrator<Algorithm> AlgorithmIndependentsetRegistrator;
+                    static MultiFactoryRegistrator<Algorithm> AlgorithmStablesetRegistrator;
 
             };
         }

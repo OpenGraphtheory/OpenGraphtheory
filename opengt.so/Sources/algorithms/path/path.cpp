@@ -12,7 +12,7 @@ namespace OpenGraphtheory
         // Diijkstras Algorithm
         // see http://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
 
-        FactoryRegistrator<Algorithm> AlgorithmPATH::AlgorithmPathRegistrator(
+        MultiFactoryRegistrator<Algorithm> AlgorithmPATH::AlgorithmPathRegistrator(
             &Algorithm::AlgorithmFactory, "path", new DefaultInstantiator<Algorithm, AlgorithmPATH>(
             "path", "Adds a path to the graph", "http://en.wikipedia.org/wiki/Path_%28graph_theory%29"));
 

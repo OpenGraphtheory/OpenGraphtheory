@@ -12,9 +12,9 @@ namespace OpenGraphtheory
         namespace Treewidth
         {
 
-            FactoryRegistrator<Algorithm> AlgorithmCLIQUE_TW::AlgorithmCliqueTWRegistrator(
-                &Algorithm::AlgorithmFactory, "cliquetw", new DefaultInstantiator<Algorithm, AlgorithmCLIQUE_TW>(
-                "cliquetw", "Adds a clique to the graph, using the treewidth-based algorithm", "http://en.wikipedia.org/wiki/Clique_(graph_theory)"));
+            MultiFactoryRegistrator<Algorithm> AlgorithmCLIQUE_TW::AlgorithmCliqueTWRegistrator(
+                &Algorithm::AlgorithmFactory, "clique", new DefaultInstantiator<Algorithm, AlgorithmCLIQUE_TW>(
+                "clique", "Adds a clique to the graph, using the treewidth-based algorithm", "http://en.wikipedia.org/wiki/Clique_(graph_theory)"));
 
 
             AlgorithmCLIQUE_TW::AlgorithmCLIQUE_TW()

@@ -2,8 +2,9 @@
 #ifndef __OPENGRAPHTHEORY_FACTORY_H
     #define __OPENGRAPHTHEORY_FACTORY_H
 
-    #include<string>
-    #include<map>
+    #include <string>
+    #include <map>
+    #include <set>
 
     namespace OpenGraphtheory
     {
@@ -54,6 +55,24 @@
             public:
                 FactoryRegistrator(Factory<T>* factory, std::string name, Instantiator<T>* instantiator);
         };
+
+        template<class T> class MultiFactory
+        {
+            private:
+                std::map<std::string, std::set<Instantiator<T>*> > instantiators;
+            public:
+                ~MultiFactory();
+                void RegisterClass(std::string name, Instantiator<T>* instantiator);
+                std::set<T*> Produce(std::string name);
+                void Enumerate(FactoryEnumerator* enumerator);
+        };
+
+        template<class T> class MultiFactoryRegistrator
+        {
+            public:
+                MultiFactoryRegistrator(MultiFactory<T>* factory, std::string name, Instantiator<T>* instantiator);
+        };
+
 
     }
 

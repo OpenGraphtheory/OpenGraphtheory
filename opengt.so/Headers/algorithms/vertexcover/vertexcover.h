@@ -13,7 +13,7 @@
     {
         namespace Algorithms
         {
-            class AlgorithmVERTEXCOVER : public Algorithm
+            class AlgorithmVERTEXCOVER : public ExactAlgorithm
             {
                 public:
                     void Run(Graph &G, std::vector<std::string> parameters);
@@ -22,7 +22,7 @@
                     static void AddVertexCover(Graph &G, std::string VertexCoverName);
 
                 protected:
-                    static FactoryRegistrator<Algorithm> AlgorithmVertexCoverRegistrator;
+                    static MultiFactoryRegistrator<Algorithm> AlgorithmVertexCoverRegistrator;
                     static bool TestVertexCover(Graph &G,
                                                 std::set<Graph::EdgeIterator>& Uncovered,
                                                 std::set<Graph::VertexIterator>& VertexCover,

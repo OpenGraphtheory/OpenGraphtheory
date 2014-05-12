@@ -9,9 +9,9 @@ namespace OpenGraphtheory
     namespace Algorithms
     {
 
-        FactoryRegistrator<Algorithm> AlgorithmCOLORING::AlgorithmColoringRegistrator(
-            &Algorithm::AlgorithmFactory, "coloring", new DefaultInstantiator<Algorithm, AlgorithmCOLORING>(
-            "coloring", "Adds a legal (vertex-) coloring to the graph", "http://en.wikipedia.org/wiki/Graph_coloring"));
+        MultiFactoryRegistrator<Algorithm> AlgorithmCOLORING::AlgorithmColoringRegistrator(
+            &Algorithm::AlgorithmFactory, "color", new DefaultInstantiator<Algorithm, AlgorithmCOLORING>(
+            "color", "Adds a legal (vertex-) coloring to the graph", "http://en.wikipedia.org/wiki/Graph_coloring"));
 
         bool AlgorithmCOLORING::CompleteColoring(Graph& G, map<Graph::VertexIterator, int>& PreColoring, int k)
         {

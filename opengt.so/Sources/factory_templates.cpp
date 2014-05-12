@@ -78,8 +78,48 @@
         }
 
 
+        // ======================================================================================================================
+
+
+        template<class T> MultiFactory<T>::~MultiFactory()
+        {
+            for(typename std::map<std::string, std::set<Instantiator<T>* > >::iterator i = instantiators.begin(); i != instantiators.end(); i++)
+                for(typename std::set<Instantiator<T>* >::iterator j = i->second.begin(); j != i->second.end(); j++)
+                    delete *j;
+        }
+
+        template<class T> void MultiFactory<T>::RegisterClass(std::string ClassName, Instantiator<T>* instantiator)
+        {
+            instantiators[ClassName].insert(instantiator);
+        }
+
+        template<class T> std::set<T*> MultiFactory<T>::Produce(std::string ClassName)
+        {
+            typename std::map<std::string, std::set<Instantiator<T>* > >::iterator iInstantiators = instantiators.find(ClassName);
+            std::set<T*> result;
+            if(iInstantiators != instantiators.end())
+                for(typename std::set<Instantiator<T>* >::iterator i = iInstantiators->second.begin(); i != iInstantiators->second.end(); i++)
+                    result.insert((*i)->Instantiate());
+            return result;
+        }
+
+        template<class T> void MultiFactory<T>::Enumerate(FactoryEnumerator* enumerator)
+        {
+            for(typename std::map<std::string, std::set<Instantiator<T>* > >::iterator i = instantiators.begin(); i != instantiators.end(); i++)
+                for(typename std::set<Instantiator<T>* >::iterator j = i->second.begin(); j != i->second.end(); j++)
+                    (*j)->Enumerate(enumerator);
+        }
+
+
+        // ======================================================================================================================
+
 
         template<class T> FactoryRegistrator<T>::FactoryRegistrator(Factory<T>* factory, std::string name, Instantiator<T>* instantiator)
+        {
+            factory->RegisterClass(name, instantiator);
+        }
+
+        template<class T> MultiFactoryRegistrator<T>::MultiFactoryRegistrator(MultiFactory<T>* factory, std::string name, Instantiator<T>* instantiator)
         {
             factory->RegisterClass(name, instantiator);
         }

@@ -9,7 +9,7 @@ namespace OpenGraphtheory
     namespace Algorithms
     {
 
-        FactoryRegistrator<Algorithm> AlgorithmMAXIMALMATCHING::AlgorithmMaximalMatchingRegistrator(
+        MultiFactoryRegistrator<Algorithm> AlgorithmMAXIMALMATCHING::AlgorithmMaximalMatchingRegistrator(
             &Algorithm::AlgorithmFactory, "maximalmatching", new DefaultInstantiator<Algorithm, AlgorithmMAXIMALMATCHING>(
             "maximalmatching", "Adds a maximal matching (not necessarily a maximUM matching) to the graph", "http://en.wikipedia.org/wiki/Matching_(graph_theory)"));
 

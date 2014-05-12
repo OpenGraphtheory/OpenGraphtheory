@@ -8,7 +8,7 @@ namespace OpenGraphtheory
 {
     namespace Algorithms
     {
-        FactoryRegistrator<Algorithm> AlgorithmVERTEXCOVER::AlgorithmVertexCoverRegistrator(
+        MultiFactoryRegistrator<Algorithm> AlgorithmVERTEXCOVER::AlgorithmVertexCoverRegistrator(
             &Algorithm::AlgorithmFactory, "vertexcover", new DefaultInstantiator<Algorithm, AlgorithmVERTEXCOVER>(
             "vertexcover", "Adds a vertex cover to the graph", "http://en.wikipedia.org/wiki/Vertex_cover"));
 
@@ -114,7 +114,6 @@ namespace OpenGraphtheory
 
             for(int k = MaximumMatching.size(); k<=G.NumberOfVertices(); k++)
             {
-                cerr << "k = " << k << endl;
                 if(FindVertexCover(G, VertexCover, k))
                     break;
                 VertexCover.clear();

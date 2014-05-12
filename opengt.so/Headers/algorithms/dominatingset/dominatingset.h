@@ -19,7 +19,7 @@
                     void AddDominatingSet(Graph &G, std::string DominatingSetName, bool VerticesCanDominateThemselves = true);
 
                 protected:
-                    static FactoryRegistrator<Algorithm> AlgorithmDominatingSetRegistrator;
+                    static MultiFactoryRegistrator<Algorithm> AlgorithmDominatingSetRegistrator;
                     bool TestDominatingSet(Graph &G,
                                            std::map<Graph::VertexIterator,int>& Dominators, std::set<Graph::VertexIterator>& Undominated,
                                            std::set<Graph::VertexIterator>& Excluded, std::set<Graph::VertexIterator>& DominatingSet,
