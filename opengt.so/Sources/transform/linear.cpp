@@ -29,7 +29,7 @@ namespace OpenGraphtheory
             while(A.size() < B.size())
                 A.push_back(vector<float>(0));
 
-            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+            for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
                 vector<float> OldCoordinates = v.GetCoordinates();
                 vector<float> NewCoordinates = B;

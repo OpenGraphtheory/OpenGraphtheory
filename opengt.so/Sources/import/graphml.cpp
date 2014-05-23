@@ -15,6 +15,9 @@ namespace OpenGraphtheory
                 "graphml", "GraphML", "http://graphml.graphdrawing.org/"));
 
 
+        // hyperedge/endpoint type="in" or type="out" or type="undir" (default: undir)
+
+
         Graph ImportFilterGRAPHML::Import(istream& is)
         {
 			OpenGraphtheory::XML::XML* root = new OpenGraphtheory::XML::XML;
@@ -31,7 +34,7 @@ namespace OpenGraphtheory
 
 
             Graph result;
-            map<string, Graph::VertexIterator*> Vertex_XML_ID_to_pointer;
+            map<string, VertexIterator*> Vertex_XML_ID_to_pointer;
 
             // 0 is the default for directed, by the XGMML standard
             string edgedefault = graphnode->GetAttribute("edgedefault", "");
@@ -50,7 +53,7 @@ namespace OpenGraphtheory
 			for(list<OpenGraphtheory::XML::XML*>::iterator node = nodes.begin(); node != nodes.end(); node++)
 			{
 				/// create vertex
-				Graph::VertexIterator *v = new Graph::VertexIterator(result.AddVertex());
+				VertexIterator *v = new VertexIterator(result.AddVertex());
 
 				/// assign XML-ID
 				string id = (*node)->GetAttribute("id", "");
@@ -67,9 +70,9 @@ namespace OpenGraphtheory
 			for(list<OpenGraphtheory::XML::XML*>::iterator edge = edges.begin(); edge != edges.end(); edge++)
 			{
 				string xmlFrom = (*edge)->GetAttribute("source", "");
-                map<string,Graph::VertexIterator*>::iterator from = Vertex_XML_ID_to_pointer.find(xmlFrom);
+                map<string,VertexIterator*>::iterator from = Vertex_XML_ID_to_pointer.find(xmlFrom);
 				string xmlTo = (*edge)->GetAttribute("target", "");
-                map<string,Graph::VertexIterator*>::iterator to = Vertex_XML_ID_to_pointer.find(xmlTo);
+                map<string,VertexIterator*>::iterator to = Vertex_XML_ID_to_pointer.find(xmlTo);
                 if(from == Vertex_XML_ID_to_pointer.end() || to == Vertex_XML_ID_to_pointer.end())
 					throw "edge with reference to nonexisting node-id";
 
@@ -81,7 +84,7 @@ namespace OpenGraphtheory
                 else if(directed == "false")
                     Directed = false;
 
-				Graph::EdgeIterator e;
+				EdgeIterator e;
 				if(Directed)
                     e = result.AddArc(*(from->second), *(to->second));
                 else
@@ -93,7 +96,7 @@ namespace OpenGraphtheory
 				*/
             }
 
-            for(map<string, Graph::VertexIterator*>::iterator i = Vertex_XML_ID_to_pointer.begin(); i != Vertex_XML_ID_to_pointer.end(); i++)
+            for(map<string, VertexIterator*>::iterator i = Vertex_XML_ID_to_pointer.begin(); i != Vertex_XML_ID_to_pointer.end(); i++)
                 delete i->second;
 			delete root;
 			return result;

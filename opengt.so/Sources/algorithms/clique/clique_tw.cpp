@@ -18,11 +18,11 @@ namespace OpenGraphtheory
 
 
             AlgorithmCLIQUE_TW::AlgorithmCLIQUE_TW()
-                : TreewidthBasedAlgorithm<set<Graph::VertexIterator> >()
+                : TreewidthBasedAlgorithm<VertexSet>()
             {
             }
 
-            bool BagClique(set<Graph::VertexIterator>& Candidates, set<Graph::VertexIterator>::iterator candidate, set<Graph::VertexIterator>& temp, int k)
+            bool BagClique(VertexSet& Candidates, VertexIterator candidate, VertexSet& temp, int k)
             {
                 if(k<=0)
                     return true;
@@ -30,8 +30,8 @@ namespace OpenGraphtheory
                 for(; candidate != Candidates.end(); candidate++)
                 {
                     bool legal = true;
-                    for(set<Graph::VertexIterator>::iterator i = temp.begin(); i != temp.end(); i++)
-                        if(!candidate->UnderlyingAdjacent(*i))
+                    for(VertexIterator i = temp.begin(); i != temp.end(); i++)
+                        if(!(*candidate)->UnderlyingAdjacent(*i))
                         {
                             legal=false;
                             break;
@@ -40,7 +40,7 @@ namespace OpenGraphtheory
                         continue;
 
                     temp.insert(*candidate);
-                    set<Graph::VertexIterator>::iterator candidate1 = candidate;
+                    VertexIterator candidate1 = candidate;
                     candidate1++;
 
                     if(BagClique(Candidates, candidate1, temp, k-1))
@@ -51,27 +51,27 @@ namespace OpenGraphtheory
                 return false;
             }
 
-            set<Graph::VertexIterator>* AlgorithmCLIQUE_TW::HandleLeafNode(Graph& G, Graph::VertexIterator IntroducedNode)
+            VertexSet* AlgorithmCLIQUE_TW::HandleLeafNode(Graph& G, VertexIterator IntroducedNode)
             {
-                set<Graph::VertexIterator>* result = new set<Graph::VertexIterator>;
-                result->insert(IntroducedNode);
+                VertexSet* result = new VertexSet;
+                result->insert(*IntroducedNode);
                 return result;
             }
 
-            set<Graph::VertexIterator>* AlgorithmCLIQUE_TW::HandleIntroduceNode(Graph& G, set<Graph::VertexIterator>* SubtreeResult, set<Graph::VertexIterator>& Bag, Graph::VertexIterator IntroducedNode)
+            VertexSet* AlgorithmCLIQUE_TW::HandleIntroduceNode(Graph& G, VertexSet* SubtreeResult, VertexSet& Bag, VertexIterator IntroducedNode)
             {
-                set<Graph::VertexIterator> Candidates;
-                for(set<Graph::VertexIterator>::iterator i = Bag.begin(); i != Bag.end(); i++)
-                    if( i->UnderlyingAdjacent(IntroducedNode) )
+                VertexSet Candidates;
+                for(VertexIterator i = Bag.begin(); i != Bag.end(); i++)
+                    if( (*i)->UnderlyingAdjacent(*IntroducedNode) )
                         Candidates.insert(*i);
 
                 if(SubtreeResult->size() >= Candidates.size())
                     return SubtreeResult;
 
 
-                set<Graph::VertexIterator>* BagResult = new set<Graph::VertexIterator>;
-                set<Graph::VertexIterator> temp;
-                temp.insert(IntroducedNode);
+                VertexSet* BagResult = new VertexSet;
+                VertexSet temp;
+                temp.insert(*IntroducedNode);
                 for(unsigned int k = SubtreeResult->size(); k < Candidates.size(); k++)
                     if(BagClique(Candidates, Candidates.begin(), temp, k))
                         (*BagResult) = temp;
@@ -79,24 +79,24 @@ namespace OpenGraphtheory
                         break;
 
 
-                set<Graph::VertexIterator>* result = SubtreeResult->size() > BagResult->size() ? SubtreeResult : BagResult;
+                VertexSet* result = SubtreeResult->size() > BagResult->size() ? SubtreeResult : BagResult;
                 delete (result == SubtreeResult ? BagResult : SubtreeResult);
                 return result;
             }
 
-            set<Graph::VertexIterator>* AlgorithmCLIQUE_TW::HandleForgetNode(Graph& G, set<Graph::VertexIterator>* SubtreeResult, set<Graph::VertexIterator>& Bag, Graph::VertexIterator ForgottenNode)
+            VertexSet* AlgorithmCLIQUE_TW::HandleForgetNode(Graph& G, VertexSet* SubtreeResult, VertexSet& Bag, VertexIterator ForgottenNode)
             {
                 return SubtreeResult;
             }
 
-            set<Graph::VertexIterator>* AlgorithmCLIQUE_TW::HandleJoinNode(Graph& G, set<Graph::VertexIterator>* SubtreeResult1, set<Graph::VertexIterator>* SubtreeResult2, set<Graph::VertexIterator>& Bag)
+            VertexSet* AlgorithmCLIQUE_TW::HandleJoinNode(Graph& G, VertexSet* SubtreeResult1, VertexSet* SubtreeResult2, VertexSet& Bag)
             {
-                set<Graph::VertexIterator>* result = SubtreeResult1->size() > SubtreeResult2->size() ? SubtreeResult1 : SubtreeResult2;
+                VertexSet* result = SubtreeResult1->size() > SubtreeResult2->size() ? SubtreeResult1 : SubtreeResult2;
                 delete (result == SubtreeResult1 ? SubtreeResult2 : SubtreeResult1);
                 return result;
             }
 
-            void AlgorithmCLIQUE_TW::HandleRootNode(Graph& G, set<Graph::VertexIterator>* RootResult, vector<string> parameters)
+            void AlgorithmCLIQUE_TW::HandleRootNode(Graph& G, VertexSet* RootResult, vector<string> parameters)
             {
                 if(parameters.size() < 1)
                     throw "Clique Algorithm needs 1 parameter (name of result)";

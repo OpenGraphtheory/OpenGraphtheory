@@ -17,7 +17,7 @@
             {
                 public:
                     void Run(Graph &G, std::vector<std::string> parameters);
-                    static void FindVertexCover(Graph& G, std::set<Graph::VertexIterator>& VertexCover);
+                    static void FindVertexCover(Graph& G, VertexSet& VertexCover);
                     static void AddVertexCover(Graph &G, std::string VertexCoverName);
 
                     float ApproximationQuality(const Graph& G);

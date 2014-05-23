@@ -27,7 +27,7 @@
                     ~TikzContext();
 
                     Graph* G;
-                    std::map<std::string, Graph::VertexIterator> nodes;
+                    std::map<std::string, VertexIterator> nodes;
                     OpenGraphtheory::Visualization::Color PenColor;
                     OpenGraphtheory::Visualization::Color BrushColor;
             };

@@ -15,44 +15,39 @@ namespace OpenGraphtheory
 
 
 
-        bool AlgorithmMAXIMUMFLOW::FindAugmentingPath(Graph &G, Graph::VertexIterator Source, Graph::VertexIterator Drain,
-                                                   map<Graph::EdgeIterator, float>& Capacities,
-                                                   map<Graph::EdgeIterator, float>& Flow,
-                                                   vector<Graph::EdgeIterator>& AugmentingPath)
+        bool AlgorithmMAXIMUMFLOW::FindAugmentingPath(Graph &G, Vertex* Source, Vertex* Drain, EdgeWeighting& Capacities,
+                                                   EdgeWeighting& Flow, vector<Edge*>& AugmentingPath)
         {
-            map<Graph::VertexIterator, Graph::VertexIterator> Predecessor;
-            map<Graph::VertexIterator, Graph::EdgeIterator> EdgeToPredecessor;
-            set<Graph::VertexIterator> LastRound;
-            set<Graph::VertexIterator> NextRound;
+            map<Vertex*, Vertex*> Predecessor;
+            map<Vertex*, Edge*> EdgeToPredecessor;
+            VertexSet LastRound;
+            VertexSet NextRound;
             LastRound.insert(Source);
             while(LastRound.find(Drain) == LastRound.end() && !LastRound.empty())
             {
-                for(set<Graph::VertexIterator>::iterator vi = LastRound.begin(); vi != LastRound.end(); vi++)
+                for(VertexIterator v = LastRound.begin(); v != LastRound.end(); v++)
                 {
-                    Graph::VertexIterator v = *vi;
-                    set<Graph::EdgeIterator> posincident = v.CollectIncidentEdges(0,1,0);
-                    for(set<Graph::EdgeIterator>::iterator ei = posincident.begin(); ei != posincident.end(); ei++)
+                    EdgeSet posincident = (*v)->CollectIncidentEdges(0,1,0);
+                    for(EdgeIterator e = posincident.begin(); e != posincident.end(); e++)
                     {
-                        Graph::EdgeIterator e = *ei;
-                        if(Capacities[e] > Flow[e]
-                           && Predecessor.find(e.To()) == Predecessor.end())
+                        if(Capacities[*e] > Flow[*e]
+                        && Predecessor.find((*e)->To()) == Predecessor.end())
                         {
-                            NextRound.insert(e.To());
-                            Predecessor[e.To()] = v;
-                            EdgeToPredecessor[e.To()] = e;
+                            NextRound.insert((*e)->To());
+                            Predecessor[(*e)->To()] = *v;
+                            EdgeToPredecessor[(*e)->To()] = *e;
                         }
                     }
 
-                    set<Graph::EdgeIterator> negincident = v.CollectIncidentEdges(0,0,1);
-                    for(set<Graph::EdgeIterator>::iterator ei = negincident.begin(); ei != negincident.end(); ei++)
+                    EdgeSet negincident = (*v)->CollectIncidentEdges(0,0,1);
+                    for(EdgeIterator e = negincident.begin(); e != negincident.end(); e++)
                     {
-                        Graph::EdgeIterator e = *ei;
-                        if(Flow[e] > 0
-                           && Predecessor.find(e.From()) == Predecessor.end())
+                        if(Flow[*e] > 0
+                           && Predecessor.find((*e)->From()) == Predecessor.end())
                         {
-                            NextRound.insert(e.From());
-                            Predecessor[e.From()] = v;
-                            EdgeToPredecessor[e.From()] = e;
+                            NextRound.insert((*e)->From());
+                            Predecessor[(*e)->From()] = *v;
+                            EdgeToPredecessor[(*e)->From()] = *e;
                         }
                     }
                 }
@@ -65,69 +60,68 @@ namespace OpenGraphtheory
                 return false;
 
             AugmentingPath.clear();
-            for(Graph::VertexIterator v = Drain; v != Source; v = Predecessor[v])
+            for(Vertex* v = Drain; v != Source; v = Predecessor[v])
                 AugmentingPath.insert(AugmentingPath.begin(), EdgeToPredecessor[v]);
             return true;
         }
 
 
-        void AlgorithmMAXIMUMFLOW::FindMaximumFlow(Graph &G, Graph::VertexIterator Source, Graph::VertexIterator Drain,
-                                                   map<Graph::EdgeIterator, float>& Capacities,
-                                                   map<Graph::EdgeIterator, float>& Flow)
+        void AlgorithmMAXIMUMFLOW::FindMaximumFlow(Graph &G, Vertex* Source, Vertex* Drain,
+                                                   EdgeWeighting& Capacities, EdgeWeighting& Flow)
         {
-            vector<Graph::EdgeIterator> AugmentingPath;
+            vector<Edge*> AugmentingPath;
 
             while(FindAugmentingPath(G, Source, Drain, Capacities, Flow, AugmentingPath))
             {
                 float Augmentation = 0;
-                for(vector<Graph::EdgeIterator>::iterator i = AugmentingPath.begin(); i != AugmentingPath.end(); i++)
+                for(vector<Edge*>::iterator i = AugmentingPath.begin(); i != AugmentingPath.end(); i++)
                     Augmentation += Capacities[*i] + Flow[*i];
 
                 // Find out how much the flow can be augmented
-                Graph::VertexIterator v = Source;
-                for(vector<Graph::EdgeIterator>::iterator i = AugmentingPath.begin(); i != AugmentingPath.end(); i++)
+                Vertex* v = Source;
+                for(vector<Edge*>::iterator i = AugmentingPath.begin(); i != AugmentingPath.end(); i++)
                 {
-                    if(v == i->From()) // Forward-Arc
+                    if(v == (*i)->From()) // Forward-Arc
                     {
                         if(Capacities[*i] - Flow[*i] < Augmentation)
                             Augmentation = Capacities[*i] - Flow[*i];
-                        v = i->To();
+                        v = (*i)->To();
                     }
                     else // Backward-Arc
                     {
                         if(Flow[*i] < Augmentation)
                             Augmentation = Flow[*i];
-                        v = i->From();
+                        v = (*i)->From();
                     }
                 }
 
                 // augment the flow
                 v = Source;
-                for(vector<Graph::EdgeIterator>::iterator i = AugmentingPath.begin(); i != AugmentingPath.end(); i++)
+                for(vector<Edge*>::iterator i = AugmentingPath.begin(); i != AugmentingPath.end(); i++)
                 {
-                    if(v == i->From()) // Forward-Arc
+                    if(v == (*i)->From()) // Forward-Arc
                     {
                         Flow[*i] += Augmentation;
-                        v = i->To();
+                        v = (*i)->To();
                     }
                     else // Backward-Arc
                     {
                         Flow[*i] -= Augmentation;
-                        v = i->From();
+                        v = (*i)->From();
                     }
                 }
             }
         }
 
 
-        void AlgorithmMAXIMUMFLOW::AddMaximumFlow(Graph &G, Graph::VertexIterator Source, Graph::VertexIterator Drain,
-                                                   map<Graph::EdgeIterator, float>& Capacities, string FlowName)
+        void AlgorithmMAXIMUMFLOW::AddMaximumFlow(Graph &G, Vertex* Source, Vertex* Drain,
+                                                  EdgeWeighting& Capacities, string FlowName)
         {
-            map<Graph::EdgeIterator, float> Flow;
-            for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
-                Flow[e] = 0;
+            EdgeWeighting Flow;
+            for(EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
+                Flow[*e] = 0;
             FindMaximumFlow(G, Source, Drain, Capacities, Flow);
-            G.AddEdgeWeight(Flow, FlowName);
+            G.AddEdgeWeighting(Flow, FlowName);
         }
 
 
@@ -141,36 +135,36 @@ namespace OpenGraphtheory
             string MaximumFlowName = parameters[2];
             string CapacitiesName = parameters.size() > 3 ? parameters[3] : "";
 
-            Graph::VertexIterator Source = G.EndVertices();
-            Graph::VertexIterator Drain = G.EndVertices();
-            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+            VertexIterator Source = G.EndVertices();
+            VertexIterator Drain = G.EndVertices();
+            for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                if(SourceName == v.GetLabel())
+                if(SourceName == (*v)->GetLabel())
                     Source = v;
-                if(DrainName == v.GetLabel())
+                if(DrainName == (*v)->GetLabel())
                     Drain = v;
             }
 
-            map<Graph::EdgeIterator, float> Capacities;
-            for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
+            EdgeWeighting Capacities;
+            for(EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
             {
                 if(CapacitiesName != "")
                 {
-                    Attribute* attr = e.Attributes().GetAttribute(CapacitiesName);
+                    Attribute* attr = (*e)->GetAttribute(CapacitiesName);
                     FloatAttribute* fattr = dynamic_cast<FloatAttribute*>(attr);
                     if(fattr != NULL)
-                        Capacities[e] = fattr->Value;
+                        Capacities[*e] = fattr->Value;
                     else
-                        Capacities[e] = 0;
+                        Capacities[*e] = 0;
                 }
                 else
                 {
-                    Capacities[e] = e.GetWeight();
+                    Capacities[*e] = (*e)->GetWeight();
                 }
             }
 
             if(Source != G.EndVertices() && Drain != G.EndVertices())
-                AddMaximumFlow(G, Source, Drain, Capacities, MaximumFlowName);
+                AddMaximumFlow(G, *Source, *Drain, Capacities, MaximumFlowName);
         }
 
     }

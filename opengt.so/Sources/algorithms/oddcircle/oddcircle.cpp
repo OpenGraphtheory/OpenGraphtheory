@@ -15,21 +15,21 @@ namespace OpenGraphtheory
 
         // need to store the edges between a vertex and its predecessor
 
-        bool AlgorithmODDCIRCLE::FindOddCircle(Graph &G, list<Graph::VertexIterator>& OddCircle)
+        bool AlgorithmODDCIRCLE::FindOddCircle(Graph &G, list<Vertex*>& OddCircle)
         {
-            set<Graph::VertexIterator> Q;
-            map<Graph::VertexIterator, pair<Graph::VertexIterator,Graph::EdgeIterator>* > path;
-            map<Graph::VertexIterator, int> coloring;
-            list<Graph::VertexIterator> queue;
+            VertexSet Q;
+            map<Vertex*, pair<Vertex*,Edge*>* > path;
+            VertexPartitioning coloring;
+            list<Vertex*> queue;
 
             bool ClashFound = false;
-            Graph::VertexIterator BipartitionClash1, BipartitionClash2, BipartitionClashRoot;
+            Vertex *BipartitionClash1, *BipartitionClash2, *BipartitionClashRoot;
 
 
-            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+            for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                Q.insert(v);
-                coloring[v] = 0;
+                Q.insert(*v);
+                coloring[*v] = 0;
             }
 
 
@@ -38,22 +38,22 @@ namespace OpenGraphtheory
                 queue.push_back(*(Q.begin()));
                 coloring[*(Q.begin())] = 1;
                 path[*(Q.begin())] = NULL;
-                Q.erase(Q.begin());
+                Q.erase(*(Q.begin()));
 
                 while(queue.size() > 0 && !ClashFound)
                 {
-                    Graph::VertexIterator front = *(queue.begin());
+                    Vertex* front = *(queue.begin());
                     queue.pop_front();
                     int neighbor_color = (coloring[front] == 1 ? 2 : 1);
 
-                    set<Graph::VertexIterator> neighbors = front.CollectNeighbors(1,1,1,1,1,1,1,1,1);
+                    VertexSet neighbors = front->CollectNeighbors(1,1,1,1,1,1,1,1,1);
                     neighbors.erase(front); // just in case
-                    for(set<Graph::VertexIterator>::iterator n = neighbors.begin(); n != neighbors.end() && !ClashFound; n++)
+                    for(VertexIterator n = neighbors.begin(); n != neighbors.end() && !ClashFound; n++)
                     {
                         if(coloring[*n] == 0)
                         {
                             coloring[*n] = neighbor_color;
-                            path[*n] = new pair<Graph::VertexIterator,Graph::EdgeIterator>(front, G.EndEdges());
+                            path[*n] = new pair<Vertex*,Edge*>(front, *G.EndEdges());
                             queue.push_back(*n);
                             Q.erase(*n);
                         }
@@ -70,28 +70,28 @@ namespace OpenGraphtheory
 
             if(ClashFound)
             {
-                set<Graph::VertexIterator> Path1;
-                Graph::VertexIterator p1 = BipartitionClash1;
+                VertexSet Path1;
+                Vertex* p1 = BipartitionClash1;
                 while(true)
                 {
                     Path1.insert(p1);
-                    pair<Graph::VertexIterator,Graph::EdgeIterator>* p1pred = path[p1];
+                    pair<Vertex*,Edge*>* p1pred = path[p1];
                     if(p1pred == NULL)
                         break;
                     p1 = p1pred->first;
                 }
 
-                Graph::VertexIterator p2 = BipartitionClash2;
+                Vertex* p2 = BipartitionClash2;
                 while(true)
                 {
                     OddCircle.push_back(p2);
-                    if(Path1.find(p2) != Path1.end())
+                    if(Path1.contains(p2))
                     {
                         BipartitionClashRoot = p2;
                         break;
                     }
 
-                    pair<Graph::VertexIterator,Graph::EdgeIterator>* p2pred = path[p2];
+                    pair<Vertex*,Edge*>* p2pred = path[p2];
                     if(p2pred == NULL)
                         break;
                     p2 = p2pred->first;
@@ -101,25 +101,25 @@ namespace OpenGraphtheory
                 while(p1 != BipartitionClashRoot)
                 {
                     OddCircle.push_front(p1);
-                    pair<Graph::VertexIterator,Graph::EdgeIterator>* p1pred = path[p1];
+                    pair<Vertex*,Edge*>* p1pred = path[p1];
                     if(p1pred == NULL)
                         break;
                     p1 = p1pred->first;
                 }
             }
 
-            for(map<Graph::VertexIterator, pair<Graph::VertexIterator,Graph::EdgeIterator>* >::iterator i = path.begin(); i != path.end(); i++)
+            for(map<Vertex*, pair<Vertex*,Edge*>* >::iterator i = path.begin(); i != path.end(); i++)
                 delete i->second;
             return ClashFound;
         }
 
         void AlgorithmODDCIRCLE::AddOddCircle(Graph &G, std::string OddCircleName)
         {
-            list<Graph::VertexIterator> OddCircle;
+            list<Vertex*> OddCircle;
             if(FindOddCircle(G, OddCircle))
             {
-                set<Graph::VertexIterator> as_set;
-                for(list<Graph::VertexIterator>::iterator i = OddCircle.begin(); i != OddCircle.end(); i++)
+                VertexSet as_set;
+                for(list<Vertex*>::iterator i = OddCircle.begin(); i != OddCircle.end(); i++)
                     as_set.insert(*i);
                 G.AddVertexSet(as_set, OddCircleName);
             }

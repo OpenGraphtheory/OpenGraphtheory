@@ -10,15 +10,15 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportFilterGASTEX::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring,
-                   map<Graph::EdgeIterator, Color>& edgecoloring, float dpi, float edgewidth, float vertexradius)
+        void ExportFilterGASTEX::Export(Graph& G, ostream& os, VertexColoring& vertexcoloring,
+                   EdgeColoring& edgecoloring, float dpi, float edgewidth, float vertexradius)
         {
             if(G.IsHypergraph())
                 throw "The GasTeX fileformat doesn\'t support hypergraphs\n";
 
-            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+            for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                vector<float> coordinates = v.GetCoordinates();
+                vector<float> coordinates = (*v)->GetCoordinates();
                 if(coordinates.size() < 2)
                     throw "Vertex with less than 2 coordinates found";
             }
@@ -33,16 +33,16 @@ namespace OpenGraphtheory
             os << "\\begin{picture}(100,100)(0,0)\n";
 
             /// write vertices
-            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+            for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                vector<float> coordinates = v.GetCoordinates();
-                os << "  \\node(n" << v.GetID() << ")(" << coordinates[0] << "," << coordinates[1] << "){" << Translator.Translate(v.GetLabel()) << "}\n";
+                vector<float> coordinates = (*v)->GetCoordinates();
+                os << "  \\node(n" << (*v)->GetID() << ")(" << coordinates[0] << "," << coordinates[1] << "){" << Translator.Translate((*v)->GetLabel()) << "}\n";
             }
 
             /// write edges
-            for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
-                os << "  \\drawedge" << (e.IsEdge()?"[AHnb=0]":"")
-                   << "(n" << e.From().GetID() << ",n" << e.To().GetID() << "){" << Translator.Translate(e.GetLabel()) << "}\n";
+            for(EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
+                os << "  \\drawedge" << ((*e)->IsEdge()?"[AHnb=0]":"")
+                   << "(n" << (*e)->From()->GetID() << ",n" << (*e)->To()->GetID() << "){" << Translator.Translate((*e)->GetLabel()) << "}\n";
 
             os << "\\end{picture}\n";
             os << "%\\end{document}\n";

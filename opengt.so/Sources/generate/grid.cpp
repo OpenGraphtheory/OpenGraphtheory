@@ -30,15 +30,15 @@ namespace OpenGraphtheory
 	    {
             Graph result;
 
-            list<Graph::VertexIterator> CurrentColumn;
-            list<Graph::VertexIterator> LastColumn;
-            list<Graph::VertexIterator>::iterator LastColumnIterator;
+            list<VertexIterator> CurrentColumn;
+            list<VertexIterator> LastColumn;
+            list<VertexIterator>::iterator LastColumnIterator;
             for(int x = 0; x < w; x++)
             {
-                Graph::VertexIterator LastVertex;
+                VertexIterator LastVertex;
                 for(int y = 0; y < h; y++)
                 {
-                    Graph::VertexIterator CurrentVertex = result.AddVertex(x*25, y*25);
+                    VertexIterator CurrentVertex = result.AddVertex(x*25, y*25);
                     if(y > 0)
                         result.AddEdge(LastVertex, CurrentVertex);
 

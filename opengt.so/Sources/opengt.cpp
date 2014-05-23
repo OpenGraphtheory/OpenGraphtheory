@@ -10,66 +10,133 @@ namespace OpenGraphtheory
 	int Graph::Edge_IDs = 0;
 
 
+	Factory<GraphObject> GraphObject::GraphObjectFactory;
+    FactoryRegistrator<GraphObject> Graph::GraphRegistrator(
+        &GraphObject::GraphObjectFactory, "graph", new DefaultInstantiator<GraphObject, Graph>("graph", "", ""));
+    FactoryRegistrator<GraphObject> Vertex::VertexRegistrator(
+        &GraphObject::GraphObjectFactory, "node", new DefaultInstantiator<GraphObject, Vertex>("node", "", ""));
+    FactoryRegistrator<GraphObject> Edge::EdgeRegistrator(
+        &GraphObject::GraphObjectFactory, "edge", new DefaultInstantiator<GraphObject, Graph>("edge", "", ""));
+    FactoryRegistrator<GraphObject> Edge::RelRegistrator(
+        &GraphObject::GraphObjectFactory, "rel", new DefaultInstantiator<GraphObject, Graph>("rel", "", ""));
+
+
 	/// \defgroup constructorsdestructors ''Constructors, Destructors and low-level Methods''
 	// @{
 
-		/// \brief Vertex Constructor (protected, accessible for class "Graph")
-		Graph::Vertex::Vertex(Graph* owner, vector<float> coordinates, string label, float weight)
-		{
+		/// \brief GraphObject Constructor (abstract base class for Graphs, Vertices and Edges)
+        GraphObject::GraphObject()
+        {
+            attributes = NULL; // this makes sure we don't get into an undefined state, if the allocation fails
 		    attributes = new AttributeCollection();
-			Owner = owner;
-			Coordinates = coordinates;
-			Label = label;
-			Weight = weight;
-		}
-		Graph::Vertex::~Vertex()
+        }
+
+		/// \brief GraphObject Destructor
+        GraphObject::~GraphObject()
+        {
+            if(attributes != NULL)
+                delete attributes;
+        }
+
+
+		/// \brief Vertex Constructor (protected, accessible for class "Graph")
+		Vertex::Vertex(Graph* owner)
+            : GraphObject()
 		{
-		    delete attributes;
+			Owner = owner;
 		}
+
+		/// \brief Vertex Destructor
+		Vertex::~Vertex()
+		{
+		}
+
 
 		/// \brief Edge Constructor (protected, accessible for class "Graph")
-		Graph::Edge::Edge(Graph* owner, string label, float weight)
+		Edge::Edge(Graph* owner)
+            : GraphObject()
 		{
-		    attributes = new AttributeCollection();
 			Owner = owner;
-			Label = label;
-			Weight = weight;
-		}
-		Graph::Edge::~Edge()
-		{
-		    delete attributes;
 		}
 
-		/// \brief Graph Destructor
-		Graph::~Graph()
+		/// \brief Vertex Destructor
+		Edge::~Edge()
 		{
-			Clear();
-			delete attributes;
 		}
+
 
 		/// \brief Graph Constructor, creates a graph with "size" vertices
 		Graph::Graph(int size)
+            : GraphObject()
 		{
-		    attributes = new AttributeCollection();
+			Vertices = NULL;
+			Edges = NULL;
+			Vertex_ID_to_pointer = NULL;
+			Edge_ID_to_pointer = NULL;
+
+			Vertices = new VertexSet;
+			Edges = new EdgeSet;
+			Vertex_ID_to_pointer = new map<int, VertexIterator>;
+			Edge_ID_to_pointer = new map<int, EdgeIterator>;
+
 			for(int i = 0; i < size; i++)
 				AddVertex();
 		}
 
 		/// \brief Graph Copy-Constructor
 		Graph::Graph(const Graph& G)
+            : GraphObject()
 		{
-		    attributes = new AttributeCollection();
 			operator=(G);
 		}
 
+		#if __cplusplus >= 201103L
+		Graph::Graph(Graph&& G)
+            : GraphObject()
+		{
+			this->attributes = G.attributes;
+			this->Vertices = G.Vertices;
+			this->Edges = G.Edges;
+            this->Vertex_ID_to_pointer = G.Vertex_ID_to_pointer;
+            this->Edge_ID_to_pointer = G.Edge_ID_to_pointer;
+
+			G.attributes = NULL;
+			G.vertices = NULL;
+			G.edges = NULL;
+			G.Vertex_ID_to_pointer = NULL;
+			G.Edge_ID_to_pointer = NULL;
+
+			#error Owner der Vertices & Edges wird nicht umgesetzt
+		}
+		#endif
+
+		/// \brief Graph Destructor
+		Graph::~Graph()
+		{
+			Clear();
+
+			if(Vertices != NULL)
+                delete Vertices;
+			if(Edges != NULL)
+                delete Edges;
+			if(Vertex_ID_to_pointer != NULL)
+                delete Vertex_ID_to_pointer;
+			if(Edge_ID_to_pointer != NULL)
+                delete Edge_ID_to_pointer;
+        }
+
         int Graph::NumberOfVertices() const
         {
-            return Vertices.size();
+            if(Vertices == NULL)
+                return 0;
+            return Vertices->size();
         }
 
         int Graph::NumberOfEdges() const
         {
-            return Edges.size();
+            if(Edges == NULL)
+                return 0;
+            return Edges->size();
         }
 
         /// \brief Operator to copy a graph
@@ -77,71 +144,36 @@ namespace OpenGraphtheory
         {
             Clear();
 
-            Label = G.GetLabel();
             *attributes = *(G.attributes);
 
             /// copy vertices
-            for(list<Graph::Vertex*>::const_iterator v = G.Vertices.begin(); v != G.Vertices.end(); v++)
+            for(ConstVertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                Graph::VertexIterator vnew = InternalAddVertex((*v)->Coordinates, (*v)->Label, (*v)->Weight, (*v)->ID);
-                vnew.Attributes() = *((*v)->attributes);
+                VertexIterator vnew = InternalAddVertex((*v)->ID);
+                vnew.attributes = *((*v)->attributes);
             }
 
             /// copy edges
-            for(list<Graph::Edge*>::const_iterator e = G.Edges.begin(); e != G.Edges.end(); e++)
+            for(ConstEdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
             {
-                list<Graph::Vertex*> OwnIncident;
-                for(list<Graph::Vertex*>::const_iterator j = (*e)->IncidentVertices.begin(); j != (*e)->IncidentVertices.end(); j++)
-                    OwnIncident.push_back(Vertex_ID_to_pointer[(*j)->ID]);
-
-                list<Graph::Vertex*> OwnPosIncident;
-                for(list<Graph::Vertex*>::const_iterator j = (*e)->PositiveIncidentVertices.begin(); j != (*e)->PositiveIncidentVertices.end(); j++)
-                    OwnPosIncident.push_back(Vertex_ID_to_pointer[(*j)->ID]);
-
-                list<Graph::Vertex*> OwnNegIncident;
-                for(list<Graph::Vertex*>::const_iterator j = (*e)->NegativeIncidentVertices.begin(); j != (*e)->NegativeIncidentVertices.end(); j++)
-                    OwnNegIncident.push_back(Vertex_ID_to_pointer[(*j)->ID]);
-
-                Graph::EdgeIterator enew = InternalAddEdge(OwnIncident, OwnNegIncident, OwnPosIncident, (*e)->Label, (*e)->Weight, (*e)->ID);
-                enew.Attributes() = *((*e)->attributes);
+                EdgeIterator ne = InternalAddEdge(NULL, NULL, true, (*e)->GetID());
+                for(ConstVertexEdgeConnectionIterator conn = (*e)->BeginConnections(); conn != (*e)->EndConnections(); conn++)
+                {
+                    (*ne)->AddConnection(Vertex_ID_to_pointer[(*conn)->GetVertex()->GetID()], (*conn)->GetDirection());
+                }
+                (*ne)->attributes = *((*e)->attributes);
             }
         }
 
         /// \brief Remove all vertices and edges
         void Graph::Clear()
         {
-            attributes->Clear();
-            for(set<VertexIterator*>::iterator i = VIterators.begin(); i != VIterators.end(); i++)
-                (*i)->Owner = NULL;
-            for(set<VertexIterator*>::iterator i = VIterators.begin(); i != VIterators.end(); i++)
-                (*i)->Owner = NULL;
+            GraphObject::Clear();
 
-            while(Edges.size() > 0)
-                RemoveEdge(*(Edges.begin()));
-            while(Vertices.size() > 0)
-                RemoveVertex(*(Vertices.begin()));
-        }
-
-        /// \brief Internal method: extract pointer to actual Vertex object from iterator
-        Graph::Vertex* Graph::VertexIteratorToPointer(const Graph::VertexIterator& i)
-        {
-            if(i.Owner == this)
-                return *(i.position);
-            map<int,Vertex*>::iterator j = Vertex_ID_to_pointer.find(i.ID);
-            if(j == Vertex_ID_to_pointer.end())
-                throw "Tried to access a Vertex that is not in the Graph";
-            return j->second;
-        }
-
-        /// \brief Internal method: extract pointer to actual Edge object from iterator
-        Graph::Edge* Graph::EdgeIteratorToPointer(const Graph::EdgeIterator& i)
-        {
-            if(i.Owner == this)
-                return *(i.position);
-            map<int,Edge*>::iterator j = Edge_ID_to_pointer.find(i.ID);
-            if(j == Edge_ID_to_pointer.end())
-                throw "Tried to access an Edge that is not in the Graph";
-            return j->second;
+            while(NumberOfEdges() > 0)
+                RemoveEdge(BeginEdges());
+            while(NumberOfVertices() > 0)
+                RemoveVertex(BeginVertices());
         }
 
 	// @}
@@ -155,344 +187,170 @@ namespace OpenGraphtheory
         // @{
 
             /// \brief Test whether the Vertex is adjacent to the given vertex
-            bool Graph::Vertex::Adjacent(const Graph::Vertex* to) const
+            bool Vertex::Adjacent(const Vertex* to) const
             {
-                for(list<Graph::Edge*>::const_iterator it = IncidentEdges.begin(); it != IncidentEdges.end(); it++)
-                    if((*it)->Incident(to))
+                for(ConstVertexEdgeConnectionIterator it = Connections.begin(); it != Connections.end(); it++)
+                    if((*it)->GetEdge()->Incident(to))
                         return true;
                 return false;
             }
 
-            bool Graph::Vertex::UnderlyingAdjacent(const Graph::Vertex* to) const
+            bool Vertex::UnderlyingAdjacent(const Vertex* to) const
             {
-                for(list<Graph::Edge*>::const_iterator it = IncidentEdges.begin(); it != IncidentEdges.end(); it++)
-                    if((*it)->Incident(to,1,1,1))
-                        return true;
-                for(list<Graph::Edge*>::const_iterator it = PositiveIncidentEdges.begin(); it != PositiveIncidentEdges.end(); it++)
-                    if((*it)->Incident(to,1,1,1))
-                        return true;
-                for(list<Graph::Edge*>::const_iterator it = NegativeIncidentEdges.begin(); it != NegativeIncidentEdges.end(); it++)
+                for(VertexEdgeConnectionSet::const_iterator it = Connections.begin(); it != Connections.end(); it++)
                     if((*it)->Incident(to,1,1,1))
                         return true;
                 return false;
             }
 
-            set<Graph::VertexIterator> Graph::VertexIterator::CollectNeighbors(
+            VertexSet Vertex::CollectNeighbors(
                     bool UndirectedToUndirected, bool UndirectedToPositive, bool UndirectedToNegative,
                     bool PositiveToUndirected,   bool PositiveToPositive,   bool PositiveToNegative,
                     bool NegativeToUndirected,   bool NegativeToPositive,   bool NegativeToNegative)
             {
-                set<Graph::VertexIterator> result;
+                VertexSet result;
 
-                if(UndirectedToUndirected || UndirectedToPositive || UndirectedToNegative)
-                    for(Graph::EdgeIterator e = BeginIncidentEdges(); e != EndIncidentEdges(); e++)
-                    {
-                        bool FoundMyself = false;
-                        if(UndirectedToUndirected)
-                            for(Graph::VertexIterator neighbor = e.BeginIncidentVertices(); neighbor != e.EndIncidentVertices(); neighbor++)
-                            {
-                                if(neighbor == *this && !FoundMyself)
-                                    FoundMyself = true;
-                                else
-                                    result.insert(neighbor);
-                            }
-                        if(UndirectedToPositive)
-                            for(Graph::VertexIterator neighbor = e.BeginPositiveIncidentVertices(); neighbor != e.EndPositiveIncidentVertices(); neighbor++)
-                                result.insert(neighbor);
-                        if(UndirectedToNegative)
-                            for(Graph::VertexIterator neighbor = e.BeginNegativeIncidentVertices(); neighbor != e.EndNegativeIncidentVertices(); neighbor++)
-                                result.insert(neighbor);
-                    }
+                for(VertexEdgeConnectionIterator v2e = BeginConnections(); v2e != EndConnections(); v2e++)
+                {
+                    VertexEdgeConnection v2edirection = (*v2e)->GetDirection();
+                    if(!(
+                        ((UndirectedToUndirected || UndirectedToNegative || UndirectedToPositive) && v2edirection == VertexEdgeConnection::Undirected)
+                        ||((PositiveToUndirected || PositiveToNegative || PositiveToPositive) && v2edirection == VertexEdgeConnection::VertexToEdge)
+                        ||((NegativeToUndirected || NegativeToNegative || NegativeToPositive) && v2edirection == VertexEdgeConnection::EdgeToVertex)
+                    ))
+                        continue;
+                    Edge* e = (*v2e)->GetEdge();
 
-                if(PositiveToUndirected || PositiveToPositive || PositiveToNegative)
-                    for(Graph::EdgeIterator e = BeginPositiveIncidentEdges(); e != EndPositiveIncidentEdges(); e++)
+                    for(VertexEdgeConnectionIterator e2v = e->BeginConnections(); e2v != e->EndConnections(); e2v++)
                     {
-                        bool FoundMyself = false;
-                        if(PositiveToUndirected)
-                            for(Graph::VertexIterator neighbor = e.BeginIncidentVertices(); neighbor != e.EndIncidentVertices(); neighbor++)
-                                result.insert(neighbor);
-                        if(PositiveToPositive)
-                            for(Graph::VertexIterator neighbor = e.BeginPositiveIncidentVertices(); neighbor != e.EndPositiveIncidentVertices(); neighbor++)
-                                result.insert(neighbor);
-                        if(PositiveToNegative)
-                            for(Graph::VertexIterator neighbor = e.BeginNegativeIncidentVertices(); neighbor != e.EndNegativeIncidentVertices(); neighbor++)
-                            {
-                                if(neighbor == *this && !FoundMyself)
-                                    FoundMyself = true;
-                                else
-                                    result.insert(neighbor);
-                            }
-                    }
+                        VertexEdgeConnection e2vdirection = (*e2v)->GetDirection();
 
-                if(NegativeToUndirected || NegativeToPositive || NegativeToNegative)
-                    for(Graph::EdgeIterator e = BeginNegativeIncidentEdges(); e != EndNegativeIncidentEdges(); e++)
-                    {
-                        bool FoundMyself = false;
-                        if(NegativeToUndirected)
-                            for(Graph::VertexIterator neighbor = e.BeginIncidentVertices(); neighbor != e.EndIncidentVertices(); neighbor++)
-                                result.insert(neighbor);
-                        if(NegativeToPositive)
-                            for(Graph::VertexIterator neighbor = e.BeginPositiveIncidentVertices(); neighbor != e.EndPositiveIncidentVertices(); neighbor++)
-                            {
-                                if(neighbor == *this && !FoundMyself)
-                                    FoundMyself = true;
-                                else
-                                    result.insert(neighbor);
-                            }
-                        if(NegativeToNegative)
-                            for(Graph::VertexIterator neighbor = e.BeginNegativeIncidentVertices(); neighbor != e.EndNegativeIncidentVertices(); neighbor++)
-                                result.insert(neighbor);
+                        bool Addable = false;
+                        switch(v2edirection)
+                        {
+                            case  VertexEdgeConnection::Undirected:
+                                switch(e2vdirection)
+                                {
+                                    case VertexEdgeConnection::Undirected: Addable = UndirectedToUndirected; break;
+                                    case VertexEdgeConnection::VertexToEdge: Addable = UndirectedToNegative; break;
+                                    case VertexEdgeConnection::EdgeToVertex: Addable = UndirectedToPositive; break;
+                                    default: throw "illegal direction value";
+                                }
+                                break;
+                            case  VertexEdgeConnection::VertexToEdge:
+                                switch(e2vdirection)
+                                {
+                                    case VertexEdgeConnection::Undirected: Addable = PositiveToUndirected; break;
+                                    case VertexEdgeConnection::VertexToEdge: Addable = PositiveToNegative; break;
+                                    case VertexEdgeConnection::EdgeToVertex: Addable = PositiveToPositive; break;
+                                    default: throw "illegal direction value";
+                                }
+                                break;
+                            case  VertexEdgeConnection::EdgeToVertex:
+                                switch(e2vdirection)
+                                {
+                                    case VertexEdgeConnection::Undirected: Addable = NegativeToUndirected; break;
+                                    case VertexEdgeConnection::VertexToEdge: Addable = NegativeToNegative; break;
+                                    case VertexEdgeConnection::EdgeToVertex: Addable = NegativeToPositive; break;
+                                    default: throw "illegal direction value";
+                                }
+                                break;
+                            default: throw "illegal direction value";
+                        }
+
+                        if(Addable)
+                            result.insert((*e2v)->GetVertex());
                     }
+                }
+
                 return result;
             }
 
-            set<Graph::EdgeIterator> Graph::VertexIterator::CollectIncidentEdges(
-                    bool Undirected, bool Positive, bool Negative)
+            EdgeSet Vertex::CollectIncidentEdges(bool Undirected, bool VertexToEdge, bool EdgeToVertex)
             {
-                set<Graph::EdgeIterator> result;
-                if(Undirected)
-                    for(Graph::EdgeIterator e = this->BeginIncidentEdges(); e != EndIncidentEdges(); e++)
-                        result.insert(e);
-                if(Positive)
-                    for(Graph::EdgeIterator e = this->BeginPositiveIncidentEdges(); e != EndPositiveIncidentEdges(); e++)
-                        result.insert(e);
-                if(Negative)
-                    for(Graph::EdgeIterator e = this->BeginNegativeIncidentEdges(); e != EndNegativeIncidentEdges(); e++)
-                        result.insert(e);
+                EdgeSet result;
+                for(VertexEdgeConnectionIterator c = Connections.begin(); c != Connections.end(); c++)
+                {
+                    if((VertexToEdge && (*c)->GetDirection() == VertexEdgeConnection::VertexToEdge)
+                       || (EdgeToVertex && (*c)->GetDirection() == VertexEdgeConnection::EdgeToVertex)
+                       || (Undirected && (*c)->GetDirection() == VertexEdgeConnection::Undirected))
+                        result.insert((*c)->GetEdge());
+                }
                 return result;
             }
 
-            set<Graph::VertexIterator> Graph::EdgeIterator::CollectIncidentVertices(
-                    bool Undirected, bool Positive, bool Negative)
+            VertexSet Edge::CollectIncidentVertices(bool Undirected, bool EdgeToVertex, bool VertexToEdge)
             {
-                set<Graph::VertexIterator> result;
-                if(Undirected)
-                    for(Graph::VertexIterator v = this->BeginIncidentVertices(); v != EndIncidentVertices(); v++)
-                        result.insert(v);
-                if(Positive)
-                    for(Graph::VertexIterator v = this->BeginPositiveIncidentVertices(); v != EndPositiveIncidentVertices(); v++)
-                        result.insert(v);
-                if(Negative)
-                    for(Graph::VertexIterator v = this->BeginNegativeIncidentVertices(); v != EndNegativeIncidentVertices(); v++)
-                        result.insert(v);
+                VertexSet result;
+                for(VertexEdgeConnectionIterator conn = BeginConnections(); conn != EndConnections(); conn++)
+                {
+                    if((Undirected && (*conn)->GetDirection() == VertexEdgeConnection::Undirected)
+                    ||(EdgeToVertex && (*conn)->GetDirection() == VertexEdgeConnection::EdgeToVertex)
+                    ||(VertexToEdge && (*conn)->GetDirection() == VertexEdgeConnection::VertexToEdge))
+                        result.insert((*conn)->GetVertex());
+                }
                 return result;
             }
 
 
-            set<Graph::VertexIterator> Graph::VertexIterator::UnderlyingNeighborhood()
+            VertexSet Vertex::UnderlyingNeighborhood()
             {
                 return CollectNeighbors(true,true,true, true,true,true, true,true,true);
             }
 
-            set<Graph::VertexIterator> Graph::VertexIterator::Successors()
+            VertexSet Vertex::Successors()
             {
                 return CollectNeighbors(false,false,false, false,true,false, false,false,false);
             }
 
-            set<Graph::VertexIterator> Graph::VertexIterator::Predecessors()
+            VertexSet Vertex::Predecessors()
             {
                 return CollectNeighbors(false,false,false, false,false,false, false,false,true);
             }
 
-            void Graph::VertexIterator::WriteToXml(OpenGraphtheory::XML::XML* xml)
-            {
-                OpenGraphtheory::XML::XML* node = new OpenGraphtheory::XML::XML("node");
-                stringstream s;
-                s << "v" << GetID();
-                node->AddAttribute("id", s.str());
 
-                // Label
-                OpenGraphtheory::XML::XML* name = new OpenGraphtheory::XML::XML("attr");
-                name->AddAttribute("name", "name");
-                OpenGraphtheory::XML::XML* str = new OpenGraphtheory::XML::XML("string");
-                str->AddChild(new OpenGraphtheory::XML::XML_Text(GetLabel()));
-                name->AddChild(str);
-                node->AddChild(name);
 
-                // Coordinates
-                vector<float> coordinates = GetCoordinates();
-                if(coordinates.size() > 0)
-                {
-                    OpenGraphtheory::XML::XML* coords = new OpenGraphtheory::XML::XML("attr");
-                    coords->AddAttribute("name", "coordinates");
-                    OpenGraphtheory::XML::XML* seq = new OpenGraphtheory::XML::XML("seq");
 
-                    for(unsigned int i = 0; i < coordinates.size(); i++)
-                    {
-                        OpenGraphtheory::XML::XML* flt = new OpenGraphtheory::XML::XML("float");
-                        stringstream s;
-                        s << coordinates[i];
-                        flt->AddChild(new OpenGraphtheory::XML::XML_Text(s.str()));
-                        seq->AddChild(flt);
-                    }
-                    coords->AddChild(seq);
-                    node->AddChild(coords);
-                }
-
-                // weight
-                OpenGraphtheory::XML::XML* weight = new OpenGraphtheory::XML::XML("attr");
-                weight->AddAttribute("name", "weight");
-                OpenGraphtheory::XML::XML* flt = new OpenGraphtheory::XML::XML("float");
-                stringstream t;
-                t << GetWeight();
-                flt->AddChild(new OpenGraphtheory::XML::XML_Text(t.str()));
-                weight->AddChild(flt);
-                node->AddChild(weight);
-
-                // arbitrary attributes
-                Attributes().WriteToXml(node);
-                xml->AddChild(node);
-            }
-
-            /// \brief Test whether the Vertex is adjacent to the given vertex
-            bool Graph::VertexIterator::Adjacent(const Graph::VertexIterator& to) const
-            {
-                Vertex* v = Owner->VertexIteratorToPointer(to);
-                return (*position)->Adjacent(v);
-            }
-
-            /// \brief Test whether the Vertex is adjacent to the given vertex
-            bool Graph::VertexIterator::UnderlyingAdjacent(const Graph::VertexIterator& to) const
-            {
-                Vertex* v = Owner->VertexIteratorToPointer(to);
-                return (*position)->UnderlyingAdjacent(v);
-            }
-
-            Graph::EdgeIterator Graph::VertexIterator::GetEdge(const Graph::VertexIterator& to,
+            Edge* Vertex::GetEdge(Vertex* to,
                     bool UndirectedToUndirected, bool UndirectedToPositive, bool UndirectedToNegative,
                     bool PositiveToUndirected,   bool PositiveToPositive,   bool PositiveToNegative,
                     bool NegativeToUndirected,   bool NegativeToPositive,   bool NegativeToNegative)
 
             {
                 if(UndirectedToUndirected || UndirectedToPositive || UndirectedToNegative)
-                    for(Graph::EdgeIterator e = BeginIncidentEdges(); e != EndIncidentEdges(); e++)
+                    for(EdgeIterator e = BeginIncidentEdges(); e != EndIncidentEdges(); e++)
                         if(e.Incident(to,UndirectedToUndirected, UndirectedToPositive, UndirectedToNegative))
                             return e;
 
                 if(PositiveToUndirected || PositiveToPositive || PositiveToNegative)
-                    for(Graph::EdgeIterator e = BeginPositiveIncidentEdges(); e != EndPositiveIncidentEdges(); e++)
+                    for(EdgeIterator e = BeginPositiveIncidentEdges(); e != EndPositiveIncidentEdges(); e++)
                         if(e.Incident(to,PositiveToUndirected, PositiveToPositive, PositiveToNegative))
                             return e;
 
                 if(NegativeToUndirected || NegativeToPositive || NegativeToNegative)
-                    for(Graph::EdgeIterator e = BeginNegativeIncidentEdges(); e != EndNegativeIncidentEdges(); e++)
+                    for(EdgeIterator e = BeginNegativeIncidentEdges(); e != EndNegativeIncidentEdges(); e++)
                         if(e.Incident(to,NegativeToUndirected, NegativeToPositive, NegativeToNegative))
                             return e;
 
                 return Owner->EndEdges();
             }
 
-
-
-            void Graph::EdgeIterator::WriteToXml(OpenGraphtheory::XML::XML* xml)
-            {
-				string ClosingTag = "</edge>\n";
-				OpenGraphtheory::XML::XML* edge;
-				if(!IsHyperedge())
-				{
-				    edge = new OpenGraphtheory::XML::XML("edge");
-
-				    stringstream id;
-                    id << "e" << GetID();
-                    edge->AddAttribute("id", id.str());
-
-				    stringstream from;
-				    from << "v" << From().GetID();
-				    edge->AddAttribute("from", from.str());
-
-				    stringstream to;
-				    to << "v" << To().GetID();
-				    edge->AddAttribute("to", to.str());
-
-				    edge->AddAttribute("isdirected", IsUndirected() ? "false" : "true");
-                }
-				else
-				{
-				    edge = new OpenGraphtheory::XML::XML("rel");
-
-                    stringstream id;
-                    id << "e" << GetID();
-                    edge->AddAttribute("id", id.str());
-
-					for(VertexIterator j = BeginIncidentVertices(); j != EndIncidentVertices(); j++)
-					{
-					    OpenGraphtheory::XML::XML* relend = new OpenGraphtheory::XML::XML("relend");
-					    stringstream target;
-					    target << "v" << j.GetID();
-					    relend->AddAttribute("target", target.str());
-					    relend->AddAttribute("direction", "none");
-					    edge->AddChild(relend);
-					}
-					for(VertexIterator j = BeginPositiveIncidentVertices(); j != EndPositiveIncidentVertices(); j++)
-					{
-					    OpenGraphtheory::XML::XML* relend = new OpenGraphtheory::XML::XML("relend");
-					    stringstream target;
-					    target << "v" << j.GetID();
-					    relend->AddAttribute("target", target.str());
-					    relend->AddAttribute("direction", "out");
-					    edge->AddChild(relend);
-					}
-					for(VertexIterator j = BeginNegativeIncidentVertices(); j != EndNegativeIncidentVertices(); j++)
-					{
-					    OpenGraphtheory::XML::XML* relend = new OpenGraphtheory::XML::XML("relend");
-					    stringstream target;
-					    target << "v" << j.GetID();
-					    relend->AddAttribute("target", target.str());
-					    relend->AddAttribute("direction", "in");
-					    edge->AddChild(relend);
-					}
-				}
-
-                // Label
-                OpenGraphtheory::XML::XML* name = new OpenGraphtheory::XML::XML("attr");
-                name->AddAttribute("name", "name");
-                OpenGraphtheory::XML::XML* str = new OpenGraphtheory::XML::XML("string");
-                str->AddChild(new OpenGraphtheory::XML::XML_Text(GetLabel()));
-                name->AddChild(str);
-                edge->AddChild(name);
-
-                // weight
-                OpenGraphtheory::XML::XML* weight = new OpenGraphtheory::XML::XML("attr");
-                weight->AddAttribute("name", "weight");
-                OpenGraphtheory::XML::XML* flt = new OpenGraphtheory::XML::XML("float");
-                stringstream sweight;
-                sweight << GetWeight();
-                flt->AddChild(new OpenGraphtheory::XML::XML_Text(sweight.str()));
-                weight->AddChild(flt);
-                edge->AddChild(weight);
-
-                // arbitrary attributes
-                Attributes().WriteToXml(edge);
-                xml->AddChild(edge);
-            }
-
             /// \brief Test whether the Edge is incident to the given vertex
-            bool Graph::Edge::Incident(const Graph::Vertex* to, bool Undirected, bool Positive, bool Negative) const
+            bool Edge::Incident(const Vertex* to, bool Undirected, bool Positive, bool Negative) const
             {
-                if(Undirected)
-                    for(list<Graph::Vertex*>::const_iterator it = IncidentVertices.begin(); it != IncidentVertices.end(); it++)
-                        if(*it == to)
-                            return true;
-                if(Positive)
-                    for(list<Graph::Vertex*>::const_iterator it = PositiveIncidentVertices.begin(); it != PositiveIncidentVertices.end(); it++)
-                        if(*it == to)
-                            return true;
-                if(Negative)
-                    for(list<Graph::Vertex*>::const_iterator it = NegativeIncidentVertices.begin(); it != NegativeIncidentVertices.end(); it++)
-                        if(*it == to)
-                            return true;
-
+                for(ConstVertexEdgeConnectionIterator conn = BeginConnections(); conn != EndConnections(); conn++)
+                {
+                    VertexEdgeConnection::Direction dir = (*conn)->GetDirection();
+                    if((  (dir == VertexEdgeConnection::Undirected && Undirected)
+                        ||(dir == VertexEdgeConnection::EdgeToVertex && Undirected)
+                        ||(dir == VertexEdgeConnection::VertexToEdge && Undirected)
+                        ) && to == (*conn)->GetVertex())
+                        return true;
+                }
                 return false;
             }
 
-            /// \brief Test whether the Edge is incident to the given vertex
-            bool Graph::EdgeIterator::Incident(const Graph::VertexIterator& to, bool Undirected, bool Positive, bool Negative) const
-            {
-                Vertex* v = Owner->VertexIteratorToPointer(to);
-                return (*position)->Incident(v, Undirected, Positive, Negative);
-            }
-
-            bool Graph::EdgeIterator::UnderlyingIncident(const Graph::VertexIterator& to) const
+            bool Edge::UnderlyingIncident(const Vertex* to) const
             {
                 return Incident(to, 1, 1, 1);
             }
@@ -500,38 +358,39 @@ namespace OpenGraphtheory
         // @}
 
 
+
         /// \defgroup directedundirected ''Directed, Undirected, Mixed''
         // @{
 
             /// \brief Test whether the edge is undirected (has no directed connections)
-            bool Graph::EdgeIterator::IsUndirected()
+            bool Edge::IsUndirected()
             {
-                Edge* e = *position;
-                return e->PositiveIncidentVertices.size() == 0
-                    && e->NegativeIncidentVertices.size() == 0;
+                for(VertexEdgeConnectionIterator conn = BeginConnections(); conn != EndConnections(); conn++)
+                    if((*conn)->GetDirection() != VertexEdgeConnection::Undirected)
+                        return false;
+                return true;
             }
 
             /// \brief Test whether the graph has no directed edges
             bool Graph::IsUndirected()
             {
                 for(EdgeIterator e = BeginEdges(); e != EndEdges(); e++)
-                    if(!e.IsUndirected())
+                    if(!(*e)->IsUndirected())
                         return false;
                 return true;
             }
 
             /// \brief Test whether the edge is directed (has no undirected connections)
-            bool Graph::EdgeIterator::IsDirected()
+            bool Edge::IsDirected()
             {
-                Edge* e = *position;
-                return e->IncidentVertices.size() == 0;
+                return !IsUndirected();
             }
 
             /// \brief Test whether the graph has no undirected edges
             bool Graph::IsDirected()
             {
                 for(EdgeIterator e = BeginEdges(); e != EndEdges(); e++)
-                    if(!e.IsDirected())
+                    if(!(*e)->IsDirected())
                         return false;
                 return true;
             }
@@ -549,17 +408,17 @@ namespace OpenGraphtheory
         // @{
 
             /// \brief Test whether the Edge is an undirected loop
-            bool Graph::EdgeIterator::IsUndirectedLoop()
+            bool Edge::IsUndirectedLoop()
             {
-                Edge* e = *position;
-                if(e->IncidentVertices.size() == 2
-                    && e->PositiveIncidentVertices.size() == 0
-                    && e->NegativeIncidentVertices.size() == 0)
-                    {
-                        list<Graph::Vertex*>::iterator v1 = e->IncidentVertices.begin();
-                        v1++;
-                        return *v1 == *(e->IncidentVertices.begin());
-                    }
+                if(NumberOfConnections() == 2)
+                {
+                    VertexEdgeConnectionIterator v1 = BeginConnections();
+                    VertexEdgeConnectionIterator v2 = v1+1;
+                    if((*v1)->GetDirection() == VertexEdgeConnection::Undirected
+                        && (*v2)->GetDirection() == VertexEdgeConnection::Undirected
+                        && (*v1)->GetVertex() == (*v2)->GetVertex())
+                        return true;
+                }
                 return false;
             }
 
@@ -567,32 +426,41 @@ namespace OpenGraphtheory
             bool Graph::HasUndirectedLoops()
             {
                 for(EdgeIterator e = BeginEdges(); e != EndEdges(); e++)
-                    if(e.IsUndirectedLoop())
+                    if((*e)->IsUndirectedLoop())
                         return true;
                 return false;
             }
 
             /// \brief Test whether the Edge is a directed loop
-            bool Graph::EdgeIterator::IsDirectedLoop()
+            bool EdgeIterator::IsDirectedLoop()
             {
-                Edge* e = *position;
-                return (e->IncidentVertices.size() == 0
-                    && e->PositiveIncidentVertices.size() == 1
-                    && e->NegativeIncidentVertices.size() == 1
-                    && *(e->PositiveIncidentVertices.begin()) == *(e->NegativeIncidentVertices.begin()));
+                if(NumberOfConnections() == 2)
+                {
+                    VertexEdgeConnectionIterator v1 = BeginConnections();
+                    VertexEdgeConnectionIterator v2 = v1+1;
+                    if((*v1)->GetDirection() == VertexEdgeConnection::VertexToEdge
+                        && (*v2)->GetDirection() == VertexEdgeConnection::EdgeToVertex
+                        && (*v1)->GetVertex() == (*v2)->GetVertex())
+                        return true;
+                    if((*v1)->GetDirection() == VertexEdgeConnection::EdgeToVertex
+                        && (*v2)->GetDirection() == VertexEdgeConnection::VertexToEdge
+                        && (*v1)->GetVertex() == (*v2)->GetVertex())
+                        return true;
+                }
+                return false;
             }
 
             /// \brief Test whether the graph contains a directed loop
             bool Graph::HasDirectedLoops()
             {
                 for(EdgeIterator e = BeginEdges(); e != EndEdges(); e++)
-                    if(e.IsDirectedLoop())
+                    if((*e)->IsDirectedLoop())
                         return true;
                 return false;
             }
 
             /// \brief Test whether the Edge is a loop
-            bool Graph::EdgeIterator::IsLoop()
+            bool EdgeIterator::IsLoop()
             {
                 return IsUndirectedLoop() || IsDirectedLoop();
             }
@@ -600,8 +468,8 @@ namespace OpenGraphtheory
             /// \brief Test whether the graph contains a loop
             bool Graph::HasLoops()
             {
-                for(Graph::EdgeIterator e = BeginEdges(); e != EndEdges(); e++)
-                    if(e.IsLoop())
+                for(EdgeIterator e = BeginEdges(); e != EndEdges(); e++)
+                    if((*e)->IsLoop())
                         return true;
                 return false;
             }
@@ -621,64 +489,87 @@ namespace OpenGraphtheory
             /// \brief Test whether the graph contains no loops
             bool Graph::IsMixedMultigraph()
             {
-                return IsMixed() &&!HasLoops();
+                return IsMixed() && !HasLoops();
+            }
+
+            bool Graph::IsSimpleGraph()
+            {
+                // ! HasParallelEdges
+                return !IsHypergraph() && IsMultigraph();
+            }
+
+            bool Graph::IsSimpleDigraph()
+            {
+                // ! HasParallelEdges
+                return !IsHypergraph() && IsMultiDigraph();
             }
 
         // @}
 
 
-		/// TODO: Test whether the graph
-		bool Graph::IsSimpleGraph() {return false;}
-
-
-        bool Graph::EdgeIterator::IsEdge()
+        bool Edge::IsEdge()
         {
-            return (*position)->IncidentVertices.size() == 2
-				&& (*position)->PositiveIncidentVertices.size() == 0
-				&& (*position)->NegativeIncidentVertices.size() == 0;
+            if(NumberOfConnections() == 2)
+            {
+                VertexEdgeConnectionIterator v1 = BeginConnections();
+                VertexEdgeConnectionIterator v2 = v1+1;
+                if((*v1)->GetDirection() == VertexEdgeConnection::Undirected
+                    && (*v2)->GetDirection() == VertexEdgeConnection::Undirected)
+                    return true;
+            }
+            return false;
         }
 
-        bool Graph::EdgeIterator::IsArc()
+        bool Edge::IsArc()
         {
-            return (*position)->IncidentVertices.size() == 0
-				&& (*position)->PositiveIncidentVertices.size() == 1
-				&& (*position)->NegativeIncidentVertices.size() == 1;
+            if(NumberOfConnections() == 2)
+            {
+                VertexEdgeConnectionIterator v1 = BeginConnections();
+                VertexEdgeConnectionIterator v2 = v1+1;
+                if(
+                     (
+                         (*v1)->GetDirection() == VertexEdgeConnection::VertexToEdge
+                      && (*v2)->GetDirection() == VertexEdgeConnection::EdgeToVertex
+                     )
+                  ||
+                     (
+                         (*v1)->GetDirection() == VertexEdgeConnection::EdgeToVertex
+                      && (*v2)->GetDirection() == VertexEdgeConnection::VertexToEdge
+                     )
+                  )
+                    return true;
+            }
+            return false;
         }
 
 		/// \brief Test whether the EdgeIterator points to a hyperedge
-		bool Graph::EdgeIterator::IsHyperedge()
+		bool Edge::IsHyperedge()
 		{
-			if( (*position)->IncidentVertices.size() > 0 )
-			{
-				return (*position)->IncidentVertices.size() > 2
-					|| (*position)->NegativeIncidentVertices.size() != 0
-					|| (*position)->PositiveIncidentVertices.size() != 0;
-			}
-			else
-			{
-				return (*position)->NegativeIncidentVertices.size() != 1
-					|| (*position)->PositiveIncidentVertices.size() != 1;
-			}
+			return !IsEdge() && !IsArc();
 		}
 
 		/// \brief Test whether the graph contains at least one hyperedge
 		bool Graph::IsHypergraph()
 		{
 			for(EdgeIterator e = BeginEdges(); e != EndEdges(); e++)
-				if(e.IsHyperedge())
+				if((*e)->IsHyperedge())
 					return true;
-
 			return false;
+		}
+
+		bool Graph::IsUndirectedHypergraph()
+		{
+		    return IsHypergraph() && IsUndirected();
 		}
 
 		bool Graph::IsHyperDigraph()
 		{
-		    return false;
+		    return IsHypergraph() && IsDirected();
 		}
 
 		bool Graph::IsMixedHypergraph()
 		{
-		    return false;
+		    return IsHypergraph() && IsMixed();
 		}
 
 	// @}
@@ -687,120 +578,130 @@ namespace OpenGraphtheory
 	/// \defgroup attributemanagement ''Managing Attributes''
 	// @{
 
-        void Graph::AddVertexSet(std::set<Graph::VertexIterator> V, string name)
+        void Graph::AddVertexSet(VertexSet& V, string name)
         {
             for(VertexIterator v = BeginVertices(); v != EndVertices(); v++)
             {
-                v.Attributes().Unset(name);
-                v.Attributes().Add(name, "bool");
-                Attribute* attr = v.Attributes().GetAttribute(name);
+                (*v)->RemoveAttribute(name);
+                Attribute* attr = (*v)->AddAttribute(name, "bool");
                 BoolAttribute* battr = dynamic_cast<BoolAttribute*>(attr);
                 if(battr != NULL)
-                    battr->Value = (V.find(v) != V.end());
+                    battr->Value = (V.contains(*v));
             }
         }
 
-        void Graph::AddEdgeSet(std::set<Graph::EdgeIterator> E, string name)
+        void Graph::AddEdgeSet(EdgeSet& E, string name)
         {
             for(EdgeIterator e = BeginEdges(); e != EndEdges(); e++)
             {
-                e.Attributes().Unset(name);
-                e.Attributes().Add(name, "bool");
-                Attribute* attr = e.Attributes().GetAttribute(name);
+                (*e)->RemoveAttribute(name);
+                Attribute* attr = (*e)->AddAttribute(name, "bool");
                 BoolAttribute* battr = dynamic_cast<BoolAttribute*>(attr);
                 if(battr != NULL)
-                    battr->Value = (E.find(e) != E.end());
+                    battr->Value = (E.contains(*e));
             }
         }
 
-        void Graph::AddVertexColoring(std::map<Graph::VertexIterator, int> Coloring, string name)
+        void Graph::AddVertexPartitioning(VertexPartitioning& Partitioning, string name)
         {
             for(VertexIterator v = BeginVertices(); v != EndVertices(); v++)
             {
-                v.Attributes().Unset(name);
-                if(Coloring.find(v) != Coloring.end())
+                (*v)->RemoveAttribute(name);
+                if(Partitioning.find(*v) != Partitioning.end())
                 {
-                    v.Attributes().Add(name, "int");
-                    Attribute* attr = v.Attributes().GetAttribute(name);
+                    Attribute* attr = (*v)->AddAttribute(name, "int");
                     IntAttribute* iattr = dynamic_cast<IntAttribute*>(attr);
                     if(iattr != NULL)
-                        iattr->Value = Coloring[v];
+                        iattr->Value = Partitioning[*v];
                 }
             }
         }
 
-        void Graph::AddEdgeColoring(std::map<Graph::EdgeIterator, int> Coloring, string name)
+        void Graph::AddEdgePartitioning(EdgePartitioning& Partitioning, string name)
         {
             for(EdgeIterator e = BeginEdges(); e != EndEdges(); e++)
             {
-                e.Attributes().Unset(name);
-                if(Coloring.find(e) != Coloring.end())
+                (*e)->RemoveAttribute(name);
+                if(Partitioning.find(e) != Partitioning.end())
                 {
-                    e.Attributes().Add(name, "int");
-                    Attribute* attr = e.Attributes().GetAttribute(name);
+                    Attribute* attr = (*e)->AddAttribute(name, "int");
                     IntAttribute* iattr = dynamic_cast<IntAttribute*>(attr);
                     if(iattr != NULL)
-                        iattr->Value = Coloring[e];
+                        iattr->Value = Partitioning[*e];
                 }
             }
         }
 
-        map<Graph::EdgeIterator, int> Graph::GetEdgeColoring(string name)
+        VertexPartitioning Graph::GetVertexPartitioning(string name)
         {
-            map<Graph::EdgeIterator, int> result;
+            VertexPartitioning result;
             if(name != "")
             {
-                for(Graph::EdgeIterator e = BeginEdges(); e != EndEdges(); e++)
+                for(VertexIterator v = BeginVertices(); v != EndVertices(); v++)
                 {
-                    Attribute* attr = e.Attributes().GetAttribute(name);
+                    Attribute* attr = (*v)->GetAttribute(name);
                     IntAttribute* iattr = dynamic_cast<IntAttribute*>(attr);
                     if(iattr != NULL)
-                        result[e] = iattr->Value;
+                        result[*v] = iattr->Value;
                     else
                     {
                         BoolAttribute* battr = dynamic_cast<BoolAttribute*>(attr);
                         if(battr != NULL)
-                            result[e] =  battr->Value ? 1 : 0;
+                            result[*v] = battr->Value ? 1 : 0;
                     }
                 }
             }
             return result;
         }
 
-        map<Graph::VertexIterator, int> Graph::GetVertexColoring(string name)
+        EdgePartitioning Graph::GetEdgePartitioning(string name)
         {
-            map<Graph::VertexIterator, int> result;
+            EdgePartitioning result;
             if(name != "")
             {
-                for(Graph::VertexIterator v = BeginVertices(); v != EndVertices(); v++)
+                for(EdgeIterator e = BeginEdges(); e != EndEdges(); e++)
                 {
-                    Attribute* attr = v.Attributes().GetAttribute(name);
+                    Attribute* attr = (*e)->GetAttribute(name);
                     IntAttribute* iattr = dynamic_cast<IntAttribute*>(attr);
                     if(iattr != NULL)
-                        result[v] = iattr->Value;
+                        result[*e] = iattr->Value;
                     else
                     {
                         BoolAttribute* battr = dynamic_cast<BoolAttribute*>(attr);
                         if(battr != NULL)
-                            result[v] = battr->Value ? 1 : 0;
+                            result[*e] = battr->Value ? 1 : 0;
                     }
                 }
             }
             return result;
         }
 
-        void Graph::AddEdgeWeight(std::map<Graph::EdgeIterator, float> Weight, string name)
+        void Graph::AddVertexWeighting(VertexWeighting Weighting, string name)
         {
-            for(EdgeIterator e = BeginEdges(); e != EndEdges(); e++)
+            for(VertexIterator v = BeginVertices(); v != EndVertices(); v++)
             {
-                e.Attributes().Unset(name);
-                if(Weight.find(e) != Weight.end())
+                (*v)->RemoveAttribute(name);
+                if(Weight.find(*v) != Weight.end())
                 {
-                    e.Attributes().Add(name, "float");
-                    Attribute* attr = e.Attributes().GetAttribute(name);
+                    Attribute* attr = (*v)->AddAttribute(name, "float");
                     FloatAttribute* fattr = dynamic_cast<FloatAttribute*>(attr);
                     if(fattr != NULL)
-                        fattr->Value = Weight[e];
+                        fattr->Value = Weight[*v];
+                }
+            }
+        }
+
+        void Graph::AddEdgeWeighting(EdgeWeighting Weighting, string name)
+        {
+            for(EdgeIterator e = BeginEdges(); e != EndEdges(); e++)
+            {
+                (*e)->RemoveAttribute(name);
+                if(Weight.find(*e) != Weight.end())
+                {
+                    Attribute* attr = (*e)->AddAttribute(name, "float");
+                    FloatAttribute* fattr = dynamic_cast<FloatAttribute*>(attr);
+                    if(fattr != NULL)
+                        fattr->Value = Weight[*e];
                 }
             }
         }
@@ -812,7 +713,7 @@ namespace OpenGraphtheory
 
 		/// \brief Internal method: Add a new Vertex to the Graph, ID can be specified
 		/// \return VertexIterator that points to the newly created vertex
-		Graph::VertexIterator Graph::InternalAddVertex(std::vector<float> coordinates, string label, float weight, int ID)
+		VertexIterator Graph::InternalAddVertex(std::vector<float> coordinates, string label, float weight, int ID)
 		{
 			Vertex* v = new Vertex(this, coordinates, label, weight);
 
@@ -824,19 +725,19 @@ namespace OpenGraphtheory
 
 			/// Add Vertex to set "Vertices"
 			Vertices.push_back(v);
-			list<Graph::Vertex*>::iterator result = Vertices.end();
+			list<Vertex*>::iterator result = Vertices.end();
 			return VertexIterator(this, ID, &Vertices, --result);
 		}
 
 		/// \brief Add a new Vertex to the graph
 		/// \return VertexIterator that points to the newly created instance
-		Graph::VertexIterator Graph::AddVertex(string label, float weight)
+		VertexIterator Graph::AddVertex(string label, float weight)
 		{
 		    vector<float> coordinates;
 			return InternalAddVertex(coordinates,label,weight, -1);
 		}
 
-		Graph::VertexIterator Graph::AddVertex(float x, string label, float weight)
+		VertexIterator Graph::AddVertex(float x, string label, float weight)
 		{
 		    vector<float> coordinates;
 		    coordinates.push_back(x);
@@ -845,7 +746,7 @@ namespace OpenGraphtheory
 
 		/// \brief Add a new Vertex to the graph
 		/// \return VertexIterator that points to the newly created instance
-		Graph::VertexIterator Graph::AddVertex(float x, float y, string label, float weight)
+		VertexIterator Graph::AddVertex(float x, float y, string label, float weight)
 		{
 		    vector<float> coordinates;
 		    coordinates.push_back(x);
@@ -855,7 +756,7 @@ namespace OpenGraphtheory
 
 		/// \brief Add a new Vertex to the graph
 		/// \return VertexIterator that points to the newly created instance
-		Graph::VertexIterator Graph::AddVertex(float x, float y, float z, string label, float weight)
+		VertexIterator Graph::AddVertex(float x, float y, float z, string label, float weight)
 		{
 		    vector<float> coordinates;
 		    coordinates.push_back(x);
@@ -867,7 +768,7 @@ namespace OpenGraphtheory
 		/// \brief Internal Method: Remove a vertex from the graph
 		/// \param pv Vertex-Pointer that references the vertex which should be removed
 		/// \param RemoveIncidentEdges Should incident edges be removed also or just disconnected from pv?
-		void Graph::RemoveVertex(Graph::Vertex* pv, bool RemoveIncidentEdges)
+		void Graph::RemoveVertex(Vertex* pv, bool RemoveIncidentEdges)
 		{
 			if(RemoveIncidentEdges) // remove incident edges
 			{
@@ -896,17 +797,17 @@ namespace OpenGraphtheory
 		/// \brief Internal Method: Remove a vertex from the graph
 		/// \param v VertexIterator that points to the vertex which should be removed
 		/// \param RemoveIncidentEdges Should incident edges be removed also or just disconnected from pv?
-        void Graph::RemoveVertex(Graph::VertexIterator v, bool RemoveIncidentEdges)
+        void Graph::RemoveVertex(VertexIterator v, bool RemoveIncidentEdges)
         {
             RemoveVertex(VertexIteratorToPointer(v), RemoveIncidentEdges);
         }
 
-        void Graph::operator-=(Graph::VertexIterator v)
+        void Graph::operator-=(VertexIterator v)
         {
             RemoveVertex(v);
         }
 
-        Graph Graph::operator-(Graph::VertexIterator v)
+        Graph Graph::operator-(VertexIterator v)
         {
             Graph result(*this);
             result.RemoveVertex(v);
@@ -914,23 +815,23 @@ namespace OpenGraphtheory
         }
 
 
-        Graph::VertexIterator Graph::Fuse(set<Graph::VertexIterator> Vertices)
+        VertexIterator Graph::Fuse(set<VertexIterator> Vertices)
         {
-            Graph::VertexIterator result = AddVertex();
-            Graph::Vertex* pResult = VertexIteratorToPointer(result);
-            set<Graph::Vertex*> pVertices;
-            for(set<Graph::VertexIterator>::iterator v = Vertices.begin(); v != Vertices.end(); v++)
+            VertexIterator result = AddVertex();
+            Vertex* pResult = VertexIteratorToPointer(result);
+            set<Vertex*> pVertices;
+            for(set<VertexIterator>::iterator v = Vertices.begin(); v != Vertices.end(); v++)
                 pVertices.insert(VertexIteratorToPointer(*v));
 
 
             // Set Coordinates of the resulting vertex (arithmetical middle of the
             // coordinates of the fused vertices)
             unsigned int Dimensionality = 0;
-            for(std::set<Graph::VertexIterator>::iterator v = Vertices.begin(); v != Vertices.end(); v++)
+            for(std::set<VertexIterator>::iterator v = Vertices.begin(); v != Vertices.end(); v++)
                 if(v->GetCoordinates().size() > Dimensionality)
                     Dimensionality = v->GetCoordinates().size();
             std::vector<float> ResultCoordinates(Dimensionality, 0.0f);
-            for(std::set<Graph::VertexIterator>::iterator v = Vertices.begin(); v != Vertices.end(); v++)
+            for(std::set<VertexIterator>::iterator v = Vertices.begin(); v != Vertices.end(); v++)
             {
                 std::vector<float> vCoordinates = v->GetCoordinates();
                 for(int i = vCoordinates.size()-1; i >= 0; --i)
@@ -942,16 +843,16 @@ namespace OpenGraphtheory
 
 
             // Connect all affected edges to the new Vertex
-            set<Graph::EdgeIterator> EdgesThatHaveBecomeLoops;
-            set<Graph::EdgeIterator> AffectedEdges;
-            for(set<Graph::VertexIterator>::iterator v = Vertices.begin(); v != Vertices.end(); v++)
+            set<EdgeIterator> EdgesThatHaveBecomeLoops;
+            set<EdgeIterator> AffectedEdges;
+            for(set<VertexIterator>::iterator v = Vertices.begin(); v != Vertices.end(); v++)
             {
-                Graph::VertexIterator vi = *v;
-                set<Graph::EdgeIterator> Incident = vi.CollectIncidentEdges(1,1,1);
+                VertexIterator vi = *v;
+                set<EdgeIterator> Incident = vi.CollectIncidentEdges(1,1,1);
                 AffectedEdges.insert(Incident.begin(), Incident.end());
             }
 
-            for(set<Graph::EdgeIterator>::iterator e = AffectedEdges.begin(); e != AffectedEdges.end(); e++)
+            for(set<EdgeIterator>::iterator e = AffectedEdges.begin(); e != AffectedEdges.end(); e++)
             {
                 bool HasBecomeLoop = true;
                 Edge* pe = EdgeIteratorToPointer(*e);
@@ -991,7 +892,7 @@ namespace OpenGraphtheory
             }
 
             // Disconnect the fused vertices from the affected edges and also remove them from the graph
-            for(set<Graph::VertexIterator>::iterator v = Vertices.begin(); v != Vertices.end(); v++)
+            for(set<VertexIterator>::iterator v = Vertices.begin(); v != Vertices.end(); v++)
             {
                 Vertex* vp = VertexIteratorToPointer(*v);
                 vp->IncidentEdges.clear();
@@ -1002,7 +903,7 @@ namespace OpenGraphtheory
             }
 
             // Remove Edges that have become loops
-            for(set<Graph::EdgeIterator>::iterator e = EdgesThatHaveBecomeLoops.begin(); e != EdgesThatHaveBecomeLoops.end(); e++)
+            for(set<EdgeIterator>::iterator e = EdgesThatHaveBecomeLoops.begin(); e != EdgesThatHaveBecomeLoops.end(); e++)
                 RemoveEdge(*e);
 
             return result;
@@ -1015,66 +916,33 @@ namespace OpenGraphtheory
 	/// \defgroup edgemanipulation ''Edge Manipulation''
 	// @{
 
-
-        /// \brief Adds an undirected connection between an edge and a vertex
-        void Graph::Edge::AddUndirectedConnection(Graph::Vertex* v)
+        VertexEdgeConnectionIterator Vertex::AddConnection(Edge* edge, VertexEdgeConnection::Direction direction)
         {
-            this->IncidentVertices.push_back(v);
-            v->IncidentEdges.push_back(this);
+            VertexEdgeConnection *conn = new VertexEdgeConnection();
+            conn->vertex = this;
+            conn->direction = direction;
+            conn->edge = edge;
+            this->Connections->push_back(conn);
+            edge->Connections->push_back(conn);
+            return EndConnections() - 1;
         }
 
-        /// \brief Adds a connection from a vertex to an edge
-        void Graph::Edge::AddIncomingConnection(Graph::Vertex* v)
+        VertexEdgeConnectionIterator Edge::AddConnection(Vertex* vertex, VertexEdgeConnection::Direction direction)
         {
-            this->NegativeIncidentVertices.push_back(v);
-            v->PositiveIncidentEdges.push_back(this);
+            return vertex->AddConnection(this, direction);
         }
-
-        /// \brief Adds a connection from an edge to a vertex
-        void Graph::Edge::AddOutgoingConnection(Graph::Vertex* v)
-        {
-            this->PositiveIncidentVertices.push_back(v);
-            v->NegativeIncidentEdges.push_back(this);
-        }
-
-        /// \brief Removes a connection from a vertex to an edge
-        void Graph::Edge::RemoveUndirectedConnection(Graph::Vertex* v)
-        {
-            this->IncidentVertices.remove(v);
-            v->IncidentEdges.remove(this);
-        }
-
-        /// \brief Removes a connection from a vertex to an edge
-        void Graph::Edge::RemoveIncomingConnection(Graph::Vertex* v)
-        {
-            this->NegativeIncidentVertices.remove(v);
-            v->PositiveIncidentEdges.remove(this);
-        }
-
-        /// \brief Removes a connection from an edge to a vertex
-        void Graph::Edge::RemoveOutgoingConnection(Graph::Vertex* v)
-        {
-            this->PositiveIncidentVertices.remove(v);
-            v->NegativeIncidentEdges.remove(this);
-        }
-
 
         /// \brief Adds a (Mixed Hyper)Edge to the Graph
         /// \param pVertices Pointers to Vertices that get undirected connections to the new (Hyper)Edge
         /// \param From Pointers to Vertices that get outgoing connections to the new (Hyper)Edge
         /// \param To Pointers to Vertices that get incoming connections from the new (Hyper)Edge
-		Graph::EdgeIterator Graph::InternalAddEdge(const list<Graph::Vertex*> &pVertices, const list<Graph::Vertex*> &From, const list<Graph::Vertex*> &To,
-                                             string label, float weight, int ID)
+		EdgeIterator Graph::InternalAddEdge(const Vertex* from, const Vertex* to, bool Directed, int ID)
 		{
-			Edge* e = new Edge(this, label, weight);
-
-            /// Copy Vertex-Pointers into the lists of the edge
-            for(list<Graph::Vertex*>::const_iterator it = pVertices.begin(); it != pVertices.end(); it++)
-			    e->AddUndirectedConnection(*it);
-            for(list<Graph::Vertex*>::const_iterator it = From.begin(); it != From.end(); it++)
-			    e->AddIncomingConnection(*it);
-            for(list<Graph::Vertex*>::const_iterator it = To.begin(); it != To.end(); it++)
-			    e->AddOutgoingConnection(*it);
+			Edge* e = new Edge(this);
+			if(from != NULL)
+                e->AddConnection(from, Directed ? VertexEdgeConnection::VertexToEdge : VertexEdgeConnection::Undirected);
+            if(to != NULL)
+                e->AddConnection(to, Directed ? VertexEdgeConnection::EdgeToVertex : VertexEdgeConnection::Undirected);
 
             /// Register ID
 			if(ID <= 0)
@@ -1084,137 +952,48 @@ namespace OpenGraphtheory
 
             /// Add Edge to list "Edges"
 			Edges.push_back(e);
-			list<Graph::Edge*>::iterator result = Edges.end();
-			return EdgeIterator(this, ID, &Edges, --result);
-		}
-
-        /// \brief Adds a (Mixed Hyper)Edge to the Graph
-        /// \param vertices VertexIterators of Vertices that get undirected connections to the new (Hyper)Edge
-        /// \param From VertexIterators of Vertices that get outgoing connections to the new (Hyper)Edge
-        /// \param To VertexIteratirs of Vertices that get incoming connections from the new (Hyper)Edge
-		Graph::EdgeIterator Graph::InternalAddEdge(const list<Graph::VertexIterator>* vertices, const list<Graph::VertexIterator>* From,
-		                                           const list<Graph::VertexIterator>* To, string label, float weight, int ID)
-		{
-			list<Vertex*> pVertices;
-			if(vertices != NULL)
-				for(list<VertexIterator>::const_iterator i = vertices->begin(); i != vertices->end(); i++)
-					pVertices.push_back(VertexIteratorToPointer(*i));
-
-			list<Vertex*> pFrom;
-			if(From != NULL)
-				for(list<VertexIterator>::const_iterator i = From->begin(); i != From->end(); i++)
-					pFrom.push_back(VertexIteratorToPointer(*i));
-
-			list<Vertex*> pTo;
-			if(To != NULL)
-				for(list<VertexIterator>::const_iterator i = To->begin(); i != To->end(); i++)
-					pTo.push_back(VertexIteratorToPointer(*i));
-
-			Graph::EdgeIterator result = InternalAddEdge(pVertices, pFrom, pTo, label, weight, ID);
-			return result;
-		}
-
-        /// \brief Adds a (Hyper)Edge to the Graph
-        /// \param vertices VertexIterators of Vertices that are connected by the new (Hyper)Edge
-		Graph::EdgeIterator Graph::InternalAddEdge(const list<Graph::VertexIterator>& vertices, string label, float weight, int ID)
-		{
-			return InternalAddEdge(&vertices, NULL, NULL, label, weight, ID);
+			return EndEdges() - 1;
 		}
 
         /// \brief Adds an Edge to the Graph
         /// \param a, b VertexIterators of the Vertices that are connected by the new Edge
-		Graph::EdgeIterator Graph::InternalAddEdge(Graph::VertexIterator a, Graph::VertexIterator b, string label, float weight, int ID)
+        EdgeIterator Graph::AddEdge(VertexIterator a, VertexIterator b)
 		{
-			list<VertexIterator> s;
-			s.push_back(a);
-			s.push_back(b);
-			return InternalAddEdge(&s, NULL, NULL, label, weight, ID);
+			return InternalAddEdge(*a, *b, false, -1);
 		}
 
         /// \brief Adds a Directed (Hyper)Edge to the Graph
         /// \param From VertexIterators of Vertices that get outgoing connections to the new (Hyper)Edge
         /// \param To VertexIteratirs of Vertices that get incoming connections from the new (Hyper)Edge
-		Graph::EdgeIterator Graph::InternalAddArc(const list<Graph::VertexIterator>& From, const list<Graph::VertexIterator>& To, string label, float weight, int ID)
+		EdgeIterator Graph::AddArc(VertexIterator From, VertexIterator To)
 		{
-			return InternalAddEdge(NULL, &From, &To, label, weight,  ID);
-		}
-
-        /// \brief Adds a Directed Edge to the Graph
-        /// \param From, To VertexIterators of Vertices that are connected by the new Edge
-		Graph::EdgeIterator Graph::InternalAddArc(Graph::VertexIterator From, Graph::VertexIterator To, string label, float weight, int ID)
-		{
-			list<VertexIterator> f;
-			f.push_back(From);
-			list<VertexIterator> t;
-			t.push_back(To);
-			return InternalAddEdge(NULL, &f, &t, label, weight, ID);
-		}
-
-
-
-        /// \brief Adds a (Mixed Hyper)Edge to the Graph
-        /// \param vertices VertexIterators of Vertices that get undirected connections to the new (Hyper)Edge
-        /// \param From VertexIterators of Vertices that get outgoing connections to the new (Hyper)Edge
-        /// \param To VertexIteratirs of Vertices that get incoming connections from the new (Hyper)Edge
-		Graph::EdgeIterator Graph::AddEdge(const list<Graph::VertexIterator>& vertices, const list<Graph::VertexIterator>& from,
-                                      const list<Graph::VertexIterator>& to, string label, float weight)
-		{
-			return InternalAddEdge(&vertices, &from, &to, label, weight, -1);
-		}
-
-		/// \brief Adds a (Hyper)Edge to the Graph
-        /// \param vertices VertexIterators of Vertices that are connected by the new (Hyper)Edge
-        Graph::EdgeIterator Graph::AddEdge(const list<Graph::VertexIterator>& vertices, string label, float weight)
-		{
-			return InternalAddEdge(vertices, label, weight, -1);
-		}
-
-        /// \brief Adds an Edge to the Graph
-        /// \param a, b VertexIterators of the Vertices that are connected by the new Edge
-        Graph::EdgeIterator Graph::AddEdge(Graph::VertexIterator a, Graph::VertexIterator b, string label, float weight)
-		{
-			return InternalAddEdge(a, b, label, weight, -1);
-		}
-
-        /// \brief Adds a Directed (Hyper)Edge to the Graph
-        /// \param From VertexIterators of Vertices that get outgoing connections to the new (Hyper)Edge
-        /// \param To VertexIteratirs of Vertices that get incoming connections from the new (Hyper)Edge
-		Graph::EdgeIterator Graph::AddArc(const list<Graph::VertexIterator>& From, const list<Graph::VertexIterator>& To, string label, float weight)
-		{
-			return InternalAddArc(From, To, label, weight, -1);
-		}
-
-        /// \brief Adds a Directed Edge to the Graph
-        /// \param From, To VertexIterators of Vertices that are connected by the new Edge
-		Graph::EdgeIterator Graph::AddArc(Graph::VertexIterator From, Graph::VertexIterator To, string label, float weight)
-		{
-			return InternalAddArc(From, To, label, weight, -1);
+			return InternalAddEdge(*From, *To, true, -1);
 		}
 
         /// \brief Adds an undirected Loop-Edge to the Graph
         /// \param v VertexIterator of the Vertex that gets the loop
-        Graph::EdgeIterator Graph::AddLoop(Graph::VertexIterator v, string label, float weight)
+        EdgeIterator Graph::AddUndirectedLoop(VertexIterator v)
         {
-            return InternalAddEdge(v,v, label, weight, -1);
+            return InternalAddEdge(*v, *v, false, -1);
         }
 
         /// \brief Adds a directed Loop-Edge to the Graph
         /// \param v VertexIterator of the Vertex that gets the loop
-        Graph::EdgeIterator Graph::AddDirectedLoop(Graph::VertexIterator v, string label, float weight)
+        EdgeIterator Graph::AddDirectedLoop(VertexIterator v)
         {
-            return InternalAddArc(v, v, label, weight, -1);
+            return InternalAddEdge(*v, *v, true, -1);
         }
 
         /// \brief Adds a Loose Edge (an edge with no connection to a vertex) to the Graph
-        Graph::EdgeIterator Graph::AddLooseEdge(string label, float weight)
+        EdgeIterator Graph::AddEdge()
         {
-            return InternalAddEdge(NULL, NULL, NULL, label, weight, -1);
+            return InternalAddEdge(NULL, NULL, false, -1)
         }
 
 
         /// \brief Internal Method: Removes an edge from the graph
         /// \param pe Pointer to the Edge that is removed
-		void Graph::RemoveEdge(Graph::Edge* pe)
+		void Graph::RemoveEdge(Edge* pe)
 		{
 			while(pe->IncidentVertices.size() > 0)
                 pe->RemoveUndirectedConnection(pe->IncidentVertices.front());
@@ -1231,264 +1010,26 @@ namespace OpenGraphtheory
 
         /// \brief Removes an edge from the graph
         /// \param e EdgeIterator of the Edge that is removed
-		void Graph::RemoveEdge(Graph::EdgeIterator e)
+		void Graph::RemoveEdge(EdgeIterator e)
 		{
-			RemoveEdge(EdgeIteratorToPointer(e));
+			RemoveEdge(*e);
 		}
 
-        void Graph::operator-=(Graph::EdgeIterator e)
+        void Graph::operator-=(EdgeIterator e)
         {
-            RemoveEdge(e);
+            RemoveEdge(*e);
         }
 
-        Graph Graph::operator-(Graph::EdgeIterator e)
+        Graph Graph::operator-(EdgeIterator e)
         {
             Graph result(*this);
-            result.RemoveEdge(e);
+            result.RemoveEdge(*e);
             return result;
         }
 
 
 	// @}
 
-
-	/// \defgroup vertexiteratormethods ''VertexIterator Methods''
-	// @{
-
-        Graph::VertexIterator::VertexIterator()
-        {
-            Owner = NULL;
-            iterating = NULL;
-            ID = -1;
-        }
-
-		Graph::VertexIterator::VertexIterator(Graph* owner, int id, list<Graph::Vertex*>* Iterating, list<Graph::Vertex*>::iterator position)
-		{
-			Owner = owner;
-			Owner->VIterators.insert(this);
-			ID = id;
-			iterating = Iterating;
-			this->position = position;
-		}
-
-		Graph::VertexIterator::VertexIterator(const Graph::VertexIterator& i)
-		{
-			ID = i.ID;
-			Owner = i.Owner;
-			iterating = i.iterating;
-			position = i.position;
-			// this is why no default-constructor is used
-			if(Owner != NULL)
-                Owner->VIterators.insert(this);
-		}
-
-		void Graph::VertexIterator::operator=(const Graph::VertexIterator& i)
-		{
-			ID = i.ID;
-			iterating = i.iterating;
-			position = i.position;
-			// this is why no default-constructor is used
-			if(Owner != i.Owner)
-			{
-			    if(Owner != NULL)
-                    Owner->VIterators.erase(this);
-				Owner = i.Owner;
-				if(Owner != NULL)
-                    Owner->VIterators.insert(this);
-			}
-		}
-
-		Graph::VertexIterator::~VertexIterator()
-		{
-		    if(Owner != NULL)
-                Owner->VIterators.erase(this);
-		}
-
-		void Graph::VertexIterator::operator++(int)
-		{
-			if(++position == iterating->end())
-				ID = -1;
-            else
-                ID = (*position)->ID;
-		}
-
-		Graph::VertexIterator Graph::VertexIterator::operator+(int n) const
-		{
-		    Graph::VertexIterator result(*this);
-		    for(; n > 0; --n)
-                result++;
-            return result;
-		}
-
-
-		bool Graph::VertexIterator::operator==(const Graph::VertexIterator& i) const
-		{
-			return ID == i.ID;
-		}
-
-		bool Graph::VertexIterator::operator!=(const Graph::VertexIterator& i) const
-		{
-			return ID != i.ID;
-		}
-
-		bool Graph::VertexIterator::operator<(const Graph::VertexIterator& i) const
-		{
-			return ID < i.ID;
-		}
-
-		bool Graph::VertexIterator::operator<=(const Graph::VertexIterator& i) const
-		{
-			return ID <= i.ID;
-		}
-
-		bool Graph::VertexIterator::operator>(const Graph::VertexIterator& i) const
-		{
-			return ID > i.ID;
-		}
-
-		bool Graph::VertexIterator::operator>=(const Graph::VertexIterator& i) const
-		{
-			return ID >= i.ID;
-		}
-
-	// @}
-
-
-	/// \defgroup edgeiteratormethods ''EdgeIterator Methods''
-	// @{
-
-        Graph::EdgeIterator::EdgeIterator()
-        {
-            Owner = NULL;
-            iterating = NULL;
-            ID = -1;
-        }
-
-		Graph::EdgeIterator::EdgeIterator(Graph* owner, int id, list<Graph::Edge*>* Iterating, list<Graph::Edge*>::iterator position)
-		{
-			Owner = owner;
-			Owner->EIterators.insert(this);
-			ID = id;
-			iterating = Iterating;
-			this->position = position;
-		}
-
-		Graph::EdgeIterator::EdgeIterator(const Graph::EdgeIterator& i)
-		{
-			ID = i.ID;
-			iterating = i.iterating;
-
-            Owner = i.Owner;
-			if(Owner != NULL)
-            {
-            	position = i.position; // otherwise, i.position is uninitialized
-                Owner->EIterators.insert(this);
-            }
-		}
-
-		void Graph::EdgeIterator::operator=(const Graph::EdgeIterator& i)
-		{
-			ID = i.ID;
-			iterating = i.iterating;
-			if(i.Owner != NULL) // otherwise, i.position is uninitialized
-                position = i.position;
-
-			if(Owner != i.Owner)
-			{
-                if(Owner != NULL)
-                    Owner->EIterators.erase(this);
-				Owner = i.Owner;
-				if(Owner != NULL)
-                    Owner->EIterators.insert(this);
-			}
-		}
-
-		Graph::EdgeIterator::~EdgeIterator()
-		{
-            if(Owner != NULL)
-                Owner->EIterators.erase(this);
-		}
-
-		void Graph::EdgeIterator::operator++(int)
-		{
-            if(iterating != NULL)
-            {
-                if(++position == iterating->end())
-                    ID = -1;
-                else
-                    ID = (*position)->ID;
-            }
-		}
-
-		Graph::EdgeIterator Graph::EdgeIterator::operator+(int n) const
-		{
-		    Graph::EdgeIterator result(*this);
-		    for(; n > 0; --n)
-                result++;
-            return result;
-		}
-
-		bool Graph::EdgeIterator::operator==(const Graph::EdgeIterator& i) const
-		{
-			return ID == i.ID;
-		}
-
-		bool Graph::EdgeIterator::operator!=(const Graph::EdgeIterator& i) const
-		{
-			return ID != i.ID;
-		}
-
-		bool Graph::EdgeIterator::operator<(const Graph::EdgeIterator& i) const
-		{
-			return ID < i.ID;
-		}
-
-		bool Graph::EdgeIterator::operator<=(const Graph::EdgeIterator& i) const
-		{
-			return ID <= i.ID;
-		}
-
-		bool Graph::EdgeIterator::operator>(const Graph::EdgeIterator& i) const
-		{
-			return ID > i.ID;
-		}
-
-		bool Graph::EdgeIterator::operator>=(const Graph::EdgeIterator& i) const
-		{
-			return ID >= i.ID;
-		}
-
-	//@}
-
-        void Graph::EdgeIterator::AddUndirectedConnection(Graph::VertexIterator v)
-        {
-            (*position)->AddUndirectedConnection(Owner->VertexIteratorToPointer(v));
-        }
-
-        void Graph::EdgeIterator::AddOutgoingConnection(Graph::VertexIterator v)
-        {
-            (*position)->AddOutgoingConnection(Owner->VertexIteratorToPointer(v));
-        }
-
-        void Graph::EdgeIterator::AddIncomingConnection(Graph::VertexIterator v)
-        {
-            (*position)->AddIncomingConnection(Owner->VertexIteratorToPointer(v));
-        }
-
-        void Graph::EdgeIterator::RemoveUndirectedConnection(Graph::VertexIterator v)
-        {
-            (*position)->RemoveUndirectedConnection(Owner->VertexIteratorToPointer(v));
-        }
-
-        void Graph::EdgeIterator::RemoveOutgoingConnection(Graph::VertexIterator v)
-        {
-            (*position)->RemoveOutgoingConnection(Owner->VertexIteratorToPointer(v));
-        }
-
-        void Graph::EdgeIterator::RemoveIncomingConnection(Graph::VertexIterator v)
-        {
-            (*position)->RemoveIncomingConnection(Owner->VertexIteratorToPointer(v));
-        }
 
 	/// \defgroup iteratorcreation ''Creating Iterators''
 	// @{
@@ -1497,57 +1038,40 @@ namespace OpenGraphtheory
 		// @{
 
 			/// \brief <i>begin</i>-Iterator for the set of all vertices in the graph
-			Graph::VertexIterator Graph::BeginVertices()
+			VertexIterator Graph::BeginVertices()
 			{
-				if(Vertices.empty())
-					return EndVertices();
-				return VertexIterator(this, Vertices.front()->ID, &Vertices, Vertices.begin());
+				return Vertices == NULL ? NULL : Vertices->begin();
+			}
+
+			/// \brief <i>begin</i>-Iterator for the set of all vertices in the graph
+			ConstVertexIterator Graph::BeginVertices() const
+			{
+				return Vertices == NULL ? NULL : Vertices->begin();
 			}
 
 			/// \brief <i>end</i>-Iterator for the set of all vertices in the graph
-			Graph::VertexIterator Graph::EndVertices()
+			VertexIterator Graph::EndVertices()
 			{
-				return VertexIterator(this, -1, &Vertices, Vertices.end());
+				return Vertices == NULL ? NULL : Vertices->end();
+			}
+
+			/// \brief <i>end</i>-Iterator for the set of all vertices in the graph
+			ConstVertexIterator Graph::EndVertices() const
+			{
+				return Vertices == NULL ? NULL : Vertices->end();
 			}
 
 			/// \brief <i>begin</i>-Iterator for the set of all edges in the graph
-			Graph::EdgeIterator Graph::BeginEdges()
+			EdgeIterator Graph::BeginEdges()
 			{
-				if(Edges.empty())
-					return EndEdges();
-				return EdgeIterator(this, Edges.front()->ID, &Edges, Edges.begin());
+                return Edges == NULL ? NULL : Edges->begin();
 			}
 
 			/// \brief <i>end</i>-Iterator for the set of all edges in the graph
-			Graph::EdgeIterator Graph::EndEdges()
+			EdgeIterator Graph::EndEdges()
 			{
-				return EdgeIterator(this, -1, &Edges, Edges.end());
+                return Edges == NULL ? NULL : Edges->end();
 			}
-
-			Graph::EdgeIterator Graph::GetEdge(int ID)
-			{
-			    list<Graph::Edge*>::iterator i;
-			    Graph::Edge* e = Edge_ID_to_pointer[ID];
-			    for(i = Edges.begin(); i != Edges.end(); i++)
-                    if(*i == e)
-                        break;
-			    if(i == Edges.end())
-                    ID = -1;
-			    return EdgeIterator(this, ID, &Edges, i);
-            }
-
-			Graph::VertexIterator Graph::GetVertex(int ID)
-			{
-			    list<Graph::Vertex*>::iterator i;
-			    Graph::Vertex* v = Vertex_ID_to_pointer[ID];
-			    for(i = Vertices.begin(); i != Vertices.end(); i++)
-                    if(*i == v)
-                        break;
-
-			    if(i == Vertices.end())
-                    ID = -1;
-			    return VertexIterator(this, ID, &Vertices, i);
-            }
 
 		// @}
 
@@ -1555,42 +1079,24 @@ namespace OpenGraphtheory
 		/// \defgroup vertexsetiterators ''Creating Iterators for the sets of a Vertex''
 		// @{
 
-			Graph::EdgeIterator Graph::VertexIterator::BeginIncidentEdges()
+			VertexEdgeConnectionIterator Vertex::BeginConnections()
 			{
-				if((*position)->IncidentEdges.empty())
-					return EndIncidentEdges();
-				return EdgeIterator((*position)->Owner, (*((*position)->IncidentEdges.begin()))->ID, &(*position)->IncidentEdges, (*position)->IncidentEdges.begin());
+                return Connections->begin();
 			}
 
-			Graph::EdgeIterator Graph::VertexIterator::EndIncidentEdges()
+			VertexEdgeConnectionIterator Vertex::EndConnections()
 			{
-				return EdgeIterator((*position)->Owner, -1, &(*position)->IncidentEdges, (*position)->IncidentEdges.end());
+                return Connections->end();
 			}
 
-			Graph::EdgeIterator Graph::VertexIterator::BeginPositiveIncidentEdges()
+			VertexEdgeConnectionIterator Edge::BeginConnections()
 			{
-				if((*position)->PositiveIncidentEdges.empty())
-					return EndPositiveIncidentEdges();
-				return EdgeIterator((*position)->Owner, (*((*position)->PositiveIncidentEdges.begin()))->ID,
-                        &(*position)->PositiveIncidentEdges, (*position)->PositiveIncidentEdges.begin());
+                return Connections->begin();
 			}
 
-			Graph::EdgeIterator Graph::VertexIterator::EndPositiveIncidentEdges()
+			VertexEdgeConnectionIterator Edge::EndConnections()
 			{
-				return EdgeIterator((*position)->Owner, -1, &(*position)->PositiveIncidentEdges, (*position)->PositiveIncidentEdges.end());
-			}
-
-			Graph::EdgeIterator Graph::VertexIterator::BeginNegativeIncidentEdges()
-			{
-				if((*position)->NegativeIncidentEdges.empty())
-					return EndNegativeIncidentEdges();
-				return EdgeIterator((*position)->Owner, (*((*position)->NegativeIncidentEdges.begin()))->ID,
-                        &(*position)->NegativeIncidentEdges, (*position)->NegativeIncidentEdges.begin());
-			}
-
-			Graph::EdgeIterator Graph::VertexIterator::EndNegativeIncidentEdges()
-			{
-				return EdgeIterator((*position)->Owner, -1, &(*position)->NegativeIncidentEdges, (*position)->NegativeIncidentEdges.end());
+                return Connections->end();
 			}
 
 		// @}
@@ -1599,52 +1105,9 @@ namespace OpenGraphtheory
 		/// \defgroup edgesetiterators ''Creating Iterators for the sets of an Edge''
 		// @{
 
-			/// \brief <i>begin</i>-Iterator for the set of incident vertices of an edge
-			Graph::VertexIterator Graph::EdgeIterator::BeginIncidentVertices()
-			{
-				if((*position)->IncidentVertices.empty())
-					return EndIncidentVertices();
-				return VertexIterator((*position)->Owner, (*((*position)->IncidentVertices.begin()))->ID, &(*position)->IncidentVertices, (*position)->IncidentVertices.begin());
-			}
-
-			/// \brief <i>end</i>-Iterator for the set of incident vertices of an edge
-			Graph::VertexIterator Graph::EdgeIterator::EndIncidentVertices()
-			{
-				return VertexIterator((*position)->Owner, -1, &(*position)->IncidentVertices, (*position)->IncidentVertices.end());
-			}
-
-			/// \brief <i>begin</i>-Iterator for the set of positively incident vertices of an edge
-			Graph::VertexIterator Graph::EdgeIterator::BeginPositiveIncidentVertices()
-			{
-				if((*position)->PositiveIncidentVertices.empty())
-					return EndPositiveIncidentVertices();
-				return VertexIterator((*position)->Owner, (*((*position)->PositiveIncidentVertices.begin()))->ID, &(*position)->PositiveIncidentVertices, (*position)->PositiveIncidentVertices.begin());
-			}
-
-			/// \brief <i>end</i>-Iterator for the set of positively incident vertices of an edge
-			Graph::VertexIterator Graph::EdgeIterator::EndPositiveIncidentVertices()
-			{
-				return VertexIterator((*position)->Owner, -1, &(*position)->PositiveIncidentVertices, (*position)->PositiveIncidentVertices.end());
-			}
-
-			/// \brief <i>begin</i>-Iterator for the set of negatively incident vertices of an edge
-			Graph::VertexIterator Graph::EdgeIterator::BeginNegativeIncidentVertices()
-			{
-				if((*position)->NegativeIncidentVertices.empty())
-					return EndNegativeIncidentVertices();
-				return VertexIterator((*position)->Owner, (*((*position)->NegativeIncidentVertices.begin()))->ID, &(*position)->NegativeIncidentVertices, (*position)->NegativeIncidentVertices.begin());
-			}
-
-			/// \brief <i>end</i>-Iterator for the set of negatively incident vertices of an edge
-			Graph::VertexIterator Graph::EdgeIterator::EndNegativeIncidentVertices()
-			{
-				return VertexIterator((*position)->Owner, -1, &(*position)->NegativeIncidentVertices, (*position)->NegativeIncidentVertices.end());
-			}
-
 			/// \brief Iterator for the first incident vertex of an edge
-			Graph::VertexIterator Graph::EdgeIterator::From()
+			Vertex* Edge::From()
 			{
-			    Edge* e = *position;
 			    if(e->IncidentVertices.size() == 2
                     && e->NegativeIncidentVertices.size() == 0
                     && e->PositiveIncidentVertices.size() == 0)
@@ -1657,14 +1120,14 @@ namespace OpenGraphtheory
 			}
 
 			/// \brief Iterator for the second incident vertex of an edge (meant for regular edges, but works on hyperedges, too)
-			Graph::VertexIterator Graph::EdgeIterator::To()
+			Vertex* Edge::To()
 			{
 			    Edge* e = *position;
 			    if(e->IncidentVertices.size() == 2
                     && e->NegativeIncidentVertices.size() == 0
                     && e->PositiveIncidentVertices.size() == 0)
                     {
-                        Graph::VertexIterator result = BeginIncidentVertices();
+                        VertexIterator result = BeginIncidentVertices();
                         result++;
                         return result;
                     }
@@ -1684,117 +1147,62 @@ namespace OpenGraphtheory
 	/// \defgroup accessors ''Accessor-Methods''
 	// @{
 
-		/// \defgroup graphaccessors ''Accessor-Methods for Graph-Attributes''
-		// @{
+        /// \brief Accessor-method for reading IDs
+        int GraphObject::GetID() const
+        {
+            return ID;
+        }
 
-			/// \brief Accessor-method for reading the label of a graph
-			string Graph::GetLabel() const
-			{
-				return Label;
-			}
+        string GraphObject::GetIDString() const
+        {
+            stringstream s;
+            s << ID;
+            return s.str();
+        }
 
-			/// \brief Accessor-method for writing the label of a graph
-			void Graph::SetLabel(string label)
-			{
-				Label = label;
-			}
+        /// \brief Accessor-method for reading labels
+        string GraphObject::GetLabel(string name, string DefaultValue) const
+        {
+            StringAttribute* sattr = dynamic_cast<StringAttribute*>(GetAttribute(name));
+            if(sattr != NULL)
+                return sattr->Value;
+            return DefaultValue;
+        }
 
-            AttributeCollection& Graph::Attributes()
-            {
-                return *attributes;
-            }
+        /// \brief Accessor-method for writing labels
+        void GraphObject::SetLabel(string label, string name)
+        {
+            RemoveAttribute(name);
+            StringAttribute* sattr = dynamic_cast<StringAttribute*>(AddAttribute(name, "string"));
+            sattr->Value = label;
+        }
 
-		// @}
+        /// \brief Accessor-method for reading weights
+        float GraphObject::GetWeight(string name, float DefaultValue) const
+        {
+            FloatAttribute* fattr = dynamic_cast<FloatAttribute*>(GetAttribute(name));
+            if(fattr != NULL)
+                return fattr->Value;
+            return DefaultValue;
+        }
 
-		/// \defgroup vertexaccessors ''Accessor-Methods for Vertex-Attributes''
-		// @{
+        /// \brief Accessor-method for writing labels
+        void GraphObject::SetWeight(float weight, string name)
+        {
+            RemoveAttribute(name);
+            FloatAttribute* fattr = dynamic_cast<FloatAttribute*>(AddAttribute(name, "float"));
+            fattr->Value = weight;
+        }
 
-			/// \brief Accessor-method for reading the ID of a vertex
-			int Graph::VertexIterator::GetID() const
-			{
-				return ID;
-			}
+        std::vector<float> VertexIterator::GetCoordinates() const
+        {
+            return (*position)->Coordinates;
+        }
 
-            std::vector<float> Graph::VertexIterator::GetCoordinates() const
-            {
-                return (*position)->Coordinates;
-            }
-
-            void Graph::VertexIterator::SetCoordinates(std::vector<float> coordinates)
-            {
-                (*position)->Coordinates = coordinates;
-            }
-
-			/// \brief Accessor-method for reading the Label of a vertex
-			string Graph::VertexIterator::GetLabel() const
-			{
-				return (*position)->Label;
-			}
-
-			/// \brief Accessor-method for writing the Label of a vertex
-			void Graph::VertexIterator::SetLabel(string label)
-			{
-				(*position)->Label = label;
-			}
-
-			/// \brief Accessor-method for reading the Weight of a vertex
-			float Graph::VertexIterator::GetWeight() const
-			{
-				return (*position)->Weight;
-			}
-
-			/// \brief Accessor-method for writing the Weight of a vertex
-			void Graph::VertexIterator::SetWeight(float weight)
-			{
-				(*position)->Weight = weight;
-			}
-
-            AttributeCollection& Graph::VertexIterator::Attributes()
-            {
-                return *((*position)->attributes);
-            }
-
-		// @}
-
-		/// \defgroup edgeaccessors ''Accessor-Methods for Edge-Attributes''
-		// @{
-
-			/// \brief Accessor-method for reading the ID of an edge
-			int Graph::EdgeIterator::GetID() const
-			{
-				return ID;
-			}
-
-			/// \brief Accessor-method for reading the Label of an edge
-			string Graph::EdgeIterator::GetLabel() const
-			{
-				return (*position)->Label;
-			}
-
-			/// \brief Accessor-method for writing the Label of an edge
-			void Graph::EdgeIterator::SetLabel(string label)
-			{
-				(*position)->Label = label;
-			}
-
-			/// \brief Accessor-method for reading the Weight of an edge
-			float Graph::EdgeIterator::GetWeight() const
-			{
-				return (*position)->Weight;
-			}
-
-			/// \brief Accessor-method for writing the Weight of an edge
-			void Graph::EdgeIterator::SetWeight(float weight)
-			{
-				(*position)->Weight = weight;
-			}
-
-            AttributeCollection& Graph::EdgeIterator::Attributes()
-            {
-                return *((*position)->attributes);
-            }
-
-		// @}
+        void VertexIterator::SetCoordinates(std::vector<float>& coordinates)
+        {
+            (*position)->Coordinates = coordinates;
+        }
 
 	// @}
 
@@ -1803,160 +1211,42 @@ namespace OpenGraphtheory
 	// @{
 
 
-		/// \brief Traverse an XML-structure, create a graph from it and copy it to *this
-		bool Graph::LoadFromXML(OpenGraphtheory::XML::XML* root)
-		{
-		    if(root == NULL)
-                throw "Error loading XML Document";
-		    list<OpenGraphtheory::XML::XML*> gxl = root->FindChildren("gxl");
-			if(gxl.size() > 1)
-				throw "XML Document must have exactly 1 top element \"gxl\"";
-			if(gxl.size() < 1)
-				throw "XML Document contains no element \"gxl\" (document possibly empty)";
-
-		    map<string, Graph::VertexIterator*> Vertex_XML_ID_to_pointer;
-
-			list<OpenGraphtheory::XML::XML*> XMLGraph = gxl.front()->FindChildren("graph");
-			if(XMLGraph.size() != 1)
-				throw "XML Document must have exactly 1 \"graph\" element below the top element \"gxl\"";
-
-			OpenGraphtheory::XML::XML* pGraph = XMLGraph.front();
-			Graph G;
-
-            bool DefaultDirected = true;
-            string edgemode = pGraph->GetAttribute("edgemode", "defaultdirected");
-            if(edgemode == "defaultdirected" || edgemode == "directed")
-                DefaultDirected = true;
-            else if(edgemode == "defaultundirected" || edgemode == "undirected")
-                DefaultDirected = false;
-
-
+        bool GraphObject::LoadFromXml(OpenGraphtheory::XML::XML* xml)
+        {
             /// assign attributes
-			list<OpenGraphtheory::XML::XML*> attrs = pGraph->FindChildren("attr");
+			list<OpenGraphtheory::XML::XML*> attrs = xml->FindChildren("attr");
 			for(list<OpenGraphtheory::XML::XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
-                G.Attributes().Set(*attr);
+                attributes->Set(*attr);
+        }
 
-            if(G.Attributes().HasAttribute("name"))
+        bool Vertex::LoadFromXml(OpenGraphtheory::XML::XML* xml)
+        {
+            GraphObject::LoadFromXml(xml);
+        }
+
+        bool Edge::LoadFromXml(OpenGraphtheory::XML::XML* xml, bool DefaultDirected)
+        {
+            GraphObject::LoadFromXml(xml);
+
+            if(xml->name == "edge")
             {
-                StringAttribute *attrName = dynamic_cast<StringAttribute*>(G.Attributes().GetAttribute("name"));
-                if(attrName != NULL)
-                {
-                    G.SetLabel(attrName->Value);
-                    G.Attributes().Unset("name");
-                }
-            }
-
-			/// load vertices
-			list<OpenGraphtheory::XML::XML*> nodes = pGraph->FindChildren("node");
-			for(list<OpenGraphtheory::XML::XML*>::iterator node = nodes.begin(); node != nodes.end(); node++)
-			{
-				/// create vertex
-				Graph::VertexIterator *v = new VertexIterator(G.AddVertex());
-
-				/// assign attributes
-				list<OpenGraphtheory::XML::XML*> attrs = (*node)->FindChildren("attr");
-				for(list<OpenGraphtheory::XML::XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
-                    v->Attributes().Set(*attr);
-
-                if(v->Attributes().HasAttribute("name"))
-                {
-                    StringAttribute *attrName = dynamic_cast<StringAttribute*>(v->Attributes().GetAttribute("name"));
-                    if(attrName != NULL)
-                    {
-                        v->SetLabel(attrName->Value);
-                        v->Attributes().Unset("name");
-                    }
-                }
-                if(v->Attributes().HasAttribute("weight"))
-                {
-                    FloatAttribute *attrWeight = dynamic_cast<FloatAttribute*>(v->Attributes().GetAttribute("weight"));
-                    if(attrWeight != NULL)
-                    {
-                        v->SetWeight(attrWeight->Value);
-                        v->Attributes().Unset("weight");
-                    }
-                }
-                if(v->Attributes().HasAttribute("coordinates"))
-                {
-                    SeqAttribute *attrCoordinates = dynamic_cast<SeqAttribute*>(v->Attributes().GetAttribute("coordinates"));
-                    if(attrCoordinates != NULL)
-                    {
-                        vector<float> coordinates;
-                        for(list<Attribute*>::iterator i = attrCoordinates->Value.begin(); i != attrCoordinates->Value.end(); i++)
-                        {
-                            FloatAttribute* attrCoordinate = dynamic_cast<FloatAttribute*>(*i);
-                            if(attrCoordinate != NULL)
-                                coordinates.push_back(attrCoordinate->Value);
-                        }
-                        v->SetCoordinates(coordinates);
-                        v->Attributes().Unset("coordinates");
-                    }
-                }
-
-				/// assign XML-ID
-				string id = (*node)->GetAttribute("id", "");
-				if(id == "")
-					return false; // illegal or no ID
-				map<string,Graph::VertexIterator*>::iterator j = Vertex_XML_ID_to_pointer.find(id);
-				if(j != Vertex_XML_ID_to_pointer.end())
-					return false; // same ID twice
-				Vertex_XML_ID_to_pointer[id] = v;
-			}
-
-			/// load edges
-			list<OpenGraphtheory::XML::XML*> edges = pGraph->FindChildren("edge");
-			for(list<OpenGraphtheory::XML::XML*>::iterator edge = edges.begin(); edge != edges.end(); edge++)
-			{
-				string xmlIsdirected = (*edge)->GetAttribute("isdirected", "");
-				bool Directed = DefaultDirected;
-				if(xmlIsdirected != "")
+                string xmlIsdirected = (*edge)->GetAttribute("isdirected", "");
+                bool Directed = DefaultDirected;
+                if(xmlIsdirected != "")
                     Directed = (xmlIsdirected == "true");
 
-				string xmlFrom = (*edge)->GetAttribute("from", "");
-                map<string,VertexIterator*>::iterator from = Vertex_XML_ID_to_pointer.find(xmlFrom);
-				string xmlTo = (*edge)->GetAttribute("to", "");
-                map<string,VertexIterator*>::iterator to = Vertex_XML_ID_to_pointer.find(xmlTo);
+                string xmlFrom = (*edge)->GetAttribute("from", "");
+                map<string,Vertex*>::iterator from = Vertex_XML_ID_to_pointer.find(xmlFrom);
+                string xmlTo = (*edge)->GetAttribute("to", "");
+                map<string,Vertex*>::iterator to = Vertex_XML_ID_to_pointer.find(xmlTo);
                 if(from == Vertex_XML_ID_to_pointer.end() || to == Vertex_XML_ID_to_pointer.end())
-					return false;
+                    return false;
 
-				/// create edge
-				EdgeIterator e;
-				if(Directed)
-                    e = G.AddArc(*(from->second), *(to->second));
-                else
-                    e = G.AddEdge(*(from->second), *(to->second));
-
-				/// assign attributes
-				list<OpenGraphtheory::XML::XML*> attrs = (*edge)->FindChildren("attr");
-				for(list<OpenGraphtheory::XML::XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
-                    e.Attributes().Set(*attr);
-
-                if(e.Attributes().HasAttribute("name"))
-                {
-                    StringAttribute *attrName = dynamic_cast<StringAttribute*>(e.Attributes().GetAttribute("name"));
-                    if(attrName != NULL)
-                    {
-                        e.SetLabel(attrName->Value);
-                        e.Attributes().Unset("name");
-                    }
-                }
-                if(e.Attributes().HasAttribute("weight"))
-                {
-                    FloatAttribute *attrWeight = dynamic_cast<FloatAttribute*>(e.Attributes().GetAttribute("weight"));
-                    if(attrWeight != NULL)
-                    {
-                        e.SetWeight(attrWeight->Value);
-                        e.Attributes().Unset("weight");
-                    }
-                }
+                this->AddConnection(*(from->second), Directed ? VertexEdgeConnection::VertexToEdge : VertexEdgeConnection::Undirected);
+                this->AddConnection(*(to->second), Directed ? VertexEdgeConnection::EdgeToVertex : VertexEdgeConnection::Undirected);
             }
-
-			/// load hyperedges
-			list<OpenGraphtheory::XML::XML*> rels = pGraph->FindChildren("rel");
-			for(list<OpenGraphtheory::XML::XML*>::iterator rel = rels.begin(); rel != rels.end(); rel++)
-			{
-			    EdgeIterator e = G.AddLooseEdge();
-
+            else if(xml->name == "rel")
+            {
 				/// collect incident vertices
 				list<OpenGraphtheory::XML::XML*> relends = (*rel)->FindChildren("relend");
 				for(list<OpenGraphtheory::XML::XML*>::iterator relend = relends.begin(); relend != relends.end(); relend++)
@@ -1970,46 +1260,97 @@ namespace OpenGraphtheory
 					if(target == Vertex_XML_ID_to_pointer.end())
 						return false;
 
-                    string direction = (*relend)->GetAttribute("direction", "");
-                    if(direction == "none")
-                        e.AddUndirectedConnection(*(target->second));
-                    else if(direction == "in")
-                        e.AddIncomingConnection(*(target->second));
-                    else if(direction == "out")
-                        e.AddOutgoingConnection(*(target->second));
+                    string xmldirection = (*relend)->GetAttribute("direction", "none");
+                    VertexEdgeConnection::Direction direction = VertexEdgeConnection::Undirected;
+                    if(xmldirection == "none")
+                        direction = VertexEdgeConnection::Undirected;
+                    else if(xmldirection == "in")
+                        direction = VertexEdgeConnection::VertexToEdge;
+                    else if(xmldirection == "out")
+                        direction = VertexEdgeConnection::EdgeToVertex;
                     else
                         return false;
+
+                    this->AddConnection(*(target->second), direction);
 				}
+            }
+        }
 
-                /// assign attributes
-				list<OpenGraphtheory::XML::XML*> attrs = (*rel)->FindChildren("attr");
-				for(list<OpenGraphtheory::XML::XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
-                    e.Attributes().Set(*attr);
+		/// \brief Traverse an XML-structure, create a graph from it and copy it to *this
+		bool Graph::LoadFromXML(OpenGraphtheory::XML::XML* root)
+		{
+		    if(root == NULL)
+                throw "Error loading XML Document";
+		    list<OpenGraphtheory::XML::XML*> gxl = root->FindChildren("gxl");
+			if(gxl.size() > 1)
+				throw "XML Document must have exactly 1 top element \"gxl\"";
+			if(gxl.size() < 1)
+				throw "XML Document contains no element \"gxl\" (document possibly empty)";
 
-                if(e.Attributes().HasAttribute("name"))
+		    map<string, Vertex*> Vertex_XML_ID_to_pointer;
+		    map<Edge*, OpenGraphtheory::XML::XML*> EdgeOrigin;
+
+			list<OpenGraphtheory::XML::XML*> XMLGraph = gxl.front()->FindChildren("graph");
+			if(XMLGraph.size() != 1)
+				throw "XML Document must have exactly 1 \"graph\" element below the top element \"gxl\"";
+
+			OpenGraphtheory::XML::XML* pGraph = XMLGraph.front();
+
+            bool DefaultDirected = true;
+            string edgemode = pGraph->GetAttribute("edgemode", "defaultdirected");
+            if(edgemode == "defaultdirected" || edgemode == "directed")
+                DefaultDirected = true;
+            else if(edgemode == "defaultundirected" || edgemode == "undirected")
+                DefaultDirected = false;
+
+
+
+			/// instantiate children from factory
+			for(list<OpenGraphtheory::XML::XML_Element*>::iterator child = pGraph->children.begin(); child != pGraph->children.end(); child++)
+			{
+                OpenGraphtheory::XML::XML* xchild = dynamic_cast<OpenGraphtheory::XML::XML*>(*child);
+                if(xchild == NULL)
+                    continue;
+
+                GraphObject* obj = GraphObject::GraphObjectFactory.Produce(xchild->name);
+
+                Edge* edge = dynamic_cast<Edge*>(obj);
+                if(edge != NULL)
                 {
-                    StringAttribute *attrName = dynamic_cast<StringAttribute*>(e.Attributes().GetAttribute("name"));
-                    if(attrName != NULL)
+                    this->Edges->insert(edge);
+                    edge->Owner = this;
+                    EdgeOrigin[edge] = xchild;
+                    // eobj->LoadFromXml is called later (after all vertices have been loaded), because
+                    // edges may reference vertices that are declared later
+                }
+                else
+                {
+                    Vertex* vertex = dynamic_cast<Vertex*>(obj);
+                    if(vertex != NULL)
                     {
-                        e.SetLabel(attrName->Value);
-                        e.Attributes().Unset("name");
+                        string id = xchild->GetAttribute("id", "");
+                        if(id == "")
+                            return false; // illegal or no ID
+                        map<string,VertexIterator*>::iterator j = Vertex_XML_ID_to_pointer.find(id);
+                        if(j != Vertex_XML_ID_to_pointer.end())
+                            return false; // same ID twice
+                        Vertex_XML_ID_to_pointer[id] = vertex;
+
+                        this->Vertices->insert(vertex);
+                        vertex->Owner = this;
+                        vertex->LoadFromXml(xchild);
+                    }
+                    else
+                    {
+                        delete obj; // object is neither a vertex nor an edge
                     }
                 }
-                if(e.Attributes().HasAttribute("weight"))
-                {
-                    FloatAttribute *attrWeight = dynamic_cast<FloatAttribute*>(e.Attributes().GetAttribute("weight"));
-                    if(attrWeight != NULL)
-                    {
-                        e.SetWeight(attrWeight->Value);
-                        e.Attributes().Unset("weight");
-                    }
-                }
-			}
+            }
 
-			/// G has been successfully loaded, copy it to *this
-			*this = G;
-			for(map<string, Graph::VertexIterator*>::iterator cleaner = Vertex_XML_ID_to_pointer.begin(); cleaner != Vertex_XML_ID_to_pointer.end(); cleaner++)
-                delete(cleaner->second);
+            // now load the edge-properties (attributes etc)
+            for(EdgeIterator e = this->Edges->begin(); e != this->Edges->end(); e++)
+                (*e)->LoadFromXml(EdgeOrigin[*e], Vertex_XML_ID_to_pointer, DefaultUndirected);
+
 			return true;
 		}
 
@@ -2038,6 +1379,7 @@ namespace OpenGraphtheory
 			G.LoadFromStream(is);
 			return is;
 		}
+
 
 		list<Graph> Graph::LoadGraphsFromXML(OpenGraphtheory::XML::XML* root)
 		{
@@ -2075,29 +1417,111 @@ namespace OpenGraphtheory
 		}
 
 
+
+
+        void GraphObject::WriteToXml(OpenGraphtheory::XML::XML* xml, string IdPrefix)
+        {
+            stringstream s;
+            s << "IdPrefix" << GetID();
+            xml->AddAttribute("id", s.str());
+
+            attributes->WriteToXml(xml);
+        }
+
+        void VertexEdgeConnection::WriteToXml(OpenGraphtheory::XML::XML* relend)
+        {
+            relend->name = "relend";
+
+            // attribute "target"
+            relend->AddAttribute("target", "v" + (*j)->GetVertex()->GetIDString());
+
+            // attribute "direction"
+            string direction;
+            switch((*j)->GetVertex()->GetDirection())
+            {
+                case VertexEdgeConnection::Undirected: direction = "none"; break;
+                case VertexEdgeConnection::EdgeToVertex: direction = "out"; break;
+                case VertexEdgeConnection::VertexToEdge: direction = "in"; break;
+                default:
+                    throw "VertexEdgeConnection with illegal \"direction\" value";
+            }
+            relend->AddAttribute("direction", direction);
+        }
+
+        void Vertex::WriteToXml(OpenGraphtheory::XML::XML* node)
+        {
+            node->name = "node";
+            GraphObject::WriteToXml(node, "v");
+        }
+
+        void Edge::WriteToXml(OpenGraphtheory::XML::XML* edge)
+        {
+            GraphObject::WriteToXml(edge, "e");
+
+            if(!IsHyperedge())
+            {
+                edge->name = "edge";
+
+                // attribute "from"
+                edge->AddAttribute("from", "v" + From()->GetIDString());
+                // attribute "to"
+                edge->AddAttribute("to", "v" + To()->GetIDString());
+                // attribute "isdirected"
+                edge->AddAttribute("isdirected", IsUndirected() ? "false" : "true");
+            }
+            else
+            {
+                edge->name = "rel";
+
+                // children "relend"
+                for(VertexEdgeConnectionIterator j = Connections.begin(); j != Connections.end(); j++)
+                {
+                    OpenGraphtheory::XML::XML* relend = new OpenGraphtheory::XML::XML("relend");
+                    (*j)->WriteToXml(relend);
+                    edge->AddChild(relend);
+                }
+            }
+
+        }
+
 		void Graph::WriteToStream(ostream& os, int indent)
 		{
-			os << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-			os << "<!DOCTYPE gxl SYSTEM \"http://www.gupro.de/GXL/gxl-1.0.dtd\">\n";
-
+            // root tag "gxl"
 			OpenGraphtheory::XML::XML* gxl = new OpenGraphtheory::XML::XML("gxl");
 			gxl->AddChild(new OpenGraphtheory::XML::XML_Comment("www.Open-Graphtheory.org"));
 			gxl->AddAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
 
+
+            // child tag "graph"
 			OpenGraphtheory::XML::XML* graph = new OpenGraphtheory::XML::XML("graph");
-			stringstream s;
 			graph->AddAttribute("edgeids", "true");
 			graph->AddAttribute("edgemode", "defaultundirected");
 			graph->AddAttribute("hypergraph", "true");
+
+            // vertices
+			for(VertexIterator i = BeginVertices(); i != EndVertices(); i++)
+			{
+                OpenGraphtheory::XML::XML* node = new OpenGraphtheory::XML::XML("node");
+                (*i)->WriteToXml(node);
+                graph->AddChild(node);
+            }
+
+            // edges
+			for(EdgeIterator i = BeginEdges(); i != EndEdges(); i++)
+			{
+                OpenGraphtheory::XML::XML* edge = new OpenGraphtheory::XML::XML("edge");
+                (*i)->WriteToXml(edge);
+                graph->AddChild(edge);
+            }
+
+			// arbitrary attributes
             attributes->WriteToXml(graph);
 
-			for(VertexIterator i = BeginVertices(); i != EndVertices(); i++)
-                i.WriteToXml(graph);
-
-			for(EdgeIterator i = BeginEdges(); i != EndEdges(); i++)
-                i.WriteToXml(graph);
 
             gxl->AddChild(graph);
+
+			os << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+			os << "<!DOCTYPE gxl SYSTEM \"http://www.gupro.de/GXL/gxl-1.0.dtd\">\n";
             gxl->WriteToStream(os, 0);
             delete gxl;
 		}

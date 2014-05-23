@@ -55,9 +55,9 @@ namespace OpenGraphtheory
 
             // insert the edges with the selected indices into the graph
             int i = 0;
-            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+            for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                Graph::VertexIterator v1 = v;
+                VertexIterator v1 = v;
                 for(v1++; v1 != G.EndVertices(); v1++)
                 {
                     if(selected_indices.find(i) != selected_indices.end())

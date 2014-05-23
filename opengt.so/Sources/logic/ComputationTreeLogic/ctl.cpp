@@ -32,7 +32,7 @@ using namespace OpenGraphtheory::Logic;
     {
         if(parameters.size() > 0)
         {
-            set<Graph::VertexIterator> result = Interpretation(G);
+            VertexSet result = Interpretation(G);
             G.AddVertexSet(result, *(parameters.begin()));
         }
     }
@@ -52,11 +52,11 @@ using namespace OpenGraphtheory::Logic;
         return new CTL_True();
     }
 
-    set<Graph::VertexIterator> CTL_True::Interpretation(Graph &G)
+    VertexSet CTL_True::Interpretation(Graph &G)
     {
-        set<Graph::VertexIterator> result;
-        for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-            result.insert(v);
+        VertexSet result;
+        for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+            result.insert(*v);
         return result;
     }
 
@@ -75,9 +75,9 @@ using namespace OpenGraphtheory::Logic;
         return new CTL_False();
     }
 
-    set<Graph::VertexIterator> CTL_False::Interpretation(Graph &G)
+    VertexSet CTL_False::Interpretation(Graph &G)
     {
-        set<Graph::VertexIterator> result;
+        VertexSet result;
         return result;
     }
 
@@ -99,29 +99,26 @@ using namespace OpenGraphtheory::Logic;
     }
 
 
-    bool CTL_Atomic::Satisfies(Graph::VertexIterator v)
+    bool CTL_Atomic::Satisfies(Vertex* v)
     {
-        if(v.Attributes().HasAttribute(*test_description))
-        {
-            Attribute *attr = v.Attributes().GetAttribute(*test_description);
-            BoolAttribute *battr = dynamic_cast<BoolAttribute*>(attr);
-            if(battr != NULL)
-                return battr->Value;
-        }
+        Attribute *attr = v->GetAttribute(*test_description);
+        BoolAttribute *battr = dynamic_cast<BoolAttribute*>(attr);
+        if(battr != NULL)
+            return battr->Value;
 
-        string label = string(",")+v.GetLabel()+string(",");
-        if( label.find( string(",")+*test_description+string(",") ) != label.npos )
+        string label = string(",") + v->GetLabel() + string(",");
+        if( label.find( string(",") + *test_description + string(",") ) != label.npos )
             return true;
 
         return false;
     }
 
-    set<Graph::VertexIterator> CTL_Atomic::Interpretation(Graph &G)
+    VertexSet CTL_Atomic::Interpretation(Graph &G)
     {
-        set<Graph::VertexIterator> result;
-        for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-            if(Satisfies(v))
-                result.insert(v);
+        VertexSet result;
+        for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+            if(Satisfies(*v))
+                result.insert(*v);
         return result;
     }
 
@@ -146,13 +143,13 @@ using namespace OpenGraphtheory::Logic;
         return new CTL_Not(static_cast<CTLFormula*>(phi->Clone()));
     }
 
-    set<Graph::VertexIterator> CTL_Not::Interpretation(Graph &G)
+    VertexSet CTL_Not::Interpretation(Graph &G)
     {
-        set<Graph::VertexIterator> phiresult = phi->Interpretation(G);
-        set<Graph::VertexIterator> result;
-        for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-            if(phiresult.find(v) == phiresult.end())
-                result.insert(v);
+        VertexSet phiresult = phi->Interpretation(G);
+        VertexSet result;
+        for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+            if(!phiresult.contains(*v))
+                result.insert(*v);
         return result;
     }
 
@@ -178,15 +175,11 @@ using namespace OpenGraphtheory::Logic;
                            static_cast<CTLFormula*>(phi2->Clone()));
     }
 
-    set<Graph::VertexIterator> CTL_And::Interpretation(Graph &G)
+    VertexSet CTL_And::Interpretation(Graph &G)
     {
-        set<Graph::VertexIterator> phi1result = phi1->Interpretation(G);
-        set<Graph::VertexIterator> phi2result = phi2->Interpretation(G);
-        set<Graph::VertexIterator> result;
-        for(set<Graph::VertexIterator>::iterator v = phi1result.begin(); v != phi1result.end(); v++)
-            if(phi2result.find(*v) != phi2result.end())
-                result.insert(*v);
-        return result;
+        VertexSet phi1result = phi1->Interpretation(G);
+        VertexSet phi2result = phi2->Interpretation(G);
+        return phi1result.intersection(phi2result);
     }
 
     // -------------------------------------------------------------------------
@@ -210,13 +203,9 @@ using namespace OpenGraphtheory::Logic;
         return new CTL_Or(static_cast<CTLFormula*>(phi1->Clone()), static_cast<CTLFormula*>(phi2->Clone()));
     }
 
-    set<Graph::VertexIterator> CTL_Or::Interpretation(Graph &G)
+    VertexSet CTL_Or::Interpretation(Graph &G)
     {
-        set<Graph::VertexIterator> phi1result = phi1->Interpretation(G);
-        set<Graph::VertexIterator> phi2result = phi2->Interpretation(G);
-        for(set<Graph::VertexIterator>::iterator v = phi2result.begin(); v != phi2result.end(); v++)
-            phi1result.insert(*v);
-        return phi1result;
+        return phi1->Interpretation(G) + phi2->Interpretation(G);
     }
 
     // -------------------------------------------------------------------------
@@ -238,15 +227,14 @@ using namespace OpenGraphtheory::Logic;
         return new CTL_ExistsNext(static_cast<CTLFormula*>(phi->Clone()));
     }
 
-    set<Graph::VertexIterator> CTL_ExistsNext::Interpretation(Graph &G)
+    VertexSet CTL_ExistsNext::Interpretation(Graph &G)
     {
-        set<Graph::VertexIterator> phiresult = phi->Interpretation(G);
-        set<Graph::VertexIterator> result;
-        for(set<Graph::VertexIterator>::iterator v = phiresult.begin(); v != phiresult.end(); v++)
+        VertexSet phiresult = phi->Interpretation(G);
+        VertexSet result;
+        for(VertexIterator v = phiresult.begin(); v != phiresult.end(); v++)
         {
-            Graph::VertexIterator vi = *v;
-            set<Graph::VertexIterator> vPredecessors = vi.CollectNeighbors(1,0,1,0,0,0,1,0,1);
-            for(set<Graph::VertexIterator>::iterator n = vPredecessors.begin(); n != vPredecessors.end(); n++)
+            VertexSet vPredecessors = (*v)->CollectNeighbors(1,0,1,0,0,0,1,0,1);
+            for(VertexIterator n = vPredecessors.begin(); n != vPredecessors.end(); n++)
                 result.insert(*n);
         }
         return result;
@@ -273,27 +261,25 @@ using namespace OpenGraphtheory::Logic;
         return new CTL_ExistsUntil(static_cast<CTLFormula*>(phi1->Clone()), static_cast<CTLFormula*>(phi2->Clone()));
     }
 
-    set<Graph::VertexIterator> CTL_ExistsUntil::Interpretation(Graph &G)
+    VertexSet CTL_ExistsUntil::Interpretation(Graph &G)
     {
-        set<Graph::VertexIterator> phi1result = phi1->Interpretation(G);
-        set<Graph::VertexIterator> phi2result = phi2->Interpretation(G);
-        set<Graph::VertexIterator> last = phi2result;
-        set<Graph::VertexIterator> next;
+        VertexSet phi1result = phi1->Interpretation(G);
+        VertexSet phi2result = phi2->Interpretation(G);
+        VertexSet last = phi2result;
+        VertexSet next;
 
         while(last.size() > 0)
         {
-            for(set<Graph::VertexIterator>::iterator l = last.begin(); l != last.end(); l++)
+            for(VertexIterator l = last.begin(); l != last.end(); l++)
             {
-                Graph::VertexIterator li = *l;
-                set<Graph::VertexIterator> lPredecessors = li.CollectNeighbors(1,0,1,0,0,0,1,0,1);
-                for(set<Graph::VertexIterator>::iterator lpred = lPredecessors.begin(); lpred != lPredecessors.end(); lpred++)
-                    if(phi1result.find(*lpred) != phi1result.end()) // if lpred satisfies phi1
-                        if(phi2result.find(*lpred) == phi2result.end() && last.find(*lpred) == last.end()) // and lpred is a new element
+                VertexSet lPredecessors = (*l)->CollectNeighbors(1,0,1,0,0,0,1,0,1);
+                for(VertexIterator lpred = lPredecessors.begin(); lpred != lPredecessors.end(); lpred++)
+                    if(phi1result.contains(*lpred)) // if lpred satisfies phi1
+                        if(!phi2result.contains(*lpred) && !last.contains(*lpred)) // and lpred is a new element
                             next.insert(*lpred);
             }
 
-            for(set<Graph::VertexIterator>::iterator n = next.begin(); n != next.end(); n++)
-                phi2result.insert(*n);
+            phi2result += next;
             last = next;
             next.clear();
         }
@@ -320,41 +306,39 @@ using namespace OpenGraphtheory::Logic;
         return new CTL_ExistsGlobally(static_cast<CTLFormula*>(phi->Clone()));
     }
 
-    set<Graph::VertexIterator> CTL_ExistsGlobally::Interpretation(Graph &G)
+    VertexSet CTL_ExistsGlobally::Interpretation(Graph &G)
     {
-        set<Graph::VertexIterator> phiresult = phi->Interpretation(G);
-        set<Graph::VertexIterator> lastremoved;
-        set<Graph::VertexIterator> nextremoved;
-        for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-            if(phiresult.find(v) == phiresult.end())
-                lastremoved.insert(v);
+        VertexSet phiresult = phi->Interpretation(G);
+        VertexSet lastremoved;
+        VertexSet nextremoved;
+        for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+            if(!phiresult.contains(*v))
+                lastremoved.insert(*v);
         // lastremoved = V - phiresult
 
         while(lastremoved.size() > 0)
         {
-            set<Graph::VertexIterator> RemovalCandidates;
-            for(set<Graph::VertexIterator>::iterator v = lastremoved.begin(); v != lastremoved.end(); v++)
+            VertexSet RemovalCandidates;
+            for(VertexIterator v = lastremoved.begin(); v != lastremoved.end(); v++)
             {
-                Graph::VertexIterator vi = *v;
-                set<Graph::VertexIterator> vPred = vi.CollectNeighbors(1,0,1,0,0,0,1,0,1);
-                for(set<Graph::VertexIterator>::iterator p = vPred.begin(); p != vPred.end(); p++)
-                    if(phiresult.find(*p) != phiresult.end())
+                VertexSet vPred = (*v)->CollectNeighbors(1,0,1,0,0,0,1,0,1);
+                for(VertexIterator p = vPred.begin(); p != vPred.end(); p++)
+                    if(phiresult.contains(*p))
                         RemovalCandidates.insert(*p);
             }
 
-            for(set<Graph::VertexIterator>::iterator v = RemovalCandidates.begin(); v != RemovalCandidates.end(); v++)
+            for(VertexIterator v = RemovalCandidates.begin(); v != RemovalCandidates.end(); v++)
             {
-                Graph::VertexIterator vi = *v;
-                set<Graph::VertexIterator> vSucc = vi.CollectNeighbors(1,1,0,1,1,0,0,0,0);
+                VertexSet vSucc = (*v)->CollectNeighbors(1,1,0,1,1,0,0,0,0);
                 bool MustBeRemoved = true;
-                for(set<Graph::VertexIterator>::iterator s = vSucc.begin(); MustBeRemoved && s != vSucc.end(); s++)
+                for(VertexIterator s = vSucc.begin(); MustBeRemoved && s != vSucc.end(); s++)
                     if(phiresult.find(*s) != phiresult.end()) // v still has a successor in phiresult
                         MustBeRemoved = false;
 
                 if(MustBeRemoved)
                 {
                     phiresult.erase(*v);
-                    nextremoved.insert(vi);
+                    nextremoved.insert(*v);
                 }
             }
 
@@ -378,7 +362,7 @@ using namespace OpenGraphtheory::Logic;
             delete forwarded;
     }
 
-    set<Graph::VertexIterator> CTL_Forwarder::Interpretation(Graph& G)
+    VertexSet CTL_Forwarder::Interpretation(Graph& G)
     {
         return forwarded->Interpretation(G);
     }

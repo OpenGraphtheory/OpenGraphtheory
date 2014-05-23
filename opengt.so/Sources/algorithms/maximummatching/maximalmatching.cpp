@@ -14,31 +14,31 @@ namespace OpenGraphtheory
             "maximalmatching", "Adds a maximal matching (not necessarily a maximUM matching) to the graph", "http://en.wikipedia.org/wiki/Matching_(graph_theory)"));
 
 
-        void AlgorithmMAXIMALMATCHING::FindMaximalMatching(Graph& G, set<Graph::EdgeIterator>& Matching, set<Graph::VertexIterator>& MatchedVertices)
+        void AlgorithmMAXIMALMATCHING::FindMaximalMatching(Graph& G, EdgeSet& Matching, VertexSet& MatchedVertices)
         {
-            for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
+            for(EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
             {
-                set<Graph::VertexIterator> Incident = e.CollectIncidentVertices(1,1,1);
-                if(SetHelper::IntersectionEmpty(MatchedVertices, Incident))
+                VertexSet Incident = (*e)->CollectIncidentVertices(1,1,1);
+                if(MatchedVertices.intersection(Incident).empty())
                 {
-                    Matching.insert(e);
-                    SetHelper::DestructiveUnion(MatchedVertices, Incident);
+                    Matching.insert(*e);
+                    MatchedVertices += Incident;
                 }
             }
 
         }
 
 
-        void AlgorithmMAXIMALMATCHING::FindMaximalMatching(Graph& G, set<Graph::EdgeIterator>& Matching)
+        void AlgorithmMAXIMALMATCHING::FindMaximalMatching(Graph& G, EdgeSet& Matching)
         {
-            set<Graph::VertexIterator> MatchedVertices;
+            VertexSet MatchedVertices;
             FindMaximalMatching(G, Matching, MatchedVertices);
         }
 
 
         void AlgorithmMAXIMALMATCHING::AddMaximalMatching(Graph &G, string MatchingName)
         {
-            set<Graph::EdgeIterator> Matching;
+            EdgeSet Matching;
             FindMaximalMatching(G, Matching);
             G.AddEdgeSet(Matching, MatchingName);
         }

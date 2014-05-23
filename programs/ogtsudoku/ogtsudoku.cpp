@@ -12,8 +12,8 @@ int main(int argc, char** argv)
     // =================================================== TRANSLATE SUDOKU INTO A PRECOLORED GRAPH
 
     Graph G;
-    Graph::VertexIterator board[9][9];
-    map<Graph::VertexIterator, int> PreColoring;
+    VertexIterator board[9][9];
+    map<VertexIterator, int> PreColoring;
 
     for(int y = 0; y < 9; y++)
         for(int x = 0; x < 9; x++)

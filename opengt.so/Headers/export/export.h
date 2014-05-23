@@ -27,10 +27,8 @@
                     static Factory<ExportFilter> ExportFilterFactory;
                     virtual ~ExportFilter();
 
-                    virtual void Export(OpenGraphtheory::Graph& G, std::ostream& os,
-                                std::map<Graph::VertexIterator, Visualization::Color>& vertexcoloring,
-                                std::map<Graph::EdgeIterator, Visualization::Color>& edgecoloring, float dpi=72,
-                                float edgewidth=-1, float vertexradius=-1) = 0;
+                    virtual void Export(OpenGraphtheory::Graph& G, std::ostream& os, VertexColoring& vertexcoloring,
+                                        EdgeColoring& edgecoloring, float dpi=72, float edgewidth=-1, float vertexradius=-1) = 0;
                     void DoExport(OpenGraphtheory::Graph& G, std::ostream& os, std::string vertexcoloring="", std::string edgecoloring="", float dpi=72, float edgewidth=-1, float vertexradius=-1);
                     void DoExport(OpenGraphtheory::Graph& G, std::string FileName, std::string vertexcoloring="", std::string edgecoloring="", float dpi=72, float edgewidth=-1, float vertexradius=-1);
                     std::string DoExport(OpenGraphtheory::Graph& G, std::string vertexcoloring="", std::string edgecoloring="", float dpi=72, float edgewidth=-1, float vertexradius=-1);
@@ -41,11 +39,8 @@
             template<class T> class GraphicalExportFilter : public ExportFilter
             {
                 public:
-                    void Export(OpenGraphtheory::Graph& G, std::ostream& os,
-                                std::map<Graph::VertexIterator, Visualization::Color>& vertexcoloring,
-                                std::map<Graph::EdgeIterator, Visualization::Color>& edgecoloring, float dpi=72,
-                                float edgewidth=-1, float vertexradius=-1);
-
+                    void Export(OpenGraphtheory::Graph& G, std::ostream& os, VertexColoring& vertexcoloring,
+                                EdgeColoring& edgecoloring, float dpi=72, float edgewidth=-1, float vertexradius=-1);
             };
 
         }

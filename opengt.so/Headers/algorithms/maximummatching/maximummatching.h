@@ -20,14 +20,13 @@
             {
                 public:
                     void Run(Graph &G, std::vector<std::string> parameters);
-                    static void FindMaximumMatching(Graph& G, std::set<Graph::EdgeIterator>& Matching);
+                    static void FindMaximumMatching(Graph& G, EdgeSet& Matching);
                     static void AddMaximumMatching(Graph &G, std::string MatchingName);
 
                 protected:
                     static MultiFactoryRegistrator<Algorithm> AlgorithmMaximumMatchingRegistrator;
 
-                    static bool Augment(Graph& G, std::set<Graph::EdgeIterator>& Matching,
-                                            std::map<Graph::VertexIterator, int> ContractionEquivalenceClass);
+                    static bool Augment(Graph& G, EdgeSet& Matching, VertexPartitioning& ContractionEquivalenceClass);
             };
         }
     }

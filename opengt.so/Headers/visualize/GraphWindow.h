@@ -33,8 +33,8 @@
                     void Display(Graph* G);
                     void Update();
 
-                    void (*OnVertexMouseDown) (Graph::VertexIterator v, MouseButton Button,   unsigned short ButtonStates);
-                    void (*OnVertexMouseUp)   (Graph::VertexIterator v, MouseButton Button,   unsigned short ButtonStates);
+                    void (*OnVertexMouseDown) (VertexIterator v, MouseButton Button,   unsigned short ButtonStates);
+                    void (*OnVertexMouseUp)   (VertexIterator v, MouseButton Button,   unsigned short ButtonStates);
             };
 
             class GraphWindowRenderingContext : public GraphRenderingContext

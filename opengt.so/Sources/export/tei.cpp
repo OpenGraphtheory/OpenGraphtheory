@@ -10,9 +10,8 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportFilterTEI::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring,
-                                     map<Graph::EdgeIterator, Color>& edgecoloring, float dpi, float edgewidth,
-                                     float vertexradius)
+        void ExportFilterTEI::Export(Graph& G, ostream& os, VertexColoring& vertexcoloring,
+                                     EdgeColoring& edgecoloring, float dpi, float edgewidth, float vertexradius)
         {
             if(G.IsHypergraph())
                 throw "The TEI fileformat doesn\'t support hypergraphs\n";
@@ -27,18 +26,20 @@ namespace OpenGraphtheory
             os << "  <label>" << Translator.Translate(G.GetLabel()) << "</label>\n";
 
             /// write vertices
-            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+            for(VertexIterator vi = G.BeginVertices(); vi != G.EndVertices(); vi++)
             {
-                os << "  <node xml:id=\"" << v.GetID() << "\">\n";
-                os << "    <label>" << Translator.Translate(v.GetLabel()) << "</label>\n";
+                Vertex* v = *vi;
+                os << "  <node xml:id=\"" << v->GetID() << "\">\n";
+                os << "    <label>" << Translator.Translate(v->GetLabel()) << "</label>\n";
                 os << "  </node>\n";
             }
 
             /// write edges or arcs (distinguishable only by the "type" attribute of the graph!)
-            for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
+            for(EdgeIterator ei = G.BeginEdges(); ei != G.EndEdges(); ei++)
             {
-                os << "  <arc from=\"#" << e.From().GetID() << "\" to=\"#" << e.To().GetID() << "\">\n";
-                os << "    <label>" << Translator.Translate(e.GetLabel()) << "</label>\n";
+                Edge* e = *ei;
+                os << "  <arc from=\"#" << e->From()->GetID() << "\" to=\"#" << e->To()->GetID() << "\">\n";
+                os << "    <label>" << Translator.Translate(e->GetLabel()) << "</label>\n";
                 os << "  </arc>\n";
             }
 

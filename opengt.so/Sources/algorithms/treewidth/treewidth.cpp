@@ -22,7 +22,7 @@ namespace OpenGraphtheory
 
             // -------------------------------------------------------------------------------------------
 
-            IntroduceNode::IntroduceNode(NiceTreeDecomposition* Subtree, Graph::VertexIterator IntroducedNode)
+            IntroduceNode::IntroduceNode(NiceTreeDecomposition* Subtree, VertexIterator IntroducedNode)
                 : NiceTreeDecomposition()
             {
                 this->IntroducedNode = IntroducedNode;
@@ -54,7 +54,7 @@ namespace OpenGraphtheory
 
             // -------------------------------------------------------------------------------------------
 
-            ForgetNode::ForgetNode(NiceTreeDecomposition* Subtree, Graph::VertexIterator ForgottenNode)
+            ForgetNode::ForgetNode(NiceTreeDecomposition* Subtree, VertexIterator ForgottenNode)
                 : NiceTreeDecomposition()
             {
                 this->ForgottenNode = ForgottenNode;

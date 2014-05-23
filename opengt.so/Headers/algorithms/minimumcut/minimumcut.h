@@ -17,14 +17,14 @@
             {
                 public:
                     void Run(Graph &G, std::vector<std::string> parameters);
-                    static void FindMinimumCut(Graph& G, Graph::VertexIterator Source, Graph::VertexIterator Drain,
-                                               std::map<Graph::EdgeIterator, float>& Capacities, std::set<Graph::EdgeIterator>& MinimumCut);
-                    static void FindMinimumCut(Graph& G, std::map<Graph::EdgeIterator, float>& Capacities, std::set<Graph::EdgeIterator>& MinimumCut);
-                    static void FindMinimumCut(Graph& G, std::set<Graph::EdgeIterator>& MinimumCut);
+                    static void FindMinimumCut(Graph& G, Vertex* Source, Vertex* Drain,
+                                               EdgeWeighting& Capacities, EdgeSet& MinimumCut);
+                    static void FindMinimumCut(Graph& G, EdgeWeighting& Capacities, EdgeSet& MinimumCut);
+                    static void FindMinimumCut(Graph& G, EdgeSet& MinimumCut);
 
-                    static void AddMinimumCut(Graph &G, Graph::VertexIterator Source, Graph::VertexIterator Drain,
-                                              std::map<Graph::EdgeIterator, float>& Capacities, std::string CutName);
-                    static void AddMinimumCut(Graph &G, std::map<Graph::EdgeIterator, float>& Capacities, std::string CutName);
+                    static void AddMinimumCut(Graph &G, Vertex* Source, Vertex* Drain,
+                                              EdgeWeighting& Capacities, std::string CutName);
+                    static void AddMinimumCut(Graph &G, EdgeWeighting& Capacities, std::string CutName);
                     static void AddMinimumCut(Graph &G, std::string CutName);
 
                 protected:

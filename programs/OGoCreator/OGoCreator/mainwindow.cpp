@@ -62,7 +62,7 @@ void MainWindow::OpenGraphFile(QString filename)
     }
 
     // make sure every vertex has 2 coordinates (otherwise, the paint event would crash)
-    for(Graph::VertexIterator v = gr->BeginVertices(); v != gr->EndVertices(); v++)
+    for(VertexIterator v = gr->BeginVertices(); v != gr->EndVertices(); v++)
     {
         vector<float> Coordinates = v.GetCoordinates();
         if(Coordinates.size() < 2)
@@ -273,7 +273,7 @@ void MainWindow::on_actionColoring_triggered()
 // ===================================================================================================================================================
 
 
-void PathVertexSelectionFinished(QWidget* mainwindow, OGoGraphView* gv, vector<Graph::VertexIterator> selectedvertices, Graph* G)
+void PathVertexSelectionFinished(QWidget* mainwindow, OGoGraphView* gv, vector<VertexIterator> selectedvertices, Graph* G)
 {
     bool ok;
     QString text = QInputDialog::getText(mainwindow, "Routing Algorithm", "Enter a name for the Path",
@@ -299,7 +299,7 @@ void MainWindow::on_actionPath_triggered()
 // ===================================================================================================================================================
 
 
-void MinCutVertexSelectionFinished(QWidget* mainwindow, OGoGraphView* gv, vector<Graph::VertexIterator> selectedvertices, Graph* G)
+void MinCutVertexSelectionFinished(QWidget* mainwindow, OGoGraphView* gv, vector<VertexIterator> selectedvertices, Graph* G)
 {
     bool ok;
     QString text = QInputDialog::getText(mainwindow, "Minimum Cut Algorithm", "Enter a name for the Cut",
@@ -308,9 +308,9 @@ void MinCutVertexSelectionFinished(QWidget* mainwindow, OGoGraphView* gv, vector
         return;
 
     OpenGraphtheory::Algorithms::AlgorithmMINIMUMCUT algo;
-    map<Graph::EdgeIterator, float> capacities;
-    for(Graph::EdgeIterator e = G->BeginEdges(); e != G->EndEdges(); e++)
-        capacities.insert(std::pair<Graph::EdgeIterator, float>(e, e.GetWeight()));
+    map<EdgeIterator, float> capacities;
+    for(EdgeIterator e = G->BeginEdges(); e != G->EndEdges(); e++)
+        capacities.insert(std::pair<EdgeIterator, float>(e, e.GetWeight()));
     algo.AddMinimumCut(*G, selectedvertices[0], selectedvertices[1], capacities, text.toUtf8().constData());
     gv->setEdgeColoring(text.toUtf8().constData());
     gv->resetVertexColoring();
@@ -483,7 +483,7 @@ void MainWindow::on_actionFirst_Order_Predicate_Logic_triggered()
     }
     else
     {
-        std::map<std::string,OpenGraphtheory::Graph::VertexIterator> var_assignments;
+        std::map<std::string,OpenGraphtheory::VertexIterator> var_assignments;
         QMessageBox::information(0, "Result", formula->Interpretation(*(gv->getGraph()),var_assignments) ? "Yes" : "No");
         delete formula;
     }

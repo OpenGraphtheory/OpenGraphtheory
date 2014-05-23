@@ -16,16 +16,15 @@
             {
                 public:
                     void Run(Graph &G, std::vector<std::string> parameters);
-                    static void FindMaximumFlow(Graph& G, Graph::VertexIterator Source, Graph::VertexIterator Drain,
-                                         std::map<Graph::EdgeIterator, float>& Capacities, std::map<Graph::EdgeIterator, float>& Flow);
-                    static void AddMaximumFlow(Graph &G, Graph::VertexIterator Source, Graph::VertexIterator Drain,
-                                         std::map<Graph::EdgeIterator, float>& Capacities, std::string FlowName);
+                    static void FindMaximumFlow(Graph& G, Vertex* Source, Vertex* Drain,
+                                         EdgeWeighting& Capacities, EdgeWeighting& Flow);
+                    static void AddMaximumFlow(Graph &G, Vertex* Source, Vertex* Drain,
+                                         EdgeWeighting& Capacities, std::string FlowName);
 
                 protected:
                     static MultiFactoryRegistrator<Algorithm> AlgorithmMaximumFlowRegistrator;
-                    static bool FindAugmentingPath(Graph& G, Graph::VertexIterator Source, Graph::VertexIterator Drain,
-                                         std::map<Graph::EdgeIterator, float>& Capacities, std::map<Graph::EdgeIterator, float>& Flow,
-                                         std::vector<Graph::EdgeIterator>& AugmentingPath);
+                    static bool FindAugmentingPath(Graph &G, Vertex* Source, Vertex* Drain, EdgeWeighting& Capacities,
+                                                   EdgeWeighting& Flow, std::vector<Edge*>& AugmentingPath);
             };
         }
     }

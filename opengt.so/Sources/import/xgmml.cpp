@@ -29,7 +29,7 @@ namespace OpenGraphtheory
 
 
             Graph result;
-            map<string, Graph::VertexIterator*> Vertex_XML_ID_to_pointer;
+            map<string, VertexIterator*> Vertex_XML_ID_to_pointer;
 
             // 0 is the default for directed, by the XGMML standard
             bool Directed = (graphnode->GetAttribute("directed", "0") == "1");
@@ -39,7 +39,8 @@ namespace OpenGraphtheory
 			for(list<OpenGraphtheory::XML::XML*>::iterator node = nodes.begin(); node != nodes.end(); node++)
 			{
 				/// create vertex
-				Graph::VertexIterator *v = new Graph::VertexIterator(result.AddVertex());
+				VertexIterator *vi = new VertexIterator(result.AddVertex());
+				Vertex* v = **vi;
 
 				v->SetLabel((*node)->GetAttribute("label",""));
 				string sWeight = (*node)->GetAttribute("weight","0");
@@ -55,10 +56,8 @@ namespace OpenGraphtheory
 				{
                     string name = (*attr)->GetAttribute("name", "");
                     string value = (*attr)->GetAttribute("value", "");
-                    v->Attributes().Unset(name);
-                    v->Attributes().Add(name, "string");
-
-                    Attribute* pAttr = v->Attributes().GetAttribute(name);
+                    v->RemoveAttribute(name);
+                    Attribute* pAttr = v->AddAttribute(name, "string");
                     StringAttribute* sAttr = dynamic_cast<StringAttribute*>(pAttr);
                     if(sAttr != NULL)
                         sAttr->Value = value;
@@ -70,7 +69,7 @@ namespace OpenGraphtheory
 					throw "Illegal Structure"; // illegal or no ID
 				if(Vertex_XML_ID_to_pointer.find(id) != Vertex_XML_ID_to_pointer.end())
 					throw "multiple nodes with same id"; // same ID twice
-				Vertex_XML_ID_to_pointer[id] = v;
+				Vertex_XML_ID_to_pointer[id] = vi;
 			}
 
 
@@ -79,24 +78,24 @@ namespace OpenGraphtheory
 			for(list<OpenGraphtheory::XML::XML*>::iterator edge = edges.begin(); edge != edges.end(); edge++)
 			{
 				string xmlFrom = (*edge)->GetAttribute("source", "");
-                map<string,Graph::VertexIterator*>::iterator from = Vertex_XML_ID_to_pointer.find(xmlFrom);
+                map<string,VertexIterator*>::iterator from = Vertex_XML_ID_to_pointer.find(xmlFrom);
 				string xmlTo = (*edge)->GetAttribute("target", "");
-                map<string,Graph::VertexIterator*>::iterator to = Vertex_XML_ID_to_pointer.find(xmlTo);
+                map<string,VertexIterator*>::iterator to = Vertex_XML_ID_to_pointer.find(xmlTo);
                 if(from == Vertex_XML_ID_to_pointer.end() || to == Vertex_XML_ID_to_pointer.end())
 					throw "edge with reference to nonexisting node-id";
 
 				/// create edge
-				Graph::EdgeIterator e;
+				EdgeIterator e;
 				if(Directed)
                     e = result.AddArc(*(from->second), *(to->second));
                 else
                     e = result.AddEdge(*(from->second), *(to->second));
 
                 /// assign attributes
-				e.SetLabel((*edge)->GetAttribute("label",""));
+				(*e)->SetLabel((*edge)->GetAttribute("label",""));
             }
 
-            for(map<string, Graph::VertexIterator*>::iterator i = Vertex_XML_ID_to_pointer.begin(); i != Vertex_XML_ID_to_pointer.end(); i++)
+            for(map<string, VertexIterator*>::iterator i = Vertex_XML_ID_to_pointer.begin(); i != Vertex_XML_ID_to_pointer.end(); i++)
                 delete i->second;
 			delete root;
 			return result;

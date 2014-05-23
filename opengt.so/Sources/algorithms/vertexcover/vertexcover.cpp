@@ -14,27 +14,30 @@ namespace OpenGraphtheory
 
 
         bool AlgorithmVERTEXCOVER::TestVertexCover(Graph &G,
-                                                   set<Graph::EdgeIterator>& Uncovered,
-                                                   set<Graph::VertexIterator>& VertexCover,
+                                                   EdgeSet& Uncovered,
+                                                   VertexSet& VertexCover,
                                                    unsigned int k)
         {
+            TestTermination();
+
+
             if(Uncovered.size() <= 0)
                 return true;
             if(k <= 0)
                 return false;
 
             unsigned int MaxNewlyCoverable = 0;
-            Graph::VertexIterator selected = G.EndVertices();
+            Vertex* selected = *G.EndVertices();
 
-            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+            for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                if(VertexCover.find(v) != VertexCover.end()) // v already in VertexCover
+                if(VertexCover.contains(*v)) // v already in VertexCover
                     continue;
-                unsigned int NewlyCoverable = SetHelper::IntersectionSize(v.CollectIncidentEdges(1,1,1), Uncovered);
+                unsigned int NewlyCoverable = (*v)->CollectIncidentEdges(1,1,1).intersection(Uncovered).size();
 
                 if(NewlyCoverable > MaxNewlyCoverable)
                 {
-                    selected = v;
+                    selected = *v;
                     MaxNewlyCoverable = NewlyCoverable;
                 }
 
@@ -42,7 +45,7 @@ namespace OpenGraphtheory
                 // vertex of degree > k => select it
                 if(NewlyCoverable == 1 || NewlyCoverable > k)
                 {
-                    selected = v;
+                    selected = *v;
                     MaxNewlyCoverable = NewlyCoverable;
                     break;
                 }
@@ -54,39 +57,37 @@ namespace OpenGraphtheory
                     return false;
             }
 
-            set<set<Graph::VertexIterator> > candidate_sets;
+            vector<VertexSet*> candidate_sets;
 
-            set<Graph::VertexIterator> enforced_neighbors = SetHelper::SetMinus(selected.CollectNeighbors(1,1,1,1,1,1,1,1,1), VertexCover);
+            VertexSet enforced_neighbors = selected->CollectNeighbors(1,1,1,1,1,1,1,1,1) - VertexCover;
             if(MaxNewlyCoverable == 1)
             {
-                candidate_sets.insert(enforced_neighbors);
+                candidate_sets.push_back(&enforced_neighbors);
             }
             else
             {
-                set<Graph::VertexIterator> selected_set;
-                selected_set.insert(selected);
                 if(MaxNewlyCoverable <= k)
-                    candidate_sets.insert(enforced_neighbors);
-                candidate_sets.insert(selected_set);
+                    candidate_sets.push_back(&enforced_neighbors);
+
+                VertexSet selected_set;
+                selected_set.insert(selected);
+                candidate_sets.push_back(&selected_set);
             }
 
             // RECURSIVE CALL
-            set<Graph::EdgeIterator> NextUncovered;
-            for(set<set<Graph::VertexIterator> >::iterator selection = candidate_sets.begin(); selection != candidate_sets.end(); selection++)
+            EdgeSet NextUncovered;
+            for(vector<VertexSet*>::iterator selection = candidate_sets.begin(); selection != candidate_sets.end(); selection++)
             {
-                VertexCover = SetHelper::Union(VertexCover, *selection);
+                VertexCover += **selection; // *selection is disjoint from VertexCover, so this is a safe step
+
                 NextUncovered = Uncovered;
-                for(set<Graph::VertexIterator>::iterator v = selection->begin(); v != selection->end(); v++)
-                {
-                    Graph::VertexIterator f = *v;
-                    SetHelper::DestructiveSetMinus(NextUncovered, f.CollectIncidentEdges(1,1,1));
-                }
 
-
-                if(TestVertexCover(G, NextUncovered, VertexCover, k - selection->size() ))
+                for(VertexIterator v = (*selection)->begin(); v != (*selection)->end(); v++)
+                    NextUncovered -= (*v)->CollectIncidentEdges(1,1,1);
+                if(TestVertexCover(G, NextUncovered, VertexCover, k - (*selection)->size() ))
                     return true;
 
-                VertexCover = SetHelper::SetMinus(VertexCover, *selection);
+                VertexCover -= **selection;
             }
 
             return false;
@@ -95,21 +96,21 @@ namespace OpenGraphtheory
 
 
 
-        bool AlgorithmVERTEXCOVER::FindVertexCover(Graph& G, set<Graph::VertexIterator>& VertexCover, unsigned int k)
+        bool AlgorithmVERTEXCOVER::FindVertexCover(Graph& G, VertexSet& VertexCover, unsigned int k)
         {
-            set<Graph::EdgeIterator> Uncovered;
-            for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
-                Uncovered.insert(e);
+            EdgeSet Uncovered;
+            for(EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
+                Uncovered.insert(*e);
 
             return TestVertexCover(G, Uncovered, VertexCover, k);
         }
 
-        void AlgorithmVERTEXCOVER::FindMinimumVertexCover(Graph& G, set<Graph::VertexIterator>& VertexCover)
+        void AlgorithmVERTEXCOVER::FindMinimumVertexCover(Graph& G, VertexSet& VertexCover)
         {
             if(G.NumberOfEdges() <= 0)
                 return;
 
-            set<Graph::EdgeIterator> MaximumMatching;
+            EdgeSet MaximumMatching;
             AlgorithmMAXIMUMMATCHING::FindMaximumMatching(G, MaximumMatching);
 
             for(int k = MaximumMatching.size(); k<=G.NumberOfVertices(); k++)
@@ -122,7 +123,7 @@ namespace OpenGraphtheory
 
         void AlgorithmVERTEXCOVER::AddVertexCover(Graph &G, string VertexCoverName)
         {
-            set<Graph::VertexIterator> VertexCover;
+            VertexSet VertexCover;
             FindMinimumVertexCover(G, VertexCover);
             G.AddVertexSet(VertexCover, VertexCoverName);
         }

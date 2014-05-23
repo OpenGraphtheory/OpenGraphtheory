@@ -13,21 +13,21 @@ namespace OpenGraphtheory
             &Algorithm::AlgorithmFactory, "color", new DefaultInstantiator<Algorithm, AlgorithmCOLORING>(
             "color", "Adds a legal (vertex-) coloring to the graph", "http://en.wikipedia.org/wiki/Graph_coloring"));
 
-        bool AlgorithmCOLORING::CompleteColoring(Graph& G, map<Graph::VertexIterator, int>& PreColoring, int k)
+        bool AlgorithmCOLORING::CompleteColoring(Graph& G, VertexPartitioning& PreColoring, int k)
         {
-            Graph::VertexIterator MinChoicesVertex = G.EndVertices();
+            VertexIterator MinChoicesVertex = G.EndVertices();
             int MaxNeighborColors = -1;
             set<int> MinChoicesUsedColors;
 
-            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+            for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                if(PreColoring[v] != -1) // v already has a color
+                if(PreColoring[*v] != -1) // v already has a color
                     continue;
 
                 int UncoloredNeighbors = 0;
                 set<int> used_colors;
-                set<Graph::VertexIterator> neighbors = v.UnderlyingNeighborhood();
-                for(set<Graph::VertexIterator>::iterator neighbor = neighbors.begin(); neighbor != neighbors.end(); neighbor++)
+                VertexSet neighbors = (*v)->UnderlyingNeighborhood();
+                for(VertexIterator neighbor = neighbors.begin(); neighbor != neighbors.end(); neighbor++)
                 {
                     if(PreColoring[*neighbor] >= 0)
                         used_colors.insert(PreColoring[*neighbor]);
@@ -44,21 +44,21 @@ namespace OpenGraphtheory
 
                 if(UncoloredNeighbors < k - (int)(used_colors.size()))
                 {
-                    PreColoring[v] = -2;
+                    PreColoring[*v] = -2;
                     if(CompleteColoring(G, PreColoring, k))
                     {
-                        for(set<Graph::VertexIterator>::iterator neighbor = neighbors.begin(); neighbor != neighbors.end(); neighbor++)
+                        for(VertexIterator neighbor = neighbors.begin(); neighbor != neighbors.end(); neighbor++)
                             used_colors.insert(PreColoring[*neighbor]);
                         for(int i = 0; i < k; i++)
                             if(used_colors.find(i) == used_colors.end())
                             {
-                                PreColoring[v] = i;
+                                PreColoring[*v] = i;
                                 return true;
                             }
                     }
                     else
                     {
-                        PreColoring[v] = -1;
+                        PreColoring[*v] = -1;
                         return false;
                     }
                 }
@@ -74,29 +74,29 @@ namespace OpenGraphtheory
             {
                 if(MinChoicesUsedColors.find(i) != MinChoicesUsedColors.end())
                     continue;
-                PreColoring[MinChoicesVertex] = i;
+                PreColoring[*MinChoicesVertex] = i;
                 if(CompleteColoring(G, PreColoring, k))
                     return true;
             }
 
-            PreColoring[MinChoicesVertex] = -1;
+            PreColoring[*MinChoicesVertex] = -1;
             return false;
         }
 
 
-        map<Graph::VertexIterator, int> AlgorithmCOLORING::FindColoring(Graph &G)
+        VertexPartitioning AlgorithmCOLORING::FindColoring(Graph &G)
         {
             for(int k = 1; ; k++)
             {
-                map<Graph::VertexIterator, int> Colors;
-                for(Graph::VertexIterator i = G.BeginVertices(); i != G.EndVertices(); i++)
-                    Colors[i] = -1;
+                VertexPartitioning Colors;
+                for(VertexIterator i = G.BeginVertices(); i != G.EndVertices(); i++)
+                    Colors[*i] = -1;
 
-                Graph::EdgeIterator e = G.BeginEdges();
+                EdgeIterator e = G.BeginEdges();
                 if(e != G.EndEdges() && k >= 2)
                 {
-                    Colors[e.From()] = 0;
-                    Colors[e.To()] = 1;
+                    Colors[(*e)->From()] = 0;
+                    Colors[(*e)->To()] = 1;
                 }
 
                 if(CompleteColoring(G, Colors, k))
@@ -107,20 +107,20 @@ namespace OpenGraphtheory
 
         bool AlgorithmCOLORING::AddColoring(Graph& G, int k, string ColoringName)
         {
-            map<Graph::VertexIterator, int> Colors;
-            for(Graph::VertexIterator i = G.BeginVertices(); i != G.EndVertices(); i++)
-                Colors[i] = -1;
+            VertexPartitioning Colors;
+            for(VertexIterator i = G.BeginVertices(); i != G.EndVertices(); i++)
+                Colors[*i] = -1;
 
-            Graph::EdgeIterator e = G.BeginEdges();
+            EdgeIterator e = G.BeginEdges();
             if(e != G.EndEdges() && k >= 2)
             {
-                Colors[e.From()] = 1;
-                Colors[e.To()] = 2;
+                Colors[(*e)->From()] = 1;
+                Colors[(*e)->To()] = 2;
             }
 
             if(CompleteColoring(G, Colors, k))
             {
-                G.AddVertexColoring(Colors, ColoringName);
+                G.AddVertexPartitioning(Colors, ColoringName);
                 return true;
             }
             else
@@ -129,50 +129,32 @@ namespace OpenGraphtheory
 
         void AlgorithmCOLORING::AddColoring(Graph &G, string ColoringName)
         {
-            G.AddVertexColoring(FindColoring(G), ColoringName);
+            G.AddVertexPartitioning(FindColoring(G), ColoringName);
         }
 
         void AlgorithmCOLORING::Run(Graph &G, vector<string> parameters)
         {
             if(parameters.size() <= 0)
                 return;
-
             string ColoringName = parameters[0];
+            VertexPartitioning PreColoring = G.GetVertexPartitioning(ColoringName);
 
-            map<Graph::VertexIterator, int> PreColoring;
-            int maxcolor = 0, mincolor = 1;
-
-            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+            if(PreColoring.size() > 0) // if there is a precoloring
             {
-                Attribute* attr = v.Attributes().GetAttribute(ColoringName);
-                if(attr == NULL)
-                    continue;
-                IntAttribute* iattr = dynamic_cast<IntAttribute*>(attr);
-                if(iattr == NULL)
-                    continue;
-
-                PreColoring[v] = iattr->Value;
-                if(iattr->Value > maxcolor)
-                    maxcolor = iattr->Value;
-                if(iattr->Value < mincolor)
-                    mincolor = iattr->Value;
-            }
-
-            if(mincolor <= maxcolor) // if there is a precoloring
-            {
-
-                for(Graph::VertexIterator i = G.BeginVertices(); i != G.EndVertices(); i++)
-                    if(PreColoring.find(i) != PreColoring.end())
-                        PreColoring[i] -= mincolor;
-                    else
-                        PreColoring[i] = -1;
-                maxcolor -= mincolor;
+                int maxcolor = -1;
+                for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+                {
+                    if(PreColoring.find(*v) == PreColoring.end())
+                        PreColoring[*v] = -1;
+                    if(PreColoring[*v] > maxcolor)
+                        maxcolor = PreColoring[*v];
+                }
 
                 for(int k = maxcolor; ; k++)
                 {
                     if(CompleteColoring(G, PreColoring, k))
                     {
-                        G.AddVertexColoring(PreColoring, ColoringName);
+                        G.AddVertexPartitioning(PreColoring, ColoringName);
                         break;
                     }
                 }

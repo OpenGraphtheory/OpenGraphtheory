@@ -16,12 +16,12 @@ namespace OpenGraphtheory
 
 
 
-    ForbiddenVertexFilter::ForbiddenVertexFilter(Graph::VertexIterator ForbiddenVertex)
+    ForbiddenVertexFilter::ForbiddenVertexFilter(Vertex* ForbiddenVertex)
     {
         this->ForbiddenVertex = ForbiddenVertex;
     }
 
-	bool ForbiddenVertexFilter::VertexAllowed(Graph::VertexIterator v)
+	bool ForbiddenVertexFilter::VertexAllowed(Vertex* v)
 	{
 		return v != ForbiddenVertex;
 	}
@@ -33,35 +33,35 @@ namespace OpenGraphtheory
     {
     }
 
-    ForbiddenVerticesFilter::ForbiddenVerticesFilter(set<Graph::VertexIterator> ForbiddenVertices)
+    ForbiddenVerticesFilter::ForbiddenVerticesFilter(VertexSet& ForbiddenVertices)
     {
         this->ForbiddenVertices = ForbiddenVertices;
     }
 
-    void ForbiddenVerticesFilter::ForbidVertex(Graph::VertexIterator ForbiddenVertex)
+    void ForbiddenVerticesFilter::ForbidVertex(Vertex* ForbiddenVertex)
     {
         ForbiddenVertices.insert(ForbiddenVertex);
     }
 
-    void ForbiddenVerticesFilter::AllowVertex(Graph::VertexIterator Vertex)
+    void ForbiddenVerticesFilter::AllowVertex(Vertex* Vertex)
     {
         ForbiddenVertices.erase(Vertex);
     }
 
-	bool ForbiddenVerticesFilter::VertexAllowed(Graph::VertexIterator v)
+	bool ForbiddenVerticesFilter::VertexAllowed(Vertex* v)
 	{
-		return ForbiddenVertices.find(v) == ForbiddenVertices.end();
+		return !ForbiddenVertices.contains(v);
 	}
 
 
 
 
-    ForbiddenEdgeFilter::ForbiddenEdgeFilter(Graph::EdgeIterator ForbiddenEdge)
+    ForbiddenEdgeFilter::ForbiddenEdgeFilter(Edge* ForbiddenEdge)
     {
         this->ForbiddenEdge = ForbiddenEdge;
     }
 
-	bool ForbiddenEdgeFilter::EdgeAllowed(Graph::EdgeIterator e)
+	bool ForbiddenEdgeFilter::EdgeAllowed(Edge* e)
 	{
 		return e != ForbiddenEdge;
 	}
@@ -73,24 +73,24 @@ namespace OpenGraphtheory
     {
     }
 
-    ForbiddenEdgesFilter::ForbiddenEdgesFilter(set<Graph::EdgeIterator> ForbiddenEdges)
+    ForbiddenEdgesFilter::ForbiddenEdgesFilter(EdgeSet& ForbiddenEdges)
     {
         this->ForbiddenEdges = ForbiddenEdges;
     }
 
-    void ForbiddenEdgesFilter::ForbidEdge(Graph::EdgeIterator ForbiddenEdge)
+    void ForbiddenEdgesFilter::ForbidEdge(Edge* ForbiddenEdge)
     {
         ForbiddenEdges.insert(ForbiddenEdge);
     }
 
-    void ForbiddenEdgesFilter::AllowEdge(Graph::EdgeIterator Edge)
+    void ForbiddenEdgesFilter::AllowEdge(Edge* Edge)
     {
         ForbiddenEdges.erase(Edge);
     }
 
-	bool ForbiddenEdgesFilter::EdgeAllowed(Graph::EdgeIterator e)
+	bool ForbiddenEdgesFilter::EdgeAllowed(Edge* e)
 	{
-		return ForbiddenEdges.find(e) == ForbiddenEdges.end();
+		return !ForbiddenEdges.contains(e);
 	}
 
 

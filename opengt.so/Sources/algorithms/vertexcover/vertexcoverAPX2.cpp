@@ -12,22 +12,21 @@ namespace OpenGraphtheory
             &Algorithm::AlgorithmFactory, "vertexcover", new DefaultInstantiator<Algorithm, AlgorithmVERTEXCOVER_APX2>(
             "vertexcover", "Adds an vertex cover approximation to the graph", "http://en.wikipedia.org/wiki/Vertex_cover"));
 
-        void AlgorithmVERTEXCOVER_APX2::FindVertexCover(Graph& G, set<Graph::VertexIterator>& VertexCover)
+        void AlgorithmVERTEXCOVER_APX2::FindVertexCover(Graph& G, VertexSet& VertexCover)
         {
             VertexCover.clear();
-            std::set<Graph::EdgeIterator> MaximalMatching;
+            EdgeSet MaximalMatching;
             AlgorithmMAXIMALMATCHING::FindMaximalMatching(G,MaximalMatching);
-            for(std::set<Graph::EdgeIterator>::iterator e = MaximalMatching.begin(); e != MaximalMatching.end(); e++)
+            for(EdgeIterator e = MaximalMatching.begin(); e != MaximalMatching.end(); e++)
             {
-                Graph::EdgeIterator ei = *e;
-                set<Graph::VertexIterator> Incident = ei.CollectIncidentVertices(1,1,1);
-                SetHelper::DestructiveUnion(VertexCover, Incident);
+                VertexSet Incident = (**e).CollectIncidentVertices(1,1,1);
+                VertexCover += Incident;
             }
         }
 
         void AlgorithmVERTEXCOVER_APX2::AddVertexCover(Graph &G, string VertexCoverName)
         {
-            set<Graph::VertexIterator> VertexCover;
+            VertexSet VertexCover;
             FindVertexCover(G, VertexCover);
             G.AddVertexSet(VertexCover, VertexCoverName);
         }

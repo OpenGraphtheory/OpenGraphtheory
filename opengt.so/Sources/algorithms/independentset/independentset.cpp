@@ -17,11 +17,11 @@ namespace OpenGraphtheory
             "stableset", "Adds a stable set (also known as independent set) to the graph", "http://en.wikipedia.org/wiki/Independent_set_(graph_theory)"));
 
 
-        bool AlgorithmINDEPENDENTSET::FindIndependentSet(Graph& G, set<Graph::VertexIterator>& IndependentSet, unsigned int k)
+        bool AlgorithmINDEPENDENTSET::FindIndependentSet(Graph& G, VertexSet& IndependentSet, unsigned int k)
         {
-            set<Graph::VertexIterator> V;
-            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-                V.insert(v);
+            VertexSet V;
+            for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+                V.insert(*v);
 
             return TestClique(IndependentSet, V, k, false);
         }
@@ -29,12 +29,12 @@ namespace OpenGraphtheory
 
         void AlgorithmINDEPENDENTSET::AddIndependentSet(Graph &G, string IndependentSetName)
         {
-            set<Graph::VertexIterator> LastIndependentSet;
-            set<Graph::VertexIterator> CurrentIndependentSet;
+            VertexSet LastIndependentSet;
+            VertexSet CurrentIndependentSet;
 
             if(G.NumberOfVertices() <= 0)
                 return;
-            CurrentIndependentSet.insert(G.BeginVertices());
+            CurrentIndependentSet.insert(*G.BeginVertices());
 
             for(unsigned int k = 2; ; k++)
             {

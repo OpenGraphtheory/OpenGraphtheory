@@ -107,7 +107,7 @@ using namespace OpenGraphtheory::XML;
     /// \brief Get the Attribute that has the given name
     /// \return A pointer to the Attribute (or NULL if it is not present)
     /// \note To test, whether the Attribute is of a certain Type, use dynamic_cast, e.g.
-    /// for(OpenGraphtheory::Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+    /// for(OpenGraphtheory::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
     /// {
     ///     Attribute* pFoo = v.Attributes().GetAttribute("foo");
     ///     IntAttribute* iFoo = dynamic_cast<IntAttribute*>(pFoo);

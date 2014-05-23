@@ -78,7 +78,7 @@ namespace OpenGraphtheory
 
             // init
             srand ( time(NULL) );
-            for(Graph::VertexIterator a = G.BeginVertices(); a != G.EndVertices(); a++)
+            for(VertexIterator a = G.BeginVertices(); a != G.EndVertices(); a++)
             {
                 vector<float> coordinates;
                 for(int i = 0; i < dimensions; i++)
@@ -96,13 +96,13 @@ namespace OpenGraphtheory
                 // compute movement
                 max_movement = 0;
                 int i = 0;
-                for(Graph::VertexIterator a = G.BeginVertices(); a != G.EndVertices(); a++, i++)
+                for(VertexIterator a = G.BeginVertices(); a != G.EndVertices(); a++, i++)
                 {
 
                     VectorND traction = tractions[i] * friction;
 
                     // compute forces on a by the other vertices
-                    for(Graph::VertexIterator b = G.BeginVertices(); b != G.EndVertices(); b++)
+                    for(VertexIterator b = G.BeginVertices(); b != G.EndVertices(); b++)
                     {
                         if(b==a)
                             continue;
@@ -118,7 +118,7 @@ namespace OpenGraphtheory
 
 
                 // execute movement
-                Graph::VertexIterator a = G.BeginVertices();
+                VertexIterator a = G.BeginVertices();
                 for(int i = 0; a != G.EndVertices(); a++, i++)
                 {
                     vector<float> OldCoordinates = a.GetCoordinates();

@@ -91,7 +91,7 @@
 			void Start(void* parameter, ConditionVariable* threadFinishedSignal = NULL);
 		public:
 			void Terminate();
-			void TestTermination();
+			static void TestTermination();
 			void Join();
 
 			void Lock();

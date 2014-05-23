@@ -14,35 +14,36 @@ namespace OpenGraphtheory
             "clique", "Adds a clique to the graph", "http://en.wikipedia.org/wiki/Clique_(graph_theory)"));
 
 
-        bool AlgorithmCLIQUE::TestClique(set<Graph::VertexIterator>& Clique, set<Graph::VertexIterator>& Candidates, unsigned int k, bool CliqueOrIndependentSet)
+        bool AlgorithmCLIQUE::TestClique(VertexSet& Clique, VertexSet& Candidates, unsigned int k, bool CliqueOrIndependentSet)
         {
             if(k == 0)
                 return true;
             if(k > Candidates.size())
                 return false;
 
-            for(set<Graph::VertexIterator>::iterator v = Candidates.begin(); v != Candidates.end(); v++)
+            for(VertexIterator v = Candidates.begin(); v != Candidates.end(); v++)
             {
-                set<Graph::VertexIterator> NextCandidates;
-                set<Graph::VertexIterator>::iterator n = v;
+                VertexSet NextCandidates;
+                VertexIterator n = v;
                 for(n++; n != Candidates.end(); n++)
-                    if(v->UnderlyingAdjacent(*n) == CliqueOrIndependentSet)
+                    if((*v)->UnderlyingAdjacent(*n) == CliqueOrIndependentSet)
                         NextCandidates.insert(*n);
 
                 // Remove Candidates that dont have enough Neighbors in the Candidates-Set
-                set<Graph::VertexIterator> RemovableCandidates;
+                VertexSet RemovableCandidates;
                 bool CandidateRemoved;
                 do
                 {
                     CandidateRemoved = false;
-                    for(set<Graph::VertexIterator>::iterator i = NextCandidates.begin(); i != NextCandidates.end(); i++)
+                    for(VertexIterator i = NextCandidates.begin(); i != NextCandidates.end(); i++)
                     {
-                        if(RemovableCandidates.find(*i) != RemovableCandidates.end())
+                        if(RemovableCandidates.contains(*i))
                             continue;
 
-                        set<Graph::VertexIterator> iNeighborCandidates;
-                        for(set<Graph::VertexIterator>::iterator j = NextCandidates.begin(); j != NextCandidates.end(); j++)
-                            if((i->UnderlyingAdjacent(*j) == CliqueOrIndependentSet) && (RemovableCandidates.find(*j) == RemovableCandidates.end()))
+                        VertexSet iNeighborCandidates;
+                        for(VertexIterator j = NextCandidates.begin(); j != NextCandidates.end(); j++)
+                            if(((*i)->UnderlyingAdjacent(*j) == CliqueOrIndependentSet)
+                             && !RemovableCandidates.contains(*j))
                                 iNeighborCandidates.insert(*j);
                         iNeighborCandidates.erase(*i);
 
@@ -55,14 +56,14 @@ namespace OpenGraphtheory
 
                 } while(CandidateRemoved);
 
-                for(set<Graph::VertexIterator>::iterator i = RemovableCandidates.begin(); i != RemovableCandidates.end(); i++)
+                for(VertexIterator i = RemovableCandidates.begin(); i != RemovableCandidates.end(); i++)
                     NextCandidates.erase(*i);
 
 
-                Clique.insert(*v);
+                Clique.push_back(*v);
                 if(TestClique(Clique, NextCandidates, k-1, CliqueOrIndependentSet))
                     return true;
-                Clique.erase(*v);
+                Clique.push_back(*v);
 
             }
 
@@ -70,11 +71,11 @@ namespace OpenGraphtheory
         }
 
 
-        bool AlgorithmCLIQUE::FindClique(Graph& G, set<Graph::VertexIterator>& Clique, unsigned int k)
+        bool AlgorithmCLIQUE::FindClique(Graph& G, VertexSet& Clique, unsigned int k)
         {
-            set<Graph::VertexIterator> V;
-            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-                V.insert(v);
+            VertexSet V;
+            for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+                V.insert(*v);
 
             return TestClique(Clique, V, k, true);
         }
@@ -82,12 +83,12 @@ namespace OpenGraphtheory
 
         void AlgorithmCLIQUE::AddClique(Graph &G, string CliqueName)
         {
-            set<Graph::VertexIterator> LastClique;
-            set<Graph::VertexIterator> CurrentClique;
+            VertexSet LastClique;
+            VertexSet CurrentClique;
 
             if(G.NumberOfVertices() <= 0)
                 return;
-            CurrentClique.insert(G.BeginVertices());
+            CurrentClique.insert(*G.BeginVertices());
 
             for(unsigned int k = 2; ; k++)
             {

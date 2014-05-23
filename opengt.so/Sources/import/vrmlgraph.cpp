@@ -17,7 +17,7 @@ namespace OpenGraphtheory
         Graph ImportFilterVRMLGRAPH::Import(istream& is)
         {
             Graph result;
-            map<string, Graph::VertexIterator> VertexVRMLGRAPHIDs;
+            map<string, VertexIterator> VertexVRMLGRAPHIDs;
 
             string Vertex1;
             string Vertex2;

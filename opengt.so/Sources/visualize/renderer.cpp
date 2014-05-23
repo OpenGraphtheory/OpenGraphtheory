@@ -83,24 +83,24 @@ namespace OpenGraphtheory
         void GraphRenderingContext::RenderGraph(Graph& G, string vertexcoloring, string edgecoloring, float dpi,
                          float edgewidth, float vertexradius)
         {
-            map<Graph::VertexIterator, int> vcoloringInt = G.GetVertexColoring(vertexcoloring);
-            map<Graph::VertexIterator, Color> VertexColoring;
-            for(map<Graph::VertexIterator, int>::iterator i = vcoloringInt.begin(); i != vcoloringInt.end(); i++)
+            map<VertexIterator, int> vcoloringInt = G.GetVertexColoring(vertexcoloring);
+            map<VertexIterator, Color> VertexColoring;
+            for(map<VertexIterator, int>::iterator i = vcoloringInt.begin(); i != vcoloringInt.end(); i++)
                 VertexColoring[i->first] = Color::DefaultColors[i->second < Color::NumDefaultColors ? i->second : 0];
 
-            map<Graph::EdgeIterator, Color> EdgeColoring;
-            map<Graph::EdgeIterator, int> ecoloringInt = G.GetEdgeColoring(edgecoloring);
-            for(map<Graph::EdgeIterator, int>::iterator i = ecoloringInt.begin(); i != ecoloringInt.end(); i++)
+            map<EdgeIterator, Color> EdgeColoring;
+            map<EdgeIterator, int> ecoloringInt = G.GetEdgeColoring(edgecoloring);
+            for(map<EdgeIterator, int>::iterator i = ecoloringInt.begin(); i != ecoloringInt.end(); i++)
                 EdgeColoring[i->first] = Color::DefaultColors[i->second < Color::NumDefaultColors ? i->second : 0];
 
             RenderGraph(G, VertexColoring, EdgeColoring, dpi, edgewidth, vertexradius);
         }
 
-        void GraphRenderingContext::RenderGraph(Graph& G, std::map<Graph::VertexIterator, Color>& vertexcoloring,
-                         std::map<Graph::EdgeIterator, Color>& edgecoloring, float dpi,
+        void GraphRenderingContext::RenderGraph(Graph& G, std::map<VertexIterator, Color>& vertexcoloring,
+                         std::map<EdgeIterator, Color>& edgecoloring, float dpi,
                          float edgewidth, float vertexradius)
         {
-            Graph::VertexIterator v1 = G.BeginVertices();
+            VertexIterator v1 = G.BeginVertices();
             vector<float> coordinates = v1.GetCoordinates();
             float minx = coordinates[0], maxx = coordinates[1], maxy = coordinates[1], miny = coordinates[1];
             for(v1++; v1 != G.EndVertices(); v1++)
@@ -128,7 +128,7 @@ namespace OpenGraphtheory
             this->BeginDeclaringVertices();
             LastBrushColor = Color(0,0,0);
             this->SetBrushColor(LastBrushColor);
-            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+            for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
                 coordinates = v.GetCoordinates();
                 Color color = vertexcoloring.find(v) != vertexcoloring.end() ? vertexcoloring[v] : Color(0,0,0);
@@ -154,7 +154,7 @@ namespace OpenGraphtheory
             this->SetPenColor(LastPenColor);
             LastLineWidth = 1;
             this->SetLineWidth(LastLineWidth);
-            for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
+            for(EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
             {
                 vector<float> FromCoordinates = e.From().GetCoordinates();
                 vector<float> ToCoordinates = e.To().GetCoordinates();
@@ -212,7 +212,7 @@ namespace OpenGraphtheory
             this->BeginRenderingVertices();
             LastBrushColor = Color(0,0,0);
             this->SetBrushColor(LastBrushColor);
-            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+            for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
                 coordinates = v.GetCoordinates();
                 float Radius = vertexradius >= 0 ? vertexradius : v.GetWeight();

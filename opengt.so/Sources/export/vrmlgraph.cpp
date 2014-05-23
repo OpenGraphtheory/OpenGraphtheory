@@ -10,7 +10,8 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportFilterVRMLGRAPH::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring, map<Graph::EdgeIterator, Color>& edgecoloring, float dpi, float edgewidth, float vertexradius)
+        void ExportFilterVRMLGRAPH::Export(Graph& G, ostream& os, VertexColoring& vertexcoloring,
+                                           EdgeColoring& edgecoloring, float dpi, float edgewidth, float vertexradius)
         {
             if(G.IsHypergraph())
                 throw "The VRMLgraph fileformat doesn\'t support hypergraphs\n";
@@ -20,9 +21,9 @@ namespace OpenGraphtheory
                 throw "The VRMLgraph fileformat doesn\'t support directed graphs\n";
 
             os << "# www.Open-Graphtheory.org\n";
-            for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
-                if(e.From() != e.To())
-                    os << e.From().GetID() << " " << e.To().GetID() << "\n";
+            for(EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
+                if((*e)->From() != (*e)->To())
+                    os << (*e)->From()->GetID() << " " << (*e)->To()->GetID() << "\n";
         }
 
         FactoryRegistrator<ExportFilter> ExportFilterVRMLGRAPH::ExportFilterVrmlgraphRegistrator(&ExportFilter::ExportFilterFactory, "vrmlgraph",

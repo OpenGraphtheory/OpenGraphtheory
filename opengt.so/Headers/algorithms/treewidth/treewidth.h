@@ -27,9 +27,9 @@
                 {
                     public:
                         NiceTreeDecomposition* Subtree;
-                        Graph::VertexIterator IntroducedNode;
+                        VertexIterator IntroducedNode;
 
-                        IntroduceNode(NiceTreeDecomposition* Subtree, Graph::VertexIterator IntroducedNode);
+                        IntroduceNode(NiceTreeDecomposition* Subtree, VertexIterator IntroducedNode);
                         ~IntroduceNode();
                         int Width();
                         int BagSize();
@@ -39,9 +39,9 @@
                 {
                     public:
                         NiceTreeDecomposition* Subtree;
-                        Graph::VertexIterator ForgottenNode;
+                        VertexIterator ForgottenNode;
 
-                        ForgetNode(NiceTreeDecomposition* Subtree, Graph::VertexIterator ForgottenNode);
+                        ForgetNode(NiceTreeDecomposition* Subtree, VertexIterator ForgottenNode);
                         ~ForgetNode();
                         int Width();
                         int BagSize();
@@ -72,14 +72,14 @@
                     protected:
 
                         virtual T* HandleEmptyBag(Graph& G);
-                        virtual T* HandleLeafNode(Graph& G, Graph::VertexIterator Introduced);
+                        virtual T* HandleLeafNode(Graph& G, VertexIterator Introduced);
 
-                        virtual T* HandleIntroduceNode(Graph& G, T* SubtreeResult, std::set<Graph::VertexIterator>& Bag, Graph::VertexIterator Introduced) = 0;
-                        virtual T* HandleForgetNode(Graph& G, T* SubtreeResult, std::set<Graph::VertexIterator>& Bag, Graph::VertexIterator Introduced) = 0;
-                        virtual T* HandleJoinNode(Graph& G, T* Subtree1Result, T* Subtree2Result, std::set<Graph::VertexIterator>& Bag) = 0;
+                        virtual T* HandleIntroduceNode(Graph& G, T* SubtreeResult, VertexSet& Bag, VertexIterator Introduced) = 0;
+                        virtual T* HandleForgetNode(Graph& G, T* SubtreeResult, VertexSet& Bag, VertexIterator Introduced) = 0;
+                        virtual T* HandleJoinNode(Graph& G, T* Subtree1Result, T* Subtree2Result, VertexSet& Bag) = 0;
 
                         virtual void HandleRootNode(Graph& G, T* RootResult, std::vector<std::string> parameters) = 0;
-                        std::pair<T*,std::set<Graph::VertexIterator> > Run(Graph& G, NiceTreeDecomposition* Decomposition);
+                        std::pair<T*,VertexSet > Run(Graph& G, NiceTreeDecomposition* Decomposition);
 
                     public:
                         TreewidthBasedAlgorithm();

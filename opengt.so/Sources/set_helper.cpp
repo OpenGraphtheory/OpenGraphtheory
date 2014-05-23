@@ -107,6 +107,113 @@
                     return IsSubset(A,B) && IsSubset(B,A);
                 }
 
+
+
+
+
+
+
+                template<class T> typename VectorSet<T>::iterator VectorSet<T>::find(const T &element)
+                {
+                    return std::find(this->begin(),this->end(), element);
+                }
+
+                template<class T> typename VectorSet<T>::const_iterator VectorSet<T>::find(const T &element) const
+                {
+                    return std::find(this->begin(),this->end(), element);
+                }
+
+                template<class T> bool VectorSet<T>::contains(const T &element)
+                {
+                    return this->find(element) != this->end();
+                }
+
+                template<class T> bool VectorSet<T>::contains(const T &element) const
+                {
+                    return this->find(element) != this->end();
+                }
+
+                template<class T> void VectorSet<T>::erase(const T &element)
+                {
+                    typename std::vector<T>::iterator i = find(element);
+                    while(i != this->end())
+                    {
+                        std::vector<T>::erase(i);
+                        i = find(element);
+                    }
+                }
+
+                template<class T> void VectorSet<T>::insert(const T &element)
+                {
+                    if(!contains(element))
+                        this->push_back(element);
+                }
+
+
+
+                template<class T> bool VectorSet<T>::operator<=(const VectorSet<T>& B) const
+                {
+                    for(typename VectorSet<T>::const_iterator i = this->begin(); i != this->end(); i++)
+                        if(!B.contains(*i))
+                            return false;
+                    return true;
+                }
+
+                template<class T> bool VectorSet<T>::operator==(const VectorSet<T>& B) const
+                {
+                    return *this <= B && B <= *this;
+                }
+
+                template<class T> VectorSet<T> VectorSet<T>::operator+(const VectorSet<T>& B) const
+                {
+                    VectorSet<T> result;
+                    for(typename VectorSet<T>::const_iterator i = this->begin(); i != this->end(); i++)
+                        result.insert(*i);
+                    for(typename VectorSet<T>::const_iterator i = B.begin(); i != B.end(); i++)
+                        result.insert(*i);
+                    return result;
+                }
+
+                template<class T> void VectorSet<T>::operator+=(const VectorSet<T>& B)
+                {
+                    for(typename VectorSet<T>::const_iterator i = B.begin(); i != B.end(); i++)
+                        insert(*i);
+                }
+
+                template<class T> VectorSet<T> VectorSet<T>::operator-(const VectorSet<T>& B) const
+                {
+                    VectorSet<T> result = *this;
+                    for(typename VectorSet<T>::const_iterator i = B.begin(); i != B.end(); i++)
+                        result.erase(*i);
+                    return result;
+                }
+
+                template<class T> void VectorSet<T>::operator-=(const VectorSet<T>& B)
+                {
+                    for(typename VectorSet<T>::const_iterator i = B.begin(); i != B.end(); i++)
+                        erase(*i);
+                }
+
+                template<class T> VectorSet<T> VectorSet<T>::intersection(const VectorSet<T>& B) const
+                {
+                    VectorSet<T> result;
+                    for(typename VectorSet<T>::const_iterator i = B.begin(); i != B.end(); i++)
+                        if(this->contains(*i))
+                            result.insert(*i);
+                    return result;
+                }
+
+                template<class T> VectorSet<T> VectorSet<T>::symmetric_difference(const VectorSet<T>& B) const
+                {
+                    VectorSet<T> result = *this;
+                    for(typename VectorSet<T>::const_iterator i = B.begin(); i != B.end(); i++)
+                        if(!result.contains(*i))
+                            result.insert(*i);
+                        else
+                            result.erase(*i);
+                    return result;
+                }
+
             }
         }
 

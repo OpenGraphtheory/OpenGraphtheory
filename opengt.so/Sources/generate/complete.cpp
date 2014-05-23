@@ -27,13 +27,13 @@ namespace OpenGraphtheory
                 for(int i = 0; i < n; i++)
                     result.AddVertex(-100 * cos(i * (2 * M_PI / n) + M_PI/2), 100 * sin(i * (2 * M_PI / n) + M_PI/2));
 
-                for(Graph::VertexIterator v1 = result.BeginVertices(); v1 != result.EndVertices(); v1++)
-                    for(Graph::VertexIterator v2 = v1 + 1; v2 != result.EndVertices(); v2++)
+                for(VertexIterator v1 = result.BeginVertices(); v1 != result.EndVertices(); v1++)
+                    for(VertexIterator v2 = v1 + 1; v2 != result.EndVertices(); v2++)
                         result.AddEdge(v1, v2);
             }
             else
             {
-                Graph::VertexIterator LastPartitionLastAdded;
+                VertexIterator LastPartitionLastAdded;
                 int n = parameter.front();
                 for(int i = 0; i < n; i++)
                     LastPartitionLastAdded = result.AddVertex();
@@ -44,12 +44,12 @@ namespace OpenGraphtheory
                     n = *i;
                     if(n > 0)
                     {
-                        Graph::VertexIterator CurrentPartitionLastAdded;
+                        VertexIterator CurrentPartitionLastAdded;
 
                         for(int j = 0; j < n; j++)
                         {
                             CurrentPartitionLastAdded = result.AddVertex();
-                            for(Graph::VertexIterator k = result.BeginVertices(); ; k++)
+                            for(VertexIterator k = result.BeginVertices(); ; k++)
                             {
                                 result.AddEdge(CurrentPartitionLastAdded, k);
                                 if(k == LastPartitionLastAdded)

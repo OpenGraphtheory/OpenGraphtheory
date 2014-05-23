@@ -6,6 +6,7 @@
     #include<string>
     #include<set>
     #include<vector>
+    #include "../../set_helper.h"
 
     namespace OpenGraphtheory
     {
@@ -15,12 +16,12 @@
             {
                 public:
                     void Run(Graph &G, std::vector<std::string> parameters);
-                    bool FindClique(Graph& G, std::set<Graph::VertexIterator>& Clique, unsigned int k);
+                    bool FindClique(Graph& G, VertexSet& Clique, unsigned int k);
                     void AddClique(Graph &G, std::string CliqueName);
 
                 protected:
                     static MultiFactoryRegistrator<Algorithm> AlgorithmCliqueRegistrator;
-                    bool TestClique(std::set<Graph::VertexIterator>& Clique, std::set<Graph::VertexIterator>& Candidates, unsigned int k, bool CliqueOrIndependentSet = true);
+                    bool TestClique(VertexSet& Clique, VertexSet& Candidates, unsigned int k, bool CliqueOrIndependentSet = true);
             };
         }
     }

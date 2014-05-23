@@ -38,7 +38,7 @@ namespace OpenGraphtheory
 			l.yylex(GMLTreeRoot);
 
             Graph result;
-            map<int, Graph::VertexIterator> VertexRegister;
+            map<int, VertexIterator> VertexRegister;
             GMLValueNode* GraphNode = GetValue<GMLValueNode>(GMLTreeRoot, "GRAPH");
             if(GraphNode == NULL)
                 throw "GML Document contains no top-level element \"graph\" with children";
@@ -64,12 +64,13 @@ namespace OpenGraphtheory
                     continue;
                 if(VertexRegister.find(id->value) != VertexRegister.end())
                     throw "Multiple nodes with the same id";
-                Graph::VertexIterator vi = result.AddVertex();
+                VertexIterator vi = result.AddVertex();
                 VertexRegister[id->value] = vi;
+                Vertex* v = *vi;
 
                 GMLValueString* label = GetValue<GMLValueString>(NValue->value, "LABEL");
                 if(label != NULL)
-                    vi.SetLabel(label->value);
+                    v->SetLabel(label->value);
 
                 GMLValueNode* graphics = GetValue<GMLValueNode>(NValue->value, "GRAPHICS");
                 if(graphics != NULL)
@@ -94,12 +95,12 @@ namespace OpenGraphtheory
                     else if(zi != NULL) coordinates.push_back(zi->value);
                     // a third coordinate is not enforced
 
-                    vi.SetCoordinates(coordinates);
+                    v->SetCoordinates(coordinates);
 
                     GMLValueFloat* wf = GetValue<GMLValueFloat>(graphics->value, "W");
                     GMLValueInt* wi = GetValue<GMLValueInt>(graphics->value, "W");
-                    if(wf != NULL) vi.SetWeight(wf->value);
-                    else if(wi != NULL) vi.SetWeight(wi->value);
+                    if(wf != NULL) v->SetWeight(wf->value);
+                    else if(wi != NULL) v->SetWeight(wi->value);
 
                 }
 
@@ -132,7 +133,7 @@ namespace OpenGraphtheory
                         Directed = type->value == "arc";
                 }
 
-                Graph::EdgeIterator ei;
+                EdgeIterator ei;
                 if(Directed)
                     ei = result.AddArc(VertexRegister[source->value], VertexRegister[target->value]);
                 else
@@ -140,7 +141,7 @@ namespace OpenGraphtheory
 
                 GMLValueString* label = GetValue<GMLValueString>(EValue->value, "LABEL");
                 if(label != NULL)
-                    ei.SetLabel(label->value);
+                    (*ei)->SetLabel(label->value);
             }
 
             delete GMLTreeRoot;

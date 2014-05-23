@@ -37,7 +37,7 @@ namespace OpenGraphtheory
 
 		void FOFormula::Interpret(Graph &G, list<string> parameters)
 		{
-            map<string, Graph::VertexIterator> VariableAssignment;
+            map<string, Vertex*> VariableAssignment;
             bool result = Interpretation(G, VariableAssignment);
             exit(result ? 0 : 1);
 		}
@@ -57,7 +57,7 @@ namespace OpenGraphtheory
 			return new FO_True();
 		}
 
-		bool FO_True::Interpretation(Graph &G, map<string, Graph::VertexIterator> &VariableAssignment)
+		bool FO_True::Interpretation(Graph &G, map<string, Vertex*> &VariableAssignment)
 		{
 			return true;
 		}
@@ -77,7 +77,7 @@ namespace OpenGraphtheory
 			return new FO_False();
 		}
 
-		bool FO_False::Interpretation(Graph &G, map<string, Graph::VertexIterator> &VariableAssignment)
+		bool FO_False::Interpretation(Graph &G, map<string, Vertex*> &VariableAssignment)
 		{
 			return false;
 		}
@@ -103,7 +103,7 @@ namespace OpenGraphtheory
 			return new FO_Eq(new string(*param1), new string(*param2));
 		}
 
-		bool FO_Eq::Interpretation(Graph &G, map<string, Graph::VertexIterator> &VariableAssignment)
+		bool FO_Eq::Interpretation(Graph &G, map<string, Vertex*> &VariableAssignment)
 		{
 			return VariableAssignment[*param1] == VariableAssignment[*param2];
 		}
@@ -129,7 +129,7 @@ namespace OpenGraphtheory
 			return new FO_Neq(new string(*param1), new string(*param2));
 		}
 
-		bool FO_Neq::Interpretation(Graph &G, map<string, Graph::VertexIterator> &VariableAssignment)
+		bool FO_Neq::Interpretation(Graph &G, map<string, Vertex*> &VariableAssignment)
 		{
 			return VariableAssignment[*param1] != VariableAssignment[*param2];
 		}
@@ -184,42 +184,45 @@ namespace OpenGraphtheory
 		}
 
 
-		bool FO_Atomic::EdgeMatchesRelation(Graph::EdgeIterator e, string relation)
+		bool FO_Atomic::EdgeMatchesRelation(Edge* e, string relation)
 		{
 			if(relation == "e" || relation == "E" || relation == "arc")
 				return true;
 
-			if(e.Attributes().HasAttribute(relation))
-			{
-				Attribute *attr = e.Attributes().GetAttribute(relation);
-				BoolAttribute *battr = dynamic_cast<BoolAttribute*>(attr);
-				if(battr != NULL)
-					return battr->Value;
-			}
+            Attribute *attr = e->GetAttribute(relation);
+         	BoolAttribute *battr = dynamic_cast<BoolAttribute*>(attr);
+			if(battr != NULL)
+				return battr->Value;
 
-			string label = string(",")+e.GetLabel()+string(",");
-			if( label.find( string(",")+relation+string(",") ) != label.npos )
+			string label = string(",") + e->GetLabel() + string(",");
+			if( label.find( string(",") + relation + string(",") ) != label.npos )
 				return true;
 
 			return false;
 		}
 
-		bool FO_Atomic::Interpretation(Graph &G, map<string, Graph::VertexIterator> &VariableAssignment)
+		bool FO_Atomic::Interpretation(Graph &G, map<string, Vertex*> &VariableAssignment)
 		{
-			list<Graph::VertexIterator> iParameters;
+			list<Vertex*> iParameters;
 			for(list<string>::iterator i = parameters.begin(); i != parameters.end(); i++)
-				iParameters.push_back(VariableAssignment[*i]);
-
-			Graph::VertexIterator first = *(iParameters.begin());
-			for(Graph::EdgeIterator e = first.BeginIncidentEdges(); e != first.EndIncidentEdges(); e++)
 			{
+                if(VariableAssignment.find(*i) == VariableAssignment.end())
+                    throw "Undeclared Variable";
+				iParameters.push_back(VariableAssignment[*i]);
+            }
+
+			Vertex* first = *(iParameters.begin());
+			EdgeSet IncidentEdges = first->CollectIncidentEdges(1,1,1);
+			for(EdgeIterator ei = IncidentEdges.begin(); ei != IncidentEdges.end(); ei++)
+			{
+                Edge* e = *ei;
 				if(!EdgeMatchesRelation(e, *relation))
 					continue;
 
 				// compare vertices in edge to vertices in relation parameters
-				list<Graph::VertexIterator>::iterator param = iParameters.begin();
+				list<Vertex*>::iterator param = iParameters.begin();
 				bool CurrentEdgeSatisfiesQuery = true;
-				for(Graph::VertexIterator inc = e.BeginIncidentVertices(); inc != e.EndIncidentVertices(); inc++)
+				for(VertexEdgeConnectionIterator conn = e->BeginConnections(); conn != e->EndConnections(); conn++)
 				{
 					if(param == iParameters.end()) // different number of elements
 					{
@@ -227,7 +230,7 @@ namespace OpenGraphtheory
 						break;
 					}
 
-					if(*param != inc)
+					if(*param != (*conn)->GetVertex())
 					{
 						CurrentEdgeSatisfiesQuery = false;
 						break;
@@ -264,7 +267,7 @@ namespace OpenGraphtheory
 			return new FO_Not(static_cast<FOFormula*>(phi->Clone()));
 		}
 
-		bool FO_Not::Interpretation(Graph &G, map<string, Graph::VertexIterator> &VariableAssignment)
+		bool FO_Not::Interpretation(Graph &G, map<string, Vertex*> &VariableAssignment)
 		{
 			return !(phi->Interpretation(G, VariableAssignment));
 		}
@@ -291,7 +294,7 @@ namespace OpenGraphtheory
 							static_cast<FOFormula*>(phi2->Clone()));
 		}
 
-		bool FO_And::Interpretation(Graph &G, map<string, Graph::VertexIterator> &VariableAssignment)
+		bool FO_And::Interpretation(Graph &G, map<string, Vertex*> &VariableAssignment)
 		{
 			return phi1->Interpretation(G, VariableAssignment)
 			    && phi2->Interpretation(G, VariableAssignment);
@@ -318,7 +321,7 @@ namespace OpenGraphtheory
 			return new FO_Or(static_cast<FOFormula*>(phi1->Clone()), static_cast<FOFormula*>(phi2->Clone()));
 		}
 
-		bool FO_Or::Interpretation(Graph &G, map<string, Graph::VertexIterator> &VariableAssignment)
+		bool FO_Or::Interpretation(Graph &G, map<string, Vertex*> &VariableAssignment)
 		{
 			return phi1->Interpretation(G, VariableAssignment)
 			    || phi2->Interpretation(G, VariableAssignment);
@@ -345,10 +348,10 @@ namespace OpenGraphtheory
 			return new FO_Forall(new string(*variablename), static_cast<FOFormula*>(phi->Clone()));
 		}
 
-		bool FO_Forall::Interpretation(Graph &G, map<string, Graph::VertexIterator> &VariableAssignment)
+		bool FO_Forall::Interpretation(Graph &G, map<string, Vertex*> &VariableAssignment)
 		{
 			bool VariableCovered = false;
-			Graph::VertexIterator bak;
+			Vertex* bak;
 			if(VariableAssignment.find(*variablename) != VariableAssignment.end())
 			{
 				bak = VariableAssignment[*variablename];
@@ -356,9 +359,9 @@ namespace OpenGraphtheory
 			}
 
 			bool currentresult = true;
-			for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices() && currentresult == true; v++)
+			for(VertexIterator v = G.BeginVertices(); v != G.EndVertices() && currentresult == true; v++)
 			{
-				VariableAssignment[*variablename] = v;
+				VariableAssignment[*variablename] = *v;
 				if(phi->Interpretation(G, VariableAssignment) == false)
 					currentresult = false;
 			}
@@ -392,10 +395,10 @@ namespace OpenGraphtheory
 			return new FO_Exists(new string(*variablename), static_cast<FOFormula*>(phi->Clone()));
 		}
 
-		bool FO_Exists::Interpretation(Graph &G, map<string, Graph::VertexIterator> &VariableAssignment)
+		bool FO_Exists::Interpretation(Graph &G, map<string, Vertex*> &VariableAssignment)
 		{
 			bool VariableCovered = false;
-			Graph::VertexIterator bak;
+			Vertex* bak;
 			if(VariableAssignment.find(*variablename) != VariableAssignment.end())
 			{
 				bak = VariableAssignment[*variablename];
@@ -403,9 +406,9 @@ namespace OpenGraphtheory
 			}
 
 			bool currentresult = false;
-			for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices() && currentresult == false; v++)
+			for(VertexIterator v = G.BeginVertices(); v != G.EndVertices() && currentresult == false; v++)
 			{
-				VariableAssignment[*variablename] = v;
+				VariableAssignment[*variablename] = *v;
 				if(phi->Interpretation(G, VariableAssignment) == true)
 					currentresult = true;
 			}

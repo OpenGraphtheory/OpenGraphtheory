@@ -23,7 +23,7 @@ namespace OpenGraphtheory
 
         void TransformerSHIFT::DoTransform(Graph& G, vector<float> parameters, IntermediateStepHandler* intermediatestephandler)
         {
-            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+            for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
                 vector<float> coordinates = v.GetCoordinates();
 

@@ -16,8 +16,8 @@
                 public:
                     void Run(Graph &G, std::vector<std::string> parameters);
 
-                    bool CompleteColoring(Graph& G, std::map<Graph::VertexIterator, int>& PreColoring, int k);
-                    std::map<Graph::VertexIterator, int> FindColoring(Graph &G);
+                    bool CompleteColoring(Graph& G, VertexPartitioning& PreColoring, int k);
+                    VertexPartitioning FindColoring(Graph &G);
                     bool AddColoring(Graph& G, int k, std::string ColoringName);
                     void AddColoring(Graph& G, std::string ColoringName);
 

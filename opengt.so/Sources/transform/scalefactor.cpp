@@ -25,7 +25,7 @@ namespace OpenGraphtheory
             vector<float> coordinates;
 
             // scale
-            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+            for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
                 vector<float> coordinates = v.GetCoordinates();
                 for(unsigned int i = 0; i < coordinates.size() && i < parameters.size(); ++i)

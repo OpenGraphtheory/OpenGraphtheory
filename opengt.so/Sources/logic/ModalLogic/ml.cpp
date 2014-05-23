@@ -32,7 +32,7 @@ using namespace OpenGraphtheory::Logic;
     {
         if(parameters.size() > 0)
         {
-            set<Graph::VertexIterator> result = Interpretation(G);
+            VertexSet result = Interpretation(G);
             G.AddVertexSet(result, *(parameters.begin()));
         }
     }
@@ -52,11 +52,11 @@ using namespace OpenGraphtheory::Logic;
         return new ML_True();
     }
 
-    set<Graph::VertexIterator> ML_True::Interpretation(Graph &G)
+    VertexSet ML_True::Interpretation(Graph &G)
     {
-        set<Graph::VertexIterator> result;
-        for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-            result.insert(v);
+        VertexSet result;
+        for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+            result.insert(*v);
         return result;
     }
 
@@ -75,9 +75,9 @@ using namespace OpenGraphtheory::Logic;
         return new ML_False();
     }
 
-    set<Graph::VertexIterator> ML_False::Interpretation(Graph &G)
+    VertexSet ML_False::Interpretation(Graph &G)
     {
-        set<Graph::VertexIterator> result;
+        VertexSet result;
         return result;
     }
 
@@ -99,29 +99,26 @@ using namespace OpenGraphtheory::Logic;
     }
 
 
-    bool ML_Atomic::Satisfies(Graph::VertexIterator v)
+    bool ML_Atomic::Satisfies(Vertex* v)
     {
-        if(v.Attributes().HasAttribute(*test_description))
-        {
-            Attribute *attr = v.Attributes().GetAttribute(*test_description);
-            BoolAttribute *battr = dynamic_cast<BoolAttribute*>(attr);
-            if(battr != NULL)
-                return battr->Value;
-        }
+        Attribute *attr = v->GetAttribute(*test_description);
+        BoolAttribute *battr = dynamic_cast<BoolAttribute*>(attr);
+        if(battr != NULL)
+            return battr->Value;
 
-        string label = string(",")+v.GetLabel()+string(",");
-        if( label.find( string(",")+*test_description+string(",") ) != label.npos )
+        string label = string(",") + v->GetLabel() + string(",");
+        if( label.find( string(",") + *test_description + string(",") ) != label.npos )
             return true;
 
         return false;
     }
 
-    set<Graph::VertexIterator> ML_Atomic::Interpretation(Graph &G)
+    VertexSet ML_Atomic::Interpretation(Graph &G)
     {
-        set<Graph::VertexIterator> result;
-        for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-            if(Satisfies(v))
-                result.insert(v);
+        VertexSet result;
+        for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+            if(this->Satisfies(*v))
+                result.insert(*v);
         return result;
     }
 
@@ -146,13 +143,13 @@ using namespace OpenGraphtheory::Logic;
         return new ML_Not(static_cast<MLFormula*>(phi->Clone()));
     }
 
-    set<Graph::VertexIterator> ML_Not::Interpretation(Graph &G)
+    VertexSet ML_Not::Interpretation(Graph &G)
     {
-        set<Graph::VertexIterator> phiresult = phi->Interpretation(G);
-        set<Graph::VertexIterator> result;
-        for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-            if(phiresult.find(v) == phiresult.end())
-                result.insert(v);
+        VertexSet phiresult = phi->Interpretation(G);
+        VertexSet result;
+        for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+            if(!phiresult.contains(*v))
+                result.insert(*v);
         return result;
     }
 
@@ -178,15 +175,11 @@ using namespace OpenGraphtheory::Logic;
                            static_cast<MLFormula*>(phi2->Clone()));
     }
 
-    set<Graph::VertexIterator> ML_And::Interpretation(Graph &G)
+    VertexSet ML_And::Interpretation(Graph &G)
     {
-        set<Graph::VertexIterator> phi1result = phi1->Interpretation(G);
-        set<Graph::VertexIterator> phi2result = phi2->Interpretation(G);
-        set<Graph::VertexIterator> result;
-        for(set<Graph::VertexIterator>::iterator v = phi1result.begin(); v != phi1result.end(); v++)
-            if(phi2result.find(*v) != phi2result.end())
-                result.insert(*v);
-        return result;
+        VertexSet phi1result = phi1->Interpretation(G);
+        VertexSet phi2result = phi2->Interpretation(G);
+        return phi1result.intersection(phi2result);
     }
 
     // -------------------------------------------------------------------------
@@ -210,13 +203,9 @@ using namespace OpenGraphtheory::Logic;
         return new ML_Or(static_cast<MLFormula*>(phi1->Clone()), static_cast<MLFormula*>(phi2->Clone()));
     }
 
-    set<Graph::VertexIterator> ML_Or::Interpretation(Graph &G)
+    VertexSet ML_Or::Interpretation(Graph &G)
     {
-        set<Graph::VertexIterator> phi1result = phi1->Interpretation(G);
-        set<Graph::VertexIterator> phi2result = phi2->Interpretation(G);
-        for(set<Graph::VertexIterator>::iterator v = phi2result.begin(); v != phi2result.end(); v++)
-            phi1result.insert(*v);
-        return phi1result;
+        return phi1->Interpretation(G) + phi2->Interpretation(G);
     }
 
     // -------------------------------------------------------------------------
@@ -238,15 +227,14 @@ using namespace OpenGraphtheory::Logic;
         return new ML_Box(static_cast<MLFormula*>(phi->Clone()));
     }
 
-    set<Graph::VertexIterator> ML_Box::Interpretation(Graph &G)
+    VertexSet ML_Box::Interpretation(Graph &G)
     {
-        set<Graph::VertexIterator> phiresult = phi->Interpretation(G);
-        set<Graph::VertexIterator> result;
-        for(set<Graph::VertexIterator>::iterator v = phiresult.begin(); v != phiresult.end(); v++)
+        VertexSet phiresult = phi->Interpretation(G);
+        VertexSet result;
+        for(VertexIterator v = phiresult.begin(); v != phiresult.end(); v++)
         {
-            Graph::VertexIterator vi = *v;
-            set<Graph::VertexIterator> vPredecessors = vi.CollectNeighbors(1,0,1,0,0,0,1,0,1);
-            for(set<Graph::VertexIterator>::iterator n = vPredecessors.begin(); n != vPredecessors.end(); n++)
+            VertexSet vPredecessors = (*v)->CollectNeighbors(1,0,1,0,0,0,1,0,1);
+            for(VertexIterator n = vPredecessors.begin(); n != vPredecessors.end(); n++)
                 result.insert(*n);
         }
         return result;
@@ -265,7 +253,7 @@ using namespace OpenGraphtheory::Logic;
             delete forwarded;
     }
 
-    set<Graph::VertexIterator> ML_Forwarder::Interpretation(Graph& G)
+    VertexSet ML_Forwarder::Interpretation(Graph& G)
     {
         return forwarded->Interpretation(G);
     }

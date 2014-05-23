@@ -23,7 +23,7 @@
             {
                 public:
                     Graph* G;
-                    std::map<std::string, Graph::VertexIterator> nodes;
+                    std::map<std::string, VertexIterator> nodes;
 
                     DotContext(Graph* G);
                     ~DotContext();
@@ -49,8 +49,8 @@
 
                     DotParameter(std::string* name, std::string* value);
                     ~DotParameter();
-                    void LoadVertex(Graph::VertexIterator* v);
-                    void LoadEdge(Graph::EdgeIterator* e);
+                    void LoadVertex(Vertex* v);
+                    void LoadEdge(Edge* e);
                     bool ContainsDirectedAttribute();
             };
 

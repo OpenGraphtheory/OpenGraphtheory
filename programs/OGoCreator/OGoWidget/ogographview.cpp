@@ -221,7 +221,7 @@ void OGoGraphView::paintEvent(QPaintEvent *)
     {
         pen.setWidthF(edgewidth*zoom);
         painter.setPen(pen);
-        for(set<Graph::VertexIterator>::iterator i = selectedvertices.begin(); i != selectedvertices.end(); i++)
+        for(set<VertexIterator>::iterator i = selectedvertices.begin(); i != selectedvertices.end(); i++)
         {
             vector<float> Coordinates = i->GetCoordinates();
             int x, y;
@@ -232,11 +232,11 @@ void OGoGraphView::paintEvent(QPaintEvent *)
     }
 }
 
-Graph::VertexIterator OGoGraphView::VertexAt(int x, int y)
+VertexIterator OGoGraphView::VertexAt(int x, int y)
 {
     float mx, my;
     ScreenToModel(x,y,mx,my);
-    for(Graph::VertexIterator v = graph->BeginVertices(); v != graph->EndVertices(); v++)
+    for(VertexIterator v = graph->BeginVertices(); v != graph->EndVertices(); v++)
     {
         vector<float> coordinates = v.GetCoordinates();
         float vx = coordinates[0];
@@ -253,7 +253,7 @@ Graph::VertexIterator OGoGraphView::VertexAt(int x, int y)
 }
 
 
-bool OGoGraphView::selectVertices(QWidget* parent, int count, void callback(QWidget*, OGoGraphView*, vector<Graph::VertexIterator>, Graph*))
+bool OGoGraphView::selectVertices(QWidget* parent, int count, void callback(QWidget*, OGoGraphView*, vector<VertexIterator>, Graph*))
 {
     if(WaitingForVertexSelection > 0)
         return false;
@@ -271,7 +271,7 @@ void OGoGraphView::mousePressEvent(QMouseEvent *mouseevent)
 
     if(WaitingForVertexSelection > 0)
     {
-        Graph::VertexIterator v = VertexAt(x,y);
+        VertexIterator v = VertexAt(x,y);
         if(v != graph->EndVertices())
         {
             PendingVertices.push_back(v);
@@ -288,7 +288,7 @@ void OGoGraphView::mousePressEvent(QMouseEvent *mouseevent)
     }
 
     mouseaction = OGoGraphView::Nothing;
-    Graph::VertexIterator v = VertexAt(x,y);
+    VertexIterator v = VertexAt(x,y);
     if(v != graph->EndVertices())
     {
         if((mouseevent->modifiers() & Qt::ShiftModifier) && (mouseevent->modifiers() & Qt::AltModifier))
@@ -320,10 +320,10 @@ void OGoGraphView::mouseReleaseEvent(QMouseEvent *mouseevent)
 {
     if(mouseaction == OGoGraphView::DrawingEdge || mouseaction == OGoGraphView::DrawingArc)
     {
-        Graph::VertexIterator v = VertexAt(mouseevent->x(), mouseevent->y());
+        VertexIterator v = VertexAt(mouseevent->x(), mouseevent->y());
         if(v != graph->EndVertices())
         {
-            for(set<Graph::VertexIterator>::iterator w = selectedvertices.begin(); w != selectedvertices.end(); w++)
+            for(set<VertexIterator>::iterator w = selectedvertices.begin(); w != selectedvertices.end(); w++)
             {
                 if(mouseaction == OGoGraphView::DrawingEdge)
                     graph->AddEdge(*w,v);
@@ -342,7 +342,7 @@ void OGoGraphView::mouseReleaseEvent(QMouseEvent *mouseevent)
 
 void OGoGraphView::mouseMoveEvent(QMouseEvent *mouseevent)
 {
-    Graph::VertexIterator v = VertexAt(mouseevent->x(), mouseevent->y());
+    VertexIterator v = VertexAt(mouseevent->x(), mouseevent->y());
     if(v != graph->EndVertices())
         this -> setToolTip(v.GetLabel().c_str());
 
@@ -358,7 +358,7 @@ void OGoGraphView::mouseMoveEvent(QMouseEvent *mouseevent)
 
         case OGoGraphView::MovingVertex:
         {
-            for(set<Graph::VertexIterator>::iterator v = selectedvertices.begin(); v != selectedvertices.end(); v++)
+            for(set<VertexIterator>::iterator v = selectedvertices.begin(); v != selectedvertices.end(); v++)
             {
                 if(SnapToGrid)
                 {
@@ -368,7 +368,7 @@ void OGoGraphView::mouseMoveEvent(QMouseEvent *mouseevent)
 
                     coordinates[0] = floor(modelmousex/gridsize + 0.5) * gridsize;
                     coordinates[1] = floor(modelmousey/gridsize + 0.5) * gridsize;
-                    Graph::VertexIterator vi = *v;
+                    VertexIterator vi = *v;
                     vi.SetCoordinates(coordinates);
                 }
                 else
@@ -376,7 +376,7 @@ void OGoGraphView::mouseMoveEvent(QMouseEvent *mouseevent)
                     vector<float> coordinates = v->GetCoordinates();
                     coordinates[0] += (mouseevent->x()-oldx)/zoom;
                     coordinates[1] += (mouseevent->y()-oldy)/zoom;
-                    Graph::VertexIterator vi = *v;
+                    VertexIterator vi = *v;
                     vi.SetCoordinates(coordinates);
                 }
             }
@@ -405,7 +405,7 @@ void OGoGraphView::keyPressEvent(QKeyEvent *keyevent)
     {
         case Qt::Key_Delete:
         {
-            for(set<Graph::VertexIterator>::iterator i = selectedvertices.begin(); i != selectedvertices.end(); i++)
+            for(set<VertexIterator>::iterator i = selectedvertices.begin(); i != selectedvertices.end(); i++)
                 graph->RemoveVertex(*i);
             selectedvertices.clear();
             repaint();

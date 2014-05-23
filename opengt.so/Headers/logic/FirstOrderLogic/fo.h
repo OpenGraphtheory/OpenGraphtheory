@@ -23,7 +23,7 @@
             {
                 public:
                     void Interpret(Graph &G, std::list<std::string> parameters);
-                    virtual bool Interpretation(Graph &G, std::map<std::string, Graph::VertexIterator> &VariableAssignment) = 0;
+                    virtual bool Interpretation(Graph &G, std::map<std::string, Vertex*> &VariableAssignment) = 0;
             };
 
 
@@ -51,8 +51,8 @@
                     ~FO_Atomic();
                     Formula* Clone();
 
-                    bool EdgeMatchesRelation(Graph::EdgeIterator e, std::string relation);
-                    bool Interpretation(Graph &G, std::map<std::string, Graph::VertexIterator> &VariableAssignment);
+                    bool EdgeMatchesRelation(Edge* e, std::string relation);
+                    bool Interpretation(Graph &G, std::map<std::string, Vertex*> &VariableAssignment);
             };
 
             class FO_True : public FOFormula
@@ -62,7 +62,7 @@
                     ~FO_True();
                     Formula* Clone();
 
-                    bool Interpretation(Graph &G, std::map<std::string, Graph::VertexIterator> &VariableAssignment);
+                    bool Interpretation(Graph &G, std::map<std::string, Vertex*> &VariableAssignment);
             };
 
             class FO_False : public FOFormula
@@ -72,7 +72,7 @@
                     ~FO_False();
                     Formula* Clone();
 
-                    bool Interpretation(Graph &G, std::map<std::string, Graph::VertexIterator> &VariableAssignment);
+                    bool Interpretation(Graph &G, std::map<std::string, Vertex*> &VariableAssignment);
             };
 
             class FO_Eq : public FOFormula
@@ -85,7 +85,7 @@
                     ~FO_Eq();
                     Formula* Clone();
 
-                    bool Interpretation(Graph &G, std::map<std::string, Graph::VertexIterator> &VariableAssignment);
+                    bool Interpretation(Graph &G, std::map<std::string, Vertex*> &VariableAssignment);
             };
 
             class FO_Neq : public FOFormula
@@ -98,7 +98,7 @@
                     ~FO_Neq();
                     Formula* Clone();
 
-                    bool Interpretation(Graph &G, std::map<std::string, Graph::VertexIterator> &VariableAssignment);
+                    bool Interpretation(Graph &G, std::map<std::string, Vertex*> &VariableAssignment);
             };
 
             class FO_Not : public FOFormula
@@ -110,7 +110,7 @@
                     ~FO_Not();
                     Formula* Clone();
 
-                    bool Interpretation(Graph &G, std::map<std::string, Graph::VertexIterator> &VariableAssignment);
+                    bool Interpretation(Graph &G, std::map<std::string, Vertex*> &VariableAssignment);
             };
 
             class FO_And : public FOFormula
@@ -123,7 +123,7 @@
                     ~FO_And();
                     Formula* Clone();
 
-                    bool Interpretation(Graph &G, std::map<std::string, Graph::VertexIterator> &VariableAssignment);
+                    bool Interpretation(Graph &G, std::map<std::string, Vertex*> &VariableAssignment);
             };
 
             class FO_Or : public FOFormula
@@ -136,7 +136,7 @@
                     ~FO_Or();
                     Formula* Clone();
 
-                    bool Interpretation(Graph &G, std::map<std::string, Graph::VertexIterator> &VariableAssignment);
+                    bool Interpretation(Graph &G, std::map<std::string, Vertex*> &VariableAssignment);
             };
 
             class FO_Forall : public FOFormula
@@ -149,7 +149,7 @@
                     ~FO_Forall();
                     Formula* Clone();
 
-                    bool Interpretation(Graph& G, std::map<std::string, Graph::VertexIterator> &VariableAssignment);
+                    bool Interpretation(Graph& G, std::map<std::string, Vertex*> &VariableAssignment);
             };
 
             class FO_Exists : public FOFormula
@@ -162,7 +162,7 @@
                     ~FO_Exists();
                     Formula* Clone();
 
-                    bool Interpretation(Graph& G, std::map<std::string, Graph::VertexIterator> &VariableAssignment);
+                    bool Interpretation(Graph& G, std::map<std::string, Vertex*> &VariableAssignment);
             };
 
         } // namespace Logic

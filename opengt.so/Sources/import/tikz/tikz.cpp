@@ -91,7 +91,7 @@ namespace OpenGraphtheory
 
         void TikzDeclareNode::DoLoad(TikzContext* context)
         {
-            Graph::VertexIterator v = context->G->AddVertex(*xCm, *yCm, label != NULL ? *label : "", (*diameter)/2);
+            VertexIterator v = context->G->AddVertex(*xCm, *yCm, label != NULL ? *label : "", (*diameter)/2);
             context->nodes[*name] = v;
         }
 
@@ -113,8 +113,8 @@ namespace OpenGraphtheory
 
         void TikzDrawEdge::DoLoad(TikzContext* context)
         {
-            Graph::VertexIterator vfrom = context->nodes[*from];
-            Graph::VertexIterator vto = context->nodes[*to];
+            VertexIterator vfrom = context->nodes[*from];
+            VertexIterator vto = context->nodes[*to];
             context->G->AddEdge(vfrom, vto, "", *linewidth);
         }
 
@@ -131,8 +131,8 @@ namespace OpenGraphtheory
 
         void TikzDrawArc::DoLoad(TikzContext* context)
         {
-            Graph::VertexIterator vfrom = context->nodes[*from];
-            Graph::VertexIterator vto = context->nodes[*to];
+            VertexIterator vfrom = context->nodes[*from];
+            VertexIterator vto = context->nodes[*to];
             context->G->AddArc(vfrom, vto, "", *linewidth);
         }
 

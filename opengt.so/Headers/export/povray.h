@@ -17,9 +17,8 @@
                 protected:
                     static FactoryRegistrator<ExportFilter> ExportFilterPovrayRegistrator;
                 public:
-                    void Export(OpenGraphtheory::Graph& G, std::ostream& os,
-                                std::map<Graph::VertexIterator, Visualization::Color>& vertexcoloring,
-                                std::map<Graph::EdgeIterator, Visualization::Color>& edgecoloring, float dpi, float edgewidth, float vertexradius);
+                    void Export(OpenGraphtheory::Graph& G, std::ostream& os, VertexColoring& vertexcoloring,
+                                EdgeColoring& edgecoloring, float dpi, float edgewidth, float vertexradius);
             };
 
         }

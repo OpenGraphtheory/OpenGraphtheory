@@ -20,14 +20,14 @@ namespace OpenGraphtheory
 
         void ExportFilter::DoExport(Graph& G, ostream& os, std::string vertexcoloring, std::string edgecoloring, float dpi, float edgewidth, float vertexradius)
         {
-            map<Graph::VertexIterator, int> vcoloringInt = G.GetVertexColoring(vertexcoloring);
-            map<Graph::VertexIterator, Color> vcoloring;
-            for(map<Graph::VertexIterator, int>::iterator i = vcoloringInt.begin(); i != vcoloringInt.end(); i++)
+            VertexPartitioning vcoloringInt = G.GetVertexPartitioning(vertexcoloring);
+            VertexColoring vcoloring;
+            for(VertexPartitioning::iterator i = vcoloringInt.begin(); i != vcoloringInt.end(); i++)
                 vcoloring[i->first] = Color::DefaultColors[i->second < Color::NumDefaultColors ? i->second : 0];
 
-            map<Graph::EdgeIterator, Color> ecoloring;
-            map<Graph::EdgeIterator, int> ecoloringInt = G.GetEdgeColoring(edgecoloring);
-            for(map<Graph::EdgeIterator, int>::iterator i = ecoloringInt.begin(); i != ecoloringInt.end(); i++)
+            EdgePartitioning ecoloringInt = G.GetEdgePartitioning(edgecoloring);
+            EdgeColoring ecoloring;
+            for(EdgePartitioning::iterator i = ecoloringInt.begin(); i != ecoloringInt.end(); i++)
                 ecoloring[i->first] = Color::DefaultColors[i->second < Color::NumDefaultColors ? i->second : 0];
 
             Export(G, os, vcoloring, ecoloring, dpi, edgewidth, vertexradius);

@@ -41,14 +41,14 @@ namespace OpenGraphtheory
             Clear();
             if(DisplayedGraph != NULL)
             {
-                map<Graph::VertexIterator, int> vcoloringInt = DisplayedGraph->GetVertexColoring(VertexColoring);
-                map<Graph::VertexIterator, Color> vcoloring;
-                for(map<Graph::VertexIterator, int>::iterator i = vcoloringInt.begin(); i != vcoloringInt.end(); i++)
+                map<VertexIterator, int> vcoloringInt = DisplayedGraph->GetVertexColoring(VertexColoring);
+                map<VertexIterator, Color> vcoloring;
+                for(map<VertexIterator, int>::iterator i = vcoloringInt.begin(); i != vcoloringInt.end(); i++)
                     vcoloring[i->first] = Color::DefaultColors[i->second < Color::NumDefaultColors ? i->second : 0];
 
-                map<Graph::EdgeIterator, Color> ecoloring;
-                map<Graph::EdgeIterator, int> ecoloringInt = DisplayedGraph->GetEdgeColoring(EdgeColoring);
-                for(map<Graph::EdgeIterator, int>::iterator i = ecoloringInt.begin(); i != ecoloringInt.end(); i++)
+                map<EdgeIterator, Color> ecoloring;
+                map<EdgeIterator, int> ecoloringInt = DisplayedGraph->GetEdgeColoring(EdgeColoring);
+                for(map<EdgeIterator, int>::iterator i = ecoloringInt.begin(); i != ecoloringInt.end(); i++)
                     ecoloring[i->first] = Color::DefaultColors[i->second < Color::NumDefaultColors ? i->second : 0];
 
 

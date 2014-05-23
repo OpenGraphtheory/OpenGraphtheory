@@ -12,59 +12,59 @@
 		{
 			public:
 				virtual ~VertexFilter();
-				virtual bool VertexAllowed(Graph::VertexIterator v) = 0;
+				virtual bool VertexAllowed(Vertex* v) = 0;
 		};
 
 		class EdgeFilter
 		{
 			public:
 				virtual ~EdgeFilter();
-				virtual bool EdgeAllowed(Graph::EdgeIterator e) = 0;
+				virtual bool EdgeAllowed(Edge* e) = 0;
 		};
 
 
         class ForbiddenVertexFilter : public VertexFilter
         {
             private:
-                Graph::VertexIterator ForbiddenVertex;
+                Vertex* ForbiddenVertex;
             public:
-                ForbiddenVertexFilter(Graph::VertexIterator ForbiddenVertex);
-                bool VertexAllowed(Graph::VertexIterator v);
+                ForbiddenVertexFilter(Vertex* ForbiddenVertex);
+                bool VertexAllowed(Vertex* v);
         };
 
         class ForbiddenVerticesFilter : public VertexFilter
         {
             private:
-                std::set<Graph::VertexIterator> ForbiddenVertices;
+                VertexSet ForbiddenVertices;
             public:
                 ForbiddenVerticesFilter();
-                ForbiddenVerticesFilter(std::set<Graph::VertexIterator> ForbiddenVertices);
-                void ForbidVertex(Graph::VertexIterator ForbiddenVertex);
-                void AllowVertex(Graph::VertexIterator Vertex);
+                ForbiddenVerticesFilter(const VertexSet& ForbiddenVertices);
+                void ForbidVertex(Vertex* ForbiddenVertex);
+                void AllowVertex(Vertex* AllowedVertex);
 
-                bool VertexAllowed(Graph::VertexIterator v);
+                bool VertexAllowed(Vertex* v);
         };
 
         class ForbiddenEdgeFilter : public EdgeFilter
         {
             private:
-                Graph::EdgeIterator ForbiddenEdge;
+                Edge* ForbiddenEdge;
             public:
-                ForbiddenEdgeFilter(Graph::EdgeIterator ForbiddenEdge);
-                bool EdgeAllowed(Graph::EdgeIterator e);
+                ForbiddenEdgeFilter(Edge* ForbiddenEdge);
+                bool EdgeAllowed(Edge* e);
         };
 
         class ForbiddenEdgesFilter : public EdgeFilter
         {
             private:
-                std::set<Graph::EdgeIterator> ForbiddenEdges;
+                EdgeSet ForbiddenEdges;
             public:
                 ForbiddenEdgesFilter();
-                ForbiddenEdgesFilter(std::set<Graph::EdgeIterator> ForbiddenEdges);
-                void ForbidEdge(Graph::EdgeIterator ForbiddenEdge);
-                void AllowEdge(Graph::EdgeIterator Edge);
+                ForbiddenEdgesFilter(EdgeSet& ForbiddenEdges);
+                void ForbidEdge(Edge* ForbiddenEdge);
+                void AllowEdge(Edge* AllowedEdge);
 
-                bool EdgeAllowed(Graph::EdgeIterator e);
+                bool EdgeAllowed(Edge* e);
         };
 
 	}

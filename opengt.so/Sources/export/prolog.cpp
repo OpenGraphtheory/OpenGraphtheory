@@ -10,7 +10,8 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportFilterPROLOG::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring, map<Graph::EdgeIterator, Color>& edgecoloring, float dpi, float edgewidth, float vertexradius)
+        void ExportFilterPROLOG::Export(Graph& G, ostream& os, VertexColoring& vertexcoloring,
+                                        EdgeColoring& edgecoloring, float dpi, float edgewidth, float vertexradius)
         {
             os << "\n%  www.Open-Graphtheory.org\n\n";
 
@@ -18,19 +19,21 @@ namespace OpenGraphtheory
 
             /// write vertices
             os << "?- dynamic(vertex/3).\n";
-            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+            for(VertexIterator vi = G.BeginVertices(); vi != G.EndVertices(); vi++)
             {
-                os << "vertex(" << v.GetID() << ", '"<< Translator.Translate(v.GetLabel()) << "', " << v.GetWeight() << ").\n";
+                Vertex* v= *vi;
+                os << "vertex(" << v->GetID() << ", '"<< Translator.Translate(v->GetLabel()) << "', " << v->GetWeight() << ").\n";
             }
             os << "v(X) :- vertex(X,_,_).\n\n";
 
              /// write edges and arcs
             os << "?- dynamic(edge/4).\n";
             os << "?- dynamic(arc/4).\n";
-            for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
+            for(EdgeIterator ei = G.BeginEdges(); ei != G.EndEdges(); ei++)
             {
-                os << (e.IsDirected()?"arc":"edge") << "(" << e.From().GetID() << ", " << e.To().GetID()
-                   << ", '" << Translator.Translate(e.GetLabel()) << "', " << e.GetWeight() << ").\n";
+                Edge* e = *ei;
+                os << (e->IsDirected()?"arc":"edge") << "(" << e->From()->GetID() << ", " << e->To()->GetID()
+                   << ", '" << Translator.Translate(e->GetLabel()) << "', " << e->GetWeight() << ").\n";
             }
             os << "a(X,Y) :- arc(X,Y,_,_).\n";
             os << "e(X,Y) :- edge(X,Y,_,_).\n";

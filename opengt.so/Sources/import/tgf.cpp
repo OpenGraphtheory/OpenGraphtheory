@@ -17,7 +17,7 @@ namespace OpenGraphtheory
         Graph ImportFilterTGF::Import(istream& is)
         {
             Graph result;
-            map<int, Graph::VertexIterator> VertexTGFIDs;
+            map<int, VertexIterator> VertexTGFIDs;
 
             int Vertex1;
             int Vertex2;

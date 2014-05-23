@@ -84,10 +84,10 @@ namespace OpenGraphtheory
 
         void DotNode::DoLoad(DotContext* context)
         {
-            Graph::VertexIterator v = context->G->AddVertex();
+            VertexIterator v = context->G->AddVertex();
             context->nodes[*name] = v;
             if(parameters != NULL)
-                parameters->LoadVertex(&v);
+                parameters->LoadVertex(*v);
         }
 
 
@@ -109,10 +109,10 @@ namespace OpenGraphtheory
 
         void DotEdge::DoLoad(DotContext* context)
         {
-            Graph::VertexIterator vfrom = context->nodes[*from];
-            Graph::VertexIterator vto = context->nodes[*to];
+            VertexIterator vfrom = context->nodes[*from];
+            VertexIterator vto = context->nodes[*to];
 
-            Graph::EdgeIterator e;
+            EdgeIterator e;
             if(parameters == NULL || !(parameters->ContainsDirectedAttribute()))
             {
                 e = context->G->AddEdge(vfrom, vto);
@@ -123,7 +123,7 @@ namespace OpenGraphtheory
             }
 
             if(parameters != NULL)
-                parameters->LoadEdge(&e);
+                parameters->LoadEdge(*e);
         }
 
 		// --------------------------------------------------------------------------------------------------------
@@ -142,7 +142,7 @@ namespace OpenGraphtheory
                 delete PrevParameters;
         }
 
-        void DotParameter::LoadVertex(Graph::VertexIterator* v)
+        void DotParameter::LoadVertex(Vertex* v)
         {
             if(PrevParameters != NULL)
                 PrevParameters->LoadVertex(v);
@@ -184,17 +184,15 @@ namespace OpenGraphtheory
             }
             else // arbitrary attribute
             {
-                v->Attributes().Unset(*name);
-                v->Attributes().Add(*name, "string");
-
-                Attribute* pAttr = v->Attributes().GetAttribute(*name);
+                v->RemoveAttribute(*name);
+                Attribute* pAttr = v->AddAttribute(*name, "string");
                 StringAttribute* sAttr = dynamic_cast<StringAttribute*>(pAttr);
                 if(sAttr != NULL)
                     sAttr->Value = *value;
             }
         }
 
-        void DotParameter::LoadEdge(Graph::EdgeIterator* e)
+        void DotParameter::LoadEdge(Edge* e)
         {
             if(PrevParameters != NULL)
                 PrevParameters->LoadEdge(e);
@@ -217,10 +215,8 @@ namespace OpenGraphtheory
             }
             else // arbitrary attribute
             {
-                e->Attributes().Unset(*name);
-                e->Attributes().Add(*name, "string");
-
-                Attribute* pAttr = e->Attributes().GetAttribute(*name);
+                e->RemoveAttribute(*name);
+                Attribute* pAttr = e->AddAttribute(*name, "string");
                 StringAttribute* sAttr = dynamic_cast<StringAttribute*>(pAttr);
                 if(sAttr != NULL)
                     sAttr->Value = *value;

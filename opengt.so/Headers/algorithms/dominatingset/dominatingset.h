@@ -15,14 +15,14 @@
             {
                 public:
                     void Run(Graph &G, std::vector<std::string> parameters);
-                    bool FindDominatingSet(Graph& G, std::set<Graph::VertexIterator>& DominatingSet, unsigned int k, bool VerticesCanDominateThemselves = true);
+                    bool FindDominatingSet(Graph& G, VertexSet& DominatingSet, unsigned int k, bool VerticesCanDominateThemselves = true);
                     void AddDominatingSet(Graph &G, std::string DominatingSetName, bool VerticesCanDominateThemselves = true);
 
                 protected:
                     static MultiFactoryRegistrator<Algorithm> AlgorithmDominatingSetRegistrator;
                     bool TestDominatingSet(Graph &G,
-                                           std::map<Graph::VertexIterator,int>& Dominators, std::set<Graph::VertexIterator>& Undominated,
-                                           std::set<Graph::VertexIterator>& Excluded, std::set<Graph::VertexIterator>& DominatingSet,
+                                           std::map<Vertex*,int>& Dominators, VertexSet& Undominated,
+                                           VertexSet& Excluded, VertexSet& DominatingSet,
                                            unsigned int k, bool VerticesCanDominateThemselves = true);
             };
         }

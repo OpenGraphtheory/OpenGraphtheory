@@ -10,7 +10,8 @@ namespace OpenGraphtheory
     namespace Export
     {
 
-        void ExportFilterTGF::Export(Graph& G, ostream& os, map<Graph::VertexIterator, Color>& vertexcoloring, map<Graph::EdgeIterator, Color>& edgecoloring, float dpi, float edgewidth, float vertexradius)
+        void ExportFilterTGF::Export(Graph& G, ostream& os, VertexColoring& vertexcoloring,
+                                     EdgeColoring& edgecoloring, float dpi, float edgewidth, float vertexradius)
         {
             if(G.IsHypergraph())
                 throw "The TGF fileformat doesn\'t support hypergraphs\n";
@@ -18,14 +19,14 @@ namespace OpenGraphtheory
                 throw "The TGF fileformat doesn\'t support mixed graphs\n";
 
             /// write vertices
-            for(Graph::VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-                os << v.GetID() << " " << v.GetLabel() << "\n";
+            for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+                os << (*v)->GetID() << " " << (*v)->GetLabel() << "\n";
 
             os << "#\n";
 
             /// write edges or arcs
-            for(Graph::EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
-                os << e.From().GetID() << " " << e.To().GetID() << " " << e.GetLabel() << "\n";
+            for(EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
+                os << (*e)->From()->GetID() << " " << (*e)->To()->GetID() << " " << (*e)->GetLabel() << "\n";
 
         }
 

@@ -21,7 +21,7 @@
             {
                 public:
                     void Interpret(Graph &G, std::list<std::string> parameters);
-                    virtual std::set<Graph::VertexIterator> Interpretation(Graph &G) = 0;
+                    virtual VertexSet Interpretation(Graph &G) = 0;
             };
 
 
@@ -36,8 +36,8 @@
                     ~CTL_Atomic();
                     Formula* Clone();
 
-                    std::set<Graph::VertexIterator> Interpretation(Graph &G);
-                    virtual bool Satisfies(Graph::VertexIterator v);
+                    VertexSet Interpretation(Graph &G);
+                    virtual bool Satisfies(Vertex* v);
             };
 
             class CTL_True : public CTLFormula
@@ -47,7 +47,7 @@
                     ~CTL_True();
                     Formula* Clone();
 
-                    std::set<Graph::VertexIterator> Interpretation(Graph &G);
+                    VertexSet Interpretation(Graph &G);
             };
 
             class CTL_False : public CTLFormula
@@ -57,7 +57,7 @@
                     ~CTL_False();
                     Formula* Clone();
 
-                    std::set<Graph::VertexIterator> Interpretation(Graph &G);
+                    VertexSet Interpretation(Graph &G);
             };
 
             class CTL_Not : public CTLFormula
@@ -69,7 +69,7 @@
                     ~CTL_Not();
                     Formula* Clone();
 
-                    std::set<Graph::VertexIterator> Interpretation(Graph &G);
+                    VertexSet Interpretation(Graph &G);
             };
 
             class CTL_And : public CTLFormula
@@ -82,7 +82,7 @@
                     ~CTL_And();
                     Formula* Clone();
 
-                    std::set<Graph::VertexIterator> Interpretation(Graph &G);
+                    VertexSet Interpretation(Graph &G);
             };
 
             class CTL_Or : public CTLFormula
@@ -95,7 +95,7 @@
                     ~CTL_Or();
                     Formula* Clone();
 
-                    std::set<Graph::VertexIterator> Interpretation(Graph &G);
+                    VertexSet Interpretation(Graph &G);
             };
 
             class CTL_ExistsNext : public CTLFormula
@@ -107,7 +107,7 @@
                     ~CTL_ExistsNext();
                     Formula* Clone();
 
-                    std::set<Graph::VertexIterator> Interpretation(Graph& G);
+                    VertexSet Interpretation(Graph& G);
             };
 
             class CTL_ExistsGlobally : public CTLFormula
@@ -119,7 +119,7 @@
                     ~CTL_ExistsGlobally();
                     Formula* Clone();
 
-                    std::set<Graph::VertexIterator> Interpretation(Graph& G);
+                    VertexSet Interpretation(Graph& G);
             };
 
             class CTL_ExistsUntil : public CTLFormula
@@ -132,7 +132,7 @@
                     ~CTL_ExistsUntil();
                     Formula* Clone();
 
-                    std::set<Graph::VertexIterator> Interpretation(Graph& G);
+                    VertexSet Interpretation(Graph& G);
             };
 
 
@@ -147,7 +147,7 @@
                     virtual ~CTL_Forwarder();
                     Formula* Clone();
 
-                    std::set<Graph::VertexIterator> Interpretation(Graph& G);
+                    VertexSet Interpretation(Graph& G);
             };
 
 

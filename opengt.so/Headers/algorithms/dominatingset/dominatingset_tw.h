@@ -16,16 +16,16 @@
             namespace Treewidth
             {
 
-                typedef std::set<std::pair<std::set<Graph::VertexIterator>, std::set<Graph::VertexIterator> > > DominatingSetTWData;
+                typedef std::set< std::pair<VertexSet, VertexSet> > DominatingSetTWData;
 
                 class AlgorithmDOMINATINGSET_TW : public TreewidthBasedAlgorithm<DominatingSetTWData>
                 {
                     protected:
                         DominatingSetTWData* HandleEmptyBag(Graph& G);
 
-                        DominatingSetTWData* HandleIntroduceNode(Graph& G, DominatingSetTWData* SubtreeResult, std::set<Graph::VertexIterator>& Bag, Graph::VertexIterator Introduced);
-                        DominatingSetTWData* HandleForgetNode(Graph& G, DominatingSetTWData* SubtreeResult, std::set<Graph::VertexIterator>& Bag, Graph::VertexIterator Introduced);
-                        DominatingSetTWData* HandleJoinNode(Graph& G, DominatingSetTWData* Subtree1Result, DominatingSetTWData* Subtree2Result, std::set<Graph::VertexIterator>& Bag);
+                        DominatingSetTWData* HandleIntroduceNode(Graph& G, DominatingSetTWData* SubtreeResult, VertexSet& Bag, VertexIterator Introduced);
+                        DominatingSetTWData* HandleForgetNode(Graph& G, DominatingSetTWData* SubtreeResult, VertexSet& Bag, VertexIterator Introduced);
+                        DominatingSetTWData* HandleJoinNode(Graph& G, DominatingSetTWData* Subtree1Result, DominatingSetTWData* Subtree2Result, VertexSet& Bag);
 
                         void HandleRootNode(Graph& G, DominatingSetTWData* RootResult, std::vector<std::string> parameters);
 
