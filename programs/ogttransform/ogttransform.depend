@@ -1,16 +1,5 @@
 # depslib dependency file v1.0
-1392029042 source:/home/viktor/Programming/OpenGraphtheory/programs/ogttransform/ogttransform.cpp
-	<iostream>
-	"../../opengt.so/opengt.h"
-	<iostream>
-	<fstream>
-	<stdio.h>
-	"../../opengt.so/opengt.h"
-	<iostream>
-	<stdlib.h>
-	<list>
-	"../../opengt.so/Headers/opengt.h"
-	"../../opengt.so/Headers/transform/transformation.h"
+1396697916 source:/home/viktor/Programming/OpenGraphtheory/programs/ogttransform/ogttransform.cpp
 	<iostream>
 	"../../opengt.so/opengt.h"
 	<iostream>
@@ -71,7 +60,7 @@
 	<list>
 	<string>
 
-1396602434 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
+1396697919 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
 	<string>
 	<iostream>
 	<sstream>
@@ -84,13 +73,13 @@
 	<set>
 	"../Sources/factory_templates.cpp"
 
-1392029043 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/transform/transformation.h
+1396697919 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/transform/transformation.h
 	<list>
 	"../opengt.h"
 	"../factory.h"
 	"../intermediatesteps/intermediatesteps.h"
 
-1396603028 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/intermediatesteps/intermediatesteps.h
+1396697918 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/intermediatesteps/intermediatesteps.h
 	<fstream>
 	<string>
 	<iostream>

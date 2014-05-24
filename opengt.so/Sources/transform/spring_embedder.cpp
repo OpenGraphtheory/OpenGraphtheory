@@ -80,10 +80,10 @@ namespace OpenGraphtheory
             srand ( time(NULL) );
             for(VertexIterator a = G.BeginVertices(); a != G.EndVertices(); a++)
             {
-                vector<float> coordinates;
+                Coordinates coordinates;
                 for(int i = 0; i < dimensions; i++)
                     coordinates.push_back(fmod(rand(), dimension_limits[i]));
-                a.SetCoordinates(coordinates);
+                (*a)->SetCoordinates(coordinates);
 
                 // should make sure that no two vertices have the same position
                 tractions.push_back(VectorND(dimensions));
@@ -102,15 +102,17 @@ namespace OpenGraphtheory
                     VectorND traction = tractions[i] * friction;
 
                     // compute forces on a by the other vertices
+                    VectorND aCoordinates((*a)->GetCoordinates());
                     for(VertexIterator b = G.BeginVertices(); b != G.EndVertices(); b++)
                     {
                         if(b==a)
                             continue;
 
                         // force on a by vertex b
-                        traction += coulomb(VectorND(a.GetCoordinates()), VectorND(b.GetCoordinates()));
-                        if(a.Adjacent(b))
-                            traction += hooke(VectorND(a.GetCoordinates()), VectorND(b.GetCoordinates()));
+                        VectorND bCoordinates((*b)->GetCoordinates());
+                        traction += coulomb(aCoordinates, bCoordinates);
+                        if((*a)->Adjacent(*b))
+                            traction += hooke(aCoordinates, bCoordinates);
                     }
 
                     tractions[i] = traction;
@@ -121,11 +123,11 @@ namespace OpenGraphtheory
                 VertexIterator a = G.BeginVertices();
                 for(int i = 0; a != G.EndVertices(); a++, i++)
                 {
-                    vector<float> OldCoordinates = a.GetCoordinates();
-                    vector<float> NewCoordinates(dimensions);
+                    Coordinates OldCoordinates = (*a)->GetCoordinates();
+                    Coordinates NewCoordinates(dimensions);
                     for(int j = 0; j < dimensions; j++)
                         NewCoordinates[j] = max(0.0f,min(dimension_limits[j],   OldCoordinates[j] + delta * tractions[i][j]   ));
-                    a.SetCoordinates( NewCoordinates );
+                    (*a)->SetCoordinates( NewCoordinates );
 
                     // for the loop-condition
                     float current_movement = 0.0f;

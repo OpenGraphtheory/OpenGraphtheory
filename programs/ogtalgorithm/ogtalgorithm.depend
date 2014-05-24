@@ -1,12 +1,12 @@
 # depslib dependency file v1.0
-1399900522 source:/home/viktor/Programming/OpenGraphtheory/programs/ogtalgorithm/ogtalgorithm.cpp
+1400916072 source:/home/viktor/Programming/OpenGraphtheory/programs/ogtalgorithm/ogtalgorithm.cpp
 	<iostream>
 	<stdlib.h>
 	<list>
 	"../../opengt.so/Headers/opengt.h"
 	"../../opengt.so/Headers/algorithms/algorithm.h"
 
-1398327727 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
+1400939798 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
 	<list>
 	<set>
 	<map>
@@ -16,40 +16,53 @@
 	<vector>
 	"simple_xml.h"
 	"attributes.h"
+	"set_helper.h"
+	"visualize/color.h"
 
-1397121195 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/simple_xml.h
+1397153968 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/simple_xml.h
 	<iostream>
 	<sstream>
 	<vector>
 	<list>
 	<string>
 
-1396602434 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
+1400940647 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
 	<string>
 	<iostream>
 	<sstream>
 	"factory.h"
 	"simple_xml.h"
 
-1399470167 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/factory.h
+1400916133 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/factory.h
 	<string>
 	<map>
 	<set>
 	"../Sources/factory_templates.cpp"
 
-1399900158 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/algorithm.h
+1400916133 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/algorithm.h
 	"../opengt.h"
 	"../factory.h"
 	"../thread.h"
 	<string>
 	<vector>
 
-1399470669 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/factory_templates.cpp
+1400916125 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/factory_templates.cpp
 	"../Headers/factory.h"
 
-1399898718 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/thread.h
+1400916133 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/thread.h
 	<pthread.h>
 	<windows.h>
 	<process.h>
 	<stdint.h>
+
+1400916133 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/set_helper.h
+	<set>
+	<vector>
+	<algorithm>
+	"../Sources/set_helper.cpp"
+
+1400916126 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/set_helper.cpp
+	"../Headers/set_helper.h"
+
+1400916133 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/color.h
 

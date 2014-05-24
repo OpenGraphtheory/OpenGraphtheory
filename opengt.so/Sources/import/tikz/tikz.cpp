@@ -115,7 +115,8 @@ namespace OpenGraphtheory
         {
             VertexIterator vfrom = context->nodes[*from];
             VertexIterator vto = context->nodes[*to];
-            context->G->AddEdge(vfrom, vto, "", *linewidth);
+            EdgeIterator e = context->G->AddEdge(vfrom, vto);
+            (*e)->SetWeight(*linewidth);
         }
 
 		// --------------------------------------------------------------------------------------------------------
@@ -133,7 +134,8 @@ namespace OpenGraphtheory
         {
             VertexIterator vfrom = context->nodes[*from];
             VertexIterator vto = context->nodes[*to];
-            context->G->AddArc(vfrom, vto, "", *linewidth);
+            EdgeIterator e = context->G->AddArc(vfrom, vto);
+            (*e)->SetWeight(*linewidth);
         }
 
 		// --------------------------------------------------------------------------------------------------------

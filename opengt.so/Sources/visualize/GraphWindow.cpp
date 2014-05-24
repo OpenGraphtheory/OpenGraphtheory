@@ -13,8 +13,8 @@ namespace OpenGraphtheory
                                  string edgecoloring, float EdgeWidth, float VertexRadius)
             : DisplayWindow(width, height, Caption)
         {
-            this->VertexColoring = vertexcoloring;
-            this->EdgeColoring = edgecoloring;
+            this->vertexColoring = vertexcoloring;
+            this->edgeColoring = edgecoloring;
             this->EdgeWidth = EdgeWidth;
             this->VertexRadius = VertexRadius;
             sem_init(&GUpdateSemaphore, 0, 1);
@@ -41,19 +41,20 @@ namespace OpenGraphtheory
             Clear();
             if(DisplayedGraph != NULL)
             {
-                map<VertexIterator, int> vcoloringInt = DisplayedGraph->GetVertexColoring(VertexColoring);
-                map<VertexIterator, Color> vcoloring;
-                for(map<VertexIterator, int>::iterator i = vcoloringInt.begin(); i != vcoloringInt.end(); i++)
+                /*
+                VertexPartitioning vcoloringInt = DisplayedGraph->GetVertexPartitioning(vertexColoring);
+                VertexColoring vcoloring;
+                for(VertexPartitioning::iterator i = vcoloringInt.begin(); i != vcoloringInt.end(); i++)
                     vcoloring[i->first] = Color::DefaultColors[i->second < Color::NumDefaultColors ? i->second : 0];
 
-                map<EdgeIterator, Color> ecoloring;
-                map<EdgeIterator, int> ecoloringInt = DisplayedGraph->GetEdgeColoring(EdgeColoring);
-                for(map<EdgeIterator, int>::iterator i = ecoloringInt.begin(); i != ecoloringInt.end(); i++)
+                EdgePartitioning ecoloringInt = DisplayedGraph->GetEdgePartitioning(edgeColoring);
+                EdgeColoring ecoloring;
+                for(EdgePartitioning::iterator i = ecoloringInt.begin(); i != ecoloringInt.end(); i++)
                     ecoloring[i->first] = Color::DefaultColors[i->second < Color::NumDefaultColors ? i->second : 0];
-
+                */
 
                 Visualization::GraphWindowRenderingContext* context = new Visualization::GraphWindowRenderingContext(this);
-                context->RenderGraph(*DisplayedGraph, vcoloring, ecoloring, 75, EdgeWidth, VertexRadius);
+                context->RenderGraph(*DisplayedGraph, vertexColoring, edgeColoring, 75, EdgeWidth, VertexRadius);
                 delete context;
             }
             Flush();

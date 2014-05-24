@@ -83,30 +83,29 @@ namespace OpenGraphtheory
         void GraphRenderingContext::RenderGraph(Graph& G, string vertexcoloring, string edgecoloring, float dpi,
                          float edgewidth, float vertexradius)
         {
-            map<VertexIterator, int> vcoloringInt = G.GetVertexColoring(vertexcoloring);
-            map<VertexIterator, Color> VertexColoring;
-            for(map<VertexIterator, int>::iterator i = vcoloringInt.begin(); i != vcoloringInt.end(); i++)
-                VertexColoring[i->first] = Color::DefaultColors[i->second < Color::NumDefaultColors ? i->second : 0];
+            VertexPartitioning vcoloringInt = G.GetVertexPartitioning(vertexcoloring);
+            VertexColoring vertexColoring;
+            for(VertexPartitioning::iterator i = vcoloringInt.begin(); i != vcoloringInt.end(); i++)
+                vertexColoring[i->first] = Color::DefaultColors[i->second < Color::NumDefaultColors ? i->second : 0];
 
-            map<EdgeIterator, Color> EdgeColoring;
-            map<EdgeIterator, int> ecoloringInt = G.GetEdgeColoring(edgecoloring);
-            for(map<EdgeIterator, int>::iterator i = ecoloringInt.begin(); i != ecoloringInt.end(); i++)
-                EdgeColoring[i->first] = Color::DefaultColors[i->second < Color::NumDefaultColors ? i->second : 0];
+            EdgePartitioning ecoloringInt = G.GetEdgePartitioning(edgecoloring);
+            EdgeColoring edgeColoring;
+            for(EdgePartitioning::iterator i = ecoloringInt.begin(); i != ecoloringInt.end(); i++)
+                edgeColoring[i->first] = Color::DefaultColors[i->second < Color::NumDefaultColors ? i->second : 0];
 
-            RenderGraph(G, VertexColoring, EdgeColoring, dpi, edgewidth, vertexradius);
+            RenderGraph(G, vertexColoring, edgeColoring, dpi, edgewidth, vertexradius);
         }
 
-        void GraphRenderingContext::RenderGraph(Graph& G, std::map<VertexIterator, Color>& vertexcoloring,
-                         std::map<EdgeIterator, Color>& edgecoloring, float dpi,
+        void GraphRenderingContext::RenderGraph(Graph& G, VertexColoring& vertexcoloring, EdgeColoring& edgecoloring, float dpi,
                          float edgewidth, float vertexradius)
         {
             VertexIterator v1 = G.BeginVertices();
-            vector<float> coordinates = v1.GetCoordinates();
+            Coordinates coordinates = (*v1)->GetCoordinates();
             float minx = coordinates[0], maxx = coordinates[1], maxy = coordinates[1], miny = coordinates[1];
             for(v1++; v1 != G.EndVertices(); v1++)
             {
-                coordinates = v1.GetCoordinates();
-                float radius = vertexradius >= 0 ? vertexradius : v1.GetWeight();
+                coordinates = (*v1)->GetCoordinates();
+                float radius = vertexradius >= 0 ? vertexradius : (*v1)->GetWeight();
 
                 if(coordinates[0]-radius < minx)
                     minx = coordinates[0]-radius;
@@ -130,15 +129,15 @@ namespace OpenGraphtheory
             this->SetBrushColor(LastBrushColor);
             for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                coordinates = v.GetCoordinates();
-                Color color = vertexcoloring.find(v) != vertexcoloring.end() ? vertexcoloring[v] : Color(0,0,0);
+                coordinates = (*v)->GetCoordinates();
+                Color color = vertexcoloring.find(*v) != vertexcoloring.end() ? vertexcoloring[*v] : Color(0,0,0);
                 if(color != LastBrushColor)
                     this->SetBrushColor(color);
                 LastBrushColor = color;
 
-                float radius = vertexradius >= 0 ? vertexradius : v.GetWeight();
-                string label = Translator != NULL ? Translator->Translate(v.GetLabel()) : v.GetLabel();
-                this->DeclareVertex(v.GetID(),
+                float radius = vertexradius >= 0 ? vertexradius : (*v)->GetWeight();
+                string label = Translator != NULL ? Translator->Translate((*v)->GetLabel()) : (*v)->GetLabel();
+                this->DeclareVertex((*v)->GetID(),
                                     coordinates[0] - minx,
                                     coordinates[1] - miny,
                                     radius,
@@ -156,29 +155,29 @@ namespace OpenGraphtheory
             this->SetLineWidth(LastLineWidth);
             for(EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
             {
-                vector<float> FromCoordinates = e.From().GetCoordinates();
-                vector<float> ToCoordinates = e.To().GetCoordinates();
+                Coordinates FromCoordinates = (*e)->From()->GetCoordinates();
+                Coordinates ToCoordinates = (*e)->To()->GetCoordinates();
                 float x1 = FromCoordinates[0] - minx;
                 float y1 = FromCoordinates[1] - miny;
                 float x2 = ToCoordinates[0] - minx;
                 float y2 = ToCoordinates[1] - miny;
 
-                Color color = edgecoloring.find(e) != edgecoloring.end() ? edgecoloring[e] : Color(0,0,0);
+                Color color = edgecoloring.find(*e) != edgecoloring.end() ? edgecoloring[*e] : Color(0,0,0);
                 if(color != LastPenColor)
                     this->SetPenColor(color);
                 LastPenColor = color;
 
-                float LineWidth = edgewidth >= 0.0f ? edgewidth : e.GetWeight();
+                float LineWidth = edgewidth >= 0.0f ? edgewidth : (*e)->GetWeight();
                 if(LineWidth != LastLineWidth)
                     this->SetLineWidth(LineWidth);
                 LastLineWidth = LineWidth;
 
-                string label = Translator != NULL ? Translator->Translate(e.GetLabel()) : e.GetLabel();
+                string label = Translator != NULL ? Translator->Translate((*e)->GetLabel()) : (*e)->GetLabel();
 
-                if(e.IsEdge())
+                if((*e)->IsEdge())
                 {
-                    this->RenderEdge(e.From().GetID(),
-                                     e.To().GetID(),
+                    this->RenderEdge((*e)->From()->GetID(),
+                                     (*e)->To()->GetID(),
                                      x1,
                                      y1,
                                      x2,
@@ -189,13 +188,13 @@ namespace OpenGraphtheory
                 }
                 else
                 {
-                    float TargetRadius = vertexradius >= 0 ? vertexradius : e.To().GetWeight();
+                    float TargetRadius = vertexradius >= 0 ? vertexradius : (*e)->To()->GetWeight();
                     Visualization::Vector2D intersectionpoint(x2-x1, y2-y1);
                     intersectionpoint = intersectionpoint * ((intersectionpoint.Length()-TargetRadius) / intersectionpoint.Length());
                     intersectionpoint.x += x1;
                     intersectionpoint.y += y1;
-                    this->RenderArc(e.From().GetID(),
-                                    e.To().GetID(),
+                    this->RenderArc((*e)->From()->GetID(),
+                                    (*e)->To()->GetID(),
                                     x1,
                                     y1,
                                     intersectionpoint.x,
@@ -214,17 +213,17 @@ namespace OpenGraphtheory
             this->SetBrushColor(LastBrushColor);
             for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                coordinates = v.GetCoordinates();
-                float Radius = vertexradius >= 0 ? vertexradius : v.GetWeight();
+                coordinates = (*v)->GetCoordinates();
+                float Radius = vertexradius >= 0 ? vertexradius : (*v)->GetWeight();
 
-                Color color = vertexcoloring.find(v) != vertexcoloring.end() ? vertexcoloring[v] : Color(0,0,0);
+                Color color = vertexcoloring.find(*v) != vertexcoloring.end() ? vertexcoloring[*v] : Color(0,0,0);
                 if(color != LastBrushColor)
                     this->SetBrushColor(color);
                 LastBrushColor = color;
 
-                string label = Translator != NULL ? Translator->Translate(v.GetLabel()) : v.GetLabel();
+                string label = Translator != NULL ? Translator->Translate((*v)->GetLabel()) : (*v)->GetLabel();
 
-                this->RenderVertex(v.GetID(),
+                this->RenderVertex((*v)->GetID(),
                                    coordinates[0] - minx,
                                    coordinates[1] - miny,
                                    Radius,

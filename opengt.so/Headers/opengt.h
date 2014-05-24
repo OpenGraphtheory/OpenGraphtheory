@@ -41,6 +41,8 @@
 		typedef VertexEdgeConnectionSet::iterator VertexEdgeConnectionIterator;
 		typedef VertexEdgeConnectionSet::const_iterator ConstVertexEdgeConnectionIterator;
 
+		typedef std::vector<float> Coordinates;
+
 
         class GraphObject
         {
@@ -60,16 +62,20 @@
                 Attribute* AddAttribute(std::string AttributeName, std::string AttributeType);
                 Attribute* GetAttribute(std::string AttributeName);
                 void RemoveAttribute(std::string AttributeName);
-                void WriteToXml(OpenGraphtheory::XML::XML* xml, std::string IdPrefix);
 
-                std::string GetLabel(std::string Name="name");
+                std::string GetLabel(std::string Name="name", std::string DefaultValue="");
                 void SetLabel(std::string Label, std::string Name="name");
-                float GetWeight(std::string Name="weight");
+                float GetWeight(std::string Name="weight", float DefaultValue=0.05f);
                 void SetWeight(float Weight, std::string Name="weight");
-                float GetCapacity(std::string Name="capacity");
+                float GetCapacity(std::string Name="capacity", float DefaultValue=0.0f);
                 void SetCapacity(float Capacity, std::string Name="capacity");
                 int GetColorClass(std::string Name="color");
                 void SetColorClass(int ColorClass, std::string Name="color");
+                Coordinates GetCoordinates(std::string Name="coordinates");
+                void SetCoordinates(Coordinates& coordinates, std::string Name="coordinates");
+
+                void WriteToXml(OpenGraphtheory::XML::XML* xml, std::string IdPrefix);
+                bool LoadFromXml(OpenGraphtheory::XML::XML* xml);
         };
 
 		class Graph : public GraphObject
@@ -100,9 +106,10 @@
 				bool IsUndirected();
 				bool IsDirected();
 				bool IsMixed();
-				bool IsHypergraph();
+				bool IsUndirectedHypergraph();
 				bool IsHyperDigraph();
 				bool IsMixedHypergraph();
+				bool IsHypergraph();
 
 				bool HasDirectedLoops();
 				bool HasUndirectedLoops();
@@ -127,44 +134,50 @@
 				EdgeIterator GetEdge(int ID);
 				VertexIterator GetVertex(int ID);
 
-				VertexIterator Fuse(VertexSet Vertices);
+				VertexIterator Fuse(VertexSet& Vertices);
 
             /// management of attributes
 
-                void AddVertexSet(VertexSet V, std::string name);
+                void AddVertexSet(VertexSet& V, std::string name);
                 VertexSet GetVertexSet(std::string name);
-                void AddEdgeSet(EdgeSet E, std::string name);
+                void AddEdgeSet(EdgeSet& E, std::string name);
                 EdgeSet GetEdgeSet(std::string name);
 
-                void AddVertexPartitioning(VertexPartitioning Coloring, std::string name);
+                void AddVertexPartitioning(VertexPartitioning& Coloring, std::string name);
                 VertexPartitioning GetVertexPartitioning(std::string name);
-                void AddEdgePartitioning(EdgePartitioning Coloring, std::string name);
+                void AddEdgePartitioning(EdgePartitioning& Coloring, std::string name);
                 EdgePartitioning GetEdgePartitioning(std::string name);
 
-                void AddVertexWeighting(VertexWeighting Weights, std::string name);
+                void AddVertexWeighting(VertexWeighting& Weights, std::string name);
                 VertexWeighting GetVertexWeighting(std::string name);
-                void AddEdgeWeighting(EdgeWeighting Weights, std::string name);
+                void AddEdgeWeighting(EdgeWeighting& Weights, std::string name);
                 EdgeWeighting GetEdgeWeighting(std::string name);
 
-                void AddVertexColoring(VertexColoring Coloring, std::string name);
+                void AddVertexColoring(VertexColoring& Coloring, std::string name);
                 VertexColoring GetVertexColoring(std::string name);
-                void AddEdgeColoring(EdgeColoring Coloring, std::string name);
+                void AddEdgeColoring(EdgeColoring& Coloring, std::string name);
                 EdgeColoring GetEdgeColoring(std::string name);
 
 			/// adding and removing vertices
 			protected:
+				VertexIterator InternalAddVertex(int ID = -1);
+
 				VertexIterator InternalAddVertex(std::vector<float> coordinates, std::string label = "", float weight = 0, int ID = -1);
 			public:
 				VertexIterator AddVertex(std::string label="", float weight = 0);
 				VertexIterator AddVertex(float x, std::string label="", float weight = 0);
 				VertexIterator AddVertex(float x, float y, std::string label="", float weight = 0);
 				VertexIterator AddVertex(float x, float y, float z, std::string label = "", float weight = 0);
+
+				void RemoveVertex(Vertex* v, bool RemoveIncidentEdges = true);
 				void RemoveVertex(VertexIterator v, bool RemoveIncidentEdges = true);
 				Graph operator-(VertexIterator v);
 				void operator-=(VertexIterator v);
 
 			/// adding and removing edges
 			protected:
+				EdgeIterator InternalAddEdge(Vertex* from, Vertex* to, bool directed=false, int ID = -1);
+
 				EdgeIterator InternalAddEdge(const std::list<Vertex*> &own_vertices, const std::list<Vertex*> &pFrom, const std::list<Vertex*> &pTo, std::string label = "", float weight = 1.0, int ID = -1);
 				EdgeIterator InternalAddEdge(const std::list<VertexIterator>* vertices = NULL, const std::list<VertexIterator>* From = NULL, const std::list<VertexIterator>* To = NULL, std::string label = "", float weight = 1.0, int ID = -1);
 
@@ -173,14 +186,19 @@
 				EdgeIterator InternalAddArc(const std::list<VertexIterator>& From, const std::list<VertexIterator>& To, std::string label = "", float weight = 1.0, int ID = -1);
 				EdgeIterator InternalAddArc( VertexIterator From, VertexIterator To, std::string label = "", float weight = 1.0, int ID = -1);
 			public:
+				EdgeIterator AddEdge(VertexIterator a, VertexIterator b);
+				EdgeIterator AddArc( VertexIterator From, VertexIterator To);
+				EdgeIterator AddUndirectedLoop(VertexIterator v);
+				EdgeIterator AddDirectedLoop(VertexIterator v);
+				EdgeIterator AddLooseEdge();
+
 				EdgeIterator AddEdge(const std::list<VertexIterator>& vertices, const std::list<VertexIterator>& From, const std::list<VertexIterator>& To, std::string label = "", float weight = 1.0);
 				EdgeIterator AddEdge(const std::list<VertexIterator>& vertices, std::string label = "", float weight = 1.0);
-				EdgeIterator AddEdge(VertexIterator a, VertexIterator b, std::string label = "", float weight = 1.0);
 				EdgeIterator AddArc(const std::list<VertexIterator>& From, const std::list<VertexIterator>& To, std::string label = "", float weight = 1.0);
-				EdgeIterator AddArc( VertexIterator From, VertexIterator To, std::string label = "", float weight = 1.0);
 				EdgeIterator AddLoop( VertexIterator v, std::string label = "", float weight = 1.0);
 				EdgeIterator AddDirectedLoop( VertexIterator v, std::string label = "", float weight = 1.0);
 				EdgeIterator AddLooseEdge(std::string label = "", float weight = 1.0);
+				void RemoveEdge(Edge* e);
 				void RemoveEdge(EdgeIterator e);
 				Graph operator-(EdgeIterator v);
 				void operator-=(EdgeIterator v);
@@ -203,62 +221,82 @@
 
         class VertexEdgeConnection
         {
+            friend class Graph;
+            friend class Vertex;
+            friend class Edge;
             public:
                 enum Direction {VertexToEdge=-1, Undirected=0, EdgeToVertex=1};
             protected:
                 Vertex* vertex;
                 Edge* edge;
                 Direction direction;
-                std::vector<std::vector<float> > coordinates;
+                std::vector<Coordinates> coordinates;
             public:
-                Direction GetDirection();
+                Direction GetDirection() const;
                 Vertex* GetVertex();
                 Edge* GetEdge();
+
                 void WriteToXml(OpenGraphtheory::XML::XML* xml);
+                bool LoadFromXml(OpenGraphtheory::XML::XML* xml);
         };
 
         /// \brief A class to represent vertices
         class Vertex : public GraphObject
         {
             friend class Graph;
+            friend class DefaultInstantiator<GraphObject, Vertex>;
             protected:
-                Vertex(Graph* owner);
+                Vertex(Graph* owner = NULL);
                 ~Vertex();
                 Graph* Owner;
 
-                std::vector<VertexEdgeConnection*> Connections;
-                std::vector<float> Coordinates;
+                VertexEdgeConnectionSet Connections;
                 static FactoryRegistrator<GraphObject> VertexRegistrator;
             public:
-                std::vector<float> GetCoordinates();
-                void SetCoordinates(std::vector<float>& Coordinates);
+                size_t NumberOfConnections() const;
+                VertexEdgeConnectionIterator BeginConnections();
+                ConstVertexEdgeConnectionIterator BeginConnections() const;
+                VertexEdgeConnectionIterator EndConnections();
+                ConstVertexEdgeConnectionIterator EndConnections() const;
+                VertexEdgeConnectionIterator AddConnection(Edge* edge, VertexEdgeConnection::Direction direction);
+                void RemoveConnection(VertexEdgeConnectionIterator connection);
 
+                Edge* GetEdge(const Vertex* to,
+                    bool UndirectedToUndirected = true,  bool UndirectedToPositive = false, bool UndirectedToNegative = false,
+                    bool PositiveToUndirected = false,   bool PositiveToPositive = false,   bool PositiveToNegative = false,
+                    bool NegativeToUndirected = false,   bool NegativeToPositive = false,   bool NegativeToNegative = false) const;
                 bool UnderlyingAdjacent(const Vertex* v) const;
-                bool Adjacent(const Vertex* v) const;
+                bool Adjacent(const Vertex* v,
+                    bool UndirectedToUndirected = true,  bool UndirectedToPositive = false, bool UndirectedToNegative = false,
+                    bool PositiveToUndirected = false,   bool PositiveToPositive = false,   bool PositiveToNegative = false,
+                    bool NegativeToUndirected = false,   bool NegativeToPositive = false,   bool NegativeToNegative = false) const;
 
-                VertexSet UnderlyingNeighborhood() const;
                 EdgeSet CollectIncidentEdges(bool Undirected, bool Positive, bool Negative);
                 VertexSet CollectNeighbors(
                     bool UndirectedToUndirected, bool UndirectedToPositive, bool UndirectedToNegative,
                     bool PositiveToUndirected,   bool PositiveToPositive,   bool PositiveToNegative,
                     bool NegativeToUndirected,   bool NegativeToPositive,   bool NegativeToNegative);
 
-                VertexEdgeConnectionIterator BeginConnections();
-                VertexEdgeConnectionIterator EndConnections();
+                VertexSet UnderlyingNeighborhood();
+                VertexSet Successors();
+                VertexSet Predecessors();
+
+                void WriteToXml(OpenGraphtheory::XML::XML* xml);
+                bool LoadFromXml(OpenGraphtheory::XML::XML* xml);
         };
 
         /// \brief A class to represent edges
         class Edge : public GraphObject
         {
             friend class Graph;
+            friend class Vertex;
             protected:
-                Edge(Graph* owner);
+                Edge(Graph* owner = NULL);
                 ~Edge();
                 Graph* Owner;
 
-                std::vector<VertexEdgeConnection*> Connections;
+                VertexEdgeConnectionSet Connections;
 
-                bool Incident(const Vertex* v, bool Undirected=true, bool Positive=false, bool Negative=false) const;
                 void AddUndirectedConnection(VertexIterator v);
                 void AddOutgoingConnection(VertexIterator v);
                 void AddIncomingConnection(VertexIterator v);
@@ -273,14 +311,29 @@
                 Vertex* From();
                 Vertex* To();
 
+                bool Incident(const Vertex* v, bool Undirected=true, bool Positive=false, bool Negative=false) const;
+                bool UnderlyingIncident(const Vertex* v) const;
                 VertexSet CollectIncidentVertices(bool Undirected, bool Positive, bool Negative);
+                bool IsUndirected();
                 bool IsEdge();
                 bool IsArc();
                 bool IsDirected();
                 bool IsHyperedge();
+                bool IsUndirectedLoop();
+                bool IsDirectedLoop();
+                bool IsLoop();
 
+                size_t NumberOfConnections() const;
                 VertexEdgeConnectionIterator BeginConnections();
+                ConstVertexEdgeConnectionIterator BeginConnections() const;
                 VertexEdgeConnectionIterator EndConnections();
+                ConstVertexEdgeConnectionIterator EndConnections() const;
+
+                VertexEdgeConnectionIterator AddConnection(Vertex* vertex, VertexEdgeConnection::Direction direction);
+                void RemoveConnection(VertexEdgeConnectionIterator connection);
+
+                void WriteToXml(OpenGraphtheory::XML::XML* xml);
+                bool LoadFromXml(OpenGraphtheory::XML::XML* xml, std::map<std::string, Vertex*>& Vertex_XML_ID_to_pointer, bool DefaultDirected);
         };
 
     } // namespace OpenGraphtheory

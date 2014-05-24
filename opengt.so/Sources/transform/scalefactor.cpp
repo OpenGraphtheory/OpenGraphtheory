@@ -22,15 +22,15 @@ namespace OpenGraphtheory
 
         void TransformerSCALEFACTOR::DoTransform(Graph& G, vector<float> parameters, IntermediateStepHandler* intermediatestephandler)
         {
-            vector<float> coordinates;
+            Coordinates coordinates;
 
             // scale
             for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                vector<float> coordinates = v.GetCoordinates();
+                coordinates = (*v)->GetCoordinates();
                 for(unsigned int i = 0; i < coordinates.size() && i < parameters.size(); ++i)
                     coordinates[i] *= parameters[i];
-                v.SetCoordinates(coordinates);
+                (*v)->SetCoordinates(coordinates);
             }
         }
 

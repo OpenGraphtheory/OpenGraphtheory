@@ -129,7 +129,8 @@ namespace OpenGraphtheory
 
         void AlgorithmCOLORING::AddColoring(Graph &G, string ColoringName)
         {
-            G.AddVertexPartitioning(FindColoring(G), ColoringName);
+            VertexPartitioning partitioning = FindColoring(G);
+            G.AddVertexPartitioning(partitioning, ColoringName);
         }
 
         void AlgorithmCOLORING::Run(Graph &G, vector<string> parameters)

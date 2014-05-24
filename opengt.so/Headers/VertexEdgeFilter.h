@@ -38,7 +38,7 @@
                 VertexSet ForbiddenVertices;
             public:
                 ForbiddenVerticesFilter();
-                ForbiddenVerticesFilter(const VertexSet& ForbiddenVertices);
+                ForbiddenVerticesFilter(VertexSet& ForbiddenVertices);
                 void ForbidVertex(Vertex* ForbiddenVertex);
                 void AllowVertex(Vertex* AllowedVertex);
 

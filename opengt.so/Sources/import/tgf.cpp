@@ -72,7 +72,8 @@ namespace OpenGraphtheory
                     Caption = "";
                 else
                     getline(strstream, Caption);
-                result.AddEdge(VertexTGFIDs[Vertex1], VertexTGFIDs[Vertex2], Caption);
+                EdgeIterator e = result.AddEdge(VertexTGFIDs[Vertex1], VertexTGFIDs[Vertex2]);
+                (*e)->SetLabel(Caption);
                 is.peek(); // update eof info
             }
 

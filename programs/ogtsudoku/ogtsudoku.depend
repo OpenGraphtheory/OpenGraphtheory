@@ -1,8 +1,5 @@
 # depslib dependency file v1.0
-1392029041 source:/home/viktor/Programming/OpenGraphtheory/programs/ogtsudoku/ogtsudoku.cpp
-	"../../opengt.so/Headers/opengt.h"
-	"../../opengt.so/Headers/algorithms/color/color.h"
-	<iostream>
+1396697916 source:/home/viktor/Programming/OpenGraphtheory/programs/ogtsudoku/ogtsudoku.cpp
 	"../../opengt.so/Headers/opengt.h"
 	"../../opengt.so/Headers/algorithms/color/color.h"
 	<iostream>
@@ -25,7 +22,7 @@
 	<list>
 	<string>
 
-1396602434 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
+1396697919 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
 	<string>
 	<iostream>
 	<sstream>

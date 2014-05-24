@@ -31,14 +31,14 @@ namespace OpenGraphtheory
 
             for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                vector<float> OldCoordinates = v.GetCoordinates();
-                vector<float> NewCoordinates = B;
+                Coordinates OldCoordinates = (*v)->GetCoordinates();
+                Coordinates NewCoordinates = B;
 
                 for(unsigned int y = A.size()-1; y >= 0; --y)
                     for(unsigned int x = min(OldCoordinates.size(), A[y].size())-1; x >= 0; --x)
                         NewCoordinates[y] += OldCoordinates[x] * A[y][x];
 
-                v.SetCoordinates(NewCoordinates);
+                (*v)->SetCoordinates(NewCoordinates);
             }
         }
 

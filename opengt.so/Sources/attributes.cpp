@@ -48,15 +48,13 @@ using namespace OpenGraphtheory::XML;
         }
     }
 
-    bool AttributeCollection::Add(string name, string type)
+    Attribute* AttributeCollection::Add(string name, string type)
     {
-        Attribute* attribute = AttributeFactory.Produce(type);
-        if(attribute == NULL)
-            return false;
-
         Unset(name);
-        Attributes[name] = attribute;
-        return true;
+        Attribute* attribute = AttributeFactory.Produce(type);
+        if(attribute != NULL)
+            Attributes[name] = attribute;
+        return attribute;
     }
 
     /// \brief Removes all Attribute instances and deletes them

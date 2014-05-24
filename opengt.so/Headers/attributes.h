@@ -29,7 +29,7 @@
             static OpenGraphtheory::Factory<Attribute> AttributeFactory;
 
             void Set(OpenGraphtheory::XML::XML* attr);
-            bool Add(std::string name, std::string type);
+            Attribute* Add(std::string name, std::string type);
             void WriteToXml(OpenGraphtheory::XML::XML* xml);
 
             void Clear();
