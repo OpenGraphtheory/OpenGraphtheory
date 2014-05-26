@@ -28,9 +28,19 @@ namespace OpenGraphtheory
         Graph GeneratorSTAR::Generate(int n)
         {
             Graph result;
-            result.AddVertex(0, 0);
+            VertexIterator center = result.AddVertex();
+            Coordinates centercoords(2, 0.0f);
+            (*center)->SetCoordinates(centercoords);
+
             for(int i = 0; i < n; i++)
-                result.AddVertex(-100 * cos(i * (2 * M_PI / n) + M_PI/2), 100 * sin(i * (2 * M_PI / n) + M_PI/2));
+            {
+                VertexIterator v = result.AddVertex();
+
+                Coordinates coords(2);
+                coords.push_back(-5 * cos(i * (2 * M_PI / n) + M_PI/2));
+                coords.push_back( 5 * sin(i * (2 * M_PI / n) + M_PI/2));
+                (*v)->SetCoordinates(coords);
+            }
 
             for(VertexIterator v = result.BeginVertices()+1; v != result.EndVertices(); v++)
                 result.AddEdge(result.BeginVertices(), v);

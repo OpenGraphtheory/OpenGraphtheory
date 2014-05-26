@@ -30,8 +30,16 @@ namespace OpenGraphtheory
         {
             if(m > n*(n-1)/2)
                 throw "cannot have more than n*(n-1)/2 edges";
+            srand(time(NULL));
 
             Graph G(n);
+            for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+            {
+                Coordinates coords;
+                coords.push_back( (rand() % 200) / 10.0f );
+                coords.push_back( (rand() % 200) / 10.0f );
+                (*v)->SetCoordinates(coords);
+            }
 
             // initialize vector "allindices"
             vector<int> allindices(n*(n-1)/2);
@@ -39,7 +47,6 @@ namespace OpenGraphtheory
                 allindices[i] = i;
 
             // randomize vector "allindices"
-            srand(time(NULL));
             for(int i = (n*(n-1)/2)-1; i > 0; i--)
             {
                 int rand_idx = rand() % (i+1);

@@ -38,7 +38,14 @@ namespace OpenGraphtheory
                 VertexIterator LastVertex;
                 for(int y = 0; y < h; y++)
                 {
-                    VertexIterator CurrentVertex = result.AddVertex(x*25, y*25);
+                    VertexIterator CurrentVertex = result.AddVertex();
+
+                    Coordinates coords(2);
+                    coords.push_back(x);
+                    coords.push_back(y);
+                    (*CurrentVertex)->SetCoordinates(coords);
+
+
                     if(y > 0)
                         result.AddEdge(LastVertex, CurrentVertex);
 

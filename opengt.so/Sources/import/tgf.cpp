@@ -45,7 +45,11 @@ namespace OpenGraphtheory
                     Caption = "";
                 else
                     getline(strstream, Caption);
-                VertexTGFIDs[Vertex1] = result.AddVertex(-1, -1, Caption);
+
+                VertexIterator v = result.AddVertex();
+                if(Caption != "")
+                    (*v)->SetLabel(Caption);
+                VertexTGFIDs[Vertex1] = v;
                 is.peek(); // update eof info
             }
 

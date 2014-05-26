@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1398251166 source:/home/viktor/Programming/OpenGraphtheory/programs/ogtexport/ogtexport.cpp
+1400580613 source:/home/viktor/Programming/OpenGraphtheory/programs/ogtexport/ogtexport.cpp
 	<iostream>
 	<fstream>
 	<stdio.h>
@@ -36,7 +36,7 @@
 	<string>
 	<map>
 
-1398327727 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
+1401104656 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/opengt.h
 	<list>
 	<set>
 	<map>
@@ -46,28 +46,30 @@
 	<vector>
 	"simple_xml.h"
 	"attributes.h"
+	"set_helper.h"
+	"visualize/color.h"
 
-1397121195 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/simple_xml.h
+1400580612 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/simple_xml.h
 	<iostream>
 	<sstream>
 	<vector>
 	<list>
 	<string>
 
-1396602434 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
+1401100934 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/attributes.h
 	<string>
 	<iostream>
 	<sstream>
 	"factory.h"
 	"simple_xml.h"
 
-1399470167 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/factory.h
+1400580612 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/factory.h
 	<string>
 	<map>
 	<set>
 	"../Sources/factory_templates.cpp"
 
-1396962428 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/export.h
+1400754708 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/export.h
 	<iostream>
 	<fstream>
 	<sstream>
@@ -82,19 +84,19 @@
 	"../visualize/renderer.h"
 	"../../Sources/export/export_templates.cpp"
 
-1398346431 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/color.h
+1400580612 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/color.h
 
-1399470669 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/factory_templates.cpp
+1400580612 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/factory_templates.cpp
 	"../Headers/factory.h"
 
-1396965224 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/stringtranslator.h
+1400580612 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/stringtranslator.h
 	<map>
 	<string>
 
-1397045403 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/vector2d.h
+1400580612 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/vector2d.h
 	<math.h>
 
-1397051184 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/renderer.h
+1400591152 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/visualize/renderer.h
 	"../opengt.h"
 	"color.h"
 	"vector2d.h"
@@ -102,6 +104,15 @@
 	<string>
 	<math.h>
 
-1396964721 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/export_templates.cpp
+1400759033 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/export_templates.cpp
 	"../../Headers/export/export.h"
+
+1400754316 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/set_helper.h
+	<set>
+	<vector>
+	<algorithm>
+	"../Sources/set_helper.cpp"
+
+1400754655 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/set_helper.cpp
+	"../Headers/set_helper.h"
 

@@ -103,7 +103,7 @@ namespace OpenGraphtheory
                 }
                 else // Hyperedge
                 {
-                    list<VertexIterator> IncidentVertices;
+                    e = result.AddLooseEdge();
                     list<OpenGraphtheory::XML::XML*> seqs = hyperedge_nodes->FindChildren("rdf:Seq");
                     for(list<OpenGraphtheory::XML::XML*>::iterator seq = seqs.begin(); seq != seqs.end(); seq++)
                     {
@@ -114,11 +114,10 @@ namespace OpenGraphtheory
                             map<string,VertexIterator*>::iterator nodeit = Vertex_XML_ID_to_pointer.find(nodeid);
                             if(nodeit == Vertex_XML_ID_to_pointer.end())
                                 throw "edge with reference to nonexisting node-id";
-                            IncidentVertices.push_back(*(nodeit->second));
+                            (*e)->AddConnection(**(nodeit->second));
                         }
                     }
 
-                    e = result.AddEdge(IncidentVertices);
                 }
 
                 (*e)->SetLabel((*edge)->GetAttribute("rgml:label",""));

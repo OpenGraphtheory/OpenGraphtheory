@@ -91,7 +91,18 @@ namespace OpenGraphtheory
 
         void TikzDeclareNode::DoLoad(TikzContext* context)
         {
-            VertexIterator v = context->G->AddVertex(*xCm, *yCm, label != NULL ? *label : "", (*diameter)/2);
+            VertexIterator v = context->G->AddVertex();
+
+            if(label != NULL)
+                (*v)->SetLabel(*label);
+
+            (*v)->SetWeight((*diameter)/2);
+
+            Coordinates coords;
+            coords.push_back(*xCm);
+            coords.push_back(*yCm);
+            (*v)->SetCoordinates(coords);
+
             context->nodes[*name] = v;
         }
 

@@ -13,17 +13,24 @@ int main(int argc, char** argv)
 
     Graph G;
     VertexIterator board[9][9];
-    map<VertexIterator, int> PreColoring;
+    VertexPartitioning PreColoring;
 
     for(int y = 0; y < 9; y++)
         for(int x = 0; x < 9; x++)
         {
-            board[y][x] = G.AddVertex(50*x + 50, 50*y + 50);
+            VertexIterator v = G.AddVertex();
 
-            int col;
+            Coordinates coords;
+            coords.push_back(x+1);
+            coords.push_back(y+1);
+            (*v)->SetCoordinates(coords);
+
+            board[y][x] = v;
+
+            int col = 0;
             cin >> col;
             //if(col > 0)
-                PreColoring[board[y][x]] = col-1;
+                PreColoring[*(board[y][x])] = col-1;
 
             for(int xi = x-1; xi >= 0; xi--)
                 G.AddEdge(board[y][x], board[y][xi]);
@@ -47,7 +54,7 @@ int main(int argc, char** argv)
         for(int y = 0; y < 9; y++)
         {
             for(int x = 0; x < 9; x++)
-                cout << PreColoring[board[y][x]] + 1 << (x%3==2 ? "  " : " ");
+                cout << PreColoring[*(board[y][x])] + 1 << (x%3==2 ? "  " : " ");
             cout << (y%3==2 ? "\n\n" : "\n");
         }
     }

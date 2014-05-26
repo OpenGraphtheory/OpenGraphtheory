@@ -29,7 +29,14 @@ namespace OpenGraphtheory
         {
             Graph result;
             for(int i = 0; i < n; i++)
-                result.AddVertex(0, 50 * i);
+            {
+                VertexIterator v = result.AddVertex();
+
+                Coordinates coords(2);
+                coords.push_back(0);
+                coords.push_back(i);
+                (*v)->SetCoordinates(coords);
+            }
 
             for(VertexIterator v = result.BeginVertices(); v + 1 != result.EndVertices(); v++)
                 result.AddEdge(v, v+1);

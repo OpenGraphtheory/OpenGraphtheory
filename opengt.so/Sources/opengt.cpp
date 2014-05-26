@@ -215,6 +215,11 @@ namespace OpenGraphtheory
         return vertex;
     }
 
+    VertexEdgeConnection::Direction VertexEdgeConnection::GetDirection() const
+    {
+        return direction;
+    }
+
     size_t Vertex::NumberOfConnections() const
     {
         return Connections.size();
@@ -818,40 +823,9 @@ namespace OpenGraphtheory
 			return EndVertices()-1;
 		}
 
-		/// \brief Add a new Vertex to the graph
-		/// \return VertexIterator that points to the newly created instance
-		VertexIterator Graph::AddVertex(string label, float weight)
+		VertexIterator Graph::AddVertex()
 		{
-		    vector<float> coordinates;
-			return InternalAddVertex(coordinates,label,weight, -1);
-		}
-
-		VertexIterator Graph::AddVertex(float x, string label, float weight)
-		{
-		    vector<float> coordinates;
-		    coordinates.push_back(x);
-			return InternalAddVertex(coordinates,label,weight, -1);
-		}
-
-		/// \brief Add a new Vertex to the graph
-		/// \return VertexIterator that points to the newly created instance
-		VertexIterator Graph::AddVertex(float x, float y, string label, float weight)
-		{
-		    vector<float> coordinates;
-		    coordinates.push_back(x);
-		    coordinates.push_back(y);
-			return InternalAddVertex(coordinates,label,weight, -1);
-		}
-
-		/// \brief Add a new Vertex to the graph
-		/// \return VertexIterator that points to the newly created instance
-		VertexIterator Graph::AddVertex(float x, float y, float z, string label, float weight)
-		{
-		    vector<float> coordinates;
-		    coordinates.push_back(x);
-		    coordinates.push_back(y);
-		    coordinates.push_back(z);
-			return InternalAddVertex(coordinates,label,weight, -1);
+            return InternalAddVertex(-1);
 		}
 
 		/// \brief Internal Method: Remove a vertex from the graph
@@ -867,7 +841,7 @@ namespace OpenGraphtheory
 			else // or just disconnect incident edges from removed vertex
 			{
                 while(pv->NumberOfConnections() > 0)
-                    pv->RemoveConnection(pv->BeginConnections());
+                    pv->RemoveConnection(*(pv->BeginConnections()));
 			}
 
 			Vertex_ID_to_pointer->erase(pv->GetID());
@@ -967,7 +941,7 @@ namespace OpenGraphtheory
 	/// \defgroup edgemanipulation ''Edge Manipulation''
 	// @{
 
-        VertexEdgeConnectionIterator Vertex::AddConnection(Edge* edge, VertexEdgeConnection::Direction direction)
+        VertexEdgeConnection* Vertex::AddConnection(Edge* edge, VertexEdgeConnection::Direction direction)
         {
             VertexEdgeConnection *conn = new VertexEdgeConnection();
             conn->vertex = this;
@@ -975,12 +949,24 @@ namespace OpenGraphtheory
             conn->edge = edge;
             this->Connections.push_back(conn);
             edge->Connections.push_back(conn);
-            return EndConnections() - 1;
+            return conn;
         }
 
-        VertexEdgeConnectionIterator Edge::AddConnection(Vertex* vertex, VertexEdgeConnection::Direction direction)
+        VertexEdgeConnection* Edge::AddConnection(Vertex* vertex, VertexEdgeConnection::Direction direction)
         {
             return vertex->AddConnection(this, direction);
+        }
+
+        void Vertex::RemoveConnection(VertexEdgeConnection* conn)
+        {
+            this->Connections.erase(conn);
+            conn->edge->Connections.erase(conn);
+            delete(conn);
+        }
+
+        void Edge::RemoveConnection(VertexEdgeConnection* conn)
+        {
+            conn->vertex->RemoveConnection(conn);
         }
 
         /// \brief Adds a (Mixed Hyper)Edge to the Graph
@@ -1046,7 +1032,7 @@ namespace OpenGraphtheory
 		void Graph::RemoveEdge(Edge* pe)
 		{
 			while(pe->NumberOfConnections() > 0)
-                pe->RemoveConnection(pe->BeginConnections());
+                pe->RemoveConnection(*(pe->BeginConnections()));
 
 			// remove from Edge_ID_to_pointer and Edges, free RAM
 			Edge_ID_to_pointer->erase(pe->GetID());

@@ -38,9 +38,17 @@ namespace OpenGraphtheory
                 strstream >> Vertex2;
 
                 if(VertexVRMLGRAPHIDs.find(Vertex1) == VertexVRMLGRAPHIDs.end())
-                    VertexVRMLGRAPHIDs[Vertex1] = result.AddVertex(0, 0, 0.1, Vertex1);
+                {
+                    VertexIterator v = result.AddVertex();
+                    (*v)->SetLabel(Vertex1);
+                    VertexVRMLGRAPHIDs[Vertex1] = v;
+                }
                 if(VertexVRMLGRAPHIDs.find(Vertex2) == VertexVRMLGRAPHIDs.end())
-                    VertexVRMLGRAPHIDs[Vertex2] = result.AddVertex(0, 0, 0.1, Vertex2);
+                {
+                    VertexIterator v = result.AddVertex();
+                    (*v)->SetLabel(Vertex2);
+                    VertexVRMLGRAPHIDs[Vertex2] = v;
+                }
 
                 result.AddEdge(VertexVRMLGRAPHIDs[Vertex1], VertexVRMLGRAPHIDs[Vertex2]);
                 is.peek(); // update eof info

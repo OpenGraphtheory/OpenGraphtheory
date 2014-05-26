@@ -37,7 +37,7 @@
 		typedef std::map<Edge*, Visualization::Color> EdgeColoring;
 
 		class VertexEdgeConnection;
-		typedef std::vector<VertexEdgeConnection*> VertexEdgeConnectionSet;
+		typedef SetHelper::VectorSet<VertexEdgeConnection*> VertexEdgeConnectionSet;
 		typedef VertexEdgeConnectionSet::iterator VertexEdgeConnectionIterator;
 		typedef VertexEdgeConnectionSet::const_iterator ConstVertexEdgeConnectionIterator;
 
@@ -162,12 +162,8 @@
 			protected:
 				VertexIterator InternalAddVertex(int ID = -1);
 
-				VertexIterator InternalAddVertex(std::vector<float> coordinates, std::string label = "", float weight = 0, int ID = -1);
 			public:
-				VertexIterator AddVertex(std::string label="", float weight = 0);
-				VertexIterator AddVertex(float x, std::string label="", float weight = 0);
-				VertexIterator AddVertex(float x, float y, std::string label="", float weight = 0);
-				VertexIterator AddVertex(float x, float y, float z, std::string label = "", float weight = 0);
+                VertexIterator AddVertex();
 
 				void RemoveVertex(Vertex* v, bool RemoveIncidentEdges = true);
 				void RemoveVertex(VertexIterator v, bool RemoveIncidentEdges = true);
@@ -178,13 +174,6 @@
 			protected:
 				EdgeIterator InternalAddEdge(Vertex* from, Vertex* to, bool directed=false, int ID = -1);
 
-				EdgeIterator InternalAddEdge(const std::list<Vertex*> &own_vertices, const std::list<Vertex*> &pFrom, const std::list<Vertex*> &pTo, std::string label = "", float weight = 1.0, int ID = -1);
-				EdgeIterator InternalAddEdge(const std::list<VertexIterator>* vertices = NULL, const std::list<VertexIterator>* From = NULL, const std::list<VertexIterator>* To = NULL, std::string label = "", float weight = 1.0, int ID = -1);
-
-				EdgeIterator InternalAddEdge(const std::list<VertexIterator>& vertices, std::string label = "", float weight = 1.0, int ID = -1);
-				EdgeIterator InternalAddEdge(VertexIterator a, VertexIterator b, std::string label = "", float weight = 1.0, int ID = -1);
-				EdgeIterator InternalAddArc(const std::list<VertexIterator>& From, const std::list<VertexIterator>& To, std::string label = "", float weight = 1.0, int ID = -1);
-				EdgeIterator InternalAddArc( VertexIterator From, VertexIterator To, std::string label = "", float weight = 1.0, int ID = -1);
 			public:
 				EdgeIterator AddEdge(VertexIterator a, VertexIterator b);
 				EdgeIterator AddArc( VertexIterator From, VertexIterator To);
@@ -192,12 +181,6 @@
 				EdgeIterator AddDirectedLoop(VertexIterator v);
 				EdgeIterator AddLooseEdge();
 
-				EdgeIterator AddEdge(const std::list<VertexIterator>& vertices, const std::list<VertexIterator>& From, const std::list<VertexIterator>& To, std::string label = "", float weight = 1.0);
-				EdgeIterator AddEdge(const std::list<VertexIterator>& vertices, std::string label = "", float weight = 1.0);
-				EdgeIterator AddArc(const std::list<VertexIterator>& From, const std::list<VertexIterator>& To, std::string label = "", float weight = 1.0);
-				EdgeIterator AddLoop( VertexIterator v, std::string label = "", float weight = 1.0);
-				EdgeIterator AddDirectedLoop( VertexIterator v, std::string label = "", float weight = 1.0);
-				EdgeIterator AddLooseEdge(std::string label = "", float weight = 1.0);
 				void RemoveEdge(Edge* e);
 				void RemoveEdge(EdgeIterator e);
 				Graph operator-(EdgeIterator v);
@@ -258,8 +241,8 @@
                 ConstVertexEdgeConnectionIterator BeginConnections() const;
                 VertexEdgeConnectionIterator EndConnections();
                 ConstVertexEdgeConnectionIterator EndConnections() const;
-                VertexEdgeConnectionIterator AddConnection(Edge* edge, VertexEdgeConnection::Direction direction);
-                void RemoveConnection(VertexEdgeConnectionIterator connection);
+                VertexEdgeConnection* AddConnection(Edge* edge, VertexEdgeConnection::Direction direction);
+                void RemoveConnection(VertexEdgeConnection* connection);
 
                 Edge* GetEdge(const Vertex* to,
                     bool UndirectedToUndirected = true,  bool UndirectedToPositive = false, bool UndirectedToNegative = false,
@@ -329,8 +312,8 @@
                 VertexEdgeConnectionIterator EndConnections();
                 ConstVertexEdgeConnectionIterator EndConnections() const;
 
-                VertexEdgeConnectionIterator AddConnection(Vertex* vertex, VertexEdgeConnection::Direction direction);
-                void RemoveConnection(VertexEdgeConnectionIterator connection);
+                VertexEdgeConnection* AddConnection(Vertex* vertex, VertexEdgeConnection::Direction direction = VertexEdgeConnection::Undirected);
+                void RemoveConnection(VertexEdgeConnection* connection);
 
                 void WriteToXml(OpenGraphtheory::XML::XML* xml);
                 bool LoadFromXml(OpenGraphtheory::XML::XML* xml, std::map<std::string, Vertex*>& Vertex_XML_ID_to_pointer, bool DefaultDirected);
