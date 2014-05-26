@@ -159,20 +159,19 @@ namespace OpenGraphtheory
             /// copy vertices
             for(ConstVertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                cerr << (*v)->GetID();
-                cerr << endl;
-                cerr.flush();
-
-                VertexIterator vnew = InternalAddVertex((*v)->ID);
+                VertexIterator vnew = InternalAddVertex((*v)->GetID());
                 *((*vnew)->attributes) = *((*v)->attributes);
-            }
 
-            for(map<int, VertexIterator>::iterator v = Vertex_ID_to_pointer->begin(); v != Vertex_ID_to_pointer->end(); v++)
-            {
-                cerr << v->first << " = " << (*(v->second))->GetID();
-                cerr << endl;
-                cerr.flush();
+for(ConstVertexIterator w = G.BeginVertices(); w <= v; w++)
+{
+    cerr << (*w)->GetID() << " = ";
+    cerr << (*((*Vertex_ID_to_pointer)[(*w)->GetID()]))->GetID();
+    cerr << endl;
+    cerr.flush();
+}
+cerr << "\n";
             }
+cerr << "A\n";
 
             /// copy edges
             for(ConstEdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
@@ -180,7 +179,16 @@ namespace OpenGraphtheory
                 EdgeIterator ne = InternalAddEdge(NULL, NULL, true, (*e)->GetID());
                 for(ConstVertexEdgeConnectionIterator conn = (*e)->BeginConnections(); conn != (*e)->EndConnections(); conn++)
                 {
-                    (*ne)->AddConnection(*((*Vertex_ID_to_pointer)[(*conn)->GetVertex()->GetID()]), (*conn)->GetDirection());
+                    int id = (*conn)->GetVertex()->GetID();
+cerr << "set connection to "<<id<<endl;
+cerr.flush();
+
+                    Vertex* target = *((*Vertex_ID_to_pointer)[id]);
+cerr << "B"<< target->GetID() << endl;
+cerr.flush();
+                    (*ne)->AddConnection(target, (*conn)->GetDirection());
+cerr << "C"<<endl;
+cerr.flush();
                 }
                 *((*ne)->attributes) = *((*e)->attributes);
             }
@@ -841,10 +849,6 @@ namespace OpenGraphtheory
 			v->ID = ID;
 
 			(*Vertex_ID_to_pointer)[ID] = EndVertices() - 1;
-
-cerr << (*(*Vertex_ID_to_pointer)[ID])->GetID() << endl;
-cerr.flush();
-
 			return EndVertices() - 1;
 		}
 
