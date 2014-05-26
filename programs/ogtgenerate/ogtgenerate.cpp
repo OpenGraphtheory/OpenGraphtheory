@@ -69,7 +69,6 @@ int main(int argc, char** argv)
 {
     try
     {
-
         list<int> parameters;
         for(int i = 2; i < argc; i++)
             parameters.push_back(atoi(argv[i]));

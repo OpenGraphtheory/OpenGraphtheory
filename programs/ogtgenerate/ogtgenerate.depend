@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1400580613 source:/home/viktor/Programming/OpenGraphtheory/programs/ogtgenerate/ogtgenerate.cpp
+1401105210 source:/home/viktor/Programming/OpenGraphtheory/programs/ogtgenerate/ogtgenerate.cpp
 	<iostream>
 	<iomanip>
 	<list>

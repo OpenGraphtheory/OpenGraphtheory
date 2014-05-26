@@ -87,6 +87,16 @@ namespace OpenGraphtheory
 		Graph::Graph(const Graph& G)
             : GraphObject()
 		{
+			Vertices = NULL;
+			Edges = NULL;
+			Vertex_ID_to_pointer = NULL;
+			Edge_ID_to_pointer = NULL;
+
+			Vertices = new VertexSet;
+			Edges = new EdgeSet;
+			Vertex_ID_to_pointer = new map<int, VertexIterator>;
+			Edge_ID_to_pointer = new map<int, EdgeIterator>;
+
 			operator=(G);
 		}
 
@@ -149,8 +159,19 @@ namespace OpenGraphtheory
             /// copy vertices
             for(ConstVertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
+                cerr << (*v)->GetID();
+                cerr << endl;
+                cerr.flush();
+
                 VertexIterator vnew = InternalAddVertex((*v)->ID);
                 *((*vnew)->attributes) = *((*v)->attributes);
+            }
+
+            for(map<int, VertexIterator>::iterator v = Vertex_ID_to_pointer->begin(); v != Vertex_ID_to_pointer->end(); v++)
+            {
+                cerr << v->first << " = " << (*(v->second))->GetID();
+                cerr << endl;
+                cerr.flush();
             }
 
             /// copy edges
@@ -819,8 +840,12 @@ namespace OpenGraphtheory
 				ID = ++Vertex_IDs;
 			v->ID = ID;
 
-			(*Vertex_ID_to_pointer)[ID] = EndVertices()-1;
-			return EndVertices()-1;
+			(*Vertex_ID_to_pointer)[ID] = EndVertices() - 1;
+
+cerr << (*(*Vertex_ID_to_pointer)[ID])->GetID() << endl;
+cerr.flush();
+
+			return EndVertices() - 1;
 		}
 
 		VertexIterator Graph::AddVertex()

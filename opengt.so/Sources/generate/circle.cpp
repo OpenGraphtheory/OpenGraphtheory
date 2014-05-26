@@ -28,7 +28,7 @@ namespace OpenGraphtheory
             {
                 VertexIterator v = result.AddVertex();
 
-                Coordinates coords(2);
+                Coordinates coords;
                 coords.push_back(-5 * cos(i * (2 * M_PI / n) + M_PI/2));
                 coords.push_back( 5 * sin(i * (2 * M_PI / n) + M_PI/2));
                 (*v)->SetCoordinates(coords);
