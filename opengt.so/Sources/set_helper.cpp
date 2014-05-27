@@ -143,10 +143,12 @@
                     }
                 }
 
-                template<class T> void VectorSet<T>::insert(const T &element)
+                template<class T> typename VectorSet<T>::iterator VectorSet<T>::insert(const T &element)
                 {
-                    if(!contains(element))
-                        this->push_back(element);
+                    typename VectorSet<T>::iterator result = find(element);
+                    if(result != this->end())
+                        return result;
+                    return std::vector<T>::insert(this->end(), element);
                 }
 
 

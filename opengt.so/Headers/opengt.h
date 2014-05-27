@@ -81,10 +81,8 @@
 		class Graph : public GraphObject
 		{
 			private:
-				static int Vertex_IDs;
-				static int Edge_IDs;
-				std::map<int,VertexIterator> *Vertex_ID_to_pointer;
-				std::map<int,EdgeIterator> *Edge_ID_to_pointer;
+				std::map<int,Vertex*> *Vertex_ID_to_pointer;
+				std::map<int,Edge*> *Edge_ID_to_pointer;
 		    protected:
 				VertexSet* Vertices;
 				EdgeSet* Edges;
@@ -175,7 +173,9 @@
 				EdgeIterator InternalAddEdge(Vertex* from, Vertex* to, bool directed=false, int ID = -1);
 
 			public:
+				EdgeIterator AddEdge(Vertex* a, Vertex* b);
 				EdgeIterator AddEdge(VertexIterator a, VertexIterator b);
+				EdgeIterator AddArc(Vertex* from, Vertex* to);
 				EdgeIterator AddArc( VertexIterator From, VertexIterator To);
 				EdgeIterator AddUndirectedLoop(VertexIterator v);
 				EdgeIterator AddDirectedLoop(VertexIterator v);
@@ -228,13 +228,18 @@
         {
             friend class Graph;
             friend class DefaultInstantiator<GraphObject, Vertex>;
+
+            private:
+				static int Vertex_IDs;
+
             protected:
-                Vertex(Graph* owner = NULL);
+                Vertex(Graph* owner = NULL, int ID=-1);
                 ~Vertex();
                 Graph* Owner;
 
-                VertexEdgeConnectionSet Connections;
+                VertexEdgeConnectionSet *Connections;
                 static FactoryRegistrator<GraphObject> VertexRegistrator;
+
             public:
                 size_t NumberOfConnections() const;
                 VertexEdgeConnectionIterator BeginConnections();
@@ -273,12 +278,17 @@
         {
             friend class Graph;
             friend class Vertex;
+            friend class DefaultInstantiator<GraphObject, Edge>;
+
+            private:
+				static int Edge_IDs;
+
             protected:
-                Edge(Graph* owner = NULL);
+                Edge(Graph* owner = NULL, int ID=-1);
                 ~Edge();
                 Graph* Owner;
 
-                VertexEdgeConnectionSet Connections;
+                VertexEdgeConnectionSet *Connections;
 
                 void AddUndirectedConnection(VertexIterator v);
                 void AddOutgoingConnection(VertexIterator v);

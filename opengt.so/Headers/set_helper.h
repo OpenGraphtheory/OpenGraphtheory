@@ -28,7 +28,7 @@
                     typename VectorSet<T>::const_iterator find(const T& element) const;
                     bool contains(const T& element);
                     bool contains(const T& element) const;
-                    void insert(const T& element);
+                    typename VectorSet<T>::iterator insert(const T& element);
                     void erase(const T& element);
 
                     bool operator<=(const VectorSet<T>& B) const;

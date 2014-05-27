@@ -30,37 +30,48 @@ namespace OpenGraphtheory
 	    {
             Graph result;
 
-            list<VertexIterator> CurrentColumn;
-            list<VertexIterator> LastColumn;
-            list<VertexIterator>::iterator LastColumnIterator;
+            list<Vertex*> CurrentColumn;
+            list<Vertex*> LastColumn;
+            list<Vertex*>::iterator LastColumnIterator;
             for(int x = 0; x < w; x++)
             {
-                VertexIterator LastVertex;
+cerr << "A"; cerr.flush();
+
+                Vertex* LastVertex;
                 for(int y = 0; y < h; y++)
                 {
-                    VertexIterator CurrentVertex = result.AddVertex();
+cerr << "B"; cerr.flush();
 
-                    Coordinates coords(2);
+                    Vertex* CurrentVertex = *(result.AddVertex());
+
+                    Coordinates coords;
                     coords.push_back(x);
                     coords.push_back(y);
-                    (*CurrentVertex)->SetCoordinates(coords);
+                    CurrentVertex->SetCoordinates(coords);
 
+cerr << "C"; cerr.flush();
 
                     if(y > 0)
                         result.AddEdge(LastVertex, CurrentVertex);
+cerr << "D"; cerr.flush();
 
                     if(x > 0)
                     {
+cerr << "E"; cerr.flush();
                         if(y == 0)
                             LastColumnIterator = LastColumn.begin();
                         else
                             LastColumnIterator++;
+cerr << "F"; cerr.flush();
 
                         result.AddEdge(*LastColumnIterator, CurrentVertex);
                     }
+cerr << "G"; cerr.flush();
 
                     CurrentColumn.push_back(CurrentVertex);
+cerr << "H"; cerr.flush();
                     LastVertex = CurrentVertex;
+cerr << "I"; cerr.flush();
                 }
 
                 LastColumn = CurrentColumn;

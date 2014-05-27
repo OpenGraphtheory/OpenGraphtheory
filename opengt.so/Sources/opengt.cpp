@@ -6,8 +6,8 @@ using namespace std;
 namespace OpenGraphtheory
 {
 
-	int Graph::Vertex_IDs = 0;
-	int Graph::Edge_IDs = 0;
+	int Vertex::Vertex_IDs = 0;
+	int Edge::Edge_IDs = 0;
 
 
 	Factory<GraphObject> GraphObject::GraphObjectFactory;
@@ -16,9 +16,9 @@ namespace OpenGraphtheory
     FactoryRegistrator<GraphObject> Vertex::VertexRegistrator(
         &GraphObject::GraphObjectFactory, "node", new DefaultInstantiator<GraphObject, Vertex>("node", "", ""));
     FactoryRegistrator<GraphObject> Edge::EdgeRegistrator(
-        &GraphObject::GraphObjectFactory, "edge", new DefaultInstantiator<GraphObject, Graph>("edge", "", ""));
+        &GraphObject::GraphObjectFactory, "edge", new DefaultInstantiator<GraphObject, Edge>("edge", "", ""));
     FactoryRegistrator<GraphObject> Edge::RelRegistrator(
-        &GraphObject::GraphObjectFactory, "rel", new DefaultInstantiator<GraphObject, Graph>("rel", "", ""));
+        &GraphObject::GraphObjectFactory, "rel", new DefaultInstantiator<GraphObject, Edge>("rel", "", ""));
 
 
 	/// \defgroup constructorsdestructors ''Constructors, Destructors and low-level Methods''
@@ -40,28 +40,40 @@ namespace OpenGraphtheory
 
 
 		/// \brief Vertex Constructor (protected, accessible for class "Graph")
-		Vertex::Vertex(Graph* owner)
+		Vertex::Vertex(Graph* owner, int ID)
             : GraphObject()
 		{
+			if(ID <= 0)
+				ID = ++Vertex_IDs;
+			this->ID = ID;
+
 			Owner = owner;
+			Connections = new VertexEdgeConnectionSet;
 		}
 
 		/// \brief Vertex Destructor
 		Vertex::~Vertex()
 		{
+            delete Connections;
 		}
 
 
 		/// \brief Edge Constructor (protected, accessible for class "Graph")
-		Edge::Edge(Graph* owner)
+		Edge::Edge(Graph* owner, int ID)
             : GraphObject()
 		{
+			if(ID <= 0)
+				ID = ++Edge_IDs;
+			this->ID = ID;
+
 			Owner = owner;
+            Connections = new VertexEdgeConnectionSet;
 		}
 
 		/// \brief Vertex Destructor
 		Edge::~Edge()
 		{
+            delete Connections;
 		}
 
 
@@ -76,8 +88,8 @@ namespace OpenGraphtheory
 
 			Vertices = new VertexSet;
 			Edges = new EdgeSet;
-			Vertex_ID_to_pointer = new map<int, VertexIterator>;
-			Edge_ID_to_pointer = new map<int, EdgeIterator>;
+			Vertex_ID_to_pointer = new map<int, Vertex*>;
+			Edge_ID_to_pointer = new map<int, Edge*>;
 
 			for(int i = 0; i < size; i++)
 				AddVertex();
@@ -94,8 +106,8 @@ namespace OpenGraphtheory
 
 			Vertices = new VertexSet;
 			Edges = new EdgeSet;
-			Vertex_ID_to_pointer = new map<int, VertexIterator>;
-			Edge_ID_to_pointer = new map<int, EdgeIterator>;
+			Vertex_ID_to_pointer = new map<int, Vertex*>;
+			Edge_ID_to_pointer = new map<int, Edge*>;
 
 			operator=(G);
 		}
@@ -159,37 +171,23 @@ namespace OpenGraphtheory
             /// copy vertices
             for(ConstVertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                VertexIterator vnew = InternalAddVertex((*v)->GetID());
+                VertexIterator vnew = this->InternalAddVertex((*v)->GetID());
                 *((*vnew)->attributes) = *((*v)->attributes);
-
-for(ConstVertexIterator w = G.BeginVertices(); w <= v; w++)
-{
-    cerr << (*w)->GetID() << " = ";
-    cerr << (*((*Vertex_ID_to_pointer)[(*w)->GetID()]))->GetID();
-    cerr << endl;
-    cerr.flush();
-}
-cerr << "\n";
             }
-cerr << "A\n";
 
             /// copy edges
             for(ConstEdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
             {
                 EdgeIterator ne = InternalAddEdge(NULL, NULL, true, (*e)->GetID());
+
+                /// copy connections
                 for(ConstVertexEdgeConnectionIterator conn = (*e)->BeginConnections(); conn != (*e)->EndConnections(); conn++)
                 {
                     int id = (*conn)->GetVertex()->GetID();
-cerr << "set connection to "<<id<<endl;
-cerr.flush();
-
-                    Vertex* target = *((*Vertex_ID_to_pointer)[id]);
-cerr << "B"<< target->GetID() << endl;
-cerr.flush();
+                    Vertex* target = (*Vertex_ID_to_pointer)[id];
                     (*ne)->AddConnection(target, (*conn)->GetDirection());
-cerr << "C"<<endl;
-cerr.flush();
                 }
+
                 *((*ne)->attributes) = *((*e)->attributes);
             }
         }
@@ -251,12 +249,12 @@ cerr.flush();
 
     size_t Vertex::NumberOfConnections() const
     {
-        return Connections.size();
+        return Connections->size();
     }
 
     size_t Edge::NumberOfConnections() const
     {
-        return Connections.size();
+        return Connections->size();
     }
 
 	/// \defgroup basictests ''Testing basic properties''
@@ -279,7 +277,7 @@ cerr.flush();
 
             bool Vertex::UnderlyingAdjacent(const Vertex* to) const
             {
-                for(ConstVertexEdgeConnectionIterator it = Connections.begin(); it != Connections.end(); it++)
+                for(ConstVertexEdgeConnectionIterator it = Connections->begin(); it != Connections->end(); it++)
                     if((*it)->GetEdge()->Incident(to,1,1,1))
                         return true;
                 return false;
@@ -351,7 +349,7 @@ cerr.flush();
             EdgeSet Vertex::CollectIncidentEdges(bool Undirected, bool VertexToEdge, bool EdgeToVertex)
             {
                 EdgeSet result;
-                for(VertexEdgeConnectionIterator c = Connections.begin(); c != Connections.end(); c++)
+                for(VertexEdgeConnectionIterator c = Connections->begin(); c != Connections->end(); c++)
                 {
                     if((VertexToEdge && (*c)->GetDirection() == VertexEdgeConnection::VertexToEdge)
                        || (EdgeToVertex && (*c)->GetDirection() == VertexEdgeConnection::EdgeToVertex)
@@ -840,15 +838,10 @@ cerr.flush();
 		/// \return VertexIterator that points to the newly created vertex
 		VertexIterator Graph::InternalAddVertex(int ID)
 		{
-			Vertex* v = new Vertex(this);
-			Vertices->push_back(v);
+			Vertex* v = new Vertex(this, ID);
+			Vertices->insert(v);
 
-			/// Register ID
-			if(ID <= 0)
-				ID = ++Vertex_IDs;
-			v->ID = ID;
-
-			(*Vertex_ID_to_pointer)[ID] = EndVertices() - 1;
+			(*Vertex_ID_to_pointer)[v->GetID()] = v;
 			return EndVertices() - 1;
 		}
 
@@ -938,7 +931,7 @@ cerr.flush();
                     {
                         // messes with internal data structures
                         (*i)->vertex = pResult;
-                        pResult->Connections.push_back(*i);
+                        pResult->Connections->push_back(*i);
                     }
                     else
                         HasBecomeLoop = false;
@@ -952,7 +945,7 @@ cerr.flush();
             for(VertexIterator v = FusedVertices.begin(); v != FusedVertices.end(); v++)
             {
                 Vertex* vp = *v;
-                vp->Connections.clear(); // mess with the internal data structures to avoid that the edges are deleted when v is removed
+                vp->Connections->clear(); // mess with the internal data structures to avoid that the edges are deleted when v is removed
                 RemoveVertex(vp);
             }
 
@@ -976,8 +969,8 @@ cerr.flush();
             conn->vertex = this;
             conn->direction = direction;
             conn->edge = edge;
-            this->Connections.push_back(conn);
-            edge->Connections.push_back(conn);
+            this->Connections->push_back(conn);
+            edge->Connections->push_back(conn);
             return conn;
         }
 
@@ -988,8 +981,8 @@ cerr.flush();
 
         void Vertex::RemoveConnection(VertexEdgeConnection* conn)
         {
-            this->Connections.erase(conn);
-            conn->edge->Connections.erase(conn);
+            this->Connections->erase(conn);
+            conn->edge->Connections->erase(conn);
             delete(conn);
         }
 
@@ -1004,20 +997,22 @@ cerr.flush();
         /// \param To Pointers to Vertices that get incoming connections from the new (Hyper)Edge
 		EdgeIterator Graph::InternalAddEdge(Vertex* from, Vertex* to, bool Directed, int ID)
 		{
-			Edge* e = new Edge(this);
+			Edge* e = new Edge(this, ID);
 			if(from != NULL)
                 e->AddConnection(from, Directed ? VertexEdgeConnection::VertexToEdge : VertexEdgeConnection::Undirected);
             if(to != NULL)
                 e->AddConnection(to, Directed ? VertexEdgeConnection::EdgeToVertex : VertexEdgeConnection::Undirected);
 
-            /// Register ID
-			if(ID <= 0)
-				ID = ++Edge_IDs;
-			e->ID = ID;
-
 			Edges->push_back(e);
-			(*Edge_ID_to_pointer)[ID] = EndEdges() - 1;
+			(*Edge_ID_to_pointer)[e->GetID()] = e;
 			return EndEdges() - 1;
+		}
+
+        /// \brief Adds an Edge to the Graph
+        /// \param a, b References to the Vertices that are connected by the new Edge
+        EdgeIterator Graph::AddEdge(Vertex* a, Vertex* b)
+		{
+			return InternalAddEdge(a, b, false, -1);
 		}
 
         /// \brief Adds an Edge to the Graph
@@ -1028,8 +1023,16 @@ cerr.flush();
 		}
 
         /// \brief Adds a Directed (Hyper)Edge to the Graph
-        /// \param From VertexIterators of Vertices that get outgoing connections to the new (Hyper)Edge
-        /// \param To VertexIteratirs of Vertices that get incoming connections from the new (Hyper)Edge
+        /// \param From Reference to the Vertex that gets an outgoing connection to the new Arc
+        /// \param To Reference to the Vertex that gets an incomming connection from the new Arc
+		EdgeIterator Graph::AddArc(Vertex* From, Vertex* To)
+		{
+			return InternalAddEdge(From, To, true, -1);
+		}
+
+        /// \brief Adds a Directed (Hyper)Edge to the Graph
+        /// \param From VertexIterator of Vertex that gets an outgoing connection to the new Arc
+        /// \param To VertexIterator of Vertex that gets an incomming connection from the new Arc
 		EdgeIterator Graph::AddArc(VertexIterator From, VertexIterator To)
 		{
 			return InternalAddEdge(*From, *To, true, -1);
@@ -1154,42 +1157,42 @@ cerr.flush();
 
 			VertexEdgeConnectionIterator Vertex::BeginConnections()
 			{
-                return Connections.begin();
+                return Connections->begin();
 			}
 
 			ConstVertexEdgeConnectionIterator Vertex::BeginConnections() const
 			{
-                return Connections.begin();
+                return Connections->begin();
 			}
 
 			VertexEdgeConnectionIterator Vertex::EndConnections()
 			{
-                return Connections.end();
+                return Connections->end();
 			}
 
 			ConstVertexEdgeConnectionIterator Vertex::EndConnections() const
 			{
-                return Connections.end();
+                return Connections->end();
 			}
 
 			VertexEdgeConnectionIterator Edge::BeginConnections()
 			{
-                return Connections.begin();
+                return Connections->begin();
 			}
 
 			ConstVertexEdgeConnectionIterator Edge::BeginConnections() const
 			{
-                return Connections.begin();
+                return Connections->begin();
 			}
 
 			VertexEdgeConnectionIterator Edge::EndConnections()
 			{
-                return Connections.end();
+                return Connections->end();
 			}
 
 			ConstVertexEdgeConnectionIterator Edge::EndConnections() const
 			{
-                return Connections.end();
+                return Connections->end();
 			}
 
 		// @}
@@ -1483,7 +1486,7 @@ cerr.flush();
             }
 
             // now load the edge-properties (attributes etc)
-            for(EdgeIterator e = this->Edges->begin(); e != this->Edges->end(); e++)
+            for(EdgeIterator e = BeginEdges(); e != EndEdges(); e++)
                 (*e)->LoadFromXml(EdgeOrigin[*e], Vertex_XML_ID_to_pointer, DefaultDirected);
 
 			return true;
@@ -1557,7 +1560,7 @@ cerr.flush();
         void GraphObject::WriteToXml(OpenGraphtheory::XML::XML* xml, string IdPrefix)
         {
             stringstream s;
-            s << "IdPrefix" << GetID();
+            s << IdPrefix << GetID();
             xml->AddAttribute("id", s.str());
 
             attributes->WriteToXml(xml);
@@ -1609,7 +1612,7 @@ cerr.flush();
                 edge->name = "rel";
 
                 // children "relend"
-                for(VertexEdgeConnectionIterator j = Connections.begin(); j != Connections.end(); j++)
+                for(VertexEdgeConnectionIterator j = Connections->begin(); j != Connections->end(); j++)
                 {
                     OpenGraphtheory::XML::XML* relend = new OpenGraphtheory::XML::XML("relend");
                     (*j)->WriteToXml(relend);
