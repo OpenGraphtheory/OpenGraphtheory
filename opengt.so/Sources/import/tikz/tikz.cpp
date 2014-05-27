@@ -103,7 +103,7 @@ namespace OpenGraphtheory
             coords.push_back(*yCm);
             (*v)->SetCoordinates(coords);
 
-            context->nodes[*name] = v;
+            context->nodes[*name] = *v;
         }
 
 		// --------------------------------------------------------------------------------------------------------
@@ -124,8 +124,8 @@ namespace OpenGraphtheory
 
         void TikzDrawEdge::DoLoad(TikzContext* context)
         {
-            VertexIterator vfrom = context->nodes[*from];
-            VertexIterator vto = context->nodes[*to];
+            Vertex* vfrom = context->nodes[*from];
+            Vertex* vto = context->nodes[*to];
             EdgeIterator e = context->G->AddEdge(vfrom, vto);
             (*e)->SetWeight(*linewidth);
         }
@@ -143,8 +143,8 @@ namespace OpenGraphtheory
 
         void TikzDrawArc::DoLoad(TikzContext* context)
         {
-            VertexIterator vfrom = context->nodes[*from];
-            VertexIterator vto = context->nodes[*to];
+            Vertex* vfrom = context->nodes[*from];
+            Vertex* vto = context->nodes[*to];
             EdgeIterator e = context->G->AddArc(vfrom, vto);
             (*e)->SetWeight(*linewidth);
         }

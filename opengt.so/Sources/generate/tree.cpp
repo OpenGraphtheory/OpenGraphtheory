@@ -19,14 +19,14 @@ namespace OpenGraphtheory
             MaxParamCount = -1;
         }
 
-        void GeneratorTREE::InternalGenerate(Graph* G, list<int>* parameter, list<int>::iterator* it, VertexIterator v)
+        void GeneratorTREE::InternalGenerate(Graph* G, list<int>* parameter, list<int>::iterator* it, Vertex* v)
         {
             if(*it == parameter->end())
                 return;
 
             for(int i = **it; i > 0; --i)
             {
-                VertexIterator u = G->AddVertex();
+                Vertex* u = *(G->AddVertex());
                 G->AddEdge(v,u);
 
                 if(*it != parameter->end())
@@ -38,7 +38,7 @@ namespace OpenGraphtheory
         Graph GeneratorTREE::DoGenerate(list<int> parameter)
         {
             Graph result;
-            VertexIterator root = result.AddVertex();
+            Vertex* root = *(result.AddVertex());
             list<int>::iterator i = parameter.begin();
             InternalGenerate(&result, &parameter, &i, root);
             return result;

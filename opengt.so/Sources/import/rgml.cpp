@@ -37,15 +37,14 @@ namespace OpenGraphtheory
 
 
             Graph result;
-            map<string, VertexIterator*> Vertex_XML_ID_to_pointer;
+            map<string, Vertex*> Vertex_XML_ID_to_pointer;
 
 			/// load vertices
 			list<OpenGraphtheory::XML::XML*> nodes = rdfnode->FindChildren("Node");
 			for(list<OpenGraphtheory::XML::XML*>::iterator node = nodes.begin(); node != nodes.end(); node++)
 			{
 				/// create vertex
-				VertexIterator *vi = new VertexIterator(result.AddVertex());
-				Vertex* v = **vi;
+				Vertex* v = *(result.AddVertex());
 
                 v->SetLabel((*node)->GetAttribute("rgml:label",""));
 
@@ -56,7 +55,7 @@ namespace OpenGraphtheory
                 id = "#" + id;
 				if(Vertex_XML_ID_to_pointer.find(id) != Vertex_XML_ID_to_pointer.end())
 					throw "multiple nodes with same id"; // same ID twice
-				Vertex_XML_ID_to_pointer[id] = vi;
+				Vertex_XML_ID_to_pointer[id] = v;
 			}
 
 
@@ -84,8 +83,8 @@ namespace OpenGraphtheory
                 EdgeIterator e;
                 if(hyperedge_nodes == NULL)
                 {
-                    map<string,VertexIterator*>::iterator from = Vertex_XML_ID_to_pointer.find(xmlFrom);
-                    map<string,VertexIterator*>::iterator to = Vertex_XML_ID_to_pointer.find(xmlTo);
+                    map<string,Vertex*>::iterator from = Vertex_XML_ID_to_pointer.find(xmlFrom);
+                    map<string,Vertex*>::iterator to = Vertex_XML_ID_to_pointer.find(xmlTo);
                     if(from == Vertex_XML_ID_to_pointer.end() || to == Vertex_XML_ID_to_pointer.end())
                         throw "edge with reference to nonexisting node-id";
 
@@ -97,9 +96,9 @@ namespace OpenGraphtheory
 
                     /// create edge
                     if(isdirected)
-                        e = result.AddArc(*(from->second), *(to->second));
+                        e = result.AddArc(from->second, to->second);
                     else
-                        e = result.AddEdge(*(from->second), *(to->second));
+                        e = result.AddEdge(from->second, to->second);
                 }
                 else // Hyperedge
                 {
@@ -111,20 +110,18 @@ namespace OpenGraphtheory
                         for(list<OpenGraphtheory::XML::XML*>::iterator li = lis.begin(); li != lis.end(); li++)
                         {
                             string nodeid = (*li)->GetAttribute("rdf:resource","");
-                            map<string,VertexIterator*>::iterator nodeit = Vertex_XML_ID_to_pointer.find(nodeid);
+                            map<string,Vertex*>::iterator nodeit = Vertex_XML_ID_to_pointer.find(nodeid);
                             if(nodeit == Vertex_XML_ID_to_pointer.end())
                                 throw "edge with reference to nonexisting node-id";
-                            (*e)->AddConnection(**(nodeit->second));
+                            // RGML only supports undirected connections to hyperedges
+                            (*e)->AddConnection(nodeit->second, VertexEdgeConnection::Undirected);
                         }
                     }
-
                 }
 
                 (*e)->SetLabel((*edge)->GetAttribute("rgml:label",""));
             }
 
-            for(map<string, VertexIterator*>::iterator i = Vertex_XML_ID_to_pointer.begin(); i != Vertex_XML_ID_to_pointer.end(); i++)
-                delete i->second;
 			delete root;
 			return result;
         }

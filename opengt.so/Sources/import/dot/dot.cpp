@@ -85,7 +85,7 @@ namespace OpenGraphtheory
         void DotNode::DoLoad(DotContext* context)
         {
             VertexIterator v = context->G->AddVertex();
-            context->nodes[*name] = v;
+            context->nodes[*name] = *v;
             if(parameters != NULL)
                 parameters->LoadVertex(*v);
         }
@@ -109,8 +109,8 @@ namespace OpenGraphtheory
 
         void DotEdge::DoLoad(DotContext* context)
         {
-            VertexIterator vfrom = context->nodes[*from];
-            VertexIterator vto = context->nodes[*to];
+            Vertex* vfrom = context->nodes[*from];
+            Vertex* vto = context->nodes[*to];
 
             EdgeIterator e;
             if(parameters == NULL || !(parameters->ContainsDirectedAttribute()))

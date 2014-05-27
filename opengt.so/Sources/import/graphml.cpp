@@ -34,7 +34,7 @@ namespace OpenGraphtheory
 
 
             Graph result;
-            map<string, VertexIterator*> Vertex_XML_ID_to_pointer;
+            map<string, Vertex*> Vertex_XML_ID_to_pointer;
 
             // 0 is the default for directed, by the XGMML standard
             string edgedefault = graphnode->GetAttribute("edgedefault", "");
@@ -53,7 +53,7 @@ namespace OpenGraphtheory
 			for(list<OpenGraphtheory::XML::XML*>::iterator node = nodes.begin(); node != nodes.end(); node++)
 			{
 				/// create vertex
-				VertexIterator *v = new VertexIterator(result.AddVertex());
+				Vertex* v = *(result.AddVertex());
 
 				/// assign XML-ID
 				string id = (*node)->GetAttribute("id", "");
@@ -70,9 +70,9 @@ namespace OpenGraphtheory
 			for(list<OpenGraphtheory::XML::XML*>::iterator edge = edges.begin(); edge != edges.end(); edge++)
 			{
 				string xmlFrom = (*edge)->GetAttribute("source", "");
-                map<string,VertexIterator*>::iterator from = Vertex_XML_ID_to_pointer.find(xmlFrom);
+                map<string,Vertex*>::iterator from = Vertex_XML_ID_to_pointer.find(xmlFrom);
 				string xmlTo = (*edge)->GetAttribute("target", "");
-                map<string,VertexIterator*>::iterator to = Vertex_XML_ID_to_pointer.find(xmlTo);
+                map<string,Vertex*>::iterator to = Vertex_XML_ID_to_pointer.find(xmlTo);
                 if(from == Vertex_XML_ID_to_pointer.end() || to == Vertex_XML_ID_to_pointer.end())
 					throw "edge with reference to nonexisting node-id";
 
@@ -86,9 +86,9 @@ namespace OpenGraphtheory
 
 				EdgeIterator e;
 				if(Directed)
-                    e = result.AddArc(*(from->second), *(to->second));
+                    e = result.AddArc(from->second, to->second);
                 else
-                    e = result.AddEdge(*(from->second), *(to->second));
+                    e = result.AddEdge(from->second, to->second);
 
                 /// assign attributes
 				/*
@@ -96,8 +96,6 @@ namespace OpenGraphtheory
 				*/
             }
 
-            for(map<string, VertexIterator*>::iterator i = Vertex_XML_ID_to_pointer.begin(); i != Vertex_XML_ID_to_pointer.end(); i++)
-                delete i->second;
 			delete root;
 			return result;
         }

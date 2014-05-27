@@ -23,7 +23,7 @@
             {
                 public:
                     Graph* G;
-                    std::map<std::string, VertexIterator> nodes;
+                    std::map<std::string, Vertex*> nodes;
 
                     DotContext(Graph* G);
                     ~DotContext();

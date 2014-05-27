@@ -17,7 +17,7 @@
             {
                 protected:
                     static FactoryRegistrator<Generator> GeneratorTreeRegistrator;
-                    void InternalGenerate(Graph* G, std::list<int>* parameter, std::list<int>::iterator* it, VertexIterator v);
+                    void InternalGenerate(Graph* G, std::list<int>* parameter, std::list<int>::iterator* it, Vertex* v);
                 public:
                     GeneratorTREE();
                     Graph DoGenerate(std::list<int> parameter);

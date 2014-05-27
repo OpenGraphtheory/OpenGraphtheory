@@ -17,7 +17,7 @@ namespace OpenGraphtheory
         Graph ImportFilterTGF::Import(istream& is)
         {
             Graph result;
-            map<int, VertexIterator> VertexTGFIDs;
+            map<int, Vertex*> VertexTGFIDs;
 
             int Vertex1;
             int Vertex2;
@@ -46,9 +46,9 @@ namespace OpenGraphtheory
                 else
                     getline(strstream, Caption);
 
-                VertexIterator v = result.AddVertex();
+                Vertex* v = *(result.AddVertex());
                 if(Caption != "")
-                    (*v)->SetLabel(Caption);
+                    v->SetLabel(Caption);
                 VertexTGFIDs[Vertex1] = v;
                 is.peek(); // update eof info
             }
@@ -77,7 +77,8 @@ namespace OpenGraphtheory
                 else
                     getline(strstream, Caption);
                 EdgeIterator e = result.AddEdge(VertexTGFIDs[Vertex1], VertexTGFIDs[Vertex2]);
-                (*e)->SetLabel(Caption);
+                if(Caption != "")
+                    (*e)->SetLabel(Caption);
                 is.peek(); // update eof info
             }
 

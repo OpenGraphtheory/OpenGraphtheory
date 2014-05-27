@@ -29,7 +29,7 @@ namespace OpenGraphtheory
 
 
             Graph result;
-            map<string, VertexIterator*> Vertex_XML_ID_to_pointer;
+            map<string, Vertex*> Vertex_XML_ID_to_pointer;
 
             // 0 is the default for directed, by the XGMML standard
             bool Directed = (graphnode->GetAttribute("directed", "0") == "1");
@@ -39,8 +39,7 @@ namespace OpenGraphtheory
 			for(list<OpenGraphtheory::XML::XML*>::iterator node = nodes.begin(); node != nodes.end(); node++)
 			{
 				/// create vertex
-				VertexIterator *vi = new VertexIterator(result.AddVertex());
-				Vertex* v = **vi;
+				Vertex* v = *(result.AddVertex());
 
 				v->SetLabel((*node)->GetAttribute("label",""));
 				string sWeight = (*node)->GetAttribute("weight","0");
@@ -69,7 +68,7 @@ namespace OpenGraphtheory
 					throw "Illegal Structure"; // illegal or no ID
 				if(Vertex_XML_ID_to_pointer.find(id) != Vertex_XML_ID_to_pointer.end())
 					throw "multiple nodes with same id"; // same ID twice
-				Vertex_XML_ID_to_pointer[id] = vi;
+				Vertex_XML_ID_to_pointer[id] = v;
 			}
 
 
@@ -78,25 +77,23 @@ namespace OpenGraphtheory
 			for(list<OpenGraphtheory::XML::XML*>::iterator edge = edges.begin(); edge != edges.end(); edge++)
 			{
 				string xmlFrom = (*edge)->GetAttribute("source", "");
-                map<string,VertexIterator*>::iterator from = Vertex_XML_ID_to_pointer.find(xmlFrom);
+                map<string,Vertex*>::iterator from = Vertex_XML_ID_to_pointer.find(xmlFrom);
 				string xmlTo = (*edge)->GetAttribute("target", "");
-                map<string,VertexIterator*>::iterator to = Vertex_XML_ID_to_pointer.find(xmlTo);
+                map<string,Vertex*>::iterator to = Vertex_XML_ID_to_pointer.find(xmlTo);
                 if(from == Vertex_XML_ID_to_pointer.end() || to == Vertex_XML_ID_to_pointer.end())
 					throw "edge with reference to nonexisting node-id";
 
 				/// create edge
 				EdgeIterator e;
 				if(Directed)
-                    e = result.AddArc(*(from->second), *(to->second));
+                    e = result.AddArc(from->second, to->second);
                 else
-                    e = result.AddEdge(*(from->second), *(to->second));
+                    e = result.AddEdge(from->second, to->second);
 
                 /// assign attributes
 				(*e)->SetLabel((*edge)->GetAttribute("label",""));
             }
 
-            for(map<string, VertexIterator*>::iterator i = Vertex_XML_ID_to_pointer.begin(); i != Vertex_XML_ID_to_pointer.end(); i++)
-                delete i->second;
 			delete root;
 			return result;
         }

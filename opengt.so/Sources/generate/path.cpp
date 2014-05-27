@@ -32,7 +32,7 @@ namespace OpenGraphtheory
             {
                 VertexIterator v = result.AddVertex();
 
-                Coordinates coords(2);
+                Coordinates coords;
                 coords.push_back(0);
                 coords.push_back(i);
                 (*v)->SetCoordinates(coords);

@@ -38,7 +38,7 @@ namespace OpenGraphtheory
 			l.yylex(GMLTreeRoot);
 
             Graph result;
-            map<int, VertexIterator> VertexRegister;
+            map<int, Vertex*> VertexRegister;
             GMLValueNode* GraphNode = GetValue<GMLValueNode>(GMLTreeRoot, "GRAPH");
             if(GraphNode == NULL)
                 throw "GML Document contains no top-level element \"graph\" with children";
@@ -64,9 +64,8 @@ namespace OpenGraphtheory
                     continue;
                 if(VertexRegister.find(id->value) != VertexRegister.end())
                     throw "Multiple nodes with the same id";
-                VertexIterator vi = result.AddVertex();
-                VertexRegister[id->value] = vi;
-                Vertex* v = *vi;
+                Vertex* v = *(result.AddVertex());
+                VertexRegister[id->value] = v;
 
                 GMLValueString* label = GetValue<GMLValueString>(NValue->value, "LABEL");
                 if(label != NULL)

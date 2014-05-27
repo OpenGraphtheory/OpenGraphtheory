@@ -24,28 +24,33 @@ namespace OpenGraphtheory
         {
             int n = parameter.front();
             Graph result;
+
+			Vertex* center = *(result.AddVertex());
+			Coordinates centercoords(2, 0.0f);
+			center->SetCoordinates(centercoords);
+
+            Vertex* prev = NULL;
+            Vertex* first = NULL;
             for(int i = 0; i < n; i++)
             {
-                VertexIterator v = result.AddVertex();
+                Vertex* v = *(result.AddVertex());
 
                 Coordinates coords(2);
-                coords.push_back(-5 * cos(i * (2 * M_PI / n) + M_PI/2));
-                coords.push_back( 5 * sin(i * (2 * M_PI / n) + M_PI/2));
-                (*v)->SetCoordinates(coords);
+                coords[0] = -5 * cos(i * (2 * M_PI / n) + M_PI/2);
+                coords[1] =  5 * sin(i * (2 * M_PI / n) + M_PI/2);
+                v->SetCoordinates(coords);
+
+                if(prev != NULL)
+                    result.AddEdge(prev, v);
+                else
+                    first = v;
+
+                result.AddEdge(v, center);
+                prev = v;
             }
 
-			VertexIterator center = result.AddVertex();
-			Coordinates centercoords(2, 0.0f);
-			(*center)->SetCoordinates(centercoords);
-
-            VertexIterator v1 = result.BeginVertices();
-            for(VertexIterator v2 = v1 + 1; v2 != result.EndVertices(); v1++, v2++)
-			{
-                result.AddEdge(v1, v2);
-				result.AddEdge(v2, center);
-			}
-            result.AddEdge(v1, result.BeginVertices());
-			result.AddEdge(center, result.BeginVertices());
+            if(prev != NULL && first != NULL)
+                result.AddEdge(prev, first);
 
             return result;
         }

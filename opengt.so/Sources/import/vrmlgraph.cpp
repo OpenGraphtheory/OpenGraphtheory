@@ -17,7 +17,7 @@ namespace OpenGraphtheory
         Graph ImportFilterVRMLGRAPH::Import(istream& is)
         {
             Graph result;
-            map<string, VertexIterator> VertexVRMLGRAPHIDs;
+            map<string, Vertex*> VertexVRMLGRAPHIDs;
 
             string Vertex1;
             string Vertex2;
@@ -39,14 +39,14 @@ namespace OpenGraphtheory
 
                 if(VertexVRMLGRAPHIDs.find(Vertex1) == VertexVRMLGRAPHIDs.end())
                 {
-                    VertexIterator v = result.AddVertex();
-                    (*v)->SetLabel(Vertex1);
+                    Vertex* v = *(result.AddVertex());
+                    v->SetLabel(Vertex1);
                     VertexVRMLGRAPHIDs[Vertex1] = v;
                 }
                 if(VertexVRMLGRAPHIDs.find(Vertex2) == VertexVRMLGRAPHIDs.end())
                 {
-                    VertexIterator v = result.AddVertex();
-                    (*v)->SetLabel(Vertex2);
+                    Vertex* v = *(result.AddVertex());
+                    v->SetLabel(Vertex2);
                     VertexVRMLGRAPHIDs[Vertex2] = v;
                 }
 

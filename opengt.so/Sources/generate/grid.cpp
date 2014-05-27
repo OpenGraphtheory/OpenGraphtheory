@@ -35,13 +35,9 @@ namespace OpenGraphtheory
             list<Vertex*>::iterator LastColumnIterator;
             for(int x = 0; x < w; x++)
             {
-cerr << "A"; cerr.flush();
-
                 Vertex* LastVertex;
                 for(int y = 0; y < h; y++)
                 {
-cerr << "B"; cerr.flush();
-
                     Vertex* CurrentVertex = *(result.AddVertex());
 
                     Coordinates coords;
@@ -49,29 +45,21 @@ cerr << "B"; cerr.flush();
                     coords.push_back(y);
                     CurrentVertex->SetCoordinates(coords);
 
-cerr << "C"; cerr.flush();
-
                     if(y > 0)
                         result.AddEdge(LastVertex, CurrentVertex);
-cerr << "D"; cerr.flush();
 
                     if(x > 0)
                     {
-cerr << "E"; cerr.flush();
                         if(y == 0)
                             LastColumnIterator = LastColumn.begin();
                         else
                             LastColumnIterator++;
-cerr << "F"; cerr.flush();
 
                         result.AddEdge(*LastColumnIterator, CurrentVertex);
                     }
-cerr << "G"; cerr.flush();
 
                     CurrentColumn.push_back(CurrentVertex);
-cerr << "H"; cerr.flush();
                     LastVertex = CurrentVertex;
-cerr << "I"; cerr.flush();
                 }
 
                 LastColumn = CurrentColumn;
