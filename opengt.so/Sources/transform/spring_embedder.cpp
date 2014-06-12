@@ -102,14 +102,14 @@ namespace OpenGraphtheory
                     VectorND traction = tractions[i] * friction;
 
                     // compute forces on a by the other vertices
-                    VectorND aCoordinates((*a)->GetCoordinates());
+                    VectorND aCoordinates((*a)->GetCoordinates(0));
                     for(VertexIterator b = G.BeginVertices(); b != G.EndVertices(); b++)
                     {
                         if(b==a)
                             continue;
 
                         // force on a by vertex b
-                        VectorND bCoordinates((*b)->GetCoordinates());
+                        VectorND bCoordinates((*b)->GetCoordinates(0));
                         traction += coulomb(aCoordinates, bCoordinates);
                         if((*a)->Adjacent(*b))
                             traction += hooke(aCoordinates, bCoordinates);
@@ -123,7 +123,7 @@ namespace OpenGraphtheory
                 VertexIterator a = G.BeginVertices();
                 for(int i = 0; a != G.EndVertices(); a++, i++)
                 {
-                    Coordinates OldCoordinates = (*a)->GetCoordinates();
+                    Coordinates OldCoordinates = (*a)->GetCoordinates(0);
                     Coordinates NewCoordinates(dimensions);
                     for(int j = 0; j < dimensions; j++)
                         NewCoordinates[j] = max(0.0f,min(dimension_limits[j],   OldCoordinates[j] + delta * tractions[i][j]   ));

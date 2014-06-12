@@ -25,7 +25,7 @@ namespace OpenGraphtheory
         {
             for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                Coordinates coordinates = (*v)->GetCoordinates();
+                Coordinates coordinates = (*v)->GetCoordinates(0);
 
                 unsigned int ubound = min(coordinates.size(), parameters.size());
                 for(unsigned int i = 0; i < ubound; ++i)

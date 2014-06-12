@@ -71,7 +71,7 @@
                 void SetCapacity(float Capacity, std::string Name="capacity");
                 int GetColorClass(std::string Name="color");
                 void SetColorClass(int ColorClass, std::string Name="color");
-                Coordinates GetCoordinates(std::string Name="coordinates");
+                Coordinates GetCoordinates(int minCount, std::string Name="coordinates");
                 void SetCoordinates(Coordinates& coordinates, std::string Name="coordinates");
 
                 void WriteToXml(OpenGraphtheory::XML::XML* xml, std::string IdPrefix);

@@ -36,7 +36,7 @@ namespace OpenGraphtheory
                                          << " color=\"#" << std::hex << std::setw(2) << col.Red
                                                                      << std::setw(2) << col.Green
                                                                      << std::setw(2) << col.Blue << std::dec << "\"";
-                vector<float> coordinates = v->GetCoordinates();
+                Coordinates coordinates = v->GetCoordinates(0);
                 if(coordinates.size() > 1)
                 {
                     os << ", pos=\"" << coordinates[0];

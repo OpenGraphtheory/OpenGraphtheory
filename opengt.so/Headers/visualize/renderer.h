@@ -55,6 +55,8 @@
                     virtual void RenderVertex(int vertex_id, float x, float y, float radius, std::string text, Color color);
                     virtual void EndRenderingVertices();
 
+                    virtual bool MirroredYAxis();
+
                 public:
                     GraphRenderingContext();
                     virtual ~GraphRenderingContext();

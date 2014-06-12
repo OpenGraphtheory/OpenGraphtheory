@@ -31,7 +31,7 @@ namespace OpenGraphtheory
             // find minimum and maximum values on all dimensions
             for(VertexIterator v1 = G.BeginVertices(); v1 != G.EndVertices(); v1++)
             {
-                coordinates = (*v1)->GetCoordinates();
+                coordinates = (*v1)->GetCoordinates(0);
                 for(unsigned int j = 0; j < min(dimensions, (unsigned int)(coordinates.size())); ++j)
                 {
                     if(coordinates[j] < dimension_min[j])
@@ -62,7 +62,7 @@ namespace OpenGraphtheory
             // scale
             for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                Coordinates coordinates = (*v)->GetCoordinates();
+                Coordinates coordinates = (*v)->GetCoordinates(0);
                 for(unsigned int i = 0; i < coordinates.size(); ++i)
                     coordinates[i] = (coordinates[i] - dimension_min[i]) * scale;
                 (*v)->SetCoordinates(coordinates);

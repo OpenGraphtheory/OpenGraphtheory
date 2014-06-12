@@ -19,6 +19,8 @@
                     bool RenderingVertices;
                     bool RenderingEdges;
 
+                    bool MirroredYAxis();
+
                 public:
                     GraphRendererTIKZ(std::ostream& os);
                     void BeginRenderingGraph(float WidthInCm, float HeightInCm, float ResolutionDPI);

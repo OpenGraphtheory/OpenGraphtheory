@@ -28,7 +28,7 @@ namespace OpenGraphtheory
             for(VertexIterator vi = G.BeginVertices(); vi != G.EndVertices(); vi++)
             {
                 Vertex* v = *vi;
-                vector<float> coordinates = v->GetCoordinates();
+                Coordinates coordinates = v->GetCoordinates(0);
                 os << "  <node id=\"" << v->GetID() << "\" label=\"" << Translator.Translate(v->GetLabel())
                    << "\" weight=\"" << v->GetWeight() << "\">\n";
                 if(coordinates.size() >= 2)

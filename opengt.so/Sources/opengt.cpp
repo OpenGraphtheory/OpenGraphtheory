@@ -901,12 +901,12 @@ namespace OpenGraphtheory
             // coordinates of the fused vertices)
             size_t Dimensionality = 0;
             for(VertexIterator v = FusedVertices.begin(); v != FusedVertices.end(); v++)
-                if((*v)->GetCoordinates().size() > Dimensionality)
-                    Dimensionality = (*v)->GetCoordinates().size();
+                if((*v)->GetCoordinates(0).size() > Dimensionality)
+                    Dimensionality = (*v)->GetCoordinates(0).size();
             Coordinates ResultCoordinates(Dimensionality, 0.0f);
             for(VertexIterator v = FusedVertices.begin(); v != FusedVertices.end(); v++)
             {
-                Coordinates vCoordinates = (*v)->GetCoordinates();
+                Coordinates vCoordinates = (*v)->GetCoordinates(0);
                 for(int i = vCoordinates.size()-1; i >= 0; --i)
                     ResultCoordinates[i] += vCoordinates[i];
             }
@@ -1302,7 +1302,7 @@ namespace OpenGraphtheory
             fattr->Value = weight;
         }
 
-        Coordinates GraphObject::GetCoordinates(string name)
+        Coordinates GraphObject::GetCoordinates(int minCount, string name)
         {
             Coordinates result;
             SeqAttribute* sattr = dynamic_cast<SeqAttribute*>(GetAttribute(name));
@@ -1325,6 +1325,8 @@ namespace OpenGraphtheory
                     }
                 }
             }
+            while(result.size() < minCount)
+                result.push_back(0.0f);
             return result;
         }
 

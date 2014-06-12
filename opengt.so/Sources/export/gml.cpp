@@ -16,13 +16,6 @@ namespace OpenGraphtheory
             if(G.IsHypergraph())
                 throw "The GML fileformat doesn\'t support hypergraphs\n";
 
-            for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-            {
-                vector<float> coordinates = (*v)->GetCoordinates();
-                if(coordinates.size() < 2)
-                    throw "Vertex with less than 2 coordinates found";
-            }
-
             StringTranslator Translator; // should be replaced with an appropriate translator.
 
             os << "graph [ label \"" << Translator.Translate(G.GetLabel()) << "\"\n";
@@ -32,7 +25,7 @@ namespace OpenGraphtheory
             for(VertexIterator vi = G.BeginVertices(); vi != G.EndVertices(); vi++)
             {
                 Vertex* v = *vi;
-                vector<float> coordinates = v->GetCoordinates();
+                Coordinates coordinates = v->GetCoordinates(2);
                 os << "  node [ id " << v->GetID() << " label \"" << Translator.Translate(v->GetLabel()) << "\"\n";
                 os << "    graphics [ x " << coordinates[0] << " y " << coordinates[1] << " ]\n";
                 os << "  ]\n";

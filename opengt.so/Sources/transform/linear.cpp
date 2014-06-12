@@ -31,7 +31,7 @@ namespace OpenGraphtheory
 
             for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                Coordinates OldCoordinates = (*v)->GetCoordinates();
+                Coordinates OldCoordinates = (*v)->GetCoordinates(0);
                 Coordinates NewCoordinates = B;
 
                 for(unsigned int y = A.size()-1; y >= 0; --y)

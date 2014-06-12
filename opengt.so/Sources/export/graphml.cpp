@@ -28,12 +28,9 @@ namespace OpenGraphtheory
                 os << "    <node id=\"n" << v->GetID() << "\">\n";
                 os << "      <data key=\"d6\">\n";
                 os << "        <y:ShapeNode>\n";
-                vector<float> Coordinates = v->GetCoordinates();
-                if(Coordinates.size() >= 2)
-                {
-                    os << "          <y:Geometry height=\"1.0\" width=\"1.0\" x=\"" << Coordinates[0] << "\" "
-                                                                            << "y=\"" << Coordinates[1] << "\"/>\n";
-                }
+                Coordinates Coordinates = v->GetCoordinates(2);
+                os << "          <y:Geometry height=\"1.0\" width=\"1.0\" x=\"" << Coordinates[0] << "\" "
+                                                                        << "y=\"" << Coordinates[1] << "\"/>\n";
                 os << "          <y:NodeLabel alignment=\"center\" autoSizePolicy=\"content\" fontFamily=\"Dialog\" fontSize=\"12\" fontStyle=\"plain\" hasBackgroundColor=\"false\" hasLineColor=\"false\" textColor=\"#000000\" visible=\"true\">"
                                  << Translator.Translate(v->GetLabel()) << "</y:NodeLabel>\n";
                 os << "        </y:ShapeNode>\n";

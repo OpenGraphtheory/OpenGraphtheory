@@ -16,13 +16,6 @@ namespace OpenGraphtheory
             if(G.IsHypergraph())
                 throw "The GasTeX fileformat doesn\'t support hypergraphs\n";
 
-            for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-            {
-                vector<float> coordinates = (*v)->GetCoordinates();
-                if(coordinates.size() < 2)
-                    throw "Vertex with less than 2 coordinates found";
-            }
-
             StringTranslatorLatex Translator;
 
             os << "% www.Open-Graphtheory.org\n";
@@ -35,7 +28,7 @@ namespace OpenGraphtheory
             /// write vertices
             for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                vector<float> coordinates = (*v)->GetCoordinates();
+                Coordinates coordinates = (*v)->GetCoordinates(2);
                 os << "  \\node(n" << (*v)->GetID() << ")(" << coordinates[0] << "," << coordinates[1] << "){" << Translator.Translate((*v)->GetLabel()) << "}\n";
             }
 

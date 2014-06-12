@@ -16,13 +16,6 @@ namespace OpenGraphtheory
             if(G.IsHypergraph())
                 throw "The POV-Ray fileformat doesn\'t support hypergraphs\n";
 
-            for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-            {
-                vector<float> coordinates = (*v)->GetCoordinates();
-                if(coordinates.size() < 3)
-                    throw "Vertex with less than 3 coordinates found";
-            }
-
             os << "// www.Open-Graphtheory.org\n";
             os << "#include \"colors.inc\"\n\n";
 
@@ -57,7 +50,7 @@ namespace OpenGraphtheory
             for(VertexIterator vi = G.BeginVertices(); vi != G.EndVertices(); vi++)
             {
                 Vertex* v = *vi;
-                vector<float> coordinates = v->GetCoordinates();
+                Coordinates coordinates = v->GetCoordinates(3);
                 os << "// v" << v->GetID() << "\n";
                 os << "sphere\n";
                 os << "{\n";
@@ -85,8 +78,8 @@ namespace OpenGraphtheory
                 os << "// e" << e->GetID() << "\n";
                 os << "cylinder\n";
                 os << "{\n";
-                vector<float> FromCoordinates = e->From()->GetCoordinates();
-                vector<float> ToCoordinates = e->To()->GetCoordinates();
+                Coordinates FromCoordinates = e->From()->GetCoordinates(3);
+                Coordinates ToCoordinates = e->To()->GetCoordinates(3);
 
                 os << "    <" << FromCoordinates[0] << "," << FromCoordinates[1] << "," << FromCoordinates[2] << ">,";
                 os <<     "<" << ToCoordinates[0] << "," << ToCoordinates[1] << "," << ToCoordinates[2] << ">,1\n";

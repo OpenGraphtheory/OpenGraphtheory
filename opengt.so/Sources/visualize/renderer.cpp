@@ -96,15 +96,22 @@ namespace OpenGraphtheory
             RenderGraph(G, vertexColoring, edgeColoring, dpi, edgewidth, vertexradius);
         }
 
+        bool GraphRenderingContext::MirroredYAxis()
+        {
+            return false;
+        }
+
         void GraphRenderingContext::RenderGraph(Graph& G, VertexColoring& vertexcoloring, EdgeColoring& edgecoloring, float dpi,
                          float edgewidth, float vertexradius)
         {
+            bool mirroredYAxis = MirroredYAxis();
+
             VertexIterator v1 = G.BeginVertices();
-            Coordinates coordinates = (*v1)->GetCoordinates();
+            Coordinates coordinates = (*v1)->GetCoordinates(2);
             float minx = coordinates[0], maxx = coordinates[1], maxy = coordinates[1], miny = coordinates[1];
             for(v1++; v1 != G.EndVertices(); v1++)
             {
-                coordinates = (*v1)->GetCoordinates();
+                coordinates = (*v1)->GetCoordinates(2);
                 float radius = vertexradius >= 0 ? vertexradius : (*v1)->GetWeight();
 
                 if(coordinates[0]-radius < minx)
@@ -129,7 +136,7 @@ namespace OpenGraphtheory
             this->SetBrushColor(LastBrushColor);
             for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                coordinates = (*v)->GetCoordinates();
+                coordinates = (*v)->GetCoordinates(2);
                 Color color = vertexcoloring.find(*v) != vertexcoloring.end() ? vertexcoloring[*v] : Color(0,0,0);
                 if(color != LastBrushColor)
                     this->SetBrushColor(color);
@@ -137,6 +144,9 @@ namespace OpenGraphtheory
 
                 float radius = vertexradius >= 0 ? vertexradius : (*v)->GetWeight();
                 string label = Translator != NULL ? Translator->Translate((*v)->GetLabel()) : (*v)->GetLabel();
+
+                if(mirroredYAxis)
+                    coordinates[1] = maxy - coordinates[1];
                 this->DeclareVertex((*v)->GetID(),
                                     coordinates[0] - minx,
                                     coordinates[1] - miny,
@@ -155,8 +165,13 @@ namespace OpenGraphtheory
             this->SetLineWidth(LastLineWidth);
             for(EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
             {
-                Coordinates FromCoordinates = (*e)->From()->GetCoordinates();
-                Coordinates ToCoordinates = (*e)->To()->GetCoordinates();
+                Coordinates FromCoordinates = (*e)->From()->GetCoordinates(2);
+                if(mirroredYAxis)
+                    FromCoordinates[1] = maxy - FromCoordinates[1];
+                Coordinates ToCoordinates = (*e)->To()->GetCoordinates(2);
+                if(mirroredYAxis)
+                    ToCoordinates[1] = maxy - ToCoordinates[1];
+
                 float x1 = FromCoordinates[0] - minx;
                 float y1 = FromCoordinates[1] - miny;
                 float x2 = ToCoordinates[0] - minx;
@@ -213,7 +228,7 @@ namespace OpenGraphtheory
             this->SetBrushColor(LastBrushColor);
             for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                coordinates = (*v)->GetCoordinates();
+                coordinates = (*v)->GetCoordinates(2);
                 float Radius = vertexradius >= 0 ? vertexradius : (*v)->GetWeight();
 
                 Color color = vertexcoloring.find(*v) != vertexcoloring.end() ? vertexcoloring[*v] : Color(0,0,0);
@@ -223,6 +238,8 @@ namespace OpenGraphtheory
 
                 string label = Translator != NULL ? Translator->Translate((*v)->GetLabel()) : (*v)->GetLabel();
 
+                if(mirroredYAxis)
+                    coordinates[1] = maxy - coordinates[1];
                 this->RenderVertex((*v)->GetID(),
                                    coordinates[0] - minx,
                                    coordinates[1] - miny,

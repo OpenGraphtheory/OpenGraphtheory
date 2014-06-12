@@ -15,6 +15,11 @@ namespace OpenGraphtheory
             Translator = new StringTranslatorLatex;
         }
 
+        bool GraphRendererTIKZ::MirroredYAxis()
+        {
+            return true;
+        }
+
         void GraphRendererTIKZ::BeginRenderingGraph(float WidthInCm, float HeightInCm, float ResolutionDPI)
         {
             // (*os) << "% www.Open-Graphtheory.org\n";
