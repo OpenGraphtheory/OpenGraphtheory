@@ -13,7 +13,7 @@
     {
         namespace Algorithms
         {
-            class AlgorithmVERTEXCOVER : public ExactAlgorithm
+            class AlgorithmVERTEXCOVER : public Algorithm
             {
                 public:
                     void Run(Graph &G, std::vector<std::string> parameters);

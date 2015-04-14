@@ -12,7 +12,7 @@
     {
         namespace Algorithms
         {
-            class AlgorithmCLIQUE : public ExactAlgorithm
+            class AlgorithmCLIQUE : public Algorithm
             {
                 public:
                     void Run(Graph &G, std::vector<std::string> parameters);

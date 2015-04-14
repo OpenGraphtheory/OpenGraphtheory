@@ -16,7 +16,7 @@ namespace OpenGraphtheory
 
 
         bool AlgorithmMAXIMUMFLOW::FindAugmentingPath(Graph &G, Vertex* Source, Vertex* Drain, EdgeWeighting& Capacities,
-                                                   EdgeWeighting& Flow, vector<Edge*>& AugmentingPath)
+                                                      EdgeWeighting& Flow, vector<Edge*>& AugmentingPath)
         {
             map<Vertex*, Vertex*> Predecessor;
             map<Vertex*, Edge*> EdgeToPredecessor;
@@ -27,6 +27,7 @@ namespace OpenGraphtheory
             {
                 for(VertexIterator v = LastRound.begin(); v != LastRound.end(); v++)
                 {
+                    // forward edges
                     EdgeSet posincident = (*v)->CollectIncidentEdges(0,1,0);
                     for(EdgeIterator e = posincident.begin(); e != posincident.end(); e++)
                     {
@@ -39,6 +40,7 @@ namespace OpenGraphtheory
                         }
                     }
 
+                    // backward edges
                     EdgeSet negincident = (*v)->CollectIncidentEdges(0,0,1);
                     for(EdgeIterator e = negincident.begin(); e != negincident.end(); e++)
                     {

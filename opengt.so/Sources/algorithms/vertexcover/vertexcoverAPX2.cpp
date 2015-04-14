@@ -40,9 +40,9 @@ namespace OpenGraphtheory
             AddVertexCover(G, VertexCoverName);
         }
 
-        float AlgorithmVERTEXCOVER_APX2::ApproximationQuality(const Graph&)
+        bool AlgorithmVERTEXCOVER_APX2::CanGuaranteeApproximationDistance(const Graph& G, float MaxApproximationDistance)
         {
-            return 0.5;
+            return MaxApproximationDistance <= 2.0f;
         }
 
     }

@@ -34,16 +34,18 @@ namespace OpenGraphtheory
 
 
 
-        void Algorithm::RunParallel(set<Algorithm*> algos, const Graph& G, vector<string> parameters, float MinApproximationQuality)
+        void Algorithm::RunParallel(set<Algorithm*> algos, const Graph& G, vector<string> parameters,
+                                    float MaxApproximationDistance, float MinCorrectnessProbability)
         {
             ConditionVariable synchronize;
             synchronize.Lock();
 
             set<Algorithm*> SelectedAlgorithms;
             for(set<Algorithm*>::iterator i = algos.begin(); i != algos.end(); i++)
-                //if((*i)->SuitableFor(G))
-                    if((*i)->ApproximationQuality(G) >= MinApproximationQuality)
-                        SelectedAlgorithms.insert(*i);
+                if((*i)->SuitableFor(G)
+                && (*i)->CanGuaranteeApproximationDistance(G, MaxApproximationDistance)
+                && (*i)->CanGuaranteeCorrectnessProbability(G, MinCorrectnessProbability))
+                    SelectedAlgorithms.insert(*i);
 
             cout << "starting " << SelectedAlgorithms.size() << " of " << algos.size() << " algorithm(s)\n";
             if(SelectedAlgorithms.size() > 0) // if this wasn't checked, noone would signal synchronize, so the wait would never end
@@ -67,18 +69,48 @@ namespace OpenGraphtheory
 
         bool Algorithm::SuitableFor(const Graph& G)
         {
+            return true;
+        }
+        bool Algorithm::CanGuaranteeApproximationDistance(const Graph& G, float MaxApproximationDistance)
+        {
+            return true; // by default, all algorithms are exact
+        }
+        bool Algorithm::CanGuaranteeCorrectnessProbability(const Graph& G, float MinCorrectnessProbability)
+        {
+            return true; // by default, all algorithms are exact
+        }
+
+
+
+        bool ApproximationAlgorithm::CanGuaranteeApproximationDistance(const Graph& G, float MaxApproximationDistance)
+        {
             return false;
         }
-
-        float Algorithm::ApproximationQuality(const Graph& G)
+        bool ApproximationSchema::CanGuaranteeApproximationDistance(const Graph& G, float MaxApproximationDistance)
         {
-            return 0.0f;
+            // approximation schemas can reach any quality
+            return true;
         }
 
-        float ExactAlgorithm::ApproximationQuality(const Graph& G)
+
+
+        bool RandomizedAlgorithm::CanGuaranteeCorrectnessProbability(const Graph& G, float MinCorrectnessProbability)
         {
-            return 1.0f;
+            return false;
         }
+        bool MonteCarloAlgorithm::CanGuaranteeCorrectnessProbability(const Graph& G, float MinCorrectnessProbability)
+        {
+            // MC-Algorithms can reach any probability (by repeated application)
+            return true;
+        }
+        bool LasVegasAlgorithm::CanGuaranteeCorrectnessProbability(const Graph& G, float MinCorrectnessProbability)
+        {
+            // Las Vegas Algorithms are exact (only the running time is random)
+            return true;
+        }
+
+
+
 
     }
 }

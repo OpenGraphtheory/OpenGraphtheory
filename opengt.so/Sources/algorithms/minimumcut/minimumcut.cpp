@@ -15,7 +15,7 @@ namespace OpenGraphtheory
 
 
         void AlgorithmMINIMUMCUT::FindMinimumCut(Graph& G, Vertex* Source, Vertex* Drain,
-                                   EdgeWeighting& Capacities, EdgeSet& MinimumCut)
+                                                 EdgeWeighting& Capacities, EdgeSet& MinimumCut)
         {
             EdgeWeighting MaximumFlow;
             AlgorithmMAXIMUMFLOW::FindMaximumFlow(G, Source, Drain, Capacities, MaximumFlow);

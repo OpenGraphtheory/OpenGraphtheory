@@ -52,6 +52,7 @@
 		<Unit filename="Headers/algorithms/clique/clique.h" />
 		<Unit filename="Headers/algorithms/clique/clique_tw.h" />
 		<Unit filename="Headers/algorithms/color/color.h" />
+		<Unit filename="Headers/algorithms/directedtreewidth/directedtreewidth.h" />
 		<Unit filename="Headers/algorithms/dominatingset/dominatingset.h" />
 		<Unit filename="Headers/algorithms/dominatingset/dominatingset_tw.h" />
 		<Unit filename="Headers/algorithms/independentset/independentset.h" />
@@ -143,6 +144,7 @@
 		<Unit filename="Sources/algorithms/clique/clique.cpp" />
 		<Unit filename="Sources/algorithms/clique/clique_tw.cpp" />
 		<Unit filename="Sources/algorithms/color/color.cpp" />
+		<Unit filename="Sources/algorithms/directedtreewidth/directedtreewidth.cpp" />
 		<Unit filename="Sources/algorithms/dominatingset/dominatingset.cpp" />
 		<Unit filename="Sources/algorithms/dominatingset/dominatingset_tw.cpp" />
 		<Unit filename="Sources/algorithms/independentset/independentset.cpp" />

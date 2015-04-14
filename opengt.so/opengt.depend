@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1400580612 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/algorithm.cpp
+1424863283 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/algorithm.cpp
 	"../../Headers/algorithms/algorithm.h"
 
-1400580612 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/algorithm.h
+1424863306 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/algorithm.h
 	"../opengt.h"
 	"../factory.h"
 	"../thread.h"
@@ -94,7 +94,7 @@
 1400591500 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/clique/clique.cpp
 	"../../../Headers/algorithms/clique/clique.h"
 
-1400582792 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/clique/clique.h
+1424863324 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/clique/clique.h
 	"../algorithm.h"
 	<string>
 	<set>
@@ -252,10 +252,10 @@
 	"../factory.h"
 	"export.h"
 
-1400580612 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/tikz.cpp
+1402394257 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/tikz.cpp
 	"../../Headers/export/tikz.h"
 
-1400580612 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/tikz.h
+1402394233 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/export/tikz.h
 	<ostream>
 	"export.h"
 
@@ -730,7 +730,7 @@
 1400580612 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/factory.cpp
 	"../Headers/factory.h"
 
-1400762990 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/vertexcover/vertexcover.h
+1424863344 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/vertexcover/vertexcover.h
 	"../algorithm.h"
 	"../maximummatching/maximummatching.h"
 	<string>
@@ -954,7 +954,7 @@
 1400759033 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/export_templates.cpp
 	"../../Headers/export/export.h"
 
-1402392909 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/renderer.cpp
+1402394435 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/visualize/renderer.cpp
 	"../../Headers/visualize/renderer.h"
 
 1400580612 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/export/stringtranslator.cpp
@@ -1037,7 +1037,7 @@
 	<set>
 	"../../../Sources/algorithms/treewidth/treewidth_templates.cpp"
 
-1400590124 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/vertexcover/vertexcoverAPX2.h
+1424863650 /home/viktor/Programming/OpenGraphtheory/opengt.so/Headers/algorithms/vertexcover/vertexcoverAPX2.h
 	"../algorithm.h"
 	"../maximummatching/maximummatching.h"
 	<string>
@@ -1048,7 +1048,7 @@
 1400580612 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/treewidth/treewidth.cpp
 	"../../../Headers/algorithms/treewidth/treewidth.h"
 
-1400590233 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/vertexcover/vertexcoverAPX2.cpp
+1424864388 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/vertexcover/vertexcoverAPX2.cpp
 	"../../../Headers/algorithms/vertexcover/vertexcoverAPX2.h"
 
 1400590584 /home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/treewidth/treewidth_templates.cpp
@@ -2125,4 +2125,7 @@
 
 1400580613 source:/home/viktor/Programming/OpenGraphtheory/opengt_so/Sources/visualize/vectornd.cpp
 	"../../Headers/visualize/vectornd.h"
+
+1400580612 source:/home/viktor/Programming/OpenGraphtheory/opengt.so/Sources/algorithms/directedtreewidth/directedtreewidth.cpp
+	"../../../Headers/algorithms/treewidth/treewidth.h"
 

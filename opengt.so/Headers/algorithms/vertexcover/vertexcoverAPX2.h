@@ -13,14 +13,14 @@
     {
         namespace Algorithms
         {
-            class AlgorithmVERTEXCOVER_APX2 : public Algorithm
+            class AlgorithmVERTEXCOVER_APX2 : public ApproximationAlgorithm
             {
                 public:
                     void Run(Graph &G, std::vector<std::string> parameters);
                     static void FindVertexCover(Graph& G, VertexSet& VertexCover);
                     static void AddVertexCover(Graph &G, std::string VertexCoverName);
 
-                    float ApproximationQuality(const Graph& G);
+                    bool CanGuaranteeApproximationDistance(const Graph& G, float MaxApproximationDistance);
                 protected:
                     static MultiFactoryRegistrator<Algorithm> AlgorithmVertexCoverAPX2Registrator;
             };
