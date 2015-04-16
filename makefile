@@ -8,7 +8,6 @@ objectsR = obj/Release/Sources/set_helper.o \
            obj/Release/Sources/thread.o \
            obj/Release/Sources/opengt.o \
            obj/Release/Sources/factory.o \
-           obj/Release/Sources/factory_templates.o \
            obj/Release/Sources/simple_xml.o \
            obj/Release/Sources/attributes.o \
            obj/Release/Sources/VertexEdgeFilter.o \
@@ -114,6 +113,7 @@ all: lib/Release/libopengt.so $(programsR)
 
 # lib
 lib/Release/libopengt.so: $(objectsR)
+	mkdir -p $(@D)
 	g++ $(GCCPARAMS) -o $@ -shared -pthread $(objectsR) -lX11
 
 
@@ -121,46 +121,63 @@ lib/Release/libopengt.so: $(objectsR)
 .PHONY: programs
 programs: $(programsR)
 bin/Release/ogtalgorithm: obj/Release/ogtalgorithm.o
+	mkdir -p $(@D)
 	g++ -o $@ $< $(GCCPARAMS_BIN)
 bin/Release/ogtdisplay: obj/Release/ogtdisplay.o
+	mkdir -p $(@D)
 	g++ -o $@ $< $(GCCPARAMS_BIN)
 bin/Release/ogtexport: obj/Release/ogtexport.o
+	mkdir -p $(@D)
 	g++ -o $@ $< $(GCCPARAMS_BIN)
 bin/Release/ogtgenerate: obj/Release/ogtgenerate.o
+	mkdir -p $(@D)
 	g++ -o $@ $< $(GCCPARAMS_BIN)
 bin/Release/ogtimport: obj/Release/ogtimport.o
+	mkdir -p $(@D)
 	g++ -o $@ $< $(GCCPARAMS_BIN)
 bin/Release/ogtlogic: obj/Release/ogtlogic.o
+	mkdir -p $(@D)
 	g++ -o $@ $< $(GCCPARAMS_BIN)
 bin/Release/ogtsudoku: obj/Release/ogtsudoku.o
+	mkdir -p $(@D)
 	g++ -o $@ $< $(GCCPARAMS_BIN)
 bin/Release/ogttransform: obj/Release/ogttransform.o
+	mkdir -p $(@D)
 	g++ -o $@ $< $(GCCPARAMS_BIN)
 
 
 # obj
 obj/Release/Sources/%.o: opengt.so/Sources/%.cpp
+	mkdir -p $(@D)
 	g++ $(GCCPARAMS_LIB) -o $@ -c $<
 obj/Release/ogtalgorithm.o: programs/ogtalgorithm/ogtalgorithm.cpp
+	mkdir -p $(@D)
 	g++ $(GCCPARAMS) -o $@ -c $< 
 obj/Release/ogtdisplay.o: programs/ogtdisplay/ogtdisplay.cpp
+	mkdir -p $(@D)
 	g++ $(GCCPARAMS) -o $@ -c $<
 obj/Release/ogtexport.o: programs/ogtexport/ogtexport.cpp
+	mkdir -p $(@D)
 	g++ $(GCCPARAMS) -o $@ -c $<
 obj/Release/ogtgenerate.o: programs/ogtgenerate/ogtgenerate.cpp
+	mkdir -p $(@D)
 	g++ $(GCCPARAMS) -o $@ -c $<
 obj/Release/ogtimport.o: programs/ogtimport/ogtimport.cpp
+	mkdir -p $(@D)
 	g++ $(GCCPARAMS) -o $@ -c $<
 obj/Release/ogtlogic.o: programs/ogtlogic/ogtlogic.cpp
+	mkdir -p $(@D)
 	g++ $(GCCPARAMS) -o $@ -c $<
 obj/Release/ogtsudoku.o: programs/ogtsudoku/ogtsudoku.cpp
+	mkdir -p $(@D)
 	g++ $(GCCPARAMS) -o $@ -c $<
 obj/Release/ogttransform.o: programs/ogttransform/ogttransform.cpp
+	mkdir -p $(@D)
 	g++ $(GCCPARAMS) -o $@ -c $<
 
 
 .PHONY: clean
 clean:
-	rm -f $(objectsR) $(programsR) obj/Release/* lib/Release/libopengt.so
+	rm -rf obj bin lib
 
 
