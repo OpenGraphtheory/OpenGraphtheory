@@ -1,6 +1,9 @@
 
-OPTIMIZATION = 0
-GCCPARAMS = -O$(OPTIMIZATION) -Iopengt.so/Headers
+DEBUGPARAMS = -O0 -g -Wall
+RELEASEPARAMS = -O3 -march=native -fexpensive-optimizations
+TARGETPARAMS = $(DEBUGPARAMS)
+%TARGETPARAMS = $(RELEASEPARAMS)
+GCCPARAMS = $(TARGETPARAMS) -Iopengt.so/Headers
 GCCPARAMS_LIB = $(GCCPARAMS) -fPIC
 GCCPARAMS_BIN = $(GCCPARAMS) -Llib/Release -lopengt
 
@@ -71,6 +74,9 @@ objectsR = obj/Release/Sources/set_helper.o \
            obj/Release/Sources/algorithms/minimumcut/minimumcut.o \
            obj/Release/Sources/algorithms/independentset/independentset.o \
            obj/Release/Sources/algorithms/vertexcover/vertexcover.o \
+           obj/Release/Sources/algorithms/vertexdisjointpaths/vertexdisjointpaths.o \
+           obj/Release/Sources/algorithms/vertexseparator/vertexseparator.o \
+           obj/Release/Sources/algorithms/directedtreewidth/directedtreewidth.o \
            obj/Release/Sources/import/import.o \
            obj/Release/Sources/import/gml/gml_lexer.o \
            obj/Release/Sources/import/gml/gml.o \

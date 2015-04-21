@@ -34,11 +34,10 @@ namespace OpenGraphtheory
 
 
 
-        void Algorithm::RunParallel(set<Algorithm*> algos, const Graph& G, vector<string> parameters,
+        void Algorithm::RunParallel(set<Algorithm*> algos, Graph& G, vector<string> parameters,
                                     float MaxApproximationDistance, float MinCorrectnessProbability)
         {
-            ConditionVariable synchronize;
-            synchronize.Lock();
+
 
             set<Algorithm*> SelectedAlgorithms;
             for(set<Algorithm*>::iterator i = algos.begin(); i != algos.end(); i++)
@@ -47,22 +46,40 @@ namespace OpenGraphtheory
                 && (*i)->CanGuaranteeCorrectnessProbability(G, MinCorrectnessProbability))
                     SelectedAlgorithms.insert(*i);
 
-            cout << "starting " << SelectedAlgorithms.size() << " of " << algos.size() << " algorithm(s)\n";
-            if(SelectedAlgorithms.size() > 0) // if this wasn't checked, noone would signal synchronize, so the wait would never end
+            if(SelectedAlgorithms.size() <= 1)
             {
-                for(set<Algorithm*>::iterator i = SelectedAlgorithms.begin(); i != SelectedAlgorithms.end(); i++)
-                    (*i)->RunInThread(G, parameters, &synchronize);
+                // we have at most 1 algorithm => no multithreading needed
+                if(SelectedAlgorithms.size() == 1)
+                {
+                    Algorithm* algo = *SelectedAlgorithms.begin();
+                    algo->Run(G, parameters);
+                }
 
-                synchronize.Wait();
-                cout << "someone finished. sending termination requests\n";
-                for(set<Algorithm*>::iterator i = SelectedAlgorithms.begin(); i != SelectedAlgorithms.end(); i++)
-                    (*i)->Terminate();
-                synchronize.Unlock();
+            }
+            else
+            {
+                // we have more than 1 algorithm => run them in parallel
+                ConditionVariable synchronize;
+                synchronize.Lock();
 
-                cout << "waiting for threads to join\n";
-                for(set<Algorithm*>::iterator i = SelectedAlgorithms.begin(); i != SelectedAlgorithms.end(); i++)
-                    (*i)->Join();
-                cout << "everyone joined\n";
+                cout << "starting " << SelectedAlgorithms.size() << " of " << algos.size() << " algorithm(s)\n";
+                if(SelectedAlgorithms.size() > 0) // if this wasn't checked, noone would signal synchronize, so the wait would never end
+                {
+                    for(set<Algorithm*>::iterator i = SelectedAlgorithms.begin(); i != SelectedAlgorithms.end(); i++)
+                        (*i)->RunInThread(G, parameters, &synchronize);
+
+                    synchronize.Wait();
+                    cout << "someone finished. sending termination requests\n";
+                    for(set<Algorithm*>::iterator i = SelectedAlgorithms.begin(); i != SelectedAlgorithms.end(); i++)
+                        (*i)->Terminate();
+                    synchronize.Unlock();
+
+                    cout << "waiting for threads to join\n";
+                    for(set<Algorithm*>::iterator i = SelectedAlgorithms.begin(); i != SelectedAlgorithms.end(); i++)
+                        (*i)->Join();
+                    cout << "everyone joined\n";
+                }
+
             }
         }
 

@@ -43,7 +43,7 @@ int main(int argc, char** argv)
         algos = Algorithm::AlgorithmFactory.Produce(argv[1]);
 
         Algorithm::RunParallel(algos, G, parameters, MinApproximationQuality);
-        //cout << G;
+        cout << G;
 	}
 	catch(const char* s)
 	{

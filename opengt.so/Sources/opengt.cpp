@@ -1302,7 +1302,7 @@ namespace OpenGraphtheory
             fattr->Value = weight;
         }
 
-        Coordinates GraphObject::GetCoordinates(int minCount, string name)
+        Coordinates GraphObject::GetCoordinates(size_t minCount, string name)
         {
             Coordinates result;
             SeqAttribute* sattr = dynamic_cast<SeqAttribute*>(GetAttribute(name));

@@ -37,7 +37,7 @@
 
                     // MaxApproximationDistance must be >= 1
                     // MinCorrectnessProbability must be <= 1   ( = 100% )
-                    static void RunParallel(std::set<Algorithm*> algos, const Graph& G, std::vector<std::string> parameters,
+                    static void RunParallel(std::set<Algorithm*> algos, Graph& G, std::vector<std::string> parameters,
                                             float MaxApproximationDistance=1.0, float MinCorrectnessProbability=1.0);
 
                     virtual ~Algorithm();

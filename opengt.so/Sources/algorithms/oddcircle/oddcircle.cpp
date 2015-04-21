@@ -23,7 +23,7 @@ namespace OpenGraphtheory
             list<Vertex*> queue;
 
             bool ClashFound = false;
-            Vertex *BipartitionClash1, *BipartitionClash2, *BipartitionClashRoot;
+            Vertex *BipartitionClash1=NULL, *BipartitionClash2=NULL, *BipartitionClashRoot=NULL;
 
 
             for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
