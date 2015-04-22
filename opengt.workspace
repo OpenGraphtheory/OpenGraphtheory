@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+  <Workspace title="Workspace">
+    <Project filename="opengt.so/opengt.cbp" active="1"/>
+    <Project filename="programs/ogtalgorithm/ogtalgorithm.cbp" />
+    <Project filename="programs/ogtdisplay/ogtdisplay.cbp" />
+    <Project filename="programs/ogtexport/ogtexport.cbp" />
+    <Project filename="programs/ogtgenerate/ogtgenerate.cbp" />
+    <Project filename="programs/ogtimport/ogtimport.cbp" />
+    <Project filename="programs/ogtlogic/ogtlogic.cbp" />
+    <Project filename="programs/ogtsudoku/ogtsudoku.cbp" />
+    <Project filename="programs/ogttransform/ogttransform.cbp" />
+  </Workspace>
+</CodeBlocks_workspace_file>
