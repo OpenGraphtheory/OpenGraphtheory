@@ -16,7 +16,8 @@ namespace OpenGraphtheory
 
         bool AlgorithmVERTEXSEPARATOR::FindMinimumVertexSeparator(Graph &G, Vertex* Source, Vertex* Drain, VertexSet& Separator)
         {
-            return false;
+            EdgeSet DisjointPaths;
+            return FindDisjointPathsAndSeparator(G, Source, Drain, DisjointPaths, Separator);
         }
 
 

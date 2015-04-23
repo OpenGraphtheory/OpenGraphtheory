@@ -17,10 +17,10 @@ namespace OpenGraphtheory
         Graph ImportFilterTGF::Import(istream& is)
         {
             Graph result;
-            map<int, Vertex*> VertexTGFIDs;
+            map<string, Vertex*> VertexTGFIDs;
 
-            int Vertex1;
-            int Vertex2;
+            string Vertex1;
+            string Vertex2;
             string Caption;
 
             /// Read vertices
@@ -42,7 +42,7 @@ namespace OpenGraphtheory
                 while(!strstream.eof() && (strstream.peek() == ' ' || strstream.peek() == '\t' || strstream.peek() == '\r'))
                     strstream.ignore(1);
                 if(strstream.eof())
-                    Caption = "";
+                    Caption = Vertex1; // vertex gets its ID as caption by default (unless overridden)
                 else
                     getline(strstream, Caption);
 
@@ -73,7 +73,7 @@ namespace OpenGraphtheory
                 while(!strstream.eof() && (strstream.peek() == ' ' || strstream.peek() == '\t' || strstream.peek() == '\r'))
                     strstream.ignore(1);
                 if(strstream.eof())
-                    Caption = "";
+                    Caption = Vertex1 + "-" + Vertex2;
                 else
                     getline(strstream, Caption);
                 EdgeIterator e = result.AddEdge(VertexTGFIDs[Vertex1], VertexTGFIDs[Vertex2]);

@@ -13,7 +13,7 @@
         namespace Algorithms
         {
 
-            class AlgorithmVERTEXSEPARATOR : public Algorithm
+            class AlgorithmVERTEXSEPARATOR : public AlgorithmVERTEXDISJOINTPATHS
             {
                 protected:
                     static MultiFactoryRegistrator<Algorithm> AlgorithmVertexSeparatorRegistrator;

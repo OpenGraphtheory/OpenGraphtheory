@@ -156,28 +156,28 @@ bin/Release/ogttransform: obj/Release/ogttransform.o
 obj/Release/Sources/%.o: opengt.so/Sources/%.cpp
 	mkdir -p $(@D)
 	g++ $(GCCPARAMS_LIB) -o $@ -c $<
-obj/Release/ogtalgorithm.o: programs/ogtalgorithm/ogtalgorithm.cpp
+obj/Release/ogtalgorithm.o: programs/ogtalgorithm/ogtalgorithm.cpp lib/Release/libopengt.so
 	mkdir -p $(@D)
 	g++ $(GCCPARAMS) -o $@ -c $< 
-obj/Release/ogtdisplay.o: programs/ogtdisplay/ogtdisplay.cpp
+obj/Release/ogtdisplay.o: programs/ogtdisplay/ogtdisplay.cpp lib/Release/libopengt.so
 	mkdir -p $(@D)
 	g++ $(GCCPARAMS) -o $@ -c $<
-obj/Release/ogtexport.o: programs/ogtexport/ogtexport.cpp
+obj/Release/ogtexport.o: programs/ogtexport/ogtexport.cpp lib/Release/libopengt.so
 	mkdir -p $(@D)
 	g++ $(GCCPARAMS) -o $@ -c $<
-obj/Release/ogtgenerate.o: programs/ogtgenerate/ogtgenerate.cpp
+obj/Release/ogtgenerate.o: programs/ogtgenerate/ogtgenerate.cpp lib/Release/libopengt.so
 	mkdir -p $(@D)
 	g++ $(GCCPARAMS) -o $@ -c $<
-obj/Release/ogtimport.o: programs/ogtimport/ogtimport.cpp
+obj/Release/ogtimport.o: programs/ogtimport/ogtimport.cpp lib/Release/libopengt.so
 	mkdir -p $(@D)
 	g++ $(GCCPARAMS) -o $@ -c $<
-obj/Release/ogtlogic.o: programs/ogtlogic/ogtlogic.cpp
+obj/Release/ogtlogic.o: programs/ogtlogic/ogtlogic.cpp lib/Release/libopengt.so
 	mkdir -p $(@D)
 	g++ $(GCCPARAMS) -o $@ -c $<
-obj/Release/ogtsudoku.o: programs/ogtsudoku/ogtsudoku.cpp
+obj/Release/ogtsudoku.o: programs/ogtsudoku/ogtsudoku.cpp lib/Release/libopengt.so
 	mkdir -p $(@D)
 	g++ $(GCCPARAMS) -o $@ -c $<
-obj/Release/ogttransform.o: programs/ogttransform/ogttransform.cpp
+obj/Release/ogttransform.o: programs/ogttransform/ogttransform.cpp lib/Release/libopengt.so
 	mkdir -p $(@D)
 	g++ $(GCCPARAMS) -o $@ -c $<
 
