@@ -1,6 +1,6 @@
 
-DEBUGPARAMS = -O0 -g -Wall
-RELEASEPARAMS = -O3 -march=native -fexpensive-optimizations
+DEBUGPARAMS = -O0 -g -m64 -Wall
+RELEASEPARAMS = -O3 -march=native -m64 -fexpensive-optimizations
 TARGETPARAMS = $(DEBUGPARAMS)
 %TARGETPARAMS = $(RELEASEPARAMS)
 GCCPARAMS = $(TARGETPARAMS) -Iopengt.so/Headers
@@ -110,17 +110,26 @@ programsR = bin/Release/ogtgenerate \
             bin/Release/ogtdisplay \
             bin/Release/ogtlogic \
             bin/Release/ogtalgorithm \
-            bin/Release/ogtimport
+            bin/Release/ogtimport \
+            bin/Release/OGoCreator
+
 
 
 .PHONY: all
 all: lib/Release/libopengt.so $(programsR)
 
 
+
 # lib
 lib/Release/libopengt.so: $(objectsR)
 	mkdir -p $(@D)
 	g++ $(GCCPARAMS) -o $@ -shared -pthread $(objectsR) -lX11
+lib/Release/libogographviewplugin.so: programs/OGoCreator/OGoWidget/ogographview.cpp \
+					programs/OGoCreator/OGoWidget/ogographviewplugin.cpp \
+					lib/Release/libopengt.so
+	mkdir -p $(@D)
+	cd $(<D); qmake && make # qmake gets confused when it runs outside the project directory
+
 
 
 # bin
@@ -150,6 +159,14 @@ bin/Release/ogtsudoku: obj/Release/ogtsudoku.o
 bin/Release/ogttransform: obj/Release/ogttransform.o
 	mkdir -p $(@D)
 	g++ -o $@ $< $(GCCPARAMS_BIN)
+bin/Release/OGoCreator: programs/OGoCreator/OGoCreator/main.cpp \
+			programs/OGoCreator/OGoCreator/mainwindow.cpp \
+			programs/OGoCreator/OGoCreator/EditAction.cpp \
+			lib/Release/libogographviewplugin.so \
+			lib/Release/libopengt.so
+	mkdir -p $(@D)
+	cd $(<D); qmake && make # qmake gets confused when it runs outside the project directory
+
 
 
 # obj
@@ -184,6 +201,8 @@ obj/Release/ogttransform.o: programs/ogttransform/ogttransform.cpp lib/Release/l
 
 .PHONY: clean
 clean:
+	make -C programs/OGoCreator/OGoWidget distclean || true
+	make -C programs/OGoCreator/OGoCreator distclean || true
 	rm -rf obj bin lib
 
 

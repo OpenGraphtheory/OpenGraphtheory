@@ -64,12 +64,12 @@ void MainWindow::OpenGraphFile(QString filename)
     // make sure every vertex has 2 coordinates (otherwise, the paint event would crash)
     for(VertexIterator v = gr->BeginVertices(); v != gr->EndVertices(); v++)
     {
-        vector<float> Coordinates = v.GetCoordinates();
+        vector<float> Coordinates = (*v)->GetCoordinates(2);
         if(Coordinates.size() < 2)
         {
             while(Coordinates.size() < 2)
                 Coordinates.push_back(0);
-           v.SetCoordinates(Coordinates);
+           (*v)->SetCoordinates(Coordinates);
         }
     }
 
@@ -282,7 +282,7 @@ void PathVertexSelectionFinished(QWidget* mainwindow, OGoGraphView* gv, vector<V
         return;
 
     OpenGraphtheory::Algorithms::AlgorithmPATH algo;
-    algo.AddPath(*G, selectedvertices[0], selectedvertices[1], text.toUtf8().constData());
+    algo.AddPath(*G, *selectedvertices[0], *selectedvertices[1], text.toUtf8().constData());
     gv->setEdgeColoring(text.toUtf8().constData());
     gv->resetVertexColoring();
     gv->repaint();
@@ -308,10 +308,10 @@ void MinCutVertexSelectionFinished(QWidget* mainwindow, OGoGraphView* gv, vector
         return;
 
     OpenGraphtheory::Algorithms::AlgorithmMINIMUMCUT algo;
-    map<EdgeIterator, float> capacities;
+    OpenGraphtheory::EdgeWeighting capacities;
     for(EdgeIterator e = G->BeginEdges(); e != G->EndEdges(); e++)
-        capacities.insert(std::pair<EdgeIterator, float>(e, e.GetWeight()));
-    algo.AddMinimumCut(*G, selectedvertices[0], selectedvertices[1], capacities, text.toUtf8().constData());
+        capacities.insert(std::pair<OpenGraphtheory::Edge*, float>(*e, (*e)->GetWeight()));
+    algo.AddMinimumCut(*G, *selectedvertices[0], *selectedvertices[1], capacities, text.toUtf8().constData());
     gv->setEdgeColoring(text.toUtf8().constData());
     gv->resetVertexColoring();
     gv->repaint();
@@ -483,7 +483,7 @@ void MainWindow::on_actionFirst_Order_Predicate_Logic_triggered()
     }
     else
     {
-        std::map<std::string,OpenGraphtheory::VertexIterator> var_assignments;
+        std::map<std::string,OpenGraphtheory::Vertex*> var_assignments;
         QMessageBox::information(0, "Result", formula->Interpretation(*(gv->getGraph()),var_assignments) ? "Yes" : "No");
         delete formula;
     }

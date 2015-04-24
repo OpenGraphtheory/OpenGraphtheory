@@ -3,4 +3,12 @@ obj/
 lib/
 *.depend
 *.layout
+.directory
+programs/OGoCreator/OGoCreator/moc_*.cpp
+programs/OGoCreator/OGoCreator/ui_*.h
+programs/OGoCreator/OGoCreator/Makefile
+programs/OGoCreator/OGoWidget/moc_*.cpp
+programs/OGoCreator/OGoWidget/ui_*.h
+programs/OGoCreator/OGoWidget/Makefile
+programs/OGoCreator/OGoWidget/qrc_icons.cpp
 

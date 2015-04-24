@@ -223,7 +223,7 @@ void OGoGraphView::paintEvent(QPaintEvent *)
         painter.setPen(pen);
         for(set<VertexIterator>::iterator i = selectedvertices.begin(); i != selectedvertices.end(); i++)
         {
-            vector<float> Coordinates = i->GetCoordinates();
+            vector<float> Coordinates = (**i)->GetCoordinates(2);
             int x, y;
             ModelToScreen(Coordinates[0], Coordinates[1], x, y);
 
@@ -238,7 +238,7 @@ VertexIterator OGoGraphView::VertexAt(int x, int y)
     ScreenToModel(x,y,mx,my);
     for(VertexIterator v = graph->BeginVertices(); v != graph->EndVertices(); v++)
     {
-        vector<float> coordinates = v.GetCoordinates();
+        vector<float> coordinates = (*v)->GetCoordinates(2);
         float vx = coordinates[0];
         float vy = coordinates[1];
         if(mx > vx - vertexsize/2 && mx < vx + vertexsize/2
@@ -344,7 +344,7 @@ void OGoGraphView::mouseMoveEvent(QMouseEvent *mouseevent)
 {
     VertexIterator v = VertexAt(mouseevent->x(), mouseevent->y());
     if(v != graph->EndVertices())
-        this -> setToolTip(v.GetLabel().c_str());
+        this -> setToolTip((*v)->GetLabel().c_str());
 
     switch(mouseaction)
     {
@@ -360,24 +360,23 @@ void OGoGraphView::mouseMoveEvent(QMouseEvent *mouseevent)
         {
             for(set<VertexIterator>::iterator v = selectedvertices.begin(); v != selectedvertices.end(); v++)
             {
+                VertexIterator vi = *v;
                 if(SnapToGrid)
                 {
-                    vector<float> coordinates = v->GetCoordinates();
+                    vector<float> coordinates = (*vi)->GetCoordinates(2);
                     float modelmousex, modelmousey;
                     ScreenToModel(mouseevent->x(), mouseevent->y(), modelmousex, modelmousey);
 
                     coordinates[0] = floor(modelmousex/gridsize + 0.5) * gridsize;
                     coordinates[1] = floor(modelmousey/gridsize + 0.5) * gridsize;
-                    VertexIterator vi = *v;
-                    vi.SetCoordinates(coordinates);
+                    (*vi)->SetCoordinates(coordinates);
                 }
                 else
                 {
-                    vector<float> coordinates = v->GetCoordinates();
+                    vector<float> coordinates = (*vi)->GetCoordinates(2);
                     coordinates[0] += (mouseevent->x()-oldx)/zoom;
                     coordinates[1] += (mouseevent->y()-oldy)/zoom;
-                    VertexIterator vi = *v;
-                    vi.SetCoordinates(coordinates);
+                    (*vi)->SetCoordinates(coordinates);
                 }
             }
             repaint();
@@ -422,7 +421,12 @@ void OGoGraphView::keyPressEvent(QKeyEvent *keyevent)
                 my = floor(my/gridsize + 0.5) * gridsize;
             }
 
-            graph->AddVertex(mx, my);
+            VertexIterator v = graph->AddVertex();
+            vector<float> coordinates;
+            coordinates.push_back(mx);
+            coordinates.push_back(my);
+            (*v)->SetCoordinates(coordinates);
+            
             repaint();
             break;
         }
