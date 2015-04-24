@@ -3,7 +3,7 @@
     #define __OPENGRAPHTHEORY_ALGORITHMS_TREEWIDTH_TREEWIDTH_H
 
     #include "../../opengt.h"
-    #include "../algorithm.h"
+    #include "../algorithms.h"
     #include "../vertexcover/vertexcoverAPX2.h"
     #include <set>
 

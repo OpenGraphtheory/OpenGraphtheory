@@ -2,7 +2,7 @@
 #ifndef __OPENGRAPHTHEORY_ALGORITHMS_PATH_PATH_H
     #define __OPENGRAPHTHEORY_ALGORITHMS_PATH_PATH_H
 
-    #include "../algorithm.h"
+    #include "../algorithms.h"
     #include "../../VertexEdgeFilter.h"
     #include<string>
     #include<map>

@@ -48,7 +48,7 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="Headers/VertexEdgeFilter.h" />
-		<Unit filename="Headers/algorithms/algorithm.h" />
+		<Unit filename="Headers/algorithms/algorithms.h" />
 		<Unit filename="Headers/algorithms/clique/clique.h" />
 		<Unit filename="Headers/algorithms/clique/clique_tw.h" />
 		<Unit filename="Headers/algorithms/color/color.h" />
@@ -132,7 +132,7 @@
 		<Unit filename="Headers/transform/shift.h" />
 		<Unit filename="Headers/transform/springembedder.h" />
 		<Unit filename="Headers/transform/springembedder3d.h" />
-		<Unit filename="Headers/transform/transformation.h" />
+		<Unit filename="Headers/transform/transform.h" />
 		<Unit filename="Headers/visualize/DisplayWindow.h" />
 		<Unit filename="Headers/visualize/GraphWindow.h" />
 		<Unit filename="Headers/visualize/color.h" />
@@ -140,7 +140,7 @@
 		<Unit filename="Headers/visualize/vector2d.h" />
 		<Unit filename="Headers/visualize/vectornd.h" />
 		<Unit filename="Sources/VertexEdgeFilter.cpp" />
-		<Unit filename="Sources/algorithms/algorithm.cpp">
+		<Unit filename="Sources/algorithms/algorithms.cpp">
 			<Option weight="49" />
 		</Unit>
 		<Unit filename="Sources/algorithms/clique/clique.cpp" />
@@ -224,7 +224,7 @@
 		<Unit filename="Sources/import/tikz/tikz_parser.yy" />
 		<Unit filename="Sources/import/vrmlgraph.cpp" />
 		<Unit filename="Sources/import/xgmml.cpp" />
-		<Unit filename="Sources/intermediatesteps/intermediate.cpp">
+		<Unit filename="Sources/intermediatesteps/intermediatesteps.cpp">
 			<Option weight="49" />
 		</Unit>
 		<Unit filename="Sources/intermediatesteps/show.cpp" />
@@ -265,7 +265,7 @@
 		<Unit filename="Sources/transform/shift.cpp" />
 		<Unit filename="Sources/transform/spring_embedder.cpp" />
 		<Unit filename="Sources/transform/spring_embedder3d.cpp" />
-		<Unit filename="Sources/transform/transformation.cpp">
+		<Unit filename="Sources/transform/transform.cpp">
 			<Option weight="49" />
 		</Unit>
 		<Unit filename="Sources/visualize/DisplayWindow.cpp" />

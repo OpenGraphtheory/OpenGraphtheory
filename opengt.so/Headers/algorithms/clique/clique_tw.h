@@ -2,7 +2,7 @@
 #ifndef __OPENGRAPHTHEORY_ALGORITHMS_CLIQUE_CLIQUE_TW_H
     #define __OPENGRAPHTHEORY_ALGORITHMS_CLIQUE_CLIQUE_TW_H
 
-    #include "../algorithm.h"
+    #include "../algorithms.h"
     #include "../treewidth/treewidth.h"
     #include<string>
     #include<set>

@@ -2,7 +2,7 @@
 #ifndef __OPENGRAPHTHEORY_ALGORITHMS_COLOR_COLOR_H
     #define __OPENGRAPHTHEORY_ALGORITHMS_COLOR_COLOR_H
 
-    #include "../algorithm.h"
+    #include "../algorithms.h"
     #include<string>
     #include<map>
     #include<vector>

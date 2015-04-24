@@ -6,7 +6,7 @@
 
     #include "../opengt.h"
     #include "../factory.h"
-    #include "transformation.h"
+    #include "transform.h"
 
     namespace OpenGraphtheory
     {

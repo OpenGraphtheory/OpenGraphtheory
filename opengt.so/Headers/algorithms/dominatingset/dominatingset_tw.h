@@ -2,7 +2,7 @@
 #ifndef __OPENGRAPHTHEORY_ALGORITHMS_DOMINATINGSET_DOMINATINGSET_TW_H
     #define __OPENGRAPHTHEORY_ALGORITHMS_DOMINATINGSET_DOMINATINGSET_TW_H
 
-    #include "../algorithm.h"
+    #include "../algorithms.h"
     #include "../../set_helper.h"
     #include "../treewidth/treewidth.h"
     #include<string>

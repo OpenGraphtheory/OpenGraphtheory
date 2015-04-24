@@ -2,7 +2,7 @@
 #ifndef __OPENGRAPHTHEORY_ALGORITHMS_MAXIMUMMATCHING_MAXIMALMATCHING_H
     #define __OPENGRAPHTHEORY_ALGORITHMS_MAXIMUMMATCHING_MAXIMALMATCHING_H
 
-    #include "../algorithm.h"
+    #include "../algorithms.h"
     #include "../../set_helper.h"
     #include<string>
     #include<vector>

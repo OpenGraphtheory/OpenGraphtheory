@@ -3,7 +3,7 @@
     #define __OPENGRAPHTHEORY_ALGORITHMS_MAXIMUMMATCHING_MAXIMUMMATCHING_H
 
     #include "maximalmatching.h"
-    #include "../algorithm.h"
+    #include "../algorithms.h"
     #include "../../set_helper.h"
     #include "../oddcircle/oddcircle.h"
     #include<string>

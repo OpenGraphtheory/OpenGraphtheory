@@ -2,7 +2,7 @@
 #ifndef __OPENGRAPHTHEORY_ALGORITHMS_MINIMUMCUT_MINIMUMCUT_H
     #define __OPENGRAPHTHEORY_ALGORITHMS_MINIMUMCUT_MINIMUMCUT_H
 
-    #include "../algorithm.h"
+    #include "../algorithms.h"
     #include "../maximumflow/maximumflow.h"
     #include<string>
     #include<set>

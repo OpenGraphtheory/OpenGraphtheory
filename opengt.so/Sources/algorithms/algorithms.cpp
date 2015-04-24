@@ -1,5 +1,5 @@
 
-#include "../../Headers/algorithms/algorithm.h"
+#include "../../Headers/algorithms/algorithms.h"
 
 using namespace std;
 

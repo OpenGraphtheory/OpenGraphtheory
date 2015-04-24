@@ -2,7 +2,7 @@
 #ifndef __OPENGRAPHTHEORY_ALGORITHMS_ODDCIRCLE_ODDCIRCLE_H
     #define __OPENGRAPHTHEORY_ALGORITHMS_ODDCIRCLE_ODDCIRCLE_H
 
-    #include "../algorithm.h"
+    #include "../algorithms.h"
     #include<string>
     #include<map>
     #include<list>

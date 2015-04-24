@@ -5,7 +5,7 @@
     #include "../opengt.h"
     #include "../visualize/vectornd.h"
     #include "../factory.h"
-    #include "transformation.h"
+    #include "transform.h"
     #include "springembedder.h"
 
     #include <iostream>

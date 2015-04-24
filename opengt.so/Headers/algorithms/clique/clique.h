@@ -2,7 +2,7 @@
 #ifndef __OPENGRAPHTHEORY_ALGORITHMS_CLIQUE_CLIQUE_H
     #define __OPENGRAPHTHEORY_ALGORITHMS_CLIQUE_CLIQUE_H
 
-    #include "../algorithm.h"
+    #include "../algorithms.h"
     #include<string>
     #include<set>
     #include<vector>

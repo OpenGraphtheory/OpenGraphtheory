@@ -2,7 +2,7 @@
 #ifndef __OPENGRAPHTHEORY_ALGORITHMS_VERTEXCOVER_VERTEXCOVERAPX2_H
     #define __OPENGRAPHTHEORY_ALGORITHMS_VERTEXCOVER_VERTEXCOVERAPX2_H
 
-    #include "../algorithm.h"
+    #include "../algorithms.h"
     #include "../maximummatching/maximummatching.h"
     #include<string>
     #include<set>

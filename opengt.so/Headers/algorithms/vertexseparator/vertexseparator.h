@@ -3,7 +3,7 @@
     #define __OPENGRAPHTHEORY_ALGORITHMS_VERTEXSEPARATOR_VERTEXSEPARATOR_H
 
     #include "../../opengt.h"
-    #include "../algorithm.h"
+    #include "../algorithms.h"
     #include <set>
     #include "../../set_helper.h"
     #include "../vertexdisjointpaths/vertexdisjointpaths.h"
