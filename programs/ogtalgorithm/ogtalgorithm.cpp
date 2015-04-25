@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <list>
 #include "../../opengt.so/Headers/opengt.h"
-#include "../../opengt.so/Headers/algorithms/algorithm.h"
+#include "../../opengt.so/Headers/algorithms/algorithms.h"
 
 using namespace std;
 using namespace OpenGraphtheory;

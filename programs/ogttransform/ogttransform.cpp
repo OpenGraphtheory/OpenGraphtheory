@@ -65,7 +65,7 @@ int main(int argc, char** argv)
 #include <stdlib.h>
 #include <list>
 #include "../../opengt.so/Headers/opengt.h"
-#include "../../opengt.so/Headers/transform/transformation.h"
+#include "../../opengt.so/Headers/transform/transform.h"
 
 using namespace std;
 using namespace OpenGraphtheory;
