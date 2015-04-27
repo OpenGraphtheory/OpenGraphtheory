@@ -126,12 +126,12 @@ $(foreach prog,$(PROGRAMS),$(eval $(call PROGRAM_template,$(prog))))
 
 .PHONY: clean
 clean:
-	rm -f $(shell find opengt.so/Sources -name '*_lexer.cpp')
-	rm -f $(shell find opengt.so/Sources -name '*_parser.cpp')
-	rm -f $(shell find opengt.so/Sources -name '*_parser.hpp')
-	rm -f $(shell find opengt.so/Sources -name 'location.hh')
-	rm -f $(shell find opengt.so/Sources -name 'position.hh')
-	rm -f $(shell find opengt.so/Sources -name 'stack.hh')
+	$(shell find opengt.so/Sources -name '*_lexer.cpp' -delete)
+	$(shell find opengt.so/Sources -name '*_parser.cpp' -delete)
+	$(shell find opengt.so/Sources -name '*_parser.hpp' -delete)
+	$(shell find opengt.so/Sources -name 'location.hh' -delete)
+	$(shell find opengt.so/Sources -name 'position.hh' -delete)
+	$(shell find opengt.so/Sources -name 'stack.hh' -delete)
 	make -C programs/OGoCreator/OGoWidget distclean || true
 	make -C programs/OGoCreator/OGoCreator distclean || true
 	rm -rf obj bin lib
