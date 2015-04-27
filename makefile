@@ -28,21 +28,19 @@ FLEX_CPP      := $(FLEX_L:%.l=%.cpp)
 SOURCES       := $(MODULE_CPP) $(BISON_CPP) $(FLEX_CPP) \
                  $(filter-out $(MODULE_CPP),$(shell find opengt.so/Sources -depth -name '*.cpp'))
 
-PROGRAMS      := $(subst programs/,,$(shell find programs -mindepth 1 -maxdepth 1 -type d -not -name "OGoCreator"))
-PROGRAMS_OGC  := $(PROGRAMS) OGoCreator
+PROGRAMS_ALL   := $(subst programs/,,$(shell find programs -mindepth 1 -maxdepth 1 -type d))
+PROGRAMS_NONQT := $(filter-out OGoCreator,$(PROGRAMS_ALL))
 
 
 
 
 soobjRelease  := $(subst opengt.so/, obj/Release/, $(SOURCES:%.cpp=%.o))
-objRelease    := $(soobjRelease) $(foreach program,$(PROGRAMS),obj/Release/$(program).o)
+objRelease    := $(soobjRelease) $(foreach program,$(PROGRAMS_NONQT),obj/Release/$(program).o)
 soobjDebug    := $(subst opengt.so/, obj/Debug/, $(SOURCES:%.cpp=%.o))
-objDebug      := $(soobjDebug) $(foreach program,$(PROGRAMS),obj/Debug/$(program).o)
+objDebug      := $(soobjDebug) $(foreach program,$(PROGRAMS_NONQT),obj/Debug/$(program).o)
 
-binRelease    := $(foreach program,$(PROGRAMS_OGC),bin/Release/$(program))
-# binDebug      := $(foreach program,$(PROGRAMS_OGC),bin/Debug/$(program))
-# cannot compile Debug version of OGoCreator right now
-binDebug      := $(foreach program,$(PROGRAMS),bin/Debug/$(program))
+binRelease    := $(foreach program,$(PROGRAMS_ALL),bin/Release/$(program))
+binDebug      := $(foreach program,$(PROGRAMS_ALL),bin/Debug/$(program))
 
 
 
@@ -81,7 +79,7 @@ obj/Debug/$(1).o: programs/$(1)/$(1).cpp lib/Debug/libopengtdbg.so
 	mkdir -p $$(@D)
 	g++ $(DEBUGPARAMS) $(GCCPARAMS) -o $$@ -c $$< 
 endef
-$(foreach prog,$(PROGRAMS),$(eval $(call PROGRAM_OBJ_template,$(prog))))
+$(foreach prog,$(PROGRAMS_NONQT),$(eval $(call PROGRAM_OBJ_template,$(prog))))
 
 
 
@@ -99,18 +97,16 @@ lib/Release/libogographviewplugin.so: programs/OGoCreator/OGoWidget/ogographview
 					lib/Release/libopengt.so
 	mkdir -p $(@D)
 	cd $(<D); qmake && make # qmake gets confused when it runs outside the project directory
+lib/Debug/libogographviewplugindbg.so: programs/OGoCreator/OGoWidget/ogographview.cpp \
+					programs/OGoCreator/OGoWidget/ogographviewplugin.cpp \
+					lib/Debug/libopengtdbg.so
+	mkdir -p $(@D)
+	cd $(<D); qmake -config debug && make # qmake gets confused when it runs outside the project directory
 
 
 
 
 # bin
-bin/Release/OGoCreator: programs/OGoCreator/OGoCreator/main.cpp \
-			programs/OGoCreator/OGoCreator/mainwindow.cpp \
-			programs/OGoCreator/OGoCreator/EditAction.cpp \
-			lib/Release/libogographviewplugin.so \
-			lib/Release/libopengt.so
-	mkdir -p $(@D)
-	cd $(<D); qmake && make # qmake gets confused when it runs outside the project directory
 define PROGRAM_template
 bin/Release/$(1): obj/Release/$(1).o
 	mkdir -p $$(@D)
@@ -119,7 +115,21 @@ bin/Debug/$(1): obj/Debug/$(1).o
 	mkdir -p $$(@D)
 	g++ -o $$@ $$< $(DEBUGPARAMS) $(GCCPARAMS_BIN_DEBUG)
 endef
-$(foreach prog,$(PROGRAMS),$(eval $(call PROGRAM_template,$(prog))))
+$(foreach prog,$(PROGRAMS_NONQT),$(eval $(call PROGRAM_template,$(prog))))
+bin/Release/OGoCreator: programs/OGoCreator/OGoCreator/main.cpp \
+			programs/OGoCreator/OGoCreator/mainwindow.cpp \
+			programs/OGoCreator/OGoCreator/EditAction.cpp \
+			lib/Release/libogographviewplugin.so \
+			lib/Release/libopengt.so
+	mkdir -p $(@D)
+	cd $(<D); qmake && make # qmake gets confused when it runs outside the project directory
+bin/Debug/OGoCreator: programs/OGoCreator/OGoCreator/main.cpp \
+			programs/OGoCreator/OGoCreator/mainwindow.cpp \
+			programs/OGoCreator/OGoCreator/EditAction.cpp \
+			lib/Debug/libogographviewplugindbg.so \
+			lib/Debug/libopengtdbg.so
+	mkdir -p $(@D)
+	cd $(<D); qmake -config debug && make # qmake gets confused when it runs outside the project directory
 
 
 
