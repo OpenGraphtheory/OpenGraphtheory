@@ -121,7 +121,7 @@ namespace OpenGraphtheory
     {
         MouseButton MouseButtonCode[] = {mbLeft, mbMiddle, mbRight};
 
-          Atom wm_delete_window=None;
+        Atom wm_delete_window=None;
 
         std::map<Display*, DisplayWindow*> WindowRegister;
 
