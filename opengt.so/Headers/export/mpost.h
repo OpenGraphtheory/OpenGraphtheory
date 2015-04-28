@@ -9,6 +9,8 @@
         namespace Export
         {
 
+            /// \ingroup GraphicalExportFilter
+
             class GraphRendererMPOST : public Visualization::GraphRenderingContextStream
             {
                 protected:

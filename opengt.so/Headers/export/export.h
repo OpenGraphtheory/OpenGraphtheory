@@ -18,9 +18,14 @@
 
     namespace OpenGraphtheory
     {
+
+        /// \defgroup Export Exporting
+        /// @{
+
         namespace Export
         {
 
+            /// \brief Base Class for all Export Filters
             class ExportFilter
             {
                 public:
@@ -36,6 +41,12 @@
                     static void Export(OpenGraphtheory::Graph& G, std::string FileName, std::string format, std::string vertexcoloring="", std::string edgecoloring="", float dpi=72,float edgewidth=-1, float vertexradius=-1);
             };
 
+            /// \defgroup ExportFilter
+            /// \ingroup Export
+            /// @{
+
+
+            /// \brief Base Class for all Export Filters that produce graphical output
             template<class T> class GraphicalExportFilter : public ExportFilter
             {
                 public:
@@ -43,7 +54,14 @@
                                 EdgeColoring& edgecoloring, float dpi=72, float edgewidth=-1, float vertexradius=-1);
             };
 
+            /// \defgroup GraphicalExportFilter
+            /// \ingroup ExportFilter
+
+            /// @}
+
         }
+
+        /// @}
     }
 
     #include "../../Sources/export/export_templates.cpp"

@@ -9,6 +9,9 @@
     namespace OpenGraphtheory
     {
 
+        /// \defgroup Factory Abstract Factories
+        /// @{
+
         class FactoryEnumerator
         {
             public:
@@ -73,6 +76,7 @@
                 MultiFactoryRegistrator(MultiFactory<T>* factory, std::string name, Instantiator<T>* instantiator);
         };
 
+        /// @}
 
     }
 

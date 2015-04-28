@@ -11,6 +11,8 @@
         namespace Export
         {
 
+            /// \ingroup ExportFilter
+
             class ExportFilterGASTEX : public ExportFilter
             {
                 protected:

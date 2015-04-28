@@ -4,7 +4,7 @@
 using namespace std;
 using namespace OpenGraphtheory::XML;
 
-/// \defgroup arbitraryattributes ''Arbitrary Attributes''
+/// \defgroup arbitraryattributes Arbitrary Attributes
 // @{
 
     OpenGraphtheory::Factory<Attribute> AttributeCollection::AttributeFactory;
@@ -132,8 +132,9 @@ Attribute::~Attribute()
 }
 
 
-/// \defgroup boolattribute ''BoolAttribute''
-// @{
+/// \defgroup boolattribute Boolean Attributes
+/// \ingroup arbitraryattributes
+/// @{
 
     /// \brief Constructor
     BoolAttribute::BoolAttribute()
@@ -182,11 +183,12 @@ Attribute::~Attribute()
     OpenGraphtheory::FactoryRegistrator<Attribute> BoolAttributeRegistrator(&AttributeCollection::AttributeFactory, "bool",
         new OpenGraphtheory::DefaultInstantiator<Attribute, BoolAttribute>());
 
-// @}
+/// @}
 
 
-/// \defgroup intattribute ''IntAttribute''
-// @{
+/// \defgroup intattribute Integral Attributes
+/// \ingroup arbitraryattributes
+/// @{
 
     /// \brief Constructor
     IntAttribute::IntAttribute()
@@ -232,11 +234,12 @@ Attribute::~Attribute()
     OpenGraphtheory::FactoryRegistrator<Attribute> IntAttributeRegistrator(&AttributeCollection::AttributeFactory, "int",
         new OpenGraphtheory::DefaultInstantiator<Attribute, IntAttribute>());
 
-// @}
+/// @}
 
 
-/// \defgroup floatattribute ''FloatAttribute''
-// @{
+/// \defgroup floatattribute Floatingpoint Attributes
+/// \ingroup arbitraryattributes
+/// @{
 
     /// \brief Constructor
     FloatAttribute::FloatAttribute()
@@ -282,12 +285,13 @@ Attribute::~Attribute()
     OpenGraphtheory::FactoryRegistrator<Attribute> FloatAttributeRegistrator(&AttributeCollection::AttributeFactory, "float",
         new OpenGraphtheory::DefaultInstantiator<Attribute, FloatAttribute>());
 
-// @}
+/// @}
 
 
 
-/// \defgroup stringattribute ''StringAttribute''
-// @{
+/// \defgroup stringattribute String Attributes
+/// \ingroup arbitraryattributes
+/// @{
 
     /// \brief Constructor
     StringAttribute::StringAttribute()
@@ -328,11 +332,12 @@ Attribute::~Attribute()
     OpenGraphtheory::FactoryRegistrator<Attribute> StringAttributeRegistrator(&AttributeCollection::AttributeFactory, "string",
         new OpenGraphtheory::DefaultInstantiator<Attribute, StringAttribute>());
 
-// @}
+/// @}
 
 
-/// \defgroup seqattribute ''SeqAttribute''
-// @{
+/// \defgroup seqattribute Sequential Attributes
+/// \ingroup arbitraryattributes
+/// @{
 
     /// \brief Constructor
     SeqAttribute::SeqAttribute()
@@ -398,4 +403,4 @@ Attribute::~Attribute()
     OpenGraphtheory::FactoryRegistrator<Attribute> SeqAttributeRegistrator(&AttributeCollection::AttributeFactory, "seq",
         new OpenGraphtheory::DefaultInstantiator<Attribute, SeqAttribute>());
 
-// @}
+/// @}

@@ -10,6 +10,10 @@
         namespace Export
         {
 
+            /// \ingroup ExportFilter
+            /// \brief StringTranslator Objects are responsible for translating strings
+            ///  to strings in a certain output format (e.g. translating & to &amp; in XML output)
+
             class StringTranslator
             {
                 protected:

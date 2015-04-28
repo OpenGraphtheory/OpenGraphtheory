@@ -9,6 +9,8 @@
         namespace Export
         {
 
+            /// \ingroup GraphicalExportFilter
+
             class GraphRendererTIKZ : public Visualization::GraphRenderingContextStream
             {
                 protected:

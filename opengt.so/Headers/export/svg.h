@@ -11,6 +11,8 @@
         namespace Export
         {
 
+            /// \ingroup GraphicalExportFilter
+
             class GraphRendererSVG : public Visualization::GraphRenderingContextStream
             {
                 protected:

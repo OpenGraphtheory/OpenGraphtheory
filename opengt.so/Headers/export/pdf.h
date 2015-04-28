@@ -12,6 +12,8 @@
         namespace Export
         {
 
+            /// \ingroup GraphicalExportFilter
+
             class GraphRendererPDF : public Visualization::GraphRenderingContextStream
             {
                 protected:

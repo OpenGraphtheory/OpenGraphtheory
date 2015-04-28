@@ -11,6 +11,8 @@
         namespace Export
         {
 
+            /// \ingroup ExportFilter
+
             class ExportFilterGRAPHML : public ExportFilter
             {
                 protected:

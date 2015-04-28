@@ -11,6 +11,8 @@
         namespace Export
         {
 
+            /// \ingroup ExportFilter
+
             class ExportFilterPROLOG : public ExportFilter
             {
                 protected:

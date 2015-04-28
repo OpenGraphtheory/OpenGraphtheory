@@ -113,6 +113,7 @@ namespace OpenGraphtheory
         }
 
         #if __cplusplus >= 201103L
+        /// \brief Graph Move-Constructor
         Graph::Graph(Graph&& G)
             : GraphObject()
         {
@@ -192,7 +193,7 @@ namespace OpenGraphtheory
             }
         }
 
-        /// \brief Remove all vertices and edges
+        /// \brief Remove all vertices, edges and attributes
         void Graph::Clear()
         {
             GraphObject::Clear();
@@ -206,6 +207,7 @@ namespace OpenGraphtheory
     // @}
 
 
+    /// \brief Remove all attributes
     void GraphObject::Clear()
     {
         if(attributes != NULL)
@@ -458,7 +460,7 @@ namespace OpenGraphtheory
 
 
 
-            /// \brief Test whether the Edge is incident to the given vertex
+            /// \brief Tests whether the Edge is incident to the given vertex
             bool Edge::Incident(const Vertex* to, bool Undirected, bool Positive, bool Negative) const
             {
                 for(ConstVertexEdgeConnectionIterator conn = BeginConnections(); conn != EndConnections(); conn++)
@@ -473,6 +475,7 @@ namespace OpenGraphtheory
                 return false;
             }
 
+            /// \brief Tests whether the Edge has any connection to the given vertex
             bool Edge::UnderlyingIncident(const Vertex* to) const
             {
                 return Incident(to, 1, 1, 1);
@@ -630,6 +633,7 @@ namespace OpenGraphtheory
         // @}
 
 
+        /// \brief Tests whether the Edge is a normal edge (undirected, 2 incident vertices)
         bool Edge::IsEdge()
         {
             if(NumberOfConnections() == 2)
@@ -643,6 +647,7 @@ namespace OpenGraphtheory
             return false;
         }
 
+        /// \brief Tests whether the Edge is a normal arc (1 positively and 1 negatively incident vertex)
         bool Edge::IsArc()
         {
             if(NumberOfConnections() == 2)
@@ -665,13 +670,13 @@ namespace OpenGraphtheory
             return false;
         }
 
-        /// \brief Test whether the EdgeIterator points to a hyperedge
+        /// \brief Tests whether the Edge is a hyperedge
         bool Edge::IsHyperedge()
         {
             return !IsEdge() && !IsArc();
         }
 
-        /// \brief Test whether the graph contains at least one hyperedge
+        /// \brief Tests whether the graph contains at least one hyperedge
         bool Graph::IsHypergraph()
         {
             for(EdgeIterator e = BeginEdges(); e != EndEdges(); e++)
@@ -1224,7 +1229,7 @@ namespace OpenGraphtheory
                 throw "Edge::From doesn't work on hyperedges";
             }
 
-            /// \brief Iterator for the second incident vertex of an edge (meant for regular edges, but works on hyperedges, too)
+            /// \brief Iterator for the second incident vertex of an edge
             Vertex* Edge::To()
             {
                 if(NumberOfConnections() == 2)
@@ -1302,6 +1307,7 @@ namespace OpenGraphtheory
             fattr->Value = weight;
         }
 
+        /// \brief Accessor-method for reading coordinates
         Coordinates GraphObject::GetCoordinates(size_t minCount, string name)
         {
             Coordinates result;
@@ -1330,6 +1336,7 @@ namespace OpenGraphtheory
             return result;
         }
 
+        /// \brief Accessor-method for writing coordinates
         void GraphObject::SetCoordinates(Coordinates& coordinates, string name)
         {
             RemoveAttribute(name);
