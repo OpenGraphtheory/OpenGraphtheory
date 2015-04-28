@@ -11,6 +11,9 @@
         namespace Generate
         {
 
+            /// \ingroup Generate
+            /// \brief Generator Class for <a href="http://en.wikipedia.org/wiki/Path_graph">Path Graphs</a>
+
             class GeneratorPATH : public Generator
             {
                 protected:

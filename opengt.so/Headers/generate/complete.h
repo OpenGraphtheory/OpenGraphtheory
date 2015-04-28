@@ -12,6 +12,9 @@
         namespace Generate
         {
 
+            /// \ingroup Generate
+            /// \brief Generator Class for <a href="http://en.wikipedia.org/wiki/Complete_graph">Complete Graphs</a>
+
             class GeneratorCOMPLETE : public Generator
             {
                 protected:

@@ -12,6 +12,9 @@
         namespace Generate
         {
 
+            /// \ingroup Generate
+            /// \brief Generator Class for <a href="http://en.wikipedia.org/wiki/Cycle_graph">Circle Graphs</a>
+
             class GeneratorCIRCLE : public Generator
             {
                 protected:

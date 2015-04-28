@@ -13,6 +13,9 @@
         namespace Generate
         {
 
+            /// \ingroup Generate
+            /// \brief Generator Class for <a href="http://en.wikipedia.org/wiki/Star_(graph_theory)">Star Graphs</a>
+
             class GeneratorSTAR : public Generator
             {
                 protected:

@@ -13,6 +13,9 @@
         namespace Generate
         {
 
+            /// \ingroup Generate
+            /// \brief Generator Class for <a href="http://en.wikipedia.org/wiki/Tree_(graph_theory)">Trees</a>
+
             class GeneratorTREE : public Generator
             {
                 protected:

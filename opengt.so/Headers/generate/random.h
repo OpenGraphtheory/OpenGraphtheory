@@ -16,6 +16,9 @@
         namespace Generate
         {
 
+            /// \ingroup Generate
+            /// \brief Generator Class for Random Graphs
+
             class GeneratorRANDOM : public Generator
             {
                 protected:

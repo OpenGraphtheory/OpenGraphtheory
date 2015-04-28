@@ -10,8 +10,14 @@
 
     namespace OpenGraphtheory
     {
+
+        /// \defgroup Generate Generators
+        /// @{
+
         namespace Generate
         {
+
+            /// \brief Base Class for all Generators
 
             class Generator
             {
@@ -34,6 +40,8 @@
             };
 
         }
+
+        /// @}
     }
 
 #endif
