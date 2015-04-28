@@ -25,9 +25,9 @@ namespace OpenGraphtheory
             int n = parameter.front();
             Graph result;
 
-			Vertex* center = *(result.AddVertex());
-			Coordinates centercoords(2, 0.0f);
-			center->SetCoordinates(centercoords);
+            Vertex* center = *(result.AddVertex());
+            Coordinates centercoords(2, 0.0f);
+            center->SetCoordinates(centercoords);
 
             Vertex* prev = NULL;
             Vertex* first = NULL;

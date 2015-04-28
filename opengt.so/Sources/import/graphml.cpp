@@ -20,16 +20,16 @@ namespace OpenGraphtheory
 
         Graph ImportFilterGRAPHML::Import(istream& is)
         {
-			OpenGraphtheory::XML::XML* root = new OpenGraphtheory::XML::XML;
-			is >> (*root);
+            OpenGraphtheory::XML::XML* root = new OpenGraphtheory::XML::XML;
+            is >> (*root);
 
-		    list<OpenGraphtheory::XML::XML*> graphmlnodes = root->FindChildren("graphml");
-			if(graphmlnodes.size() > 1)
-				throw "XML Document must have exactly 1 top element \"graphml\"";
-			if(graphmlnodes.size() < 1)
-				throw "XML Document contains no element \"graphml\" (document possibly empty)";
+            list<OpenGraphtheory::XML::XML*> graphmlnodes = root->FindChildren("graphml");
+            if(graphmlnodes.size() > 1)
+                throw "XML Document must have exactly 1 top element \"graphml\"";
+            if(graphmlnodes.size() < 1)
+                throw "XML Document contains no element \"graphml\" (document possibly empty)";
             OpenGraphtheory::XML::XML* graphmlnode = graphmlnodes.front();
-		    list<OpenGraphtheory::XML::XML*> graphnodes = graphmlnode->FindChildren("graph");
+            list<OpenGraphtheory::XML::XML*> graphnodes = graphmlnode->FindChildren("graph");
             OpenGraphtheory::XML::XML* graphnode = graphnodes.front();
 
 
@@ -48,56 +48,56 @@ namespace OpenGraphtheory
 
 
 
-			/// load vertices
-			list<OpenGraphtheory::XML::XML*> nodes = graphnode->FindChildren("node");
-			for(list<OpenGraphtheory::XML::XML*>::iterator node = nodes.begin(); node != nodes.end(); node++)
-			{
-				/// create vertex
-				Vertex* v = *(result.AddVertex());
+            /// load vertices
+            list<OpenGraphtheory::XML::XML*> nodes = graphnode->FindChildren("node");
+            for(list<OpenGraphtheory::XML::XML*>::iterator node = nodes.begin(); node != nodes.end(); node++)
+            {
+                /// create vertex
+                Vertex* v = *(result.AddVertex());
 
-				/// assign XML-ID
-				string id = (*node)->GetAttribute("id", "");
-				if(id == "")
-					throw "Illegal Structure"; // illegal or no ID
-				if(Vertex_XML_ID_to_pointer.find(id) != Vertex_XML_ID_to_pointer.end())
-					throw "multiple nodes with same id"; // same ID twice
-				Vertex_XML_ID_to_pointer[id] = v;
-			}
+                /// assign XML-ID
+                string id = (*node)->GetAttribute("id", "");
+                if(id == "")
+                    throw "Illegal Structure"; // illegal or no ID
+                if(Vertex_XML_ID_to_pointer.find(id) != Vertex_XML_ID_to_pointer.end())
+                    throw "multiple nodes with same id"; // same ID twice
+                Vertex_XML_ID_to_pointer[id] = v;
+            }
 
 
-			/// load edges
-			list<OpenGraphtheory::XML::XML*> edges = graphnode->FindChildren("edge");
-			for(list<OpenGraphtheory::XML::XML*>::iterator edge = edges.begin(); edge != edges.end(); edge++)
-			{
-				string xmlFrom = (*edge)->GetAttribute("source", "");
+            /// load edges
+            list<OpenGraphtheory::XML::XML*> edges = graphnode->FindChildren("edge");
+            for(list<OpenGraphtheory::XML::XML*>::iterator edge = edges.begin(); edge != edges.end(); edge++)
+            {
+                string xmlFrom = (*edge)->GetAttribute("source", "");
                 map<string,Vertex*>::iterator from = Vertex_XML_ID_to_pointer.find(xmlFrom);
-				string xmlTo = (*edge)->GetAttribute("target", "");
+                string xmlTo = (*edge)->GetAttribute("target", "");
                 map<string,Vertex*>::iterator to = Vertex_XML_ID_to_pointer.find(xmlTo);
                 if(from == Vertex_XML_ID_to_pointer.end() || to == Vertex_XML_ID_to_pointer.end())
-					throw "edge with reference to nonexisting node-id";
+                    throw "edge with reference to nonexisting node-id";
 
-				/// create edge
-				bool Directed = defaultdirected;
-				string directed = (*edge)->GetAttribute("directed", "");
-				if(directed == "true")
+                /// create edge
+                bool Directed = defaultdirected;
+                string directed = (*edge)->GetAttribute("directed", "");
+                if(directed == "true")
                     Directed = true;
                 else if(directed == "false")
                     Directed = false;
 
-				EdgeIterator e;
-				if(Directed)
+                EdgeIterator e;
+                if(Directed)
                     e = result.AddArc(from->second, to->second);
                 else
                     e = result.AddEdge(from->second, to->second);
 
                 /// assign attributes
-				/*
-				e.SetLabel((*edge)->GetAttribute("label",""));
-				*/
+                /*
+                e.SetLabel((*edge)->GetAttribute("label",""));
+                */
             }
 
-			delete root;
-			return result;
+            delete root;
+            return result;
         }
 
     }

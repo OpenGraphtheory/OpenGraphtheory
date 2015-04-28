@@ -1,47 +1,47 @@
 
 #ifndef __OPENGRAPHTHEORY_OPENGT_H
-	#define __OPENGRAPHTHEORY_OPENGT_H
+    #define __OPENGRAPHTHEORY_OPENGT_H
 
-	#include <list>
-	#include <set>
-	#include <map>
-	#include <string>
-	#include <iostream>
-	#include <fstream>
+    #include <list>
+    #include <set>
+    #include <map>
+    #include <string>
+    #include <iostream>
+    #include <fstream>
     #include <vector>
 
-	#include "simple_xml.h"
-	#include "attributes.h"
-	#include "set_helper.h"
-	#include "visualize/color.h"
+    #include "simple_xml.h"
+    #include "attributes.h"
+    #include "set_helper.h"
+    #include "visualize/color.h"
 
     namespace OpenGraphtheory
     {
 
-		/// \brief A class to represent graphs
+        /// \brief A class to represent graphs
 
-		class Vertex;
-		typedef SetHelper::VectorSet<Vertex*> VertexSet;
-		typedef VertexSet::iterator VertexIterator;
-		typedef VertexSet::const_iterator ConstVertexIterator;
+        class Vertex;
+        typedef SetHelper::VectorSet<Vertex*> VertexSet;
+        typedef VertexSet::iterator VertexIterator;
+        typedef VertexSet::const_iterator ConstVertexIterator;
         typedef std::map<Vertex*, int> VertexPartitioning;
-		typedef std::map<Vertex*, float> VertexWeighting;
-		typedef std::map<Vertex*, Visualization::Color> VertexColoring;
+        typedef std::map<Vertex*, float> VertexWeighting;
+        typedef std::map<Vertex*, Visualization::Color> VertexColoring;
 
-		class Edge;
-		typedef SetHelper::VectorSet<Edge*> EdgeSet;
-		typedef EdgeSet::iterator EdgeIterator;
-		typedef EdgeSet::const_iterator ConstEdgeIterator;
-		typedef std::map<Edge*, int> EdgePartitioning;
-		typedef std::map<Edge*, float> EdgeWeighting;
-		typedef std::map<Edge*, Visualization::Color> EdgeColoring;
+        class Edge;
+        typedef SetHelper::VectorSet<Edge*> EdgeSet;
+        typedef EdgeSet::iterator EdgeIterator;
+        typedef EdgeSet::const_iterator ConstEdgeIterator;
+        typedef std::map<Edge*, int> EdgePartitioning;
+        typedef std::map<Edge*, float> EdgeWeighting;
+        typedef std::map<Edge*, Visualization::Color> EdgeColoring;
 
-		class VertexEdgeConnection;
-		typedef SetHelper::VectorSet<VertexEdgeConnection*> VertexEdgeConnectionSet;
-		typedef VertexEdgeConnectionSet::iterator VertexEdgeConnectionIterator;
-		typedef VertexEdgeConnectionSet::const_iterator ConstVertexEdgeConnectionIterator;
+        class VertexEdgeConnection;
+        typedef SetHelper::VectorSet<VertexEdgeConnection*> VertexEdgeConnectionSet;
+        typedef VertexEdgeConnectionSet::iterator VertexEdgeConnectionIterator;
+        typedef VertexEdgeConnectionSet::const_iterator ConstVertexEdgeConnectionIterator;
 
-		typedef std::vector<float> Coordinates;
+        typedef std::vector<float> Coordinates;
 
 
         class GraphObject
@@ -78,61 +78,61 @@
                 bool LoadFromXml(OpenGraphtheory::XML::XML* xml);
         };
 
-		class Graph : public GraphObject
-		{
-			private:
-				std::map<int,Vertex*> *Vertex_ID_to_pointer;
-				std::map<int,Edge*> *Edge_ID_to_pointer;
-		    protected:
-				VertexSet* Vertices;
-				EdgeSet* Edges;
+        class Graph : public GraphObject
+        {
+            private:
+                std::map<int,Vertex*> *Vertex_ID_to_pointer;
+                std::map<int,Edge*> *Edge_ID_to_pointer;
+            protected:
+                VertexSet* Vertices;
+                EdgeSet* Edges;
                 static FactoryRegistrator<GraphObject> GraphRegistrator;
 
-			public:
-				virtual ~Graph();
-				Graph(int size = 0);
-				Graph(const Graph& G);
-				#if __cplusplus >= 201103L
+            public:
+                virtual ~Graph();
+                Graph(int size = 0);
+                Graph(const Graph& G);
+                #if __cplusplus >= 201103L
                     Graph(Graph&& G); // Move Constructor (C++ 2011 Standard)
                 #endif
-				void Clear();
-				void operator=(const Graph& G);
+                void Clear();
+                void operator=(const Graph& G);
 
-				int NumberOfVertices() const;
-				int NumberOfEdges() const;
+                int NumberOfVertices() const;
+                int NumberOfEdges() const;
 
-				bool IsUndirected();
-				bool IsDirected();
-				bool IsMixed();
-				bool IsUndirectedHypergraph();
-				bool IsHyperDigraph();
-				bool IsMixedHypergraph();
-				bool IsHypergraph();
+                bool IsUndirected();
+                bool IsDirected();
+                bool IsMixed();
+                bool IsUndirectedHypergraph();
+                bool IsHyperDigraph();
+                bool IsMixedHypergraph();
+                bool IsHypergraph();
 
-				bool HasDirectedLoops();
-				bool HasUndirectedLoops();
-				bool HasLoops();
-				bool IsMultigraph();
-				bool IsMultiDigraph();
-				bool IsMixedMultigraph();
+                bool HasDirectedLoops();
+                bool HasUndirectedLoops();
+                bool HasLoops();
+                bool IsMultigraph();
+                bool IsMultiDigraph();
+                bool IsMixedMultigraph();
 
-				bool HasParallelEdges();
-				bool IsSimpleGraph();
-				bool IsSimpleDigraph();
+                bool HasParallelEdges();
+                bool IsSimpleGraph();
+                bool IsSimpleDigraph();
 
-				VertexIterator BeginVertices();
-				ConstVertexIterator BeginVertices() const;
-				VertexIterator EndVertices();
-				ConstVertexIterator EndVertices() const;
-				EdgeIterator BeginEdges();
-				ConstEdgeIterator BeginEdges() const;
-				EdgeIterator EndEdges();
-				ConstEdgeIterator EndEdges() const;
+                VertexIterator BeginVertices();
+                ConstVertexIterator BeginVertices() const;
+                VertexIterator EndVertices();
+                ConstVertexIterator EndVertices() const;
+                EdgeIterator BeginEdges();
+                ConstEdgeIterator BeginEdges() const;
+                EdgeIterator EndEdges();
+                ConstEdgeIterator EndEdges() const;
 
-				EdgeIterator GetEdge(int ID);
-				VertexIterator GetVertex(int ID);
+                EdgeIterator GetEdge(int ID);
+                VertexIterator GetVertex(int ID);
 
-				VertexIterator Fuse(VertexSet& Vertices);
+                VertexIterator Fuse(VertexSet& Vertices);
 
             /// management of attributes
 
@@ -156,49 +156,49 @@
                 void AddEdgeColoring(EdgeColoring& Coloring, std::string name);
                 EdgeColoring GetEdgeColoring(std::string name);
 
-			/// adding and removing vertices
-			protected:
-				VertexIterator InternalAddVertex(int ID = -1);
+            /// adding and removing vertices
+            protected:
+                VertexIterator InternalAddVertex(int ID = -1);
 
-			public:
+            public:
                 VertexIterator AddVertex();
 
-				void RemoveVertex(Vertex* v, bool RemoveIncidentEdges = true);
-				void RemoveVertex(VertexIterator v, bool RemoveIncidentEdges = true);
-				Graph operator-(VertexIterator v);
-				void operator-=(VertexIterator v);
+                void RemoveVertex(Vertex* v, bool RemoveIncidentEdges = true);
+                void RemoveVertex(VertexIterator v, bool RemoveIncidentEdges = true);
+                Graph operator-(VertexIterator v);
+                void operator-=(VertexIterator v);
 
-			/// adding and removing edges
-			protected:
-				EdgeIterator InternalAddEdge(Vertex* from, Vertex* to, bool directed=false, int ID = -1);
+            /// adding and removing edges
+            protected:
+                EdgeIterator InternalAddEdge(Vertex* from, Vertex* to, bool directed=false, int ID = -1);
 
-			public:
-				EdgeIterator AddEdge(Vertex* a, Vertex* b);
-				EdgeIterator AddEdge(VertexIterator a, VertexIterator b);
-				EdgeIterator AddArc(Vertex* from, Vertex* to);
-				EdgeIterator AddArc( VertexIterator From, VertexIterator To);
-				EdgeIterator AddUndirectedLoop(VertexIterator v);
-				EdgeIterator AddDirectedLoop(VertexIterator v);
-				EdgeIterator AddLooseEdge();
+            public:
+                EdgeIterator AddEdge(Vertex* a, Vertex* b);
+                EdgeIterator AddEdge(VertexIterator a, VertexIterator b);
+                EdgeIterator AddArc(Vertex* from, Vertex* to);
+                EdgeIterator AddArc( VertexIterator From, VertexIterator To);
+                EdgeIterator AddUndirectedLoop(VertexIterator v);
+                EdgeIterator AddDirectedLoop(VertexIterator v);
+                EdgeIterator AddLooseEdge();
 
-				void RemoveEdge(Edge* e);
-				void RemoveEdge(EdgeIterator e);
-				Graph operator-(EdgeIterator v);
-				void operator-=(EdgeIterator v);
+                void RemoveEdge(Edge* e);
+                void RemoveEdge(EdgeIterator e);
+                Graph operator-(EdgeIterator v);
+                void operator-=(EdgeIterator v);
 
 
-			/// streaming
-			public:
-				bool LoadFromXML(OpenGraphtheory::XML::XML* root);
-				bool LoadFromStream(std::istream& is);
-				friend std::istream& operator>>(std::istream& is, Graph& G);
-				static std::list<Graph> LoadGraphsFromXML(OpenGraphtheory::XML::XML* root);
-				static std::list<Graph> LoadGraphsFromStream(std::istream& is);
-				void LoadFromFile(std::string filename);
+            /// streaming
+            public:
+                bool LoadFromXML(OpenGraphtheory::XML::XML* root);
+                bool LoadFromStream(std::istream& is);
+                friend std::istream& operator>>(std::istream& is, Graph& G);
+                static std::list<Graph> LoadGraphsFromXML(OpenGraphtheory::XML::XML* root);
+                static std::list<Graph> LoadGraphsFromStream(std::istream& is);
+                void LoadFromFile(std::string filename);
 
-				void WriteToStream(std::ostream& os, int indent=0);
-				void SaveToFile(std::string filename);
-				friend std::ostream& operator<<(std::ostream& os, Graph& G);
+                void WriteToStream(std::ostream& os, int indent=0);
+                void SaveToFile(std::string filename);
+                friend std::ostream& operator<<(std::ostream& os, Graph& G);
         };
 
 
@@ -230,7 +230,7 @@
             friend class DefaultInstantiator<GraphObject, Vertex>;
 
             private:
-				static int Vertex_IDs;
+                static int Vertex_IDs;
 
             protected:
                 Vertex(Graph* owner = NULL, int ID=-1);
@@ -281,7 +281,7 @@
             friend class DefaultInstantiator<GraphObject, Edge>;
 
             private:
-				static int Edge_IDs;
+                static int Edge_IDs;
 
             protected:
                 Edge(Graph* owner = NULL, int ID=-1);

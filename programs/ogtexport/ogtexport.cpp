@@ -13,17 +13,17 @@ void usage(char* argv0);
 int main(int argc, char** argv)
 {
     ExportFilter* exportfilter = NULL;
-	try
-	{
+    try
+    {
         string vertexcoloring = "";
         string edgecoloring = "";
         string format = "";
         float edgewidth = -1;
         float vertexradius = -1;
         float dpi = 72;
-		for(int i = 1; i < argc-1; i++)
-		{
-		    if(string(argv[i]) == "--format")
+        for(int i = 1; i < argc-1; i++)
+        {
+            if(string(argv[i]) == "--format")
                 format = argv[++i];
             else if(string(argv[i]) == "--vertexcoloring")
                 vertexcoloring = argv[++i];
@@ -52,27 +52,27 @@ int main(int argc, char** argv)
                 cerr << "argument not understood: " << argv[i] << "\n";
             }
 
-		}
+        }
 
-		exportfilter = ExportFilter::ExportFilterFactory.Produce(format);
-		if(exportfilter == NULL)
-		    throw "unknown export filter";
+        exportfilter = ExportFilter::ExportFilterFactory.Produce(format);
+        if(exportfilter == NULL)
+            throw "unknown export filter";
 
         Graph G;
         cin >> G;
         exportfilter->DoExport(G, cout, vertexcoloring, edgecoloring, dpi, edgewidth, vertexradius);
         delete exportfilter;
-	}
-	catch(const char* s)
-	{
-		cerr << argv[0] << " ERROR: " << s << "\n";
-		usage(argv[0]);
-		if(exportfilter != NULL)
-		    delete exportfilter;
-		return 1;
-	}
+    }
+    catch(const char* s)
+    {
+        cerr << argv[0] << " ERROR: " << s << "\n";
+        usage(argv[0]);
+        if(exportfilter != NULL)
+            delete exportfilter;
+        return 1;
+    }
 
-	return 0;
+    return 0;
 }
 
 
@@ -131,19 +131,19 @@ void FactoryLister::Enumerate(string name, string description, string url)
 
 void usage(char* argv0)
 {
-	cerr << "usage: " << argv0 << " --format <format> [<option>*]\n"
-	     << "   where <option> can be\n"
-	     << "       --vertexcoloring <name>\n"
-	     << "           selects the coloring that is used for the vertices\n"
-	     << "       --edgecoloring <name>\n"
-	     << "           selects the coloring that is used for the edges\n"
-	     << "       --vertexradius <float>\n"
-	     << "           sets a common radius for all vertices (in centimeters)\n"
-	     << "       --edgewidth <float>\n"
-	     << "           sets a common width for all edges (in centimeters)\n"
-	     << "       --dpi <float>\n"
-	     << "           sets the assumed resolution (dots per inch)\n"
-	     << "   and <format> can be\n";
+    cerr << "usage: " << argv0 << " --format <format> [<option>*]\n"
+         << "   where <option> can be\n"
+         << "       --vertexcoloring <name>\n"
+         << "           selects the coloring that is used for the vertices\n"
+         << "       --edgecoloring <name>\n"
+         << "           selects the coloring that is used for the edges\n"
+         << "       --vertexradius <float>\n"
+         << "           sets a common radius for all vertices (in centimeters)\n"
+         << "       --edgewidth <float>\n"
+         << "           sets a common width for all edges (in centimeters)\n"
+         << "       --dpi <float>\n"
+         << "           sets the assumed resolution (dots per inch)\n"
+         << "   and <format> can be\n";
 
     FactoryMaxNameLength* l = new FactoryMaxNameLength();
     Export::ExportFilter::ExportFilterFactory.Enumerate(l);

@@ -17,14 +17,14 @@ namespace OpenGraphtheory
 
         Graph ImportFilterXGMML::Import(istream& is)
         {
-			OpenGraphtheory::XML::XML* root = new OpenGraphtheory::XML::XML;
-			is >> (*root);
+            OpenGraphtheory::XML::XML* root = new OpenGraphtheory::XML::XML;
+            is >> (*root);
 
-		    list<OpenGraphtheory::XML::XML*> graphnodes = root->FindChildren("graph");
-			if(graphnodes.size() > 1)
-				throw "XML Document must have exactly 1 top element \"graph\"";
-			if(graphnodes.size() < 1)
-				throw "XML Document contains no element \"graph\" (document possibly empty)";
+            list<OpenGraphtheory::XML::XML*> graphnodes = root->FindChildren("graph");
+            if(graphnodes.size() > 1)
+                throw "XML Document must have exactly 1 top element \"graph\"";
+            if(graphnodes.size() < 1)
+                throw "XML Document contains no element \"graph\" (document possibly empty)";
             OpenGraphtheory::XML::XML* graphnode = graphnodes.front();
 
 
@@ -34,25 +34,25 @@ namespace OpenGraphtheory
             // 0 is the default for directed, by the XGMML standard
             bool Directed = (graphnode->GetAttribute("directed", "0") == "1");
 
-			/// load vertices
-			list<OpenGraphtheory::XML::XML*> nodes = graphnode->FindChildren("node");
-			for(list<OpenGraphtheory::XML::XML*>::iterator node = nodes.begin(); node != nodes.end(); node++)
-			{
-				/// create vertex
-				Vertex* v = *(result.AddVertex());
+            /// load vertices
+            list<OpenGraphtheory::XML::XML*> nodes = graphnode->FindChildren("node");
+            for(list<OpenGraphtheory::XML::XML*>::iterator node = nodes.begin(); node != nodes.end(); node++)
+            {
+                /// create vertex
+                Vertex* v = *(result.AddVertex());
 
-				v->SetLabel((*node)->GetAttribute("label",""));
-				string sWeight = (*node)->GetAttribute("weight","0");
-				stringstream s;
-				s << sWeight;
-				float Weight = 0;
-				s >> Weight;
-				v->SetWeight(Weight);
+                v->SetLabel((*node)->GetAttribute("label",""));
+                string sWeight = (*node)->GetAttribute("weight","0");
+                stringstream s;
+                s << sWeight;
+                float Weight = 0;
+                s >> Weight;
+                v->SetWeight(Weight);
 
-				/// assign attributes
-				list<OpenGraphtheory::XML::XML*> attrs = (*node)->FindChildren("att");
-				for(list<OpenGraphtheory::XML::XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
-				{
+                /// assign attributes
+                list<OpenGraphtheory::XML::XML*> attrs = (*node)->FindChildren("att");
+                for(list<OpenGraphtheory::XML::XML*>::iterator attr = attrs.begin(); attr != attrs.end(); attr++)
+                {
                     string name = (*attr)->GetAttribute("name", "");
                     string value = (*attr)->GetAttribute("value", "");
                     v->RemoveAttribute(name);
@@ -62,40 +62,40 @@ namespace OpenGraphtheory
                         sAttr->Value = value;
                 }
 
-				/// assign XML-ID
-				string id = (*node)->GetAttribute("id", "");
-				if(id == "")
-					throw "Illegal Structure"; // illegal or no ID
-				if(Vertex_XML_ID_to_pointer.find(id) != Vertex_XML_ID_to_pointer.end())
-					throw "multiple nodes with same id"; // same ID twice
-				Vertex_XML_ID_to_pointer[id] = v;
-			}
+                /// assign XML-ID
+                string id = (*node)->GetAttribute("id", "");
+                if(id == "")
+                    throw "Illegal Structure"; // illegal or no ID
+                if(Vertex_XML_ID_to_pointer.find(id) != Vertex_XML_ID_to_pointer.end())
+                    throw "multiple nodes with same id"; // same ID twice
+                Vertex_XML_ID_to_pointer[id] = v;
+            }
 
 
-			/// load edges
-			list<OpenGraphtheory::XML::XML*> edges = graphnode->FindChildren("edge");
-			for(list<OpenGraphtheory::XML::XML*>::iterator edge = edges.begin(); edge != edges.end(); edge++)
-			{
-				string xmlFrom = (*edge)->GetAttribute("source", "");
+            /// load edges
+            list<OpenGraphtheory::XML::XML*> edges = graphnode->FindChildren("edge");
+            for(list<OpenGraphtheory::XML::XML*>::iterator edge = edges.begin(); edge != edges.end(); edge++)
+            {
+                string xmlFrom = (*edge)->GetAttribute("source", "");
                 map<string,Vertex*>::iterator from = Vertex_XML_ID_to_pointer.find(xmlFrom);
-				string xmlTo = (*edge)->GetAttribute("target", "");
+                string xmlTo = (*edge)->GetAttribute("target", "");
                 map<string,Vertex*>::iterator to = Vertex_XML_ID_to_pointer.find(xmlTo);
                 if(from == Vertex_XML_ID_to_pointer.end() || to == Vertex_XML_ID_to_pointer.end())
-					throw "edge with reference to nonexisting node-id";
+                    throw "edge with reference to nonexisting node-id";
 
-				/// create edge
-				EdgeIterator e;
-				if(Directed)
+                /// create edge
+                EdgeIterator e;
+                if(Directed)
                     e = result.AddArc(from->second, to->second);
                 else
                     e = result.AddEdge(from->second, to->second);
 
                 /// assign attributes
-				(*e)->SetLabel((*edge)->GetAttribute("label",""));
+                (*e)->SetLabel((*edge)->GetAttribute("label",""));
             }
 
-			delete root;
-			return result;
+            delete root;
+            return result;
         }
 
     }

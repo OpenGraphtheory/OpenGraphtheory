@@ -16,100 +16,100 @@
 
 /*
 
-	---------------------------------------------------------------------------------------------------------------------
+    ---------------------------------------------------------------------------------------------------------------------
 
-	DisplayWindow Class - (C) 2008 Viktor "AlgorithMan" Engelmann
-	This sourcecode is provided under the terms of the GNU General Public License v3, see GPL3.txt for details.
-	THANKS TO:
-		http://tronche.com/gui/x/xlib/
-		http://www.pronix.de/pronix-28.html
-	FloodFill Method taken from Wine
-		http://source.winehq.org/source/graphics/x11drv/graphics.c?v=wine20031118#L1227
+    DisplayWindow Class - (C) 2008 Viktor "AlgorithMan" Engelmann
+    This sourcecode is provided under the terms of the GNU General Public License v3, see GPL3.txt for details.
+    THANKS TO:
+        http://tronche.com/gui/x/xlib/
+        http://www.pronix.de/pronix-28.html
+    FloodFill Method taken from Wine
+        http://source.winehq.org/source/graphics/x11drv/graphics.c?v=wine20031118#L1227
 
-	-------------------------------------------------------------------------------------------------------------------
+    -------------------------------------------------------------------------------------------------------------------
 
-	This Class is intended to provide a simple interface to the X11 system. You can easily create windows and
-	draw into them and it can call simple event handlers! You can also create multiple windows!
+    This Class is intended to provide a simple interface to the X11 system. You can easily create windows and
+    draw into them and it can call simple event handlers! You can also create multiple windows!
 
-	This makes this class ideal for displaying calculation results or anything that doesnt need user interaction,
-	because you can write your calculations like usual Shell Programs, pass the results to this class, keep on
-	calculating and this class does all the rest for you.
-	here is some example code:
+    This makes this class ideal for displaying calculation results or anything that doesnt need user interaction,
+    because you can write your calculations like usual Shell Programs, pass the results to this class, keep on
+    calculating and this class does all the rest for you.
+    here is some example code:
 
-	#include "DisplayWindow.h"
-	int main(int argc, char** argv) {
-		DisplayWindow Foo("Title", 640, 480);
-		DisplayWindow Bar("Title2", 320, 240);
+    #include "DisplayWindow.h"
+    int main(int argc, char** argv) {
+        DisplayWindow Foo("Title", 640, 480);
+        DisplayWindow Bar("Title2", 320, 240);
 
-		Foo.Line(20,20,100,100);
-		Foo.Flush(); // you need to flush the graphic buffers so your drawn stuff appears
-		Bar.Circle(20,20,10);
-		Bar.Flush();
+        Foo.Line(20,20,100,100);
+        Foo.Flush(); // you need to flush the graphic buffers so your drawn stuff appears
+        Bar.Circle(20,20,10);
+        Bar.Flush();
 
-		sleep(60);
-		return(0);
-	}
+        sleep(60);
+        return(0);
+    }
 
-	you will notice that even while the program is sleeping (e.g. waiting in a scanf command), you can move the
-	windows, cover them, uncover them etc. this is the case because updates are done by a seperate thread
+    you will notice that even while the program is sleeping (e.g. waiting in a scanf command), you can move the
+    windows, cover them, uncover them etc. this is the case because updates are done by a seperate thread
 
-	-------------------------------------------------------------------------------------------------------------------
+    -------------------------------------------------------------------------------------------------------------------
 
-	here are the signatures for the interface:
+    here are the signatures for the interface:
 
-	DisplayWindow(string Caption, int Width, int Height);
-		Constructor
-	~DisplayWindow();
-		Destructor
-	void CloseWindow();
-		Close the window - parts stay in ram until the DisplayWindow instance is destroyed.
-	void Flush();
-		copies the buffer to the screen - whatever you draw, it is not displayed, until this method is called
-	int Width(); int Height();
-		returns the width or height of the drawing area... they cant be changed after the construction
-		so these methods are kinda pointless, but i included them anyways...
-	bool Closed();
-		checks if the window is already closed (e.g. because the user clicked the "X" button)
-
-
-
-
-	okay, now the interesting methods:
-
-
-	void PutPixel(int x, int y);
-	void Line(int x1, int y1, int x2, int y2);
+    DisplayWindow(string Caption, int Width, int Height);
+        Constructor
+    ~DisplayWindow();
+        Destructor
+    void CloseWindow();
+        Close the window - parts stay in ram until the DisplayWindow instance is destroyed.
+    void Flush();
+        copies the buffer to the screen - whatever you draw, it is not displayed, until this method is called
+    int Width(); int Height();
+        returns the width or height of the drawing area... they cant be changed after the construction
+        so these methods are kinda pointless, but i included them anyways...
+    bool Closed();
+        checks if the window is already closed (e.g. because the user clicked the "X" button)
 
 
 
-	LineStyle = LineSolid, LineOnOffDash, LineDoubleDash.
-	CapStyle = CapNotLast, CapButt, CapRound, CapProjecting.
-	JoinStyle = JoinMiter, JoinRound, or JoinBevel.
-	FillStyle = FillSolid, FillTiled, FillStippled, or FillOpaqueStippled.
+
+    okay, now the interesting methods:
 
 
-	---------------------------------------------------------------------------------------------------------------------
+    void PutPixel(int x, int y);
+    void Line(int x1, int y1, int x2, int y2);
 
-	The Constructor creates a window and a thread that processes the events and updates the "Win" window
 
-	the paint methods (line, rectangle, circle, ...) draw on the PaintBuffer, which is copied to the "WinBackup" Buffer,
-		whenever Flush() is called. When Update() is called or the window receives an "expose" event, the "WinBackup"
-		Buffer is copied to the actual "Win" Window - this "Double Buffer" method prevents stuff from being displayed
-		to early (because of an expose event, instead of a Flush() call - this would lead to messed up images)
 
-	three semaphores (per window) prevent the threads from confusing each other (I hope...)
-		the MainSemaphore is used almost everywhere to make almost all methods atomic
-		the QuittingSemaphore is locked all the time while the thread is running. when CloseWindow sets "Close" to true,
-			the Thread stops and releases the QuittingSemaphore - and the destructor waits for this semaphore, so the
-			DisplayWindow instance isnt kicked out of the ram before it cleanly finished
-		the UpdateSemaphore allows the window to update, while drawing on the PaintBuffer - it only gets locked while
-			the PaintBuffer is copied to the WinBackup buffer or while the PaintBuffer is Copied to WinBackup
+    LineStyle = LineSolid, LineOnOffDash, LineDoubleDash.
+    CapStyle = CapNotLast, CapButt, CapRound, CapProjecting.
+    JoinStyle = JoinMiter, JoinRound, or JoinBevel.
+    FillStyle = FillSolid, FillTiled, FillStippled, or FillOpaqueStippled.
 
-	you can close the window by clicking its "X" button or by using the CloseWindow method - your programs will still
-		be running, only the output is suppressed - this also means that parts of the Data stay in RAM until the
-		instance is destroyed (reaching an end of a block, deleting via a pointer...)
 
-	---------------------------------------------------------------------------------------------------------------------
+    ---------------------------------------------------------------------------------------------------------------------
+
+    The Constructor creates a window and a thread that processes the events and updates the "Win" window
+
+    the paint methods (line, rectangle, circle, ...) draw on the PaintBuffer, which is copied to the "WinBackup" Buffer,
+        whenever Flush() is called. When Update() is called or the window receives an "expose" event, the "WinBackup"
+        Buffer is copied to the actual "Win" Window - this "Double Buffer" method prevents stuff from being displayed
+        to early (because of an expose event, instead of a Flush() call - this would lead to messed up images)
+
+    three semaphores (per window) prevent the threads from confusing each other (I hope...)
+        the MainSemaphore is used almost everywhere to make almost all methods atomic
+        the QuittingSemaphore is locked all the time while the thread is running. when CloseWindow sets "Close" to true,
+            the Thread stops and releases the QuittingSemaphore - and the destructor waits for this semaphore, so the
+            DisplayWindow instance isnt kicked out of the ram before it cleanly finished
+        the UpdateSemaphore allows the window to update, while drawing on the PaintBuffer - it only gets locked while
+            the PaintBuffer is copied to the WinBackup buffer or while the PaintBuffer is Copied to WinBackup
+
+    you can close the window by clicking its "X" button or by using the CloseWindow method - your programs will still
+        be running, only the output is suppressed - this also means that parts of the Data stay in RAM until the
+        instance is destroyed (reaching an end of a block, deleting via a pointer...)
+
+    ---------------------------------------------------------------------------------------------------------------------
 
 */
 
@@ -121,7 +121,7 @@ namespace OpenGraphtheory
     {
         MouseButton MouseButtonCode[] = {mbLeft, mbMiddle, mbRight};
 
-      	Atom wm_delete_window=None;
+          Atom wm_delete_window=None;
 
         std::map<Display*, DisplayWindow*> WindowRegister;
 

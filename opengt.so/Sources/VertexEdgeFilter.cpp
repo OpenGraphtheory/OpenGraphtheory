@@ -5,13 +5,13 @@ using namespace std;
 namespace OpenGraphtheory
 {
 
-	VertexFilter::~VertexFilter()
-	{
-	}
+    VertexFilter::~VertexFilter()
+    {
+    }
 
-	EdgeFilter::~EdgeFilter()
-	{
-	}
+    EdgeFilter::~EdgeFilter()
+    {
+    }
 
 
 
@@ -21,10 +21,10 @@ namespace OpenGraphtheory
         this->ForbiddenVertex = ForbiddenVertex;
     }
 
-	bool ForbiddenVertexFilter::VertexAllowed(Vertex* v)
-	{
-		return v != ForbiddenVertex;
-	}
+    bool ForbiddenVertexFilter::VertexAllowed(Vertex* v)
+    {
+        return v != ForbiddenVertex;
+    }
 
 
 
@@ -48,10 +48,10 @@ namespace OpenGraphtheory
         ForbiddenVertices.erase(Vertex);
     }
 
-	bool ForbiddenVerticesFilter::VertexAllowed(Vertex* v)
-	{
-		return !ForbiddenVertices.contains(v);
-	}
+    bool ForbiddenVerticesFilter::VertexAllowed(Vertex* v)
+    {
+        return !ForbiddenVertices.contains(v);
+    }
 
 
 
@@ -61,10 +61,10 @@ namespace OpenGraphtheory
         this->ForbiddenEdge = ForbiddenEdge;
     }
 
-	bool ForbiddenEdgeFilter::EdgeAllowed(Edge* e)
-	{
-		return e != ForbiddenEdge;
-	}
+    bool ForbiddenEdgeFilter::EdgeAllowed(Edge* e)
+    {
+        return e != ForbiddenEdge;
+    }
 
 
 
@@ -88,10 +88,10 @@ namespace OpenGraphtheory
         ForbiddenEdges.erase(Edge);
     }
 
-	bool ForbiddenEdgesFilter::EdgeAllowed(Edge* e)
-	{
-		return !ForbiddenEdges.contains(e);
-	}
+    bool ForbiddenEdgesFilter::EdgeAllowed(Edge* e)
+    {
+        return !ForbiddenEdges.contains(e);
+    }
 
 
 

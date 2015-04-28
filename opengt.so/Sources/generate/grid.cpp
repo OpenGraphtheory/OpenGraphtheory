@@ -27,7 +27,7 @@ namespace OpenGraphtheory
         }
 
         Graph GeneratorGRID::Generate(int w, int h)
-	    {
+        {
             Graph result;
 
             list<Vertex*> CurrentColumn;

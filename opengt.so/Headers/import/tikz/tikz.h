@@ -3,7 +3,7 @@
     #define __OPENGRAPHTHEORY_IMPORT_TIKZ_TIKZ_H
 
     #include<string>
-	#include<map>
+    #include<map>
     #include "../import.h"
     #include "../../visualize/color.h"
 

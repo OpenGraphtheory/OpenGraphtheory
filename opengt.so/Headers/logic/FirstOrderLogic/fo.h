@@ -3,7 +3,7 @@
     #define __OPENGRAPHTHEORY_LOGIC_FIRSTORDERLOGIC_FO_H
 
     #include<string>
-	#include<map>
+    #include<map>
     #include "../logic.h"
 
     namespace OpenGraphtheory
@@ -27,18 +27,18 @@
             };
 
 
-			class FO_Parameter
-			{
-				private:
-					FO_Parameter* Next;
-					std::string* variablename;
-				public:
-					FO_Parameter(std::string* variablename, FO_Parameter* Next);
-					~FO_Parameter();
+            class FO_Parameter
+            {
+                private:
+                    FO_Parameter* Next;
+                    std::string* variablename;
+                public:
+                    FO_Parameter(std::string* variablename, FO_Parameter* Next);
+                    ~FO_Parameter();
 
-					std::string GetVariableName();
-					FO_Parameter* GetNext();
-			};
+                    std::string GetVariableName();
+                    FO_Parameter* GetNext();
+            };
 
 
             class FO_Atomic : public FOFormula
@@ -77,10 +77,10 @@
 
             class FO_Eq : public FOFormula
             {
-				private:
-					std::string* param1;
-					std::string* param2;
-				public:
+                private:
+                    std::string* param1;
+                    std::string* param2;
+                public:
                     FO_Eq(std::string* param1, std::string* param2);
                     ~FO_Eq();
                     Formula* Clone();
@@ -90,9 +90,9 @@
 
             class FO_Neq : public FOFormula
             {
-				private:
-					std::string* param1;
-					std::string* param2;
+                private:
+                    std::string* param1;
+                    std::string* param2;
                 public:
                     FO_Neq(std::string* param1, std::string* param2);
                     ~FO_Neq();
@@ -142,7 +142,7 @@
             class FO_Forall : public FOFormula
             {
                 protected:
-					std::string* variablename;
+                    std::string* variablename;
                     FOFormula* phi;
                 public:
                     FO_Forall(std::string* variablename, FOFormula* phi);
@@ -155,7 +155,7 @@
             class FO_Exists : public FOFormula
             {
                 protected:
-					std::string* variablename;
+                    std::string* variablename;
                     FOFormula* phi;
                 public:
                     FO_Exists(std::string* variablename, FOFormula* phi);

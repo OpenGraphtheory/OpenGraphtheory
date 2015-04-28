@@ -14,16 +14,16 @@ int main(int argc, char** argv)
 {
     set<Algorithm*> algos;
     int result = 0;
-	try
-	{
-		Graph G;
-		vector<string> parameters;
-		int argvi = 2;
+    try
+    {
+        Graph G;
+        vector<string> parameters;
+        int argvi = 2;
         cin >> G;
         float MinApproximationQuality = 1.0;
 
-		for(; argvi < argc; argvi++)
-		{
+        for(; argvi < argc; argvi++)
+        {
             if(string(argv[argvi]) == "--quality" && argc > argvi+1)
             {
                 float temp = atof(argv[++argvi]);
@@ -44,13 +44,13 @@ int main(int argc, char** argv)
 
         Algorithm::RunParallel(algos, G, parameters, MinApproximationQuality);
         cout << G;
-	}
-	catch(const char* s)
-	{
-		cerr << argv[0] << " ERROR: " << s << "\n";
-		usage(argv[0]);
-		result = 1;
-	}
+    }
+    catch(const char* s)
+    {
+        cerr << argv[0] << " ERROR: " << s << "\n";
+        usage(argv[0]);
+        result = 1;
+    }
 
     while(algos.size() > 0)
     {
@@ -58,7 +58,7 @@ int main(int argc, char** argv)
         algos.erase(algos.begin());
     }
 
-	return result;
+    return result;
 }
 
 
@@ -117,8 +117,8 @@ void FactoryLister::Enumerate(string name, string description, string url)
 
 void usage(char* argv0)
 {
-	cerr << "usage: " << argv0 << " algorithm <parameters>\n"
-	     << "     where algorithm can be\n";
+    cerr << "usage: " << argv0 << " algorithm <parameters>\n"
+         << "     where algorithm can be\n";
 
     FactoryMaxNameLength* l = new FactoryMaxNameLength();
     Algorithm::AlgorithmFactory.Enumerate(l);

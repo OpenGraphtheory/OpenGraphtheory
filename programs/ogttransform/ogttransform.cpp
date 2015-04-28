@@ -18,7 +18,7 @@ int main(int argc, char** argv)
     /// do your thing
 
     cout << G;
-	return 0;
+    return 0;
 }
 
 example program 2
@@ -56,7 +56,7 @@ int main(int argc, char** argv)
         G.SaveToFile(argv[2]);
     else
         cout << G;
-	return 0;
+    return 0;
 }
 */
 
@@ -75,29 +75,29 @@ using namespace OpenGraphtheory::IntermediateSteps;
 void usage(char* argv0);
 int main(int argc, char** argv)
 {
-	try
-	{
-		Graph G;
+    try
+    {
+        Graph G;
         cin >> G;
         string sIntermediatestephandler = "";
         IntermediateStepHandler* intermediatestephandler = NULL;
 
-		/// do your thing
-		vector<float> parameters;
-		int argvi = 2;
-		for(; argvi < argc; argvi++)
-		{
-		    if(string(argv[argvi]) == "--intermediatesteps")
-		    {
-		        if(argc > argvi+1)
+        /// do your thing
+        vector<float> parameters;
+        int argvi = 2;
+        for(; argvi < argc; argvi++)
+        {
+            if(string(argv[argvi]) == "--intermediatesteps")
+            {
+                if(argc > argvi+1)
                     sIntermediatestephandler = argv[argvi+1];
                 break;
-		    }
+            }
             parameters.push_back(atof(argv[argvi]));
-		}
+        }
 
-		if(sIntermediatestephandler != "")
-		{
+        if(sIntermediatestephandler != "")
+        {
             intermediatestephandler = IntermediateStepHandler::IntermediateStepHandlerFactory.Produce(sIntermediatestephandler);
             if(intermediatestephandler != NULL)
             {
@@ -108,7 +108,7 @@ int main(int argc, char** argv)
                 intermediatestephandler->Configure(intermediatestephandlerparameters);
                 intermediatestephandler->BeginHandling();
             }
-		}
+        }
 
 
         Transformer::Transform(G, parameters, argv[1], intermediatestephandler);
@@ -120,15 +120,15 @@ int main(int argc, char** argv)
             delete(intermediatestephandler);
         }
 
-	}
-	catch(const char* s)
-	{
-		cerr << argv[0] << " ERROR: " << s << "\n";
-		usage(argv[0]);
-		return 1;
-	}
+    }
+    catch(const char* s)
+    {
+        cerr << argv[0] << " ERROR: " << s << "\n";
+        usage(argv[0]);
+        return 1;
+    }
 
-	return 0;
+    return 0;
 }
 
 
@@ -183,8 +183,8 @@ void FactoryLister::Enumerate(string name, string description, string url)
 
 void usage(char* argv0)
 {
-	cerr << "usage: " << argv0 << " transformation <parameters>\n"
-	     << "   where transformation can be\n";
+    cerr << "usage: " << argv0 << " transformation <parameters>\n"
+         << "   where transformation can be\n";
 
 
     FactoryMaxNameLength* l = new FactoryMaxNameLength();

@@ -8,12 +8,12 @@ using namespace OpenGraphtheory::Import;
 
 namespace OpenGraphtheory
 {
-	namespace Import
-	{
+    namespace Import
+    {
 
-		FactoryRegistrator<ImportFilter> ImportFilterGML::ImportFilterGMLRegistrator(
-			&ImportFilter::ImportFilterFactory, "gml", new DefaultInstantiator<ImportFilter, ImportFilterGML>(
-				"gml", "Graph Modelling Language",
+        FactoryRegistrator<ImportFilter> ImportFilterGML::ImportFilterGMLRegistrator(
+            &ImportFilter::ImportFilterFactory, "gml", new DefaultInstantiator<ImportFilter, ImportFilterGML>(
+                "gml", "Graph Modelling Language",
                 "http://www.fim.uni-passau.de/en/fim/faculty/chairs/theoretische-informatik/projects.html"));
 
 
@@ -33,9 +33,9 @@ namespace OpenGraphtheory
 
         Graph ImportFilterGML::Import(std::istream& is)
         {
-			OpenGraphtheory::Import::GMLLexer l(is);
-			GMLTreeNode* GMLTreeRoot = new GMLTreeNode;
-			l.yylex(GMLTreeRoot);
+            OpenGraphtheory::Import::GMLLexer l(is);
+            GMLTreeNode* GMLTreeRoot = new GMLTreeNode;
+            l.yylex(GMLTreeRoot);
 
             Graph result;
             map<int, Vertex*> VertexRegister;
@@ -147,7 +147,7 @@ namespace OpenGraphtheory
             return result;
         }
 
-		// --------------------------------------------------------------------------------------------------------
+        // --------------------------------------------------------------------------------------------------------
 
         GMLValue::GMLValue()
         {
@@ -206,6 +206,6 @@ namespace OpenGraphtheory
         }
 
 
-	} // namespace Logic
+    } // namespace Logic
 } // namespace OpenGraphtheory
 

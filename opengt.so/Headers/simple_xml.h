@@ -1,11 +1,11 @@
 
 #ifndef __OPENGRAPHTHEORY_SIMPLE_XML_H
-	#define __OPENGRAPHTHEORY_SIMPLE_XML_H
+    #define __OPENGRAPHTHEORY_SIMPLE_XML_H
 
-	#include<iostream>
-	#include<sstream>
-	#include<vector>
-	#include<list>
+    #include<iostream>
+    #include<sstream>
+    #include<vector>
+    #include<list>
     #include<string>
 
     namespace OpenGraphtheory

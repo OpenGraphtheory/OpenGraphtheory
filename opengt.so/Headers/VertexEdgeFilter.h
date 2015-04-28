@@ -1,26 +1,26 @@
 
 #ifndef __OPENGRAPHTHEORY_VERTEXEDGEFILTER_H
-	#define __OPENGRAPHTHEORY_VERTEXEDGEFILTER_H
+    #define __OPENGRAPHTHEORY_VERTEXEDGEFILTER_H
 
-	#include "opengt.h"
-	#include<set>
+    #include "opengt.h"
+    #include<set>
 
-	namespace OpenGraphtheory
-	{
+    namespace OpenGraphtheory
+    {
 
-		class VertexFilter
-		{
-			public:
-				virtual ~VertexFilter();
-				virtual bool VertexAllowed(Vertex* v) = 0;
-		};
+        class VertexFilter
+        {
+            public:
+                virtual ~VertexFilter();
+                virtual bool VertexAllowed(Vertex* v) = 0;
+        };
 
-		class EdgeFilter
-		{
-			public:
-				virtual ~EdgeFilter();
-				virtual bool EdgeAllowed(Edge* e) = 0;
-		};
+        class EdgeFilter
+        {
+            public:
+                virtual ~EdgeFilter();
+                virtual bool EdgeAllowed(Edge* e) = 0;
+        };
 
 
         class ForbiddenVertexFilter : public VertexFilter
@@ -67,6 +67,6 @@
                 bool EdgeAllowed(Edge* e);
         };
 
-	}
+    }
 
 #endif

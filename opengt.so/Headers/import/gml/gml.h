@@ -3,8 +3,8 @@
     #define __OPENGRAPHTHEORY_IMPORT_GML_GML_H
 
     #include <string>
-	#include <map>
-	#include <algorithm>
+    #include <map>
+    #include <algorithm>
     #include "../import.h"
 
     namespace OpenGraphtheory

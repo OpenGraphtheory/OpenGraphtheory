@@ -8,12 +8,12 @@ using namespace OpenGraphtheory::Visualization;
 
 int main(int argc, char** argv)
 {
-	try
-	{
-		Graph G1;
-		Graph G2;
-		Graph* pG1 = &G1;
-		Graph* pG2 = &G2;
+    try
+    {
+        Graph G1;
+        Graph G2;
+        Graph* pG1 = &G1;
+        Graph* pG2 = &G2;
 
         /// select input source
 
@@ -67,12 +67,12 @@ int main(int argc, char** argv)
 
         if(!autoclose)
             Win.WaitUntilClosed();
-	}
-	catch(const char* s)
-	{
-		cerr << argv[0] << " ERROR: " << s << "\n";
-		return 1;
-	}
+    }
+    catch(const char* s)
+    {
+        cerr << argv[0] << " ERROR: " << s << "\n";
+        return 1;
+    }
 
-	return 0;
+    return 0;
 }

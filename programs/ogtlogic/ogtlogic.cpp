@@ -12,13 +12,13 @@ using namespace OpenGraphtheory::Logic;
 void usage(char* argv0);
 int main(int argc, char** argv)
 {
-	try
-	{
-	    if(argc < 3)
-	    {
-	        usage(argv[0]);
+    try
+    {
+        if(argc < 3)
+        {
+            usage(argv[0]);
             return 1;
-	    }
+        }
 
         string logic = argv[1];
         string query = argv[2];
@@ -26,35 +26,35 @@ int main(int argc, char** argv)
         for(int i = 3; i < argc; i++)
             parameters.push_back(argv[i]);
 
-		Graph G;
+        Graph G;
         cin >> G;
 
-		ModelChecker* modelchecker = ModelChecker::ModelCheckerFactory.Produce(logic);
-		if(modelchecker != NULL)
-		{
-		    try
-		    {
+        ModelChecker* modelchecker = ModelChecker::ModelCheckerFactory.Produce(logic);
+        if(modelchecker != NULL)
+        {
+            try
+            {
                 modelchecker-> ModelCheck(G, query, parameters);
                 cout << G;
                 delete modelchecker;
-		    }
-		    catch(...)
-		    {
-		        delete modelchecker;
-		        throw;
-		    }
-		}
-		else
-			usage(argv[0]);
-	}
-	catch(const char* s)
-	{
-		cerr << argv[0] << " ERROR: " << s << "\n";
-		usage(argv[0]);
-		return 1;
-	}
+            }
+            catch(...)
+            {
+                delete modelchecker;
+                throw;
+            }
+        }
+        else
+            usage(argv[0]);
+    }
+    catch(const char* s)
+    {
+        cerr << argv[0] << " ERROR: " << s << "\n";
+        usage(argv[0]);
+        return 1;
+    }
 
-	return 0;
+    return 0;
 }
 
 
@@ -111,8 +111,8 @@ void FactoryLister::Enumerate(string name, string description, string url)
 
 void usage(char* argv0)
 {
-	cerr << "usage: " << argv0 << " logic query\n"
-	     << "   where logic can be\n";
+    cerr << "usage: " << argv0 << " logic query\n"
+         << "   where logic can be\n";
 
     FactoryMaxNameLength* l = new FactoryMaxNameLength();
     Logic::ModelChecker::ModelCheckerFactory.Enumerate(l);

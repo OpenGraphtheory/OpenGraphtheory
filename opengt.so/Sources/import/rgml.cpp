@@ -18,56 +18,56 @@ namespace OpenGraphtheory
 
         Graph ImportFilterRGML::Import(istream& is)
         {
-			OpenGraphtheory::XML::XML* root = new OpenGraphtheory::XML::XML;
-			is >> (*root);
+            OpenGraphtheory::XML::XML* root = new OpenGraphtheory::XML::XML;
+            is >> (*root);
 
-		    list<OpenGraphtheory::XML::XML*> rdfnodes = root->FindChildren("rdf:RDF");
-			if(rdfnodes.size() > 1)
-				throw "XML Document must have exactly 1 top element \"rdf:RDF\"";
-			if(rdfnodes.size() < 1)
-				throw "XML Document contains no element \"rdf:RDF\" (document possibly empty)";
+            list<OpenGraphtheory::XML::XML*> rdfnodes = root->FindChildren("rdf:RDF");
+            if(rdfnodes.size() > 1)
+                throw "XML Document must have exactly 1 top element \"rdf:RDF\"";
+            if(rdfnodes.size() < 1)
+                throw "XML Document contains no element \"rdf:RDF\" (document possibly empty)";
             OpenGraphtheory::XML::XML* rdfnode = rdfnodes.front();
 
 
             // The RGML Standard doesn't define a default value
             bool Directed = false;
-		    list<OpenGraphtheory::XML::XML*> graphnodes = rdfnode->FindChildren("Graph");
-		    if(graphnodes.size() > 0)
+            list<OpenGraphtheory::XML::XML*> graphnodes = rdfnode->FindChildren("Graph");
+            if(graphnodes.size() > 0)
                 Directed = graphnodes.front()->GetAttribute("rgml:directed", "false") == "true";
 
 
             Graph result;
             map<string, Vertex*> Vertex_XML_ID_to_pointer;
 
-			/// load vertices
-			list<OpenGraphtheory::XML::XML*> nodes = rdfnode->FindChildren("Node");
-			for(list<OpenGraphtheory::XML::XML*>::iterator node = nodes.begin(); node != nodes.end(); node++)
-			{
-				/// create vertex
-				Vertex* v = *(result.AddVertex());
+            /// load vertices
+            list<OpenGraphtheory::XML::XML*> nodes = rdfnode->FindChildren("Node");
+            for(list<OpenGraphtheory::XML::XML*>::iterator node = nodes.begin(); node != nodes.end(); node++)
+            {
+                /// create vertex
+                Vertex* v = *(result.AddVertex());
 
                 v->SetLabel((*node)->GetAttribute("rgml:label",""));
 
-				/// assign XML-ID
-				string id = (*node)->GetAttribute("rdf:ID", "");
-				if(id == "")
-					throw "Illegal Structure"; // illegal or no ID
+                /// assign XML-ID
+                string id = (*node)->GetAttribute("rdf:ID", "");
+                if(id == "")
+                    throw "Illegal Structure"; // illegal or no ID
                 id = "#" + id;
-				if(Vertex_XML_ID_to_pointer.find(id) != Vertex_XML_ID_to_pointer.end())
-					throw "multiple nodes with same id"; // same ID twice
-				Vertex_XML_ID_to_pointer[id] = v;
-			}
+                if(Vertex_XML_ID_to_pointer.find(id) != Vertex_XML_ID_to_pointer.end())
+                    throw "multiple nodes with same id"; // same ID twice
+                Vertex_XML_ID_to_pointer[id] = v;
+            }
 
 
-			/// load edges
-			list<OpenGraphtheory::XML::XML*> edges = rdfnode->FindChildren("Edge");
-			for(list<OpenGraphtheory::XML::XML*>::iterator edge = edges.begin(); edge != edges.end(); edge++)
-			{
-				string xmlFrom = "";
-				string xmlTo = "";
-				OpenGraphtheory::XML::XML* hyperedge_nodes = NULL;
-				for(list<OpenGraphtheory::XML::XML_Element*>::iterator child = (*edge)->children.begin(); child != (*edge)->children.end(); child++)
-				{
+            /// load edges
+            list<OpenGraphtheory::XML::XML*> edges = rdfnode->FindChildren("Edge");
+            for(list<OpenGraphtheory::XML::XML*>::iterator edge = edges.begin(); edge != edges.end(); edge++)
+            {
+                string xmlFrom = "";
+                string xmlTo = "";
+                OpenGraphtheory::XML::XML* hyperedge_nodes = NULL;
+                for(list<OpenGraphtheory::XML::XML_Element*>::iterator child = (*edge)->children.begin(); child != (*edge)->children.end(); child++)
+                {
                     OpenGraphtheory::XML::XML* xchild = dynamic_cast<OpenGraphtheory::XML::XML*>(*child);
                     if(xchild != NULL)
                     {
@@ -122,8 +122,8 @@ namespace OpenGraphtheory
                 (*e)->SetLabel((*edge)->GetAttribute("rgml:label",""));
             }
 
-			delete root;
-			return result;
+            delete root;
+            return result;
         }
 
     }

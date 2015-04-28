@@ -11,34 +11,34 @@ using namespace OpenGraphtheory::Import;
 
 namespace OpenGraphtheory
 {
-	namespace Import
-	{
+    namespace Import
+    {
 
-		FactoryRegistrator<ImportFilter> ImportFilterDOT::ImportFilterDOTRegistrator(
-			&ImportFilter::ImportFilterFactory, "dot", new DefaultInstantiator<ImportFilter, ImportFilterDOT>(
-				"dot", "Fileformat of the Graphviz project", "http://www.graphviz.org/doc/info/lang.html"));
+        FactoryRegistrator<ImportFilter> ImportFilterDOT::ImportFilterDOTRegistrator(
+            &ImportFilter::ImportFilterFactory, "dot", new DefaultInstantiator<ImportFilter, ImportFilterDOT>(
+                "dot", "Fileformat of the Graphviz project", "http://www.graphviz.org/doc/info/lang.html"));
 
 
         Graph ImportFilterDOT::Import(std::istream& is)
         {
-			OpenGraphtheory::Import::DOTLexer l(is);
-			DotCode* dotdocument;
-			DOTParser p(l, &dotdocument);
-			if(p.parse() == 0)
-			{
+            OpenGraphtheory::Import::DOTLexer l(is);
+            DotCode* dotdocument;
+            DOTParser p(l, &dotdocument);
+            if(p.parse() == 0)
+            {
                 Graph result;
                 DotContext context(&result);
                 dotdocument->Load(&context);
                 delete dotdocument;
                 return result;
-			}
-			else
-			{
+            }
+            else
+            {
                 throw "Error parsing dot structure";
-			}
+            }
         }
 
-		// --------------------------------------------------------------------------------------------------------
+        // --------------------------------------------------------------------------------------------------------
 
         DotContext::DotContext(Graph* G)
         {
@@ -49,7 +49,7 @@ namespace OpenGraphtheory
         {
         }
 
-		// --------------------------------------------------------------------------------------------------------
+        // --------------------------------------------------------------------------------------------------------
 
         DotCode::DotCode()
         {
@@ -61,26 +61,26 @@ namespace OpenGraphtheory
                 delete PrevLines;
         }
 
-		void DotCode::Load(DotContext* context)
-		{
+        void DotCode::Load(DotContext* context)
+        {
             if(PrevLines != NULL)
                 PrevLines->Load(context);
             DoLoad(context);
-		}
+        }
 
-		// --------------------------------------------------------------------------------------------------------
+        // --------------------------------------------------------------------------------------------------------
 
-		DotNode::DotNode(string* name, DotParameter* parameters)
-		{
+        DotNode::DotNode(string* name, DotParameter* parameters)
+        {
             this->name = name;
             this->parameters = parameters;
-		}
+        }
 
-		DotNode::~DotNode()
-		{
+        DotNode::~DotNode()
+        {
             delete name;
             delete parameters;
-		}
+        }
 
         void DotNode::DoLoad(DotContext* context)
         {
@@ -91,21 +91,21 @@ namespace OpenGraphtheory
         }
 
 
-		// --------------------------------------------------------------------------------------------------------
+        // --------------------------------------------------------------------------------------------------------
 
-		DotEdge::DotEdge(std::string* from, std::string* to, DotParameter* parameters)
-		{
+        DotEdge::DotEdge(std::string* from, std::string* to, DotParameter* parameters)
+        {
             this->from = from;
             this->to = to;
             this->parameters = parameters;
-		}
+        }
 
-		DotEdge::~DotEdge()
-		{
+        DotEdge::~DotEdge()
+        {
             delete from;
             delete to;
             delete parameters;
-		}
+        }
 
         void DotEdge::DoLoad(DotContext* context)
         {
@@ -126,7 +126,7 @@ namespace OpenGraphtheory
                 parameters->LoadEdge(*e);
         }
 
-		// --------------------------------------------------------------------------------------------------------
+        // --------------------------------------------------------------------------------------------------------
 
         DotParameter::DotParameter(string* name, string* value)
         {
@@ -237,6 +237,6 @@ namespace OpenGraphtheory
             return false;
         }
 
-	} // namespace Logic
+    } // namespace Logic
 } // namespace OpenGraphtheory
 
