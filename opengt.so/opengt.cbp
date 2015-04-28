@@ -198,30 +198,32 @@
 		<Unit filename="Sources/generate/tree.cpp" />
 		<Unit filename="Sources/generate/wheel.cpp" />
 		<Unit filename="Sources/import/dot/dot.cpp" />
-		<Unit filename="Sources/import/dot/dot_lexer.cpp" />
-		<Unit filename="Sources/import/dot/dot_lexer.l" />
-		<Unit filename="Sources/import/dot/dot_parser.cpp" />
-		<Unit filename="Sources/import/dot/dot_parser.yy" />
-		<Unit filename="Sources/import/dot/makefile" />
-		<Unit filename="Sources/import/gml/gml.cpp" />
-		<Unit filename="Sources/import/gml/gml_lexer.cpp" />
-		<Unit filename="Sources/import/gml/gml_lexer.l">
-			<Option compiler="gcc" use="0" buildCommand="make" />
+		<Unit filename="Sources/import/dot/dot_lexer.l">
+			<Option compile="1" />
 		</Unit>
-		<Unit filename="Sources/import/gml/makefile" />
+		<Unit filename="Sources/import/dot/dot_parser.yy">
+			<Option compile="1" />
+			<Option weight="49" />
+		</Unit>
+		<Unit filename="Sources/import/gml/gml.cpp" />
+		<Unit filename="Sources/import/gml/gml_lexer.l">
+			<Option compile="1" />
+		</Unit>
 		<Unit filename="Sources/import/graphml.cpp" />
 		<Unit filename="Sources/import/import.cpp">
-			<Option weight="49" />
+			<Option weight="48" />
 		</Unit>
 		<Unit filename="Sources/import/rgml.cpp" />
 		<Unit filename="Sources/import/tei.cpp" />
 		<Unit filename="Sources/import/tgf.cpp" />
-		<Unit filename="Sources/import/tikz/makefile" />
 		<Unit filename="Sources/import/tikz/tikz.cpp" />
-		<Unit filename="Sources/import/tikz/tikz_lexer.cpp" />
-		<Unit filename="Sources/import/tikz/tikz_lexer.l" />
-		<Unit filename="Sources/import/tikz/tikz_parser.cpp" />
-		<Unit filename="Sources/import/tikz/tikz_parser.yy" />
+		<Unit filename="Sources/import/tikz/tikz_lexer.l">
+			<Option compile="1" />
+		</Unit>
+		<Unit filename="Sources/import/tikz/tikz_parser.yy">
+			<Option compile="1" />
+			<Option weight="49" />
+		</Unit>
 		<Unit filename="Sources/import/vrmlgraph.cpp" />
 		<Unit filename="Sources/import/xgmml.cpp" />
 		<Unit filename="Sources/intermediatesteps/intermediatesteps.cpp">
@@ -231,27 +233,31 @@
 		<Unit filename="Sources/intermediatesteps/stdout.cpp" />
 		<Unit filename="Sources/intermediatesteps/writefile.cpp" />
 		<Unit filename="Sources/logic/ComputationTreeLogic/ctl.cpp" />
-		<Unit filename="Sources/logic/ComputationTreeLogic/ctl_lexer.cpp" />
-		<Unit filename="Sources/logic/ComputationTreeLogic/ctl_lexer.l" />
-		<Unit filename="Sources/logic/ComputationTreeLogic/ctl_parser.cpp" />
-		<Unit filename="Sources/logic/ComputationTreeLogic/ctl_parser.yy" />
-		<Unit filename="Sources/logic/ComputationTreeLogic/makefile">
-			<Option compiler="gcc" use="1" buildCommand="make" />
+		<Unit filename="Sources/logic/ComputationTreeLogic/ctl_lexer.l">
+			<Option compile="1" />
+		</Unit>
+		<Unit filename="Sources/logic/ComputationTreeLogic/ctl_parser.yy">
+			<Option compile="1" />
+			<Option weight="49" />
 		</Unit>
 		<Unit filename="Sources/logic/FirstOrderLogic/fo.cpp" />
-		<Unit filename="Sources/logic/FirstOrderLogic/fo_lexer.cpp" />
-		<Unit filename="Sources/logic/FirstOrderLogic/fo_lexer.l" />
-		<Unit filename="Sources/logic/FirstOrderLogic/fo_parser.cpp" />
-		<Unit filename="Sources/logic/FirstOrderLogic/fo_parser.yy" />
-		<Unit filename="Sources/logic/FirstOrderLogic/makefile" />
-		<Unit filename="Sources/logic/ModalLogic/makefile" />
-		<Unit filename="Sources/logic/ModalLogic/ml.cpp" />
-		<Unit filename="Sources/logic/ModalLogic/ml_lexer.cpp" />
-		<Unit filename="Sources/logic/ModalLogic/ml_lexer.l" />
-		<Unit filename="Sources/logic/ModalLogic/ml_parser.cpp" />
-		<Unit filename="Sources/logic/ModalLogic/ml_parser.yy" />
-		<Unit filename="Sources/logic/logic.cpp">
+		<Unit filename="Sources/logic/FirstOrderLogic/fo_lexer.l">
+			<Option compile="1" />
+		</Unit>
+		<Unit filename="Sources/logic/FirstOrderLogic/fo_parser.yy">
+			<Option compile="1" />
 			<Option weight="49" />
+		</Unit>
+		<Unit filename="Sources/logic/ModalLogic/ml.cpp" />
+		<Unit filename="Sources/logic/ModalLogic/ml_lexer.l">
+			<Option compile="1" />
+		</Unit>
+		<Unit filename="Sources/logic/ModalLogic/ml_parser.yy">
+			<Option compile="1" />
+			<Option weight="49" />
+		</Unit>
+		<Unit filename="Sources/logic/logic.cpp">
+			<Option weight="48" />
 		</Unit>
 		<Unit filename="Sources/opengt.cpp" />
 		<Unit filename="Sources/set_helper.cpp" />

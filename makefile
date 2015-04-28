@@ -56,6 +56,7 @@ all: debug release
 
 
 # bison and flex
+.PRECIOUS: opengt.so/Sources/%.cpp
 opengt.so/Sources/%.cpp: opengt.so/Sources/%.yy
 	bison -o $@ $<
 opengt.so/Sources/%.cpp: opengt.so/Sources/%.l
@@ -85,7 +86,7 @@ $(foreach prog,$(PROGRAMS_NONQT),$(eval $(call PROGRAM_OBJ_template,$(prog))))
 
 
 # lib
-.PRECIOUS: lib/Release/libopengt.so lib/Debug/libopengt.so
+.PRECIOUS: lib/Release/libopengt.so lib/Debug/libopengtdbg.so
 lib/Release/libopengt.so: $(soobjRelease)
 	mkdir -p $(@D)
 	g++ $(RELEASEPARAMS) $(GCCPARAMS) -o $@ -shared -pthread $(soobjRelease) -lX11
