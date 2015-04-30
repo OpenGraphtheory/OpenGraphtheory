@@ -17,11 +17,13 @@
                 protected:
                     static MultiFactoryRegistrator<Algorithm> AlgorithmVertexDisjointPathsRegistrator;
 
-                    bool FindAugmentingPathOrSeparator(Graph &G, Vertex* Source, Vertex* Drain, EdgeSet& EFlow,
+                    bool FindAugmentingPathOrSeparator(Graph &G, VertexSet& Sources, VertexSet& Drains, EdgeSet& EFlow,
                                                       VertexSet& VFlow, std::vector<Edge*>& AugmentingPath, VertexSet& Separator);
-                    bool FindDisjointPathsAndSeparator(Graph &G, Vertex* Source, Vertex* Drain, EdgeSet& DisjointPaths, VertexSet& Separator);
+                    bool FindDisjointPathsAndSeparator(Graph &G, VertexSet& Sources, VertexSet& Drains, EdgeSet& DisjointPaths, VertexSet& Separator);
+                    bool FindDisjointPaths(Graph &G, VertexSet& Sources, VertexSet& Drain, EdgeSet& EFlow);
                     bool FindDisjointPaths(Graph &G, Vertex* Source, Vertex* Drain, EdgeSet& EFlow);
                 public:
+                    void AddVertexDisjointPaths(Graph &G, VertexSet& Sources, VertexSet& Drain, std::string DisjointPathsName);
                     void AddVertexDisjointPaths(Graph &G, Vertex* Source, Vertex* Drain, std::string DisjointPathsName);
                     void Run(Graph& G, std::vector<std::string> parameters);
             };

@@ -17,7 +17,7 @@ namespace OpenGraphtheory
         /*
           every vertex is (theoretically) split into two vertices, the head and the tail
         */
-        bool AlgorithmVERTEXDISJOINTPATHS::FindAugmentingPathOrSeparator(Graph &G, Vertex* Source, Vertex* Drain, EdgeSet& EFlow,
+        bool AlgorithmVERTEXDISJOINTPATHS::FindAugmentingPathOrSeparator(Graph &G, VertexSet& Sources, VertexSet& Drains, EdgeSet& EFlow,
                                                                                    VertexSet& VFlow, vector<Edge*>& AugmentingPath,
                                                                                    VertexSet& Separator)
         {
@@ -27,11 +27,15 @@ namespace OpenGraphtheory
             map<Vertex*, Edge*> EdgeToPredecessorOfTail;
             VertexSet LastRoundTails, LastRoundHeads;
             VertexSet NextRoundTails, NextRoundHeads;
-            LastRoundHeads.insert(Source);
-            PredecessorOfHead[Source] = NULL; // prevent algoritm from adding paths to tail of source (which doesnt exist logically)
-            PredecessorOfTail[Source] = NULL;
+            for(VertexIterator Source = Sources.begin(); Source != Sources.end(); Source++)
+            {
+                LastRoundHeads.insert(*Source);
+                PredecessorOfHead[*Source] = NULL; // prevents algoritm from adding paths to tail of source (which doesnt exist logically)
+                PredecessorOfTail[*Source] = NULL;
+            }
 
-            while(LastRoundTails.find(Drain) == LastRoundTails.end() && !(LastRoundHeads.empty() && LastRoundTails.empty()))
+            VertexIterator FoundDrain = Drains.end();
+            while(FoundDrain==Drains.end() && !(LastRoundHeads.empty() && LastRoundTails.empty()))
             {
                 // Heads
                 for(VertexIterator v = LastRoundHeads.begin(); v != LastRoundHeads.end(); v++)
@@ -88,9 +92,14 @@ namespace OpenGraphtheory
                 LastRoundTails = NextRoundTails;
                 NextRoundHeads.clear();
                 NextRoundTails.clear();
+
+                for(VertexIterator Drain = Drains.begin(); FoundDrain == Drains.end() && Drain != Drains.end(); Drain++)
+                    if(LastRoundTails.find(*Drain) != LastRoundTails.end())
+                        FoundDrain = Drain;
             }
 
-            if(LastRoundTails.find(Drain) == LastRoundTails.end())
+
+            if(FoundDrain == Drains.end())
             {
                 // no augmenting path found => construct the cut
                 Separator.clear();
@@ -102,11 +111,12 @@ namespace OpenGraphtheory
                 return false;
             }
 
+
             // construct the augmenting path from the collected data
             AugmentingPath.clear();
-            Vertex* v = Drain;
+            Vertex* v = *FoundDrain;
             bool vIsTail= true; // Drain is a tail
-            while(v != Source)
+            while(Sources.find(v) == Sources.end())
             {
                 if(vIsTail)
                 {
@@ -134,15 +144,21 @@ namespace OpenGraphtheory
 
 
 
-        bool AlgorithmVERTEXDISJOINTPATHS::FindDisjointPathsAndSeparator(Graph& G, Vertex* Source, Vertex* Drain, EdgeSet& DisjointPaths, VertexSet& Separator)
+        bool AlgorithmVERTEXDISJOINTPATHS::FindDisjointPathsAndSeparator(Graph& G, VertexSet& Sources, VertexSet& Drains,
+                                                                         EdgeSet& DisjointPaths, VertexSet& Separator)
         {
+            // if a source is also a drain, then it cannot be separated and the flow is infinite
+            for(VertexIterator Source = Sources.begin(); Source != Sources.end(); Source++)
+                if(Drains.find(*Source) != Drains.end())
+                    return false;
+
             vector<Edge*> AugmentingPath;
             VertexSet VFlow;
 
-            while(FindAugmentingPathOrSeparator(G, Source, Drain, DisjointPaths, VFlow, AugmentingPath, Separator))
+            while(FindAugmentingPathOrSeparator(G, Sources, Drains, DisjointPaths, VFlow, AugmentingPath, Separator))
             {
                 // augment the flow
-                Vertex* v = Source;
+                Vertex* v = (*AugmentingPath.begin())->From();
                 bool LastWasForwardArc = false; // false to prevent loop from inserting <Source> into VFlow
                 for(vector<Edge*>::iterator i = AugmentingPath.begin(); i != AugmentingPath.end(); i++)
                 {
@@ -170,21 +186,43 @@ namespace OpenGraphtheory
             return true;
         }
 
-        bool AlgorithmVERTEXDISJOINTPATHS::FindDisjointPaths(Graph& G, Vertex* Source, Vertex* Drain, EdgeSet& DisjointPaths)
+
+
+        bool AlgorithmVERTEXDISJOINTPATHS::FindDisjointPaths(Graph& G, VertexSet& Sources, VertexSet& Drains, EdgeSet& DisjointPaths)
         {
             VertexSet Separator;
-            return FindDisjointPathsAndSeparator(G, Source, Drain, DisjointPaths, Separator);
+            return FindDisjointPathsAndSeparator(G, Sources, Drains, DisjointPaths, Separator);
+        }
+
+        bool AlgorithmVERTEXDISJOINTPATHS::FindDisjointPaths(Graph& G, Vertex* Source, Vertex* Drain, EdgeSet& DisjointPaths)
+        {
+            VertexSet Sources;
+            Sources.insert(Source);
+            VertexSet Drains;
+            Drains.insert(Drain);
+            return FindDisjointPaths(G, Sources, Drains, DisjointPaths);
         }
 
 
-        void AlgorithmVERTEXDISJOINTPATHS::AddVertexDisjointPaths(Graph &G, Vertex* Source, Vertex* Drain, string DisjointPathsName)
+        void AlgorithmVERTEXDISJOINTPATHS::AddVertexDisjointPaths(Graph &G, VertexSet& Sources, VertexSet& Drains, string DisjointPathsName)
         {
             EdgeSet DisjointPaths;
-            if(FindDisjointPaths(G, Source, Drain, DisjointPaths))
+            if(FindDisjointPaths(G, Sources, Drains, DisjointPaths))
             {
                 G.AddEdgeSet(DisjointPaths, DisjointPathsName);
             }
         }
+
+        void AlgorithmVERTEXDISJOINTPATHS::AddVertexDisjointPaths(Graph &G, Vertex* Source, Vertex* Drain, string DisjointPathsName)
+        {
+            VertexSet Sources;
+            Sources.insert(Source);
+            VertexSet Drains;
+            Drains.insert(Drain);
+            AddVertexDisjointPaths(G,Sources,Drains,DisjointPathsName);
+        }
+
+
 
         void AlgorithmVERTEXDISJOINTPATHS::Run(Graph& G, std::vector<std::string> parameters)
         {

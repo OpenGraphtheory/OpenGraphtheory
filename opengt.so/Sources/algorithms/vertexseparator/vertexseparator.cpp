@@ -14,22 +14,38 @@ namespace OpenGraphtheory
             "vertexseparator", "adds a minimum vertex-separator to the graph", "http://en.wikipedia.org/wiki/Vertex_separator"));
 
 
-        bool AlgorithmVERTEXSEPARATOR::FindMinimumVertexSeparator(Graph &G, Vertex* Source, Vertex* Drain, VertexSet& Separator)
+        bool AlgorithmVERTEXSEPARATOR::FindMinimumVertexSeparator(Graph &G, VertexSet& Sources, VertexSet& Drains, VertexSet& Separator)
         {
             EdgeSet DisjointPaths;
-            return FindDisjointPathsAndSeparator(G, Source, Drain, DisjointPaths, Separator);
+            return FindDisjointPathsAndSeparator(G, Sources, Drains, DisjointPaths, Separator);
         }
 
+        bool AlgorithmVERTEXSEPARATOR::FindMinimumVertexSeparator(Graph &G, Vertex* Source, Vertex* Drain, VertexSet& Separator)
+        {
+            VertexSet Sources;
+            Sources.insert(Source);
+            VertexSet Drains;
+            Drains.insert(Drain);
+            return FindMinimumVertexSeparator(G, Sources, Drains, Separator);
+        }
 
-        void AlgorithmVERTEXSEPARATOR::AddMinimumVertexSeparator(Graph &G, Vertex* Source, Vertex* Drain, string SeparatorName)
+        void AlgorithmVERTEXSEPARATOR::AddMinimumVertexSeparator(Graph &G, VertexSet& Sources, VertexSet& Drains, string SeparatorName)
         {
             VertexSet Separator;
-            if(FindMinimumVertexSeparator(G, Source, Drain, Separator))
+            if(FindMinimumVertexSeparator(G, Sources, Drains, Separator))
             {
                 G.AddVertexSet(Separator, SeparatorName);
             }
         }
 
+        void AlgorithmVERTEXSEPARATOR::AddMinimumVertexSeparator(Graph &G, Vertex* Source, Vertex* Drain, string SeparatorName)
+        {
+            VertexSet Sources;
+            Sources.insert(Source);
+            VertexSet Drains;
+            Drains.insert(Drain);
+            AddMinimumVertexSeparator(G, Sources, Drains, SeparatorName);
+        }
 
         void AlgorithmVERTEXSEPARATOR::Run(Graph& G, std::vector<std::string> parameters)
         {
