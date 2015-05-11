@@ -26,7 +26,7 @@ FLEX_L        := $(shell find opengt.so/Sources -name '*.l')
 FLEX_CPP      := $(FLEX_L:%.l=%.cpp)
 
 SOURCES       := $(MODULE_CPP) $(BISON_CPP) $(FLEX_CPP) \
-                 $(filter-out $(MODULE_CPP),$(shell find opengt.so/Sources -depth -name '*.cpp'))
+                 $(filter-out $(MODULE_CPP) $(BISON_CPP) $(FLEX_CPP),$(shell find opengt.so/Sources -depth -name '*.cpp'))
 
 PROGRAMS_ALL   := $(subst programs/,,$(shell find programs -mindepth 1 -maxdepth 1 -type d))
 PROGRAMS_NONQT := $(filter-out OGoCreator,$(PROGRAMS_ALL))
