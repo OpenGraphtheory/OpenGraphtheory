@@ -9,7 +9,7 @@ namespace OpenGraphtheory
     namespace Algorithms
     {
 
-        // Diijkstras Algorithm
+        // Dijkstras Algorithm
         // see http://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
 
         MultiFactoryRegistrator<Algorithm> AlgorithmPATH::AlgorithmPathRegistrator(
@@ -21,10 +21,12 @@ namespace OpenGraphtheory
                                                              VertexFilter *vertexfilter, EdgeFilter *edgefilter)
         {
             VertexWeighting distance;
+            distance[from] = 0;
             VertexSet Q;
+            for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
+                Q.insert(*v);
             map<Vertex*, pair<Vertex*,Edge*>* > path;
 
-            DijkstraInit(G, Q, distance, from);
             while(!Q.empty())
             {
                 // select vertex u from Q with smallest distance to start-vertex
@@ -50,50 +52,80 @@ namespace OpenGraphtheory
                 EdgeSet IncidentEdges = (*v)->CollectIncidentEdges(1,1,0);
                 for(EdgeIterator e = IncidentEdges.begin(); e != IncidentEdges.end(); e++)
                 {
-                    if(edgefilter != NULL)
-                        if(!edgefilter->EdgeAllowed(*e))
-                            continue;
+                    if(edgefilter != NULL && !edgefilter->EdgeAllowed(*e))
+                        continue;
 
                     VertexSet ReachableVertices = (*e)->CollectIncidentVertices(1,1,0);
                     for(VertexIterator u = ReachableVertices.begin(); u != ReachableVertices.end(); u++)
                         if(Q.contains(*u) && !(vertexfilter != NULL && !vertexfilter->VertexAllowed(*u)))
-                            DijkstraUpdate(*v, *e, *u, distance, path);
+                        {
+                            if((distance.find(*u) == distance.end()) || ((*e)->GetWeight() + distance[*v] < distance[*u]))
+                            {
+                                distance[*u] = distance[*v] + (*e)->GetWeight();
+                                path[*u] = new pair<Vertex*, Edge*>(*v, *e);
+                            }
+                        }
                 }
             }
 
-            list<pair<Vertex*, Edge*>* > result = DijkstraExtract(from, to, path);
+            list<pair<Vertex*, Edge*>* > result;
+            for(Vertex* i = to; i != from; i = path[i]->first)
+                result.push_front(new pair<Vertex*, Edge*>(path[i]->first, path[i]->second));
             for(map<Vertex*, pair<Vertex*,Edge*>* >::iterator i = path.begin(); i != path.end(); i++)
                 delete i->second;
             return result;
         }
 
-        void AlgorithmPATH::DijkstraInit(Graph& G, VertexSet &Q, VertexWeighting& distance, Vertex* from)
+        
+        
+        VertexSet AlgorithmPATH::ReachableVertices(Graph& G, Vertex* from, VertexFilter *vertexfilter, EdgeFilter *edgefilter, bool positive, bool negative)
         {
-            for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-                Q.insert(*v);
-            distance[from] = 0;
-        }
-
-        void AlgorithmPATH::DijkstraUpdate(Vertex* v, Edge* e, Vertex* u, VertexWeighting &distance,
-                            map<Vertex*, pair<Vertex*, Edge*>* > &path)
-        {
-            if((distance.find(u) == distance.end()) || (e->GetWeight() + distance[v] < distance[u]))
+            VertexSet result;
+            result.insert(from);
+            vector<Vertex*> queue(G.NumberOfVertices());
+            queue[0] = from;
+            int head=1, tail=0;
+            
+            while(tail < head)
             {
-                distance[u] = distance[v] + e->GetWeight();
-                path[u] = new pair<Vertex*, Edge*>(v, e);
-            }
-        }
+                Vertex* v = queue[tail++];
+                
+                EdgeSet IncidentEdges = v->CollectIncidentEdges(1,positive,negative);
+                for(EdgeIterator e = IncidentEdges.begin(); e != IncidentEdges.end(); e++)
+                {
+                    if(edgefilter != NULL && !edgefilter->EdgeAllowed(*e))
+                        continue;
 
-        list<pair<Vertex*, Edge*>* > AlgorithmPATH::DijkstraExtract(Vertex* from, Vertex* to,
-                                                        map<Vertex*, pair<Vertex*, Edge*>* >& path)
-        {
-            list<pair<Vertex*, Edge*>* > result;
-            for(Vertex* i = to; i != from; i = path[i]->first)
-                result.push_front(new pair<Vertex*, Edge*>(path[i]->first, path[i]->second));
+                    VertexSet ReachableVertices = (*e)->CollectIncidentVertices(1,positive,negative);
+                    for(VertexIterator u = ReachableVertices.begin(); u != ReachableVertices.end(); u++)
+                    {
+                        if(result.contains(*u) || (vertexfilter != NULL && !vertexfilter->VertexAllowed(*u)))
+                            continue;
+                        result.insert(*u);
+                        queue[head++] = *u;
+                    }       
+                }
+            }
+            
             return result;
         }
 
-
+        VertexSet AlgorithmPATH::ForwardReachableVertices(Graph& G, Vertex* from, VertexFilter *vertexfilter, EdgeFilter *edgefilter)
+        {
+            return ReachableVertices(G,from,vertexfilter,edgefilter,1,0);
+        }
+        
+        VertexSet AlgorithmPATH::BackwardReachableVertices(Graph& G, Vertex* from, VertexFilter *vertexfilter, EdgeFilter *edgefilter)
+        {
+            return ReachableVertices(G,from,vertexfilter,edgefilter,0,1);
+        }
+        
+        VertexSet AlgorithmPATH::WeaklyReachableVertices(Graph& G, Vertex* from, VertexFilter *vertexfilter, EdgeFilter *edgefilter)
+        {
+            return ReachableVertices(G,from,vertexfilter,edgefilter,1,1);
+        }
+        
+        
         void AlgorithmPATH::AddPath(Graph &G, Vertex* from, Vertex* to, std::string PathName)
         {
             list<pair<Vertex*, Edge*>* > path = FindPath(G, from, to);
