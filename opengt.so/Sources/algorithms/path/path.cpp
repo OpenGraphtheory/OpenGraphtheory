@@ -20,76 +20,103 @@ namespace OpenGraphtheory
         list<pair<Vertex*, Edge*>* > AlgorithmPATH::FindPath(Graph &G, Vertex* from, Vertex* to,
                                                              VertexFilter *vertexfilter, EdgeFilter *edgefilter)
         {
-            VertexWeighting distance;
-            distance[from] = 0;
+            list<pair<Vertex*, Edge*>* > result;
+            if(from == to)
+                return result;
+
             VertexSet Q;
             for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
                 Q.insert(*v);
-            map<Vertex*, pair<Vertex*,Edge*>* > path;
+            VertexWeighting distance;
+            distance[from] = 0;
+
+            map<Vertex*, pair<Vertex*,Edge*>* > dfstree;
 
             while(!Q.empty())
             {
-                // select vertex u from Q with smallest distance to start-vertex
-                VertexIterator v = G.EndVertices();
+                // select vertex v from Q with smallest distance to start-vertex
+                VertexIterator v = Q.end();
                 float vDistance = 0;
                 bool FirstHit = true;
                 for(VertexIterator vCandidate = Q.begin(); vCandidate != Q.end(); vCandidate++)
                     if(distance.find(*vCandidate) != distance.end())
-                        if(distance[*vCandidate] < vDistance || FirstHit)
+                        if((distance[*vCandidate] < vDistance) || FirstHit)
                         {
                             FirstHit = false;
                             v = vCandidate;
                             vDistance = distance[*v];
                         }
 
-                if(v == G.EndVertices()) // this can happen if the graph is not connected
+                if(v == Q.end()) // this can happen if the graph is not connected
                     break;
                 if(*v == to) // shortest path to target-vertex found.
                     break;
 
-                Q.erase(*v);
+                Vertex* pv = *v;
+                // erase v from Q (this means dfstree[v] now contains the final predecessor and edge for v)
+                Q.erase(pv);
 
-                EdgeSet IncidentEdges = (*v)->CollectIncidentEdges(1,1,0);
+                // update distances of v's neighbors (only the ones which are still in Q)
+                EdgeSet IncidentEdges = pv->CollectIncidentEdges(1,1,0);
                 for(EdgeIterator e = IncidentEdges.begin(); e != IncidentEdges.end(); e++)
                 {
                     if(edgefilter != NULL && !edgefilter->EdgeAllowed(*e))
                         continue;
 
-                    VertexSet ReachableVertices = (*e)->CollectIncidentVertices(1,1,0);
-                    for(VertexIterator u = ReachableVertices.begin(); u != ReachableVertices.end(); u++)
-                        if(Q.contains(*u) && !(vertexfilter != NULL && !vertexfilter->VertexAllowed(*u)))
+                    VertexSet vNeighbors = (*e)->CollectIncidentVertices(1,1,0);
+                    for(VertexIterator n = vNeighbors.begin(); n != vNeighbors.end(); n++)
+                    {
+                        if(Q.contains(*n) ) // && (vertexfilter == NULL || vertexfilter->VertexAllowed(*n))
                         {
-                            if((distance.find(*u) == distance.end()) || ((*e)->GetWeight() + distance[*v] < distance[*u]))
+                            if((distance.find(*n) == distance.end()) || ((*e)->GetWeight() + distance[pv] < distance[*n]))
                             {
-                                distance[*u] = distance[*v] + (*e)->GetWeight();
-                                path[*u] = new pair<Vertex*, Edge*>(*v, *e);
+                                distance[*n] = distance[pv] + (*e)->GetWeight();
+                                if(dfstree.find(*n) == dfstree.end())
+                                    dfstree[*n] = new pair<Vertex*, Edge*>(pv, *e);
+                                dfstree[*n]->first = pv;
+                                dfstree[*n]->second = *e;
                             }
                         }
+                    }
                 }
             }
 
-            list<pair<Vertex*, Edge*>* > result;
-            for(Vertex* i = to; i != from; i = path[i]->first)
-                result.push_front(new pair<Vertex*, Edge*>(path[i]->first, path[i]->second));
-            for(map<Vertex*, pair<Vertex*,Edge*>* >::iterator i = path.begin(); i != path.end(); i++)
+            if(dfstree.find(to) != dfstree.end()) // path found
+            {
+                Vertex* i2;
+                for(Vertex* i = to; i != from; i = i2)
+                {
+                    i2 = dfstree[i]->first;
+                    result.push_front(dfstree[i]);
+                    dfstree[i] = NULL;
+                }
+            }
+            else // no path found
+            {
+                result.push_back(NULL);
+            }
+
+            // erase dfs-tree
+            for(map<Vertex*, pair<Vertex*,Edge*>* >::iterator i = dfstree.begin(); i != dfstree.end(); i++)
                 delete i->second;
+
             return result;
         }
 
-        
-        
+
+
         VertexSet AlgorithmPATH::ReachableVertices(Graph& G, Vertex* from, VertexFilter *vertexfilter, EdgeFilter *edgefilter, bool positive, bool negative)
         {
             VertexSet result;
             result.insert(from);
-            vector<Vertex*> queue(G.NumberOfVertices());
+            vector<Vertex*> queue(G.NumberOfVertices()+1);
             queue[0] = from;
             int head=1, tail=0;
-            
+
             while(tail < head)
             {
                 Vertex* v = queue[tail++];
-                
+
                 EdgeSet IncidentEdges = v->CollectIncidentEdges(1,positive,negative);
                 for(EdgeIterator e = IncidentEdges.begin(); e != IncidentEdges.end(); e++)
                 {
@@ -103,10 +130,10 @@ namespace OpenGraphtheory
                             continue;
                         result.insert(*u);
                         queue[head++] = *u;
-                    }       
+                    }
                 }
             }
-            
+
             return result;
         }
 
@@ -114,36 +141,39 @@ namespace OpenGraphtheory
         {
             return ReachableVertices(G,from,vertexfilter,edgefilter,1,0);
         }
-        
+
         VertexSet AlgorithmPATH::BackwardReachableVertices(Graph& G, Vertex* from, VertexFilter *vertexfilter, EdgeFilter *edgefilter)
         {
             return ReachableVertices(G,from,vertexfilter,edgefilter,0,1);
         }
-        
+
         VertexSet AlgorithmPATH::WeaklyReachableVertices(Graph& G, Vertex* from, VertexFilter *vertexfilter, EdgeFilter *edgefilter)
         {
             return ReachableVertices(G,from,vertexfilter,edgefilter,1,1);
         }
-        
-        
+
+
         void AlgorithmPATH::AddPath(Graph &G, Vertex* from, Vertex* to, std::string PathName)
         {
             list<pair<Vertex*, Edge*>* > path = FindPath(G, from, to);
 
-            EdgeSet pathedges;
-            for(list<pair<Vertex*, Edge*>* >::iterator i = path.begin(); i != path.end(); i++)
+            if(path.size() != 1 || *(path.begin()) != NULL)
             {
-                pathedges.insert((*i)->second);
-                delete *i;
+                EdgeSet pathedges;
+                for(list<pair<Vertex*, Edge*>* >::iterator i = path.begin(); i != path.end(); i++)
+                {
+                    pathedges.insert((*i)->second);
+                    delete *i;
+                }
+                G.AddEdgeSet(pathedges, PathName);
             }
-            G.AddEdgeSet(pathedges, PathName);
         }
 
 
         void AlgorithmPATH::Run(Graph &G, vector<string> parameters)
         {
-            if(parameters.size() <= 0)
-                return;
+            if(parameters.size() < 3)
+                throw "Path Algorithm needs 3 parameters (start, end, result name)";
 
             string FromName =  parameters[0];
             string ToName = parameters[1];
@@ -159,8 +189,12 @@ namespace OpenGraphtheory
                     to = v;
             }
 
-            if(from != G.EndVertices() && to != G.EndVertices())
-                AddPath(G, *from, *to, PathName);
+            if(from == G.EndVertices())
+                throw "Path Algorithm: start vertex not found";
+            if(to == G.EndVertices())
+                throw "Path Algorithm: end vertex not found";
+
+            AddPath(G, *from, *to, PathName);
         }
 
     }
