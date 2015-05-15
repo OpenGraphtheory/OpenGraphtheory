@@ -19,7 +19,8 @@ namespace OpenGraphtheory
         */
         bool AlgorithmVERTEXDISJOINTPATHS::FindAugmentingPathOrSeparator(Graph &G, VertexSet& Sources, VertexSet& Drains, EdgeSet& EFlow,
                                                                                    VertexSet& VFlow, vector<Edge*>& AugmentingPath,
-                                                                                   VertexSet& Separator)
+                                                                                   VertexSet& Separator,
+                                                                                   VertexFilter* vertexfilter, EdgeFilter* edgefilter)
         {
             map<Vertex*, Vertex*> PredecessorOfHead;
             map<Vertex*, Vertex*> PredecessorOfTail;
@@ -145,7 +146,8 @@ namespace OpenGraphtheory
 
 
         bool AlgorithmVERTEXDISJOINTPATHS::FindDisjointPathsAndSeparator(Graph& G, VertexSet& Sources, VertexSet& Drains,
-                                                                         EdgeSet& DisjointPaths, VertexSet& Separator)
+                                                                         EdgeSet& DisjointPaths, VertexSet& Separator,
+                                                                         VertexFilter* vertexfilter, EdgeFilter* edgefilter)
         {
             // if a source is also a drain, then it cannot be separated and the flow is infinite
             for(VertexIterator Source = Sources.begin(); Source != Sources.end(); Source++)
@@ -155,7 +157,7 @@ namespace OpenGraphtheory
             vector<Edge*> AugmentingPath;
             VertexSet VFlow;
 
-            while(FindAugmentingPathOrSeparator(G, Sources, Drains, DisjointPaths, VFlow, AugmentingPath, Separator))
+            while(FindAugmentingPathOrSeparator(G, Sources, Drains, DisjointPaths, VFlow, AugmentingPath, Separator, vertexfilter, edgefilter))
             {
                 // augment the flow
                 Vertex* v = (*AugmentingPath.begin())->From();
@@ -188,19 +190,21 @@ namespace OpenGraphtheory
 
 
 
-        bool AlgorithmVERTEXDISJOINTPATHS::FindDisjointPaths(Graph& G, VertexSet& Sources, VertexSet& Drains, EdgeSet& DisjointPaths)
+        bool AlgorithmVERTEXDISJOINTPATHS::FindDisjointPaths(Graph& G, VertexSet& Sources, VertexSet& Drains, EdgeSet& DisjointPaths,
+                                                                       VertexFilter* vertexfilter, EdgeFilter* edgefilter)
         {
             VertexSet Separator;
-            return FindDisjointPathsAndSeparator(G, Sources, Drains, DisjointPaths, Separator);
+            return FindDisjointPathsAndSeparator(G, Sources, Drains, DisjointPaths, Separator, vertexfilter, edgefilter);
         }
 
-        bool AlgorithmVERTEXDISJOINTPATHS::FindDisjointPaths(Graph& G, Vertex* Source, Vertex* Drain, EdgeSet& DisjointPaths)
+        bool AlgorithmVERTEXDISJOINTPATHS::FindDisjointPaths(Graph& G, Vertex* Source, Vertex* Drain, EdgeSet& DisjointPaths,
+                                                                       VertexFilter* vertexfilter, EdgeFilter* edgefilter)
         {
             VertexSet Sources;
             Sources.insert(Source);
             VertexSet Drains;
             Drains.insert(Drain);
-            return FindDisjointPaths(G, Sources, Drains, DisjointPaths);
+            return FindDisjointPaths(G, Sources, Drains, DisjointPaths, vertexfilter, edgefilter);
         }
 
 

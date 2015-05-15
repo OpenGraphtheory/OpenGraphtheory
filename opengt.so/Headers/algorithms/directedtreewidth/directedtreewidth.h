@@ -7,6 +7,7 @@
     #include <set>
     #include "../../set_helper.h"
     #include "../vertexseparator/vertexseparator.h"
+    #include "../components/strongcomponents.h"
 
     namespace OpenGraphtheory
     {
@@ -15,13 +16,27 @@
             namespace DirectedTreewidth
             {
 
+                class DirectedTreeDecomposition
+                {
+                    public:
+                        DirectedTreeDecomposition();
+                        ~DirectedTreeDecomposition();
+
+                        VertexSet Bag;
+                        std::vector<DirectedTreeDecomposition*> Children;
+                };
+
                 class AlgorithmDIRECTEDTREEDECOMPOSITION : public Algorithm
                 {
                     protected:
                         static MultiFactoryRegistrator<Algorithm> AlgorithmDirectedTreeDecompositionRegistrator;
 
                     public:
-                        bool FindWeaklyBalancedWSeparation(VertexSet& X, VertexSet& S, VertexSet& Y);
+                        bool FindWeaklyBalancedWSeparation(Graph& G, VertexSet& V, VertexSet& W, VertexIterator WIt,
+                                                           VertexSet& X, VertexSet& S, VertexSet& Y, size_t k);
+                        DirectedTreeDecomposition* FindDirectedTreeDecomposition(Graph& G, VertexSet& V, VertexSet& W, size_t k);
+                        DirectedTreeDecomposition* FindDirectedTreeDecomposition(Graph& G, size_t k);
+                        DirectedTreeDecomposition* FindDirectedTreeDecomposition(Graph& G);
 
                         void Run(Graph& G, std::vector<std::string> parameters);
                 };

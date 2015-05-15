@@ -14,19 +14,21 @@ namespace OpenGraphtheory
             "vertexseparator", "adds a minimum vertex-separator to the graph", "http://en.wikipedia.org/wiki/Vertex_separator"));
 
 
-        bool AlgorithmVERTEXSEPARATOR::FindMinimumVertexSeparator(Graph &G, VertexSet& Sources, VertexSet& Drains, VertexSet& Separator)
+        bool AlgorithmVERTEXSEPARATOR::FindMinimumVertexSeparator(Graph &G, VertexSet& Sources, VertexSet& Drains, VertexSet& Separator,
+                                                                  VertexFilter* vertexfilter, EdgeFilter* edgefilter)
         {
             EdgeSet DisjointPaths;
-            return FindDisjointPathsAndSeparator(G, Sources, Drains, DisjointPaths, Separator);
+            return FindDisjointPathsAndSeparator(G, Sources, Drains, DisjointPaths, Separator, vertexfilter, edgefilter);
         }
 
-        bool AlgorithmVERTEXSEPARATOR::FindMinimumVertexSeparator(Graph &G, Vertex* Source, Vertex* Drain, VertexSet& Separator)
+        bool AlgorithmVERTEXSEPARATOR::FindMinimumVertexSeparator(Graph &G, Vertex* Source, Vertex* Drain, VertexSet& Separator,
+                                                                  VertexFilter* vertexfilter, EdgeFilter* edgefilter)
         {
             VertexSet Sources;
             Sources.insert(Source);
             VertexSet Drains;
             Drains.insert(Drain);
-            return FindMinimumVertexSeparator(G, Sources, Drains, Separator);
+            return FindMinimumVertexSeparator(G, Sources, Drains, Separator, vertexfilter, edgefilter);
         }
 
         void AlgorithmVERTEXSEPARATOR::AddMinimumVertexSeparator(Graph &G, VertexSet& Sources, VertexSet& Drains, string SeparatorName)

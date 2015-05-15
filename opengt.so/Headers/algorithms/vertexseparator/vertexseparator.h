@@ -17,9 +17,12 @@
             {
                 protected:
                     static MultiFactoryRegistrator<Algorithm> AlgorithmVertexSeparatorRegistrator;
-                    bool FindMinimumVertexSeparator(Graph &G, VertexSet& Sources, VertexSet& Drains, VertexSet& Separator);
-                    bool FindMinimumVertexSeparator(Graph &G, Vertex* Source, Vertex* Drain, VertexSet& Separator);
                 public:
+                    bool FindMinimumVertexSeparator(Graph &G, VertexSet& Sources, VertexSet& Drains, VertexSet& Separator,
+                                                    VertexFilter* vertexfilter = NULL, EdgeFilter* edgefilter = NULL);
+                    bool FindMinimumVertexSeparator(Graph &G, Vertex* Source, Vertex* Drain, VertexSet& Separator,
+                                                    VertexFilter* vertexfilter = NULL, EdgeFilter* edgefilter = NULL);
+
                     void AddMinimumVertexSeparator(Graph &G, VertexSet& Sources, VertexSet& Drains, std::string SeparatorName);
                     void AddMinimumVertexSeparator(Graph &G, Vertex* Source, Vertex* Drain, std::string SeparatorName);
                     void Run(Graph& G, std::vector<std::string> parameters);
