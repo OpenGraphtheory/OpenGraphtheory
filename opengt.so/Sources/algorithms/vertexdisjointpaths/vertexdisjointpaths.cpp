@@ -30,6 +30,8 @@ namespace OpenGraphtheory
             VertexSet NextRoundTails, NextRoundHeads;
             for(VertexIterator Source = Sources.begin(); Source != Sources.end(); Source++)
             {
+                if(vertexfilter != NULL && !vertexfilter->VertexAllowed(*Source))
+                    continue;
                 LastRoundHeads.insert(*Source);
                 PredecessorOfHead[*Source] = NULL; // prevents algoritm from adding paths to tail of source (which doesnt exist logically)
                 PredecessorOfTail[*Source] = NULL;
@@ -38,16 +40,20 @@ namespace OpenGraphtheory
             VertexIterator FoundDrain = Drains.end();
             while(FoundDrain==Drains.end() && !(LastRoundHeads.empty() && LastRoundTails.empty()))
             {
-                // Heads
+                // Process Heads
                 for(VertexIterator v = LastRoundHeads.begin(); v != LastRoundHeads.end(); v++)
                 {
                     // forward edges
                     EdgeSet posincident = (*v)->CollectIncidentEdges(0,1,0);
                     for(EdgeIterator e = posincident.begin(); e != posincident.end(); e++)
                     {
+                        if(edgefilter != NULL && !edgefilter->EdgeAllowed(*e))
+                            continue;
+
                         // the first condition is turned off, because the actual edges have infinite capacity
                         if( /* EFlow.find(*e) == EFlow.end() */
-                        /* && */ PredecessorOfTail.find((*e)->To()) == PredecessorOfTail.end())
+                        /* && */ PredecessorOfTail.find((*e)->To()) == PredecessorOfTail.end()
+                        && (vertexfilter == NULL || vertexfilter->VertexAllowed((*e)->To())))
                         {
                             NextRoundTails.insert((*e)->To());
                             PredecessorOfTail[(*e)->To()] = *v;
@@ -64,7 +70,7 @@ namespace OpenGraphtheory
                     }
                 }
 
-                // Tails
+                // Process Tails
                 for(VertexIterator v = LastRoundTails.begin(); v != LastRoundTails.end(); v++)
                 {
                     // the internal forward edge
@@ -79,8 +85,12 @@ namespace OpenGraphtheory
                     EdgeSet negincident = (*v)->CollectIncidentEdges(0,0,1);
                     for(EdgeIterator e = negincident.begin(); e != negincident.end(); e++)
                     {
+                        if(edgefilter != NULL && !edgefilter->EdgeAllowed(*e))
+                            continue;
+
                         if(EFlow.find(*e) != EFlow.end() // flow = 0 or 1, so this test is sufficient
-                           && PredecessorOfHead.find((*e)->From()) == PredecessorOfHead.end())
+                           && PredecessorOfHead.find((*e)->From()) == PredecessorOfHead.end()
+                           && (vertexfilter == NULL || vertexfilter->VertexAllowed((*e)->From())))
                         {
                             NextRoundHeads.insert((*e)->From());
                             PredecessorOfHead[(*e)->From()] = *v;
@@ -96,6 +106,7 @@ namespace OpenGraphtheory
 
                 for(VertexIterator Drain = Drains.begin(); FoundDrain == Drains.end() && Drain != Drains.end(); Drain++)
                     if(LastRoundTails.find(*Drain) != LastRoundTails.end())
+                        // forbidden vertices are not in LastRoundTails anyways, so vertexfilter need not be applied
                         FoundDrain = Drain;
             }
 
@@ -121,7 +132,7 @@ namespace OpenGraphtheory
             {
                 if(vIsTail)
                 {
-                    // otherwise, we move across the internal edge of the vertex
+                    // otherwise, we only move across the internal edge of the vertex by setting vIsTail to false
                     if(PredecessorOfTail[v] != v)
                     {
                         AugmentingPath.insert(AugmentingPath.begin(), EdgeToPredecessorOfTail[v]);
@@ -131,7 +142,7 @@ namespace OpenGraphtheory
                 }
                 else // vIsHead
                 {
-                    // otherwise, we move across the internal edge of the vertex
+                    // otherwise, we only move across the internal edge of the vertex by setting vIsTail to true
                     if(PredecessorOfHead[v] != v)
                     {
                         AugmentingPath.insert(AugmentingPath.begin(), EdgeToPredecessorOfHead[v]);
@@ -149,7 +160,7 @@ namespace OpenGraphtheory
                                                                          EdgeSet& DisjointPaths, VertexSet& Separator,
                                                                          VertexFilter* vertexfilter, EdgeFilter* edgefilter)
         {
-            // if a source is also a drain, then it cannot be separated and the flow is infinite
+            // if a source is also a drain, then it cannot be separated (and the flow is infinite)
             for(VertexIterator Source = Sources.begin(); Source != Sources.end(); Source++)
                 if(Drains.find(*Source) != Drains.end())
                     return false;
