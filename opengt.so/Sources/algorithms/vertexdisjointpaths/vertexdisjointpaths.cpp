@@ -32,6 +32,7 @@ namespace OpenGraphtheory
             {
                 if(vertexfilter != NULL && !vertexfilter->VertexAllowed(*Source))
                     continue;
+
                 LastRoundHeads.insert(*Source);
                 PredecessorOfHead[*Source] = NULL; // prevents algoritm from adding paths to tail of source (which doesnt exist logically)
                 PredecessorOfTail[*Source] = NULL;
@@ -160,10 +161,29 @@ namespace OpenGraphtheory
                                                                          EdgeSet& DisjointPaths, VertexSet& Separator,
                                                                          VertexFilter* vertexfilter, EdgeFilter* edgefilter)
         {
-            // if a source is also a drain, then it cannot be separated (and the flow is infinite)
+
             for(VertexIterator Source = Sources.begin(); Source != Sources.end(); Source++)
+            {
+                if(vertexfilter != NULL && !vertexfilter->VertexAllowed(*Source))
+                    continue;
+
+                // if a source is also a drain, then it cannot be separated (the flow is infinite)
                 if(Drains.find(*Source) != Drains.end())
                     return false;
+
+                // if a source and a drain are adjacent, then they cannot be separated by a vertex set
+                EdgeSet posincident = (*Source)->CollectIncidentEdges(0,1,0);
+                for(EdgeIterator e = posincident.begin(); e != posincident.end(); e++)
+                {
+                    if(edgefilter != NULL && !edgefilter->EdgeAllowed(*e))
+                        continue;
+                    if(vertexfilter != NULL && !vertexfilter->VertexAllowed((*e)->To()))
+                        continue;
+
+                    if(Drains.find((*e)->To()) != Drains.end())
+                        return false;
+                }
+            }
 
             vector<Edge*> AugmentingPath;
             VertexSet VFlow;

@@ -45,6 +45,19 @@
                 bool VertexAllowed(Vertex* v);
         };
 
+        class AllowedVerticesFilter : public VertexFilter
+        {
+            private:
+                VertexSet AllowedVertices;
+            public:
+                AllowedVerticesFilter();
+                AllowedVerticesFilter(VertexSet& AllowedVertices);
+                void ForbidVertex(Vertex* ForbiddenVertex);
+                void AllowVertex(Vertex* AllowedVertex);
+
+                bool VertexAllowed(Vertex* v);
+        };
+
         class ForbiddenEdgeFilter : public EdgeFilter
         {
             private:
@@ -67,6 +80,18 @@
                 bool EdgeAllowed(Edge* e);
         };
 
+        class AllowedEdgesFilter : public EdgeFilter
+        {
+            private:
+                EdgeSet AllowedEdges;
+            public:
+                AllowedEdgesFilter();
+                AllowedEdgesFilter(EdgeSet& AllowedEdges);
+                void ForbidEdge(Edge* ForbiddenEdge);
+                void AllowEdge(Edge* AllowedEdge);
+
+                bool EdgeAllowed(Edge* e);
+        };
     }
 
 #endif

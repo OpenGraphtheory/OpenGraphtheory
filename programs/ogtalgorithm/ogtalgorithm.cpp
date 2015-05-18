@@ -42,6 +42,9 @@ int main(int argc, char** argv)
             throw "no algorithm selected";
         algos = Algorithm::AlgorithmFactory.Produce(argv[1]);
 
+        if(algos.size() < 1)
+            throw "no such algorithm";
+
         Algorithm::RunParallel(algos, G, parameters, MinApproximationQuality);
         cout << G;
     }

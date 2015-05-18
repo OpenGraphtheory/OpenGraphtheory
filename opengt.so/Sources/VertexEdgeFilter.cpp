@@ -56,6 +56,35 @@ namespace OpenGraphtheory
 
 
 
+
+    AllowedVerticesFilter::AllowedVerticesFilter()
+    {
+    }
+
+    AllowedVerticesFilter::AllowedVerticesFilter(VertexSet& AllowedVertices)
+    {
+        this->AllowedVertices = AllowedVertices;
+    }
+
+    void AllowedVerticesFilter::ForbidVertex(Vertex* ForbiddenVertex)
+    {
+        AllowedVertices.erase(ForbiddenVertex);
+    }
+
+    void AllowedVerticesFilter::AllowVertex(Vertex* Vertex)
+    {
+        AllowedVertices.insert(Vertex);
+    }
+
+    bool AllowedVerticesFilter::VertexAllowed(Vertex* v)
+    {
+        return AllowedVertices.contains(v);
+    }
+
+
+
+
+
     ForbiddenEdgeFilter::ForbiddenEdgeFilter(Edge* ForbiddenEdge)
     {
         this->ForbiddenEdge = ForbiddenEdge;
@@ -95,5 +124,30 @@ namespace OpenGraphtheory
 
 
 
+
+
+    AllowedEdgesFilter::AllowedEdgesFilter()
+    {
+    }
+
+    AllowedEdgesFilter::AllowedEdgesFilter(EdgeSet& AllowedEdges)
+    {
+        this->AllowedEdges = AllowedEdges;
+    }
+
+    void AllowedEdgesFilter::ForbidEdge(Edge* ForbiddenEdge)
+    {
+        AllowedEdges.erase(ForbiddenEdge);
+    }
+
+    void AllowedEdgesFilter::AllowEdge(Edge* AllowedEdge)
+    {
+        AllowedEdges.insert(AllowedEdge);
+    }
+
+    bool AllowedEdgesFilter::EdgeAllowed(Edge* e)
+    {
+        return AllowedEdges.contains(e);
+    }
 
 }

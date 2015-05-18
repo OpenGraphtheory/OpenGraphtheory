@@ -38,6 +38,8 @@
                         DirectedTreeDecomposition* FindDirectedTreeDecomposition(Graph& G, size_t k);
                         DirectedTreeDecomposition* FindDirectedTreeDecomposition(Graph& G);
 
+                        void PrintDirectedTreeDecomposition(DirectedTreeDecomposition* d, size_t indent);
+
                         void Run(Graph& G, std::vector<std::string> parameters);
                 };
 

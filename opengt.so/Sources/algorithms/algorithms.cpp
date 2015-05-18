@@ -54,7 +54,10 @@ namespace OpenGraphtheory
                     Algorithm* algo = *SelectedAlgorithms.begin();
                     algo->Run(G, parameters);
                 }
-
+                else
+                {
+                    throw "No suitable algorithm found";
+                }
             }
             else
             {
