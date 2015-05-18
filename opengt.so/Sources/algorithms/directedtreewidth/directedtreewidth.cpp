@@ -136,7 +136,6 @@ cerr << "}\n";
 
                 // not sure why... ask Leo Bodlaender... see line 8 on page 9 of
                 // http://www.math2.rwth-aachen.de/~koster/paper/boko09a.pdf
-                /*
                 if((X.empty() || Y.empty()) && SetHelper::IsSubset(S,W))
                     for(VertexIterator v = V.begin(); v != V.end(); v++)
                         if(!W.contains(*v))
@@ -144,7 +143,7 @@ cerr << "}\n";
                             S.insert(*v);
                             break;
                         }
-                */
+
 
                 // determine the strong components of G-S
                 AlgorithmSTRONGCOMPONENTS strongcomponentalgorithm;
