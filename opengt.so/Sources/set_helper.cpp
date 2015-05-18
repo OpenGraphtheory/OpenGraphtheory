@@ -93,7 +93,6 @@
                     }
                 }
 
-
                 template<class T> bool IsSubset(const std::set<T> &A, const std::set<T> &B)
                 {
                     for(typename std::set<T>::iterator a = A.begin(); a != A.end(); a++)
@@ -108,6 +107,108 @@
                 }
 
 
+
+
+
+                template<class T> VectorSet<T> Intersection(const VectorSet<T> &A, const VectorSet<T> &B)
+                {
+                    VectorSet<T> result;
+                    for(typename VectorSet<T>::const_iterator a = A.begin(); a != A.end(); a++)
+                        if(B.find(*a) != B.end())
+                            result.insert(*a);
+                    return result;
+                }
+
+                template<class T> unsigned int IntersectionSize(const VectorSet<T> &A, const VectorSet<T> &B)
+                {
+                    unsigned int result = 0;
+                    for(typename VectorSet<T>::iterator a = A.begin(); a != A.end(); a++)
+                        if(B.find(*a) != B.end())
+                            result++;
+                    return result;
+                }
+
+                template<class T> bool IntersectionEmpty(const VectorSet<T> &A, const VectorSet<T> &B)
+                {
+                    for(typename VectorSet<T>::iterator a = A.begin(); a != A.end(); a++)
+                        if(B.find(*a) != B.end())
+                            return false;
+                    return true;
+                }
+
+
+                template<class T> VectorSet<T> SetMinus(const VectorSet<T> &A, const VectorSet<T> &B)
+                {
+                    VectorSet<T> result;
+                    for(typename VectorSet<T>::iterator a = A.begin(); a != A.end(); a++)
+                        if(B.find(*a) == B.end())
+                            result.insert(*a);
+                    return result;
+                }
+
+                template<class T> void DestructiveSetMinus(VectorSet<T> &A, const VectorSet<T> &B)
+                {
+                    for(typename VectorSet<T>::iterator b = B.begin(); b != B.end(); b++)
+                        A.erase(*b);
+                }
+
+
+                template<class T> VectorSet<T> Union(const VectorSet<T> &A, const VectorSet<T> &B)
+                {
+                    VectorSet<T> result;
+                    for(typename VectorSet<T>::const_iterator a = A.begin(); a != A.end(); a++)
+                        result.insert(*a);
+                    for(typename VectorSet<T>::const_iterator b = B.begin(); b != B.end(); b++)
+                        result.insert(*b);
+                    return result;
+                }
+
+                template<class T> void DestructiveUnion(VectorSet<T> &A, const VectorSet<T> &B)
+                {
+                    for(typename VectorSet<T>::const_iterator b = B.begin(); b != B.end(); b++)
+                        A.insert(*b);
+                }
+
+
+                template<class T> VectorSet<T> SymmetricDifference(const VectorSet<T> &A, const VectorSet<T> &B)
+                {
+                    VectorSet<T> result;
+                    for(typename VectorSet<T>::iterator a = A.begin(); a != A.end(); a++)
+                        if(B.find(*a) == B.end())
+                            result.insert(*a);
+                    for(typename VectorSet<T>::iterator b = B.begin(); b != B.end(); b++)
+                        if(A.find(*b) == A.end())
+                            result.insert(*b);
+                    return result;
+                }
+
+
+                template<class T> void DestructiveSymmetricDifference(VectorSet<T> &A, const VectorSet<T> &B)
+                {
+                    for(typename VectorSet<T>::iterator b = B.begin(); b != B.end(); b++)
+                    {
+                        typename VectorSet<T>::iterator pos = A.find(*b);
+                        if(pos == A.end())
+                            A.insert(*b);
+                        else
+                            A.erase(pos);
+                    }
+                }
+
+
+                template<class T> bool IsSubset(const VectorSet<T> &A, const VectorSet<T> &B)
+                {
+                    for(typename VectorSet<T>::const_iterator a = A.begin(); a != A.end(); a++)
+                        if(B.find(*a) == B.end())
+                            return false;
+                    return true;
+                }
+
+
+                template<class T> bool SetsEqual(const VectorSet<T> &A, const VectorSet<T> &B)
+                {
+                    return IsSubset(A,B) && IsSubset(B,A);
+                }
 
 
 

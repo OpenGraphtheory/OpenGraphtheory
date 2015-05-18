@@ -121,8 +121,12 @@ namespace OpenGraphtheory
                 result = new DirectedTreeDecomposition;
                 for(vector<vector<Vertex*> >::iterator C = VerticesInComponent.begin(); C != VerticesInComponent.end(); C++)
                 {
-                    VertexSet SoC = SetHelper::Union(S, C);
-                    VertexSet SoWaC = SetHelper::Union(S, SetHelper::Intersection(W,C));
+                    VertexSet CSet;
+                    for(vector<Vertex*>::iterator v = C->begin(); v != C->end(); v++)
+                        CSet.insert(*v);
+
+                    VertexSet SoC = SetHelper::Union(S, CSet);
+                    VertexSet SoWaC = SetHelper::Union(S, SetHelper::Intersection(W,CSet));
                     DirectedTreeDecomposition* d = FindDirectedTreeDecomposition(G, SoC, SoWaC, k);
                     if(d == NULL) // treewidth is larger than k
                     {
