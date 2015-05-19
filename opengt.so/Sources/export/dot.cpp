@@ -16,10 +16,18 @@ namespace OpenGraphtheory
             if(G.IsHypergraph())
                 throw "The DOT fileformat doesn\'t support hypergraphs\n";
 
+            // actually, DOT supports mixed graphs, but it is not nice, see
+            // http://stackoverflow.com/questions/13236975/graphviz-dot-mix-directed-and-undirected
+            if(G.IsMixed())
+                throw "The DOT fileformat doesn\'t support mixed graphs\n";
+
             StringTranslator Translator; // should be replaced with an appropriate translator
 
             os << "// www.open-graphtheory.org\n";
-            os << "graph gxl2dot {\n";
+            if(G.IsDirected())
+                os << "digraph gxl2dot {\n";
+            else
+                os << "graph gxl2dot {\n";
 
             /// write vertices
             os << std::setfill('0');
