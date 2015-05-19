@@ -21,7 +21,7 @@
             {
                 protected:
                     static FactoryRegistrator<Generator> GeneratorDtw2TreeRegistrator;
-                    void InternalGenerate(Graph* G, Vertex* v, std::vector<Vertex*>& predecessors, int height);
+                    int InternalGenerate(Graph* G, Vertex* v, std::vector<Vertex*>& predecessors, int height, int startid);
                 public:
                     GeneratorDTW2TREE();
                     Graph DoGenerate(std::list<int> parameter);

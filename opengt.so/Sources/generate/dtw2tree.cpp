@@ -19,7 +19,7 @@ namespace OpenGraphtheory
             MaxParamCount = 1;
         }
 
-        void GeneratorDTW2TREE::InternalGenerate(Graph* G, Vertex* v, vector<Vertex*>& predecessors, int height)
+        int GeneratorDTW2TREE::InternalGenerate(Graph* G, Vertex* v, vector<Vertex*>& predecessors, int height, int startid)
         {
             if(height <= 1)
             {
@@ -28,17 +28,27 @@ namespace OpenGraphtheory
                     Vertex* pred = *p;
                     G->AddArc(v, pred);
                 }
-                return;
+                return 0;
             }
 
+            int nodescreated = 0;
             for(int i = 0; i < 2; i++)
             {
                 Vertex* u = *(G->AddVertex());
+                nodescreated++;
+
+                string strid;
+                stringstream s;
+                s << startid+nodescreated;
+                s >> strid;
+                u->SetLabel(strid);
+
                 G->AddArc(v,u);
                 predecessors.push_back(v);
-                InternalGenerate(G, u, predecessors, height-1);
+                nodescreated += InternalGenerate(G, u, predecessors, height-1, startid+nodescreated);
                 predecessors.pop_back();
             }
+            return nodescreated;
         }
 
         Graph GeneratorDTW2TREE::DoGenerate(list<int> parameter)
@@ -48,9 +58,10 @@ namespace OpenGraphtheory
             Graph result;
 
             Vertex* root = *(result.AddVertex());
+            root->SetLabel("0");
             vector<Vertex*> predecessors;
 
-            InternalGenerate(&result, root, predecessors, height);
+            InternalGenerate(&result, root, predecessors, height, 0);
             return result;
         }
 
