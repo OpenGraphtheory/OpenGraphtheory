@@ -32,7 +32,7 @@
                         static MultiFactoryRegistrator<Algorithm> AlgorithmDirectedTreeDecompositionRegistrator;
 
                     public:
-                        bool FindWeaklyBalancedWSeparation(Graph& G, VertexSet& V, VertexSet& W, VertexIterator WIt,
+                        bool FindWeaklyBalancedWSeparation(Graph& G, VertexSet& W, VertexIterator WIt,
                                                            VertexSet& X, VertexSet& S, VertexSet& Y, size_t k);
                         DirectedTreeDecomposition* FindDirectedTreeDecomposition(Graph& G, VertexSet& V, VertexSet& W, size_t k);
                         DirectedTreeDecomposition* FindDirectedTreeDecomposition(Graph& G, size_t k);

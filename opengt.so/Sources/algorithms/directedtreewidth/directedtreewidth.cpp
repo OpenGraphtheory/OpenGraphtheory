@@ -31,46 +31,26 @@ namespace OpenGraphtheory
             {
                 for(std::vector<DirectedTreeDecomposition*>::iterator i = Children.begin(); i != Children.end(); i++)
                     delete *i;
+                Children.clear();
             }
 
 
 
-            bool AlgorithmDIRECTEDTREEDECOMPOSITION::FindWeaklyBalancedWSeparation(Graph& G, VertexSet& V, VertexSet& W, VertexIterator WIt,
+            bool AlgorithmDIRECTEDTREEDECOMPOSITION::FindWeaklyBalancedWSeparation(Graph& G, VertexSet& W, VertexIterator WIt,
                                                                                    VertexSet& X, VertexSet& S, VertexSet& Y, size_t k)
             {
-cerr << "FindWeaklyBalancedWSeparation   W = {"; cerr.flush();
-for(VertexIterator v = W.begin(); v != W.end(); v++)
-    cerr << (*v)->GetLabel() << " ";
-cerr << "}   ";
-
-cerr << "X = {"; cerr.flush();
-for(VertexIterator v = X.begin(); v != X.end(); v++)
-    cerr << (*v)->GetLabel() << " ";
-cerr << "}   ";
-
-cerr << "S = {"; cerr.flush();
-for(VertexIterator v = S.begin(); v != S.end(); v++)
-    cerr << (*v)->GetLabel() << " ";
-cerr << "}   ";
-
-cerr << "Y = {"; cerr.flush();
-for(VertexIterator v = Y.begin(); v != Y.end(); v++)
-    cerr << (*v)->GetLabel() << " ";
-cerr << "}\n";
-
-
                 if(S.size() > k)
                     return false;
-                if(X.size()*4 > W.size()*3)
+                if(X.size()*4 > W.size()*3) // not balanced
                     return false;
-                if(Y.size()*4 > W.size()*3)
+                if(Y.size()*4 > W.size()*3) // not balanced
                     return false;
 
                 if(WIt == W.end()) // all vertices are distributed
                 {
                     VertexSet Separator;
                     AllowedVerticesFilter VMinusS;
-                    for(VertexIterator v = V.begin(); v != V.end(); v++)
+                    for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
                         if(S.find(*v) == S.end())
                             VMinusS.AllowVertex(*v);
                     AlgorithmVERTEXSEPARATOR separatoralgorithm;
@@ -89,17 +69,17 @@ cerr << "}\n";
                 Vertex* pWIt = *WIt;
 
                 X.insert(pWIt);                                             // Put WIt into X
-                if(FindWeaklyBalancedWSeparation(G,V,W,WItNext, X,S,Y, k))
+                if(FindWeaklyBalancedWSeparation(G,W,WItNext, X,S,Y, k))
                     return true;
                 X.erase(pWIt);
 
                 Y.insert(pWIt);                                             // Put WIt into Y
-                if(FindWeaklyBalancedWSeparation(G,V,W,WItNext, X,S,Y, k))
+                if(FindWeaklyBalancedWSeparation(G,W,WItNext, X,S,Y, k))
                     return true;
                 Y.erase(pWIt);
 
                 S.insert(pWIt);                                             // Put WIt into S
-                if(FindWeaklyBalancedWSeparation(G,V,W,WItNext, X,S,Y, k))
+                if(FindWeaklyBalancedWSeparation(G,W,WItNext, X,S,Y, k))
                     return true;
                 S.erase(pWIt);
 
@@ -119,10 +99,11 @@ for(VertexIterator v = W.begin(); v != W.end(); v++)
     cerr << (*v)->GetLabel() << " ";
 cerr << "}\n";
 
+
                 DirectedTreeDecomposition* result = NULL;
 
                 // (the remnant of) V is small enough to return a single bag containing all of V
-                if(V.size() <= W.size())
+                if(SetHelper::SetsEqual(V,W))
                 {
                     result = new DirectedTreeDecomposition;
                     result->Bag = V;
@@ -131,11 +112,28 @@ cerr << "}\n";
 
                 // find weakly balanced W separation (X,S,Y)
                 VertexSet X, S, Y;
-                if(!FindWeaklyBalancedWSeparation(G, V, W, W.begin(), X,S,Y,  k)) // treewidth is larger than k
+                if(!FindWeaklyBalancedWSeparation(G, W, W.begin(), X,S,Y,  k)) // treewidth is larger than k
                     return NULL;
 
-                // not sure why... ask Leo Bodlaender... see line 8 on page 9 of
-                // http://www.math2.rwth-aachen.de/~koster/paper/boko09a.pdf
+
+cerr << "   Weakly Balanced W Separation:   X = {"; cerr.flush();
+for(VertexIterator v = X.begin(); v != X.end(); v++)
+    cerr << (*v)->GetLabel() << " ";
+cerr << "}   ";
+
+cerr << "S = {"; cerr.flush();
+for(VertexIterator v = S.begin(); v != S.end(); v++)
+    cerr << (*v)->GetLabel() << " ";
+cerr << "}   ";
+
+cerr << "Y = {"; cerr.flush();
+for(VertexIterator v = Y.begin(); v != Y.end(); v++)
+    cerr << (*v)->GetLabel() << " ";
+cerr << "}\n";
+
+
+                // this only enforces termination of the algorithm (without it, the
+                // algorithm might alternate infinitely between two components)
                 if((X.empty() || Y.empty()) && SetHelper::IsSubset(S,W))
                     for(VertexIterator v = V.begin(); v != V.end(); v++)
                         if(!W.contains(*v))
@@ -144,8 +142,8 @@ cerr << "}\n";
                             break;
                         }
 
-
-                // determine the strong components of G-S
+                // determine the strong components of G[V]-S
+                // TODO: verify that you dont have to use all of G instead of only the local G[V]
                 AlgorithmSTRONGCOMPONENTS strongcomponentalgorithm;
                 AllowedVerticesFilter VMinusS;
                 for(VertexIterator v = V.begin(); v != V.end(); v++)
@@ -155,7 +153,7 @@ cerr << "}\n";
                 vector<vector<Vertex*> > VerticesInComponent;
                 strongcomponentalgorithm.FindStrongComponents(G, ComponentOfVertex, VerticesInComponent, &VMinusS);
 
-                // Recurse on  V' = S union C,  W' = S union (W cap C)   for the strong components C of G-S
+                // Recurse on  V' = S union C,  W' = S union (W cap C)   for the strong components C of G[V]-S
                 result = new DirectedTreeDecomposition;
                 for(vector<vector<Vertex*> >::iterator C = VerticesInComponent.begin(); C != VerticesInComponent.end(); C++)
                 {
