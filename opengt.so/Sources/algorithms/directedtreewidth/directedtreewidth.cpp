@@ -1,6 +1,7 @@
 
 #include "../../../Headers/algorithms/directedtreewidth/directedtreewidth.h"
 
+#define VERBOSEOUTPUT
 
 // see page 8 and 9 of
 // http://www.math2.rwth-aachen.de/~koster/paper/boko09a.pdf
@@ -90,6 +91,7 @@ namespace OpenGraphtheory
 
             DirectedTreeDecomposition* AlgorithmDIRECTEDTREEDECOMPOSITION::FindDirectedTreeDecomposition(Graph& G, VertexSet& V, VertexSet& W, size_t k)
             {
+#ifdef VERBOSEOUTPUT
 cerr << "FindDirectedTreeDecomposition   k = " << k << "   V = {"; cerr.flush();
 for(VertexIterator v = V.begin(); v != V.end(); v++)
     cerr << (*v)->GetLabel() << " ";
@@ -98,7 +100,7 @@ cerr << "W = {"; cerr.flush();
 for(VertexIterator v = W.begin(); v != W.end(); v++)
     cerr << (*v)->GetLabel() << " ";
 cerr << "}\n";
-
+#endif
 
                 DirectedTreeDecomposition* result = NULL;
 
@@ -115,7 +117,7 @@ cerr << "}\n";
                 if(!FindWeaklyBalancedWSeparation(G, W, W.begin(), X,S,Y,  k)) // treewidth is larger than k
                     return NULL;
 
-
+#ifdef VERBOSEOUTPUT
 cerr << "   Weakly Balanced W Separation:   X = {"; cerr.flush();
 for(VertexIterator v = X.begin(); v != X.end(); v++)
     cerr << (*v)->GetLabel() << " ";
@@ -130,7 +132,7 @@ cerr << "Y = {"; cerr.flush();
 for(VertexIterator v = Y.begin(); v != Y.end(); v++)
     cerr << (*v)->GetLabel() << " ";
 cerr << "}\n";
-
+#endif
 
                 // this only enforces termination of the algorithm (without it, the
                 // algorithm might alternate infinitely between two components)
