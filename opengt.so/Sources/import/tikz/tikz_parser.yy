@@ -67,10 +67,17 @@ TIKZLINE:
                                               { $<tval>$ = new TikzDeclareNode($<sval>6, $<fval>10, $<fval>13, $<fval>2, $<sval>17); }
        | NODE FLOAT CM CLOSEBRACKET OPEN STRING CLOSE AT OPEN FLOAT CM COMMA FLOAT CM CLOSE OPENBRACES CLOSEBRACES SEMICOLON
                                               { $<tval>$ = new TikzDeclareNode($<sval>6, $<fval>10, $<fval>13, $<fval>2, NULL); }
+       | NODE FLOAT CM CLOSEBRACKET OPEN STRING CLOSE AT OPEN FLOAT CM COMMA FLOAT CM CLOSE OPENBRACES FLOAT CLOSEBRACES SEMICOLON
+                                              { std::stringstream sstream;
+                                                sstream << $<fval>17;
+                                                std::string *s = new std::string(sstream.str());
+                                                $<tval>$ = new TikzDeclareNode($<sval>6, $<fval>10, $<fval>13, $<fval>2, s); }
+
        | DRAWEDGE FLOAT CM CLOSEBRACKET OPEN STRING CLOSE TO OPEN STRING CLOSE SEMICOLON
                                               { $<tval>$ = new TikzDrawEdge($<sval>6, $<sval>10, $<fval>2); }
        | DRAWARC FLOAT CM CLOSEBRACKET OPEN STRING CLOSE TO OPEN STRING CLOSE SEMICOLON
                                               { $<tval>$ = new TikzDrawArc($<sval>6, $<sval>10, $<fval>2); }
+
        | PENCOLOR OPENBRACES FLOAT COMMA FLOAT COMMA FLOAT CLOSEBRACES
                                               { $<tval>$ = new TikzDefinePencolor($<fval>3, $<fval>5, $<fval>7); }
        | BRUSHCOLOR OPENBRACES FLOAT COMMA FLOAT COMMA FLOAT CLOSEBRACES
