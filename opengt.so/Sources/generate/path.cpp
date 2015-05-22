@@ -28,6 +28,9 @@ namespace OpenGraphtheory
         Graph GeneratorPATH::Generate(int n)
         {
             Graph result;
+            if(n <= 0)
+                return result;
+
             for(int i = 0; i < n; i++)
             {
                 VertexIterator v = result.AddVertex();
@@ -38,8 +41,11 @@ namespace OpenGraphtheory
                 (*v)->SetCoordinates(coords);
             }
 
-            for(VertexIterator v = result.BeginVertices(); v + 1 != result.EndVertices(); v++)
-                result.AddEdge(v, v+1);
+            VertexIterator v = result.BeginVertices();
+            VertexIterator v1 = v;
+            v1++;
+            for(; v1 != result.EndVertices(); v++,v1++)
+                result.AddEdge(v, v1);
 
             return result;
         }

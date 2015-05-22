@@ -114,7 +114,7 @@ namespace OpenGraphtheory
                             AugmentingPathEdges.insert(PredecessorEdge[i]);
                         AugmentingPathEdges.insert(EdgesBetweenEquivalenceClasses[v][*n]);
 
-                        Matching = Matching.symmetric_difference(AugmentingPathEdges);
+                        SetHelper::DestructiveSymmetricDifference(Matching,AugmentingPathEdges);
                         return true;
                     }
 
@@ -145,7 +145,8 @@ namespace OpenGraphtheory
                             EdgeSet path;
                             for(int i = LeastCommonPredecessor; i != ForestRoot[v]; i = ForestPredecessor[i])
                                 path.insert(PredecessorEdge[i]);
-                            NextMatching = Matching.symmetric_difference(path);
+
+                            NextMatching = SetHelper::SymmetricDifference(Matching,path);
                         }
                         else
                         {
@@ -182,7 +183,7 @@ namespace OpenGraphtheory
                             else
                                 NextContractionEquivalenceClasses[*vi] = LeastCommonPredecessor;
                         }
-                        NextMatching -= OddCircleEdges;
+                        SetHelper::DestructiveSetMinus(NextMatching, OddCircleEdges);
 
                         // Recursion on contracted graph
                         bool Augmented = false;

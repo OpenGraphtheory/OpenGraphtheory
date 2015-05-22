@@ -154,7 +154,7 @@ namespace OpenGraphtheory
                 if(TestDominatingSet(G, Dominators, Undominated, Excluded, DominatingSet, k-1))
                     return true;
                 DominatingSet.erase(*candidate);
-                if(!Excluded.contains(*candidate))
+                if(Excluded.find(*candidate) == Excluded.end())
                 {
                     Excluded.insert(*candidate);
                     NextExcluded.insert(*candidate);

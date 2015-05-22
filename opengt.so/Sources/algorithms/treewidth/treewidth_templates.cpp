@@ -84,7 +84,7 @@
                         treedecomp = new IntroduceNode(treedecomp, i);
 
                     for(VertexIterator i = G.BeginVertices(); i != G.EndVertices(); i++)
-                        if(!VertexCover.contains(*i))
+                        if(VertexCover.find(*i) == VertexCover.end())
                             treedecomp = new ForgetNode(new IntroduceNode(treedecomp, i), i);
 
                     std::pair<T*,VertexSet> RootResult = Run(G, treedecomp);

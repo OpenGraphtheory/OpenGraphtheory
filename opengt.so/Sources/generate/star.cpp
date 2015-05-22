@@ -42,7 +42,8 @@ namespace OpenGraphtheory
                 (*v)->SetCoordinates(coords);
             }
 
-            for(VertexIterator v = result.BeginVertices()+1; v != result.EndVertices(); v++)
+            VertexIterator v = result.BeginVertices();
+            for(v++; v != result.EndVertices(); v++)
                 result.AddEdge(result.BeginVertices(), v);
 
             return result;

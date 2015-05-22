@@ -31,9 +31,9 @@ namespace OpenGraphtheory
 
             for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
-                if(VertexCover.contains(*v)) // v already in VertexCover
+                if(VertexCover.find(*v) != VertexCover.end()) // v already in VertexCover
                     continue;
-                unsigned int NewlyCoverable = (*v)->CollectIncidentEdges(1,1,1).intersection(Uncovered).size();
+                unsigned int NewlyCoverable = SetHelper::IntersectionSize((*v)->CollectIncidentEdges(1,1,1), Uncovered);
 
                 if(NewlyCoverable > MaxNewlyCoverable)
                 {
@@ -59,7 +59,7 @@ namespace OpenGraphtheory
 
             vector<VertexSet*> candidate_sets;
 
-            VertexSet enforced_neighbors = selected->CollectNeighbors(1,1,1,1,1,1,1,1,1) - VertexCover;
+            VertexSet enforced_neighbors = SetHelper::SetMinus( selected->CollectNeighbors(1,1,1,1,1,1,1,1,1), VertexCover);
             if(MaxNewlyCoverable == 1)
             {
                 candidate_sets.push_back(&enforced_neighbors);
@@ -78,16 +78,16 @@ namespace OpenGraphtheory
             EdgeSet NextUncovered;
             for(vector<VertexSet*>::iterator selection = candidate_sets.begin(); selection != candidate_sets.end(); selection++)
             {
-                VertexCover += **selection; // *selection is disjoint from VertexCover, so this is a safe step
+                SetHelper::DestructiveUnion(VertexCover, **selection); // *selection is disjoint from VertexCover, so this is a safe step
 
                 NextUncovered = Uncovered;
 
                 for(VertexIterator v = (*selection)->begin(); v != (*selection)->end(); v++)
-                    NextUncovered -= (*v)->CollectIncidentEdges(1,1,1);
+                    SetHelper::DestructiveSetMinus(NextUncovered, (*v)->CollectIncidentEdges(1,1,1));
                 if(TestVertexCover(G, NextUncovered, VertexCover, k - (*selection)->size() ))
                     return true;
 
-                VertexCover -= **selection;
+                SetHelper::DestructiveSetMinus(VertexCover, **selection);
             }
 
             return false;

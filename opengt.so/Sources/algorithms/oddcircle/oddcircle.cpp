@@ -85,7 +85,7 @@ namespace OpenGraphtheory
                 while(true)
                 {
                     OddCircle.push_back(p2);
-                    if(Path1.contains(p2))
+                    if(Path1.find(p2) == Path1.end())
                     {
                         BipartitionClashRoot = p2;
                         break;

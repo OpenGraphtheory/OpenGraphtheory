@@ -19,10 +19,10 @@ namespace OpenGraphtheory
             for(EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
             {
                 VertexSet Incident = (*e)->CollectIncidentVertices(1,1,1);
-                if(MatchedVertices.intersection(Incident).empty())
+                if(SetHelper::IntersectionEmpty(MatchedVertices,Incident))
                 {
                     Matching.insert(*e);
-                    MatchedVertices += Incident;
+                    SetHelper::DestructiveUnion(MatchedVertices, Incident);
                 }
             }
 

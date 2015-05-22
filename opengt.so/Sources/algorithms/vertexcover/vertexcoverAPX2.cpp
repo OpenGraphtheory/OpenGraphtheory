@@ -20,7 +20,7 @@ namespace OpenGraphtheory
             for(EdgeIterator e = MaximalMatching.begin(); e != MaximalMatching.end(); e++)
             {
                 VertexSet Incident = (**e).CollectIncidentVertices(1,1,1);
-                VertexCover += Incident;
+                SetHelper::DestructiveUnion(VertexCover, Incident);
             }
         }
 

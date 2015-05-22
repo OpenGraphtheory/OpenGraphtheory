@@ -28,7 +28,7 @@ namespace OpenGraphtheory
             for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
                 Q.insert(*v);
             VertexWeighting distance;
-            distance[from] = 0;
+            distance[from] = 0.0f;
 
             map<Vertex*, pair<Vertex*,Edge*>* > dfstree;
 
@@ -66,7 +66,7 @@ namespace OpenGraphtheory
                     VertexSet vNeighbors = (*e)->CollectIncidentVertices(1,1,0);
                     for(VertexIterator n = vNeighbors.begin(); n != vNeighbors.end(); n++)
                     {
-                        if(Q.contains(*n) ) // && (vertexfilter == NULL || vertexfilter->VertexAllowed(*n))
+                        if(Q.find(*n) != Q.end()) // && (vertexfilter == NULL || vertexfilter->VertexAllowed(*n))
                         {
                             if((distance.find(*n) == distance.end()) || ((*e)->GetWeight() + distance[pv] < distance[*n]))
                             {
@@ -126,7 +126,8 @@ namespace OpenGraphtheory
                     VertexSet ReachableVertices = (*e)->CollectIncidentVertices(1,positive,negative);
                     for(VertexIterator u = ReachableVertices.begin(); u != ReachableVertices.end(); u++)
                     {
-                        if(result.contains(*u) || (vertexfilter != NULL && !vertexfilter->VertexAllowed(*u)))
+                        if (result.find(*u) != result.end()
+                        || (vertexfilter != NULL && !vertexfilter->VertexAllowed(*u)))
                             continue;
                         result.insert(*u);
                         queue[head++] = *u;

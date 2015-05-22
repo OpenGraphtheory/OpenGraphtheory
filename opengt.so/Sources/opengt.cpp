@@ -539,7 +539,8 @@ namespace OpenGraphtheory
                 if(NumberOfConnections() == 2)
                 {
                     VertexEdgeConnectionIterator v1 = BeginConnections();
-                    VertexEdgeConnectionIterator v2 = v1+1;
+                    VertexEdgeConnectionIterator v2 = v1;
+                    v2++;
                     if((*v1)->GetDirection() == VertexEdgeConnection::Undirected
                         && (*v2)->GetDirection() == VertexEdgeConnection::Undirected
                         && (*v1)->GetVertex() == (*v2)->GetVertex())
@@ -563,7 +564,8 @@ namespace OpenGraphtheory
                 if(NumberOfConnections() == 2)
                 {
                     VertexEdgeConnectionIterator v1 = BeginConnections();
-                    VertexEdgeConnectionIterator v2 = v1+1;
+                    VertexEdgeConnectionIterator v2 = v1;
+                    v2++;
                     if((*v1)->GetDirection() == VertexEdgeConnection::VertexToEdge
                         && (*v2)->GetDirection() == VertexEdgeConnection::EdgeToVertex
                         && (*v1)->GetVertex() == (*v2)->GetVertex())
@@ -639,7 +641,8 @@ namespace OpenGraphtheory
             if(NumberOfConnections() == 2)
             {
                 VertexEdgeConnectionIterator v1 = BeginConnections();
-                VertexEdgeConnectionIterator v2 = v1+1;
+                VertexEdgeConnectionIterator v2 = v1;
+                v2++;
                 if((*v1)->GetDirection() == VertexEdgeConnection::Undirected
                     && (*v2)->GetDirection() == VertexEdgeConnection::Undirected)
                     return true;
@@ -653,7 +656,8 @@ namespace OpenGraphtheory
             if(NumberOfConnections() == 2)
             {
                 VertexEdgeConnectionIterator v1 = BeginConnections();
-                VertexEdgeConnectionIterator v2 = v1+1;
+                VertexEdgeConnectionIterator v2 = v1;
+                v2++;
                 if(
                      (
                          (*v1)->GetDirection() == VertexEdgeConnection::VertexToEdge
@@ -714,7 +718,7 @@ namespace OpenGraphtheory
                 Attribute* attr = (*v)->AddAttribute(name, "bool");
                 BoolAttribute* battr = dynamic_cast<BoolAttribute*>(attr);
                 if(battr != NULL)
-                    battr->Value = (V.contains(*v));
+                    battr->Value = (V.find(*v) != V.end());
             }
         }
 
@@ -726,7 +730,7 @@ namespace OpenGraphtheory
                 Attribute* attr = (*e)->AddAttribute(name, "bool");
                 BoolAttribute* battr = dynamic_cast<BoolAttribute*>(attr);
                 if(battr != NULL)
-                    battr->Value = (E.contains(*e));
+                    battr->Value = (E.find(*e) != E.end());
             }
         }
 
@@ -844,10 +848,10 @@ namespace OpenGraphtheory
         VertexIterator Graph::InternalAddVertex(int ID)
         {
             Vertex* v = new Vertex(this, ID);
-            Vertices->insert(v);
+            VertexIterator result = Vertices->insert(v).first;
 
             (*Vertex_ID_to_pointer)[v->GetID()] = v;
-            return EndVertices() - 1;
+            return result;
         }
 
         VertexIterator Graph::AddVertex()
@@ -923,7 +927,7 @@ namespace OpenGraphtheory
             // Connect all affected edges to the new Vertex
             EdgeSet AffectedEdges;
             for(VertexIterator v = FusedVertices.begin(); v != FusedVertices.end(); v++)
-                AffectedEdges += (*v)->CollectIncidentEdges(1,1,1);
+                SetHelper::DestructiveUnion(AffectedEdges, (*v)->CollectIncidentEdges(1,1,1));
 
 
             EdgeSet EdgesThatHaveBecomeLoops;
@@ -932,11 +936,11 @@ namespace OpenGraphtheory
                 bool HasBecomeLoop = true;
                 for(VertexEdgeConnectionIterator i = (*e)->BeginConnections(); i != (*e)->EndConnections(); i++)
                 {
-                    if(FusedVertices.contains((*i)->GetVertex()))
+                    if(FusedVertices.find((*i)->GetVertex()) != FusedVertices.end())
                     {
                         // messes with internal data structures
                         (*i)->vertex = pResult;
-                        pResult->Connections->push_back(*i);
+                        pResult->Connections->insert(*i);
                     }
                     else
                         HasBecomeLoop = false;
@@ -974,8 +978,8 @@ namespace OpenGraphtheory
             conn->vertex = this;
             conn->direction = direction;
             conn->edge = edge;
-            this->Connections->push_back(conn);
-            edge->Connections->push_back(conn);
+            this->Connections->insert(conn);
+            edge->Connections->insert(conn);
             return conn;
         }
 
@@ -1008,9 +1012,9 @@ namespace OpenGraphtheory
             if(to != NULL)
                 e->AddConnection(to, Directed ? VertexEdgeConnection::EdgeToVertex : VertexEdgeConnection::Undirected);
 
-            Edges->push_back(e);
+            EdgeIterator result = Edges->insert(e).first;
             (*Edge_ID_to_pointer)[e->GetID()] = e;
-            return EndEdges() - 1;
+            return result;
         }
 
         /// \brief Adds an Edge to the Graph
@@ -1212,7 +1216,8 @@ namespace OpenGraphtheory
                 if(NumberOfConnections() == 2)
                 {
                     VertexEdgeConnectionIterator a = BeginConnections();
-                    VertexEdgeConnectionIterator b = a+1;
+                    VertexEdgeConnectionIterator b = a;
+                    b++;
 
                     if(   (*a)->GetDirection() == VertexEdgeConnection::Undirected
                        && (*b)->GetDirection() == VertexEdgeConnection::Undirected)
@@ -1235,7 +1240,8 @@ namespace OpenGraphtheory
                 if(NumberOfConnections() == 2)
                 {
                     VertexEdgeConnectionIterator a = BeginConnections();
-                    VertexEdgeConnectionIterator b = a+1;
+                    VertexEdgeConnectionIterator b = a;
+                    b++;
 
                     if(   (*a)->GetDirection() == VertexEdgeConnection::Undirected
                        && (*b)->GetDirection() == VertexEdgeConnection::Undirected)

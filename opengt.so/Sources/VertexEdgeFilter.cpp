@@ -50,7 +50,7 @@ namespace OpenGraphtheory
 
     bool ForbiddenVerticesFilter::VertexAllowed(Vertex* v)
     {
-        return !ForbiddenVertices.contains(v);
+        return ForbiddenVertices.find(v) == ForbiddenVertices.end();
     }
 
 
@@ -78,7 +78,7 @@ namespace OpenGraphtheory
 
     bool AllowedVerticesFilter::VertexAllowed(Vertex* v)
     {
-        return AllowedVertices.contains(v);
+        return AllowedVertices.find(v) != AllowedVertices.end();
     }
 
 
@@ -119,7 +119,7 @@ namespace OpenGraphtheory
 
     bool ForbiddenEdgesFilter::EdgeAllowed(Edge* e)
     {
-        return !ForbiddenEdges.contains(e);
+        return ForbiddenEdges.find(e) == ForbiddenEdges.end();
     }
 
 
@@ -147,7 +147,7 @@ namespace OpenGraphtheory
 
     bool AllowedEdgesFilter::EdgeAllowed(Edge* e)
     {
-        return AllowedEdges.contains(e);
+        return AllowedEdges.find(e) != AllowedEdges.end();
     }
 
 }

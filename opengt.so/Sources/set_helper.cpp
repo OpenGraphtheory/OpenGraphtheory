@@ -17,9 +17,9 @@
                     return result;
                 }
 
-                template<class T> unsigned int IntersectionSize(const std::set<T> &A, const std::set<T> &B)
+                template<class T> size_t IntersectionSize(const std::set<T> &A, const std::set<T> &B)
                 {
-                    unsigned int result = 0;
+                    size_t result = 0;
                     for(typename std::set<T>::iterator a = A.begin(); a != A.end(); a++)
                         if(B.find(*a) != B.end())
                             result++;
@@ -119,9 +119,9 @@
                     return result;
                 }
 
-                template<class T> unsigned int IntersectionSize(const VectorSet<T> &A, const VectorSet<T> &B)
+                template<class T> size_t IntersectionSize(const VectorSet<T> &A, const VectorSet<T> &B)
                 {
-                    unsigned int result = 0;
+                    size_t result = 0;
                     for(typename VectorSet<T>::iterator a = A.begin(); a != A.end(); a++)
                         if(B.find(*a) != B.end())
                             result++;

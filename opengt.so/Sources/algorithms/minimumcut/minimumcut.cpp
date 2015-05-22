@@ -34,7 +34,7 @@ namespace OpenGraphtheory
                     for(EdgeIterator e = posincident.begin(); e != posincident.end(); e++)
                     {
                         if(Capacities[*e] > MaximumFlow[*e]
-                           && !SourceComponent.contains((*e)->To()))
+                           && SourceComponent.find((*e)->To()) == SourceComponent.end())
                         {
                             NextRound.insert((*e)->To());
                             SourceComponent.insert((*e)->To());
@@ -45,7 +45,7 @@ namespace OpenGraphtheory
                     for(EdgeIterator e = negincident.begin(); e != negincident.end(); e++)
                     {
                         if(MaximumFlow[*e] > 0
-                           && !SourceComponent.contains((*e)->From()))
+                           && SourceComponent.find((*e)->From()) == SourceComponent.end())
                         {
                             NextRound.insert((*e)->From());
                             SourceComponent.insert((*e)->From());
@@ -75,8 +75,8 @@ namespace OpenGraphtheory
             for(EdgeIterator e = G.BeginEdges(); e != G.EndEdges(); e++)
             {
                 // if exactly one incident vertex of e is augmenting-path-reachable from "Source"
-                if(  (SourceComponent.contains((*e)->From()))
-                   !=(SourceComponent.contains((*e)->To())))
+                if(  (SourceComponent.find((*e)->From()) == SourceComponent.end())
+                   !=(SourceComponent.find((*e)->To()) == SourceComponent.end()))
                 MinimumCut.insert(*e);
             }
         }
@@ -90,7 +90,12 @@ namespace OpenGraphtheory
                 MinimumCutSize += i->second >= 0 ? i->second : 0;
 
             for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-                for(VertexIterator w = (Undirected ? v + 1 : G.BeginVertices()); w != G.EndVertices(); w++)
+            {
+                VertexIterator w = (Undirected ? v : G.BeginVertices());
+                if(Undirected)
+                    w++;
+
+                for(; w != G.EndVertices(); w++)
                 {
                     if(v==w)
                         continue;
@@ -107,6 +112,7 @@ namespace OpenGraphtheory
                         MinimumCut = vwCut;
                     }
                 }
+            }
         }
 
         void AlgorithmMINIMUMCUT::FindMinimumCut(Graph& G, EdgeSet& MinimumCut)

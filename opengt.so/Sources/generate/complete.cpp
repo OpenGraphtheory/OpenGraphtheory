@@ -36,8 +36,11 @@ namespace OpenGraphtheory
 
 
                 for(VertexIterator v1 = result.BeginVertices(); v1 != result.EndVertices(); v1++)
-                    for(VertexIterator v2 = v1 + 1; v2 != result.EndVertices(); v2++)
+                {
+                    VertexIterator v2 = v1;
+                    for(v2++; v2 != result.EndVertices(); v2++)
                         result.AddEdge(v1, v2);
+                }
             }
             else
             {

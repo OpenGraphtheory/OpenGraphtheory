@@ -21,7 +21,8 @@
         /// \brief A class to represent graphs
 
         class Vertex;
-        typedef SetHelper::VectorSet<Vertex*> VertexSet;
+        //typedef SetHelper::VectorSet<Vertex*> VertexSet;
+        typedef std::set<Vertex*> VertexSet;
         typedef VertexSet::iterator VertexIterator;
         typedef VertexSet::const_iterator ConstVertexIterator;
         typedef std::map<Vertex*, int> VertexPartitioning;
@@ -29,7 +30,8 @@
         typedef std::map<Vertex*, Visualization::Color> VertexColoring;
 
         class Edge;
-        typedef SetHelper::VectorSet<Edge*> EdgeSet;
+        //typedef SetHelper::VectorSet<Edge*> EdgeSet;
+        typedef std::set<Edge*> EdgeSet;
         typedef EdgeSet::iterator EdgeIterator;
         typedef EdgeSet::const_iterator ConstEdgeIterator;
         typedef std::map<Edge*, int> EdgePartitioning;
@@ -37,7 +39,8 @@
         typedef std::map<Edge*, Visualization::Color> EdgeColoring;
 
         class VertexEdgeConnection;
-        typedef SetHelper::VectorSet<VertexEdgeConnection*> VertexEdgeConnectionSet;
+        //typedef SetHelper::VectorSet<VertexEdgeConnection*> VertexEdgeConnectionSet;
+        typedef std::set<VertexEdgeConnection*> VertexEdgeConnectionSet;
         typedef VertexEdgeConnectionSet::iterator VertexEdgeConnectionIterator;
         typedef VertexEdgeConnectionSet::const_iterator ConstVertexEdgeConnectionIterator;
 

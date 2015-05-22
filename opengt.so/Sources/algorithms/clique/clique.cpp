@@ -37,13 +37,13 @@ namespace OpenGraphtheory
                     CandidateRemoved = false;
                     for(VertexIterator i = NextCandidates.begin(); i != NextCandidates.end(); i++)
                     {
-                        if(RemovableCandidates.contains(*i))
+                        if(RemovableCandidates.find(*i) != RemovableCandidates.end())
                             continue;
 
                         VertexSet iNeighborCandidates;
                         for(VertexIterator j = NextCandidates.begin(); j != NextCandidates.end(); j++)
                             if(((*i)->UnderlyingAdjacent(*j) == CliqueOrIndependentSet)
-                             && !RemovableCandidates.contains(*j))
+                             && RemovableCandidates.find(*j) == RemovableCandidates.end())
                                 iNeighborCandidates.insert(*j);
                         iNeighborCandidates.erase(*i);
 
@@ -60,10 +60,10 @@ namespace OpenGraphtheory
                     NextCandidates.erase(*i);
 
 
-                Clique.push_back(*v);
+                Clique.insert(*v);
                 if(TestClique(Clique, NextCandidates, k-1, CliqueOrIndependentSet))
                     return true;
-                Clique.push_back(*v);
+                Clique.insert(*v);
 
             }
 

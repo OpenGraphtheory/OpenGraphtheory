@@ -35,7 +35,9 @@ namespace OpenGraphtheory
             }
 
             VertexIterator v1 = result.BeginVertices();
-            for(VertexIterator v2 = v1 + 1; v2 != result.EndVertices(); v1++, v2++)
+            VertexIterator v2 = v1;
+            v2++;
+            for(; v2 != result.EndVertices(); v1++, v2++)
                 result.AddEdge(v1, v2);
             result.AddEdge(v1, result.BeginVertices());
 

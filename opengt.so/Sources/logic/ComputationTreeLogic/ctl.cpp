@@ -148,7 +148,7 @@ using namespace OpenGraphtheory::Logic;
         VertexSet phiresult = phi->Interpretation(G);
         VertexSet result;
         for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-            if(!phiresult.contains(*v))
+            if(phiresult.find(*v) == phiresult.end())
                 result.insert(*v);
         return result;
     }
@@ -179,7 +179,7 @@ using namespace OpenGraphtheory::Logic;
     {
         VertexSet phi1result = phi1->Interpretation(G);
         VertexSet phi2result = phi2->Interpretation(G);
-        return phi1result.intersection(phi2result);
+        return SetHelper::Union(phi1result,phi2result);
     }
 
     // -------------------------------------------------------------------------
@@ -205,7 +205,7 @@ using namespace OpenGraphtheory::Logic;
 
     VertexSet CTL_Or::Interpretation(Graph &G)
     {
-        return phi1->Interpretation(G) + phi2->Interpretation(G);
+        return SetHelper::Union(phi1->Interpretation(G), phi2->Interpretation(G));
     }
 
     // -------------------------------------------------------------------------
@@ -274,12 +274,12 @@ using namespace OpenGraphtheory::Logic;
             {
                 VertexSet lPredecessors = (*l)->CollectNeighbors(1,0,1,0,0,0,1,0,1);
                 for(VertexIterator lpred = lPredecessors.begin(); lpred != lPredecessors.end(); lpred++)
-                    if(phi1result.contains(*lpred)) // if lpred satisfies phi1
-                        if(!phi2result.contains(*lpred) && !last.contains(*lpred)) // and lpred is a new element
+                    if(phi1result.find(*lpred) != phi1result.end()) // if lpred satisfies phi1
+                        if(phi2result.find(*lpred) == phi2result.end() && last.find(*lpred) == last.end()) // and lpred is a new element
                             next.insert(*lpred);
             }
 
-            phi2result += next;
+            SetHelper::DestructiveUnion(phi2result, next);
             last = next;
             next.clear();
         }
@@ -312,7 +312,7 @@ using namespace OpenGraphtheory::Logic;
         VertexSet lastremoved;
         VertexSet nextremoved;
         for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-            if(!phiresult.contains(*v))
+            if(phiresult.find(*v) == phiresult.end())
                 lastremoved.insert(*v);
         // lastremoved = V - phiresult
 
@@ -323,7 +323,7 @@ using namespace OpenGraphtheory::Logic;
             {
                 VertexSet vPred = (*v)->CollectNeighbors(1,0,1,0,0,0,1,0,1);
                 for(VertexIterator p = vPred.begin(); p != vPred.end(); p++)
-                    if(phiresult.contains(*p))
+                    if(phiresult.find(*p) != phiresult.end())
                         RemovalCandidates.insert(*p);
             }
 

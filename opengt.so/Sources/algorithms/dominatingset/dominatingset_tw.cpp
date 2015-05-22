@@ -37,7 +37,7 @@ namespace OpenGraphtheory
                 VertexSet N = (*IntroducedNode)->CollectNeighbors(1,0,1,0,0,0,1,1,0);
 
                 for(DominatingSetTWData::iterator i = SubtreeResult->begin(); i != SubtreeResult->end(); i++)
-                    if(!N.intersection(i->first).empty())
+                    if(!SetHelper::IntersectionEmpty(N,i->first))
                     {
                         // current set already dominates the introduced node
                         result->insert(DominatingSetTWData::value_type(i->first,i->second));
@@ -61,7 +61,7 @@ namespace OpenGraphtheory
             {
                 DominatingSetTWData* result = new DominatingSetTWData;
                 for(DominatingSetTWData::iterator i = SubtreeResult->begin(); i != SubtreeResult->end(); i++)
-                    if(!i->second.contains(*ForgottenNode)) // only populate vertex-sets that dominate the forgotten node
+                    if(i->second.find(*ForgottenNode) == i->second.end()) // only populate vertex-sets that dominate the forgotten node
                                                             // (only verts in the current bag are allowed to be undominated)
                         result->insert(DominatingSetTWData::value_type(i->first,i->second));
 
@@ -85,10 +85,10 @@ namespace OpenGraphtheory
                         VertexSet U1 = d1->second;
                         VertexSet U2 = d2->second;
                         if((U1 == U2)
-                        && (D1.intersection(Bag) == D2.intersection(Bag)))
+                        && (SetHelper::SetsEqual( SetHelper::Intersection(D1,Bag), SetHelper::Intersection(D2,Bag))))
                         {
                             IsInIntersection = true;
-                            D = D1+D2;
+                            D = SetHelper::Union(D1,D2);
                             break;
                         }
                     }

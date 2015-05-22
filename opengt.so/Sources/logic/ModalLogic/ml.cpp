@@ -148,7 +148,7 @@ using namespace OpenGraphtheory::Logic;
         VertexSet phiresult = phi->Interpretation(G);
         VertexSet result;
         for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
-            if(!phiresult.contains(*v))
+            if(phiresult.find(*v) == phiresult.end())
                 result.insert(*v);
         return result;
     }
@@ -179,7 +179,7 @@ using namespace OpenGraphtheory::Logic;
     {
         VertexSet phi1result = phi1->Interpretation(G);
         VertexSet phi2result = phi2->Interpretation(G);
-        return phi1result.intersection(phi2result);
+        return SetHelper::Intersection(phi1result,phi2result);
     }
 
     // -------------------------------------------------------------------------
@@ -205,7 +205,7 @@ using namespace OpenGraphtheory::Logic;
 
     VertexSet ML_Or::Interpretation(Graph &G)
     {
-        return phi1->Interpretation(G) + phi2->Interpretation(G);
+        return SetHelper::Union(phi1->Interpretation(G), phi2->Interpretation(G));
     }
 
     // -------------------------------------------------------------------------

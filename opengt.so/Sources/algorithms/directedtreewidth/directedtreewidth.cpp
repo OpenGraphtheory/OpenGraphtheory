@@ -138,7 +138,7 @@ cerr << "}\n";
                 // algorithm might alternate infinitely between two components)
                 if((X.empty() || Y.empty()) && SetHelper::IsSubset(S,W))
                     for(VertexIterator v = V.begin(); v != V.end(); v++)
-                        if(!W.contains(*v))
+                        if(W.find(*v) == W.end())
                         {
                             S.insert(*v);
                             break;
