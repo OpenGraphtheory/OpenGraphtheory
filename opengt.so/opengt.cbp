@@ -91,6 +91,7 @@
 		<Unit filename="Headers/factory.h" />
 		<Unit filename="Headers/generate/circle.h" />
 		<Unit filename="Headers/generate/complete.h" />
+		<Unit filename="Headers/generate/dtw2tree.h" />
 		<Unit filename="Headers/generate/generate.h" />
 		<Unit filename="Headers/generate/grid.h" />
 		<Unit filename="Headers/generate/path.h" />
@@ -192,6 +193,7 @@
 		<Unit filename="Sources/factory_templates.cpp" />
 		<Unit filename="Sources/generate/circle.cpp" />
 		<Unit filename="Sources/generate/complete.cpp" />
+		<Unit filename="Sources/generate/dtw2tree.cpp" />
 		<Unit filename="Sources/generate/generate.cpp">
 			<Option weight="49" />
 		</Unit>
