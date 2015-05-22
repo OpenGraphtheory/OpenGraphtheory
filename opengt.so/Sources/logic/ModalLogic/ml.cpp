@@ -210,24 +210,24 @@ using namespace OpenGraphtheory::Logic;
 
     // -------------------------------------------------------------------------
 
-    ML_Box::ML_Box(MLFormula* phi)
+    ML_Diamond::ML_Diamond(MLFormula* phi)
     {
         if(phi == NULL)
-            throw "ML_Box::ML_Box parameter must not be NULL";
+            throw "ML_Diamond::ML_Diamond parameter must not be NULL";
         this->phi = phi;
     }
 
-    ML_Box::~ML_Box()
+    ML_Diamond::~ML_Diamond()
     {
         delete phi;
     }
 
-    Formula* ML_Box::Clone()
+    Formula* ML_Diamond::Clone()
     {
-        return new ML_Box(static_cast<MLFormula*>(phi->Clone()));
+        return new ML_Diamond(static_cast<MLFormula*>(phi->Clone()));
     }
 
-    VertexSet ML_Box::Interpretation(Graph &G)
+    VertexSet ML_Diamond::Interpretation(Graph &G)
     {
         VertexSet phiresult = phi->Interpretation(G);
         VertexSet result;
@@ -265,10 +265,10 @@ using namespace OpenGraphtheory::Logic;
         return result;
     }
 
-    ML_Diamond::ML_Diamond(MLFormula* phi)
+    ML_Box::ML_Box(MLFormula* phi)
     {
         // Diamond phi = not Box not phi
-        forwarded = new ML_Not(new ML_Box(new ML_Not(phi)));
+        forwarded = new ML_Not(new ML_Diamond(new ML_Not(phi)));
     }
 
 

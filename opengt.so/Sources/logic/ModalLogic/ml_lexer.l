@@ -21,8 +21,8 @@
 "\\vee"                     {return MLParser::token::OR;}
 "\\neg"                     {return MLParser::token::NOT;}
 
-"\\top"                     {return MLParser::token::_TRUE;}
-"\\bot"                     {return MLParser::token::_FALSE;}
+"\\top"|"true"              {return MLParser::token::_TRUE;}
+"\\bot"|"false"             {return MLParser::token::_FALSE;}
 
 "("                         {return MLParser::token::OPEN;}
 ")"                         {return MLParser::token::CLOSE;}

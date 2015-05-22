@@ -98,13 +98,13 @@
                     VertexSet Interpretation(Graph &G);
             };
 
-            class ML_Box : public MLFormula
+            class ML_Diamond : public MLFormula
             {
                 protected:
                     MLFormula* phi;
                 public:
-                    ML_Box(MLFormula* phi);
-                    ~ML_Box();
+                    ML_Diamond(MLFormula* phi);
+                    ~ML_Diamond();
                     Formula* Clone();
 
                     VertexSet Interpretation(Graph& G);
@@ -124,10 +124,10 @@
                     VertexSet Interpretation(Graph& G);
             };
 
-            class ML_Diamond : public ML_Forwarder
+            class ML_Box : public ML_Forwarder
             {
                 public:
-                    ML_Diamond(MLFormula* phi);
+                    ML_Box(MLFormula* phi);
             };
 
         } // namespace Logic
