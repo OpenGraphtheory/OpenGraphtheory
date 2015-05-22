@@ -124,12 +124,15 @@ namespace OpenGraphtheory
             this->Edge_ID_to_pointer = G.Edge_ID_to_pointer;
 
             G.attributes = NULL;
-            G.vertices = NULL;
-            G.edges = NULL;
+            G.Vertices = NULL;
+            G.Edges = NULL;
             G.Vertex_ID_to_pointer = NULL;
             G.Edge_ID_to_pointer = NULL;
 
-            #error Owner der Vertices und Edges wird nicht umgesetzt
+            for(VertexIterator v = Vertices->begin(); v != Vertices->end(); v++)
+                (*v)->Owner = this;
+            for(EdgeIterator e = Edges->begin(); e != Edges->end(); e++)
+                (*e)->Owner = this;
         }
         #endif
 
