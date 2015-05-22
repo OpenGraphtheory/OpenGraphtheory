@@ -273,7 +273,7 @@ void MainWindow::on_actionColoring_triggered()
 // ===================================================================================================================================================
 
 
-void PathVertexSelectionFinished(QWidget* mainwindow, OGoGraphView* gv, vector<VertexIterator> selectedvertices, Graph* G)
+void PathVertexSelectionFinished(QWidget* mainwindow, OGoGraphView* gv, vector<Vertex*>& selectedvertices, Graph* G)
 {
     bool ok;
     QString text = QInputDialog::getText(mainwindow, "Routing Algorithm", "Enter a name for the Path",
@@ -282,7 +282,7 @@ void PathVertexSelectionFinished(QWidget* mainwindow, OGoGraphView* gv, vector<V
         return;
 
     OpenGraphtheory::Algorithms::AlgorithmPATH algo;
-    algo.AddPath(*G, *selectedvertices[0], *selectedvertices[1], text.toUtf8().constData());
+    algo.AddPath(*G, selectedvertices[0], selectedvertices[1], text.toUtf8().constData());
     gv->setEdgeColoring(text.toUtf8().constData());
     gv->resetVertexColoring();
     gv->repaint();
@@ -299,7 +299,7 @@ void MainWindow::on_actionPath_triggered()
 // ===================================================================================================================================================
 
 
-void MinCutVertexSelectionFinished(QWidget* mainwindow, OGoGraphView* gv, vector<VertexIterator> selectedvertices, Graph* G)
+void MinCutVertexSelectionFinished(QWidget* mainwindow, OGoGraphView* gv, vector<Vertex*>& selectedvertices, Graph* G)
 {
     bool ok;
     QString text = QInputDialog::getText(mainwindow, "Minimum Cut Algorithm", "Enter a name for the Cut",
@@ -311,7 +311,7 @@ void MinCutVertexSelectionFinished(QWidget* mainwindow, OGoGraphView* gv, vector
     OpenGraphtheory::EdgeWeighting capacities;
     for(EdgeIterator e = G->BeginEdges(); e != G->EndEdges(); e++)
         capacities.insert(std::pair<OpenGraphtheory::Edge*, float>(*e, (*e)->GetWeight()));
-    algo.AddMinimumCut(*G, *selectedvertices[0], *selectedvertices[1], capacities, text.toUtf8().constData());
+    algo.AddMinimumCut(*G, selectedvertices[0], selectedvertices[1], capacities, text.toUtf8().constData());
     gv->setEdgeColoring(text.toUtf8().constData());
     gv->resetVertexColoring();
     gv->repaint();
