@@ -25,6 +25,7 @@
                     int yylex();
                 public:
                     int yylex(DOTParser::semantic_type * lval);
+                    int GetCurrentLineNumber();
                     DOTLexer(std::istream& is);
             };
 

@@ -56,3 +56,7 @@ int TIKZLexer::yylex(TIKZParser::semantic_type* lval)
     return yylex();
 }
 
+int TIKZLexer::GetCurrentLineNumber()
+{
+    return yylineno;
+}

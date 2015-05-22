@@ -26,6 +26,7 @@
                 public:
                     int yylex(TIKZParser::semantic_type * lval);
                     TIKZLexer(std::istream& is);
+                    int GetCurrentLineNumber();
             };
 
 

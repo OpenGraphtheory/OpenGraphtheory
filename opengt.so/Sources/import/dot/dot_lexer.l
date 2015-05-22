@@ -8,6 +8,7 @@
 %option yyclass="OpenGraphtheory::Import::DOTLexer"
 %option full
 %option noyywrap
+%option yylineno
 %option nounput
 %option batch
 %option prefix="Import_DOT_"
@@ -16,7 +17,7 @@
 
 [\ \n\t\r]+                          {}
 "//"[^\n]*\n                         {}
-"graph"                              { return DOTParser::token::GRAPH; }
+"graph"|"digraph"                    { return DOTParser::token::GRAPH; }
 "["                                  { return DOTParser::token::OPENBRACKET; }
 "]"                                  { return DOTParser::token::CLOSEBRACKET; }
 "{"                                  { return DOTParser::token::OPENBRACES; }
@@ -44,3 +45,7 @@ int DOTLexer::yylex(DOTParser::semantic_type* lval)
     return yylex();
 }
 
+int DOTLexer::GetCurrentLineNumber()
+{
+    return yylineno;
+}

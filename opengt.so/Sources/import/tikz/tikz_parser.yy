@@ -82,7 +82,7 @@ TIKZLINE:
 
 void TIKZParser::error(const TIKZParser::location_type &loc, const std::string &msg)
 {
-    std::cerr << "Error: " << msg << std::endl;
+    std::cerr << "Error near line " << scanner.GetCurrentLineNumber() << ": " << msg << std::endl;
 }
 
 static int yylex(TIKZParser::semantic_type * yylval, OpenGraphtheory::Import::TIKZLexer &scanner)

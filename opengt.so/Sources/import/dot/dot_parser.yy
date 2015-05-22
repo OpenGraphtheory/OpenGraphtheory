@@ -71,7 +71,7 @@ PARAMETER : STRING EQ STRING COMMA            { $<pval>$ = new DotParameter($<sv
 
 void DOTParser::error(const DOTParser::location_type &loc, const std::string &msg)
 {
-    std::cerr << "Error: " << msg << std::endl;
+    std::cerr << "Error near line " << scanner.GetCurrentLineNumber() << ": " << msg << std::endl;
 }
 
 static int yylex(DOTParser::semantic_type * yylval, OpenGraphtheory::Import::DOTLexer &scanner)
