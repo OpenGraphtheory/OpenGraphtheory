@@ -81,6 +81,7 @@
 
         protected:
             Mutex mutex;
+            bool Started;
             #ifdef __unix__
                 pthread_t thread;
             #elif __WIN32__ || _MSC_VER || _Windows || __NT__
@@ -97,6 +98,7 @@
             void Lock();
             void Unlock();
             bool TryLock();
+            Thread();
             virtual ~Thread();
     };
 

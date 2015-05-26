@@ -148,22 +148,30 @@ void ThreadContext::Execute()
 
 void Thread::Start(void* parameter, ConditionVariable* threadFinishedSignal)
 {
-    ThreadContext* context = new ThreadContext(this, parameter, threadFinishedSignal); // deleted in ThreadWrapper
-    #ifdef __unix__
-        pthread_create(&thread, NULL, &ThreadWrapper, context);
-        //pthread_detach(thread);
-    #elif __WIN32__ || _MSC_VER || _Windows || __NT__
-        thread = _beginthread(ThreadWrapper, 0, context);
-    #endif
+    if(!Started)
+    {
+        ThreadContext* context = new ThreadContext(this, parameter, threadFinishedSignal); // deleted in ThreadWrapper
+        #ifdef __unix__
+            pthread_create(&thread, NULL, &ThreadWrapper, context);
+            //pthread_detach(thread);
+        #elif __WIN32__ || _MSC_VER || _Windows || __NT__
+            thread = _beginthread(ThreadWrapper, 0, context);
+        #endif
+        Started = true;
+    }
 }
 
 void Thread::Terminate()
 {
-    #ifdef __unix__
-        pthread_cancel(thread);
-    #elif __WIN32__ || _MSC_VER || _Windows || __NT__
-        TerminateThread((void*)(thread),0);
-    #endif
+    if(Started)
+    {
+        #ifdef __unix__
+            pthread_cancel(thread);
+        #elif __WIN32__ || _MSC_VER || _Windows || __NT__
+            TerminateThread((void*)(thread),0);
+        #endif
+    }
+    Started = false;
 }
 
 void Thread::TestTermination()
@@ -172,6 +180,11 @@ void Thread::TestTermination()
         pthread_testcancel();
     #elif __WIN32__ || _MSC_VER || _Windows || __NT__
     #endif
+}
+
+Thread::Thread()
+{
+    Started = false;
 }
 
 Thread::~Thread()
@@ -196,8 +209,12 @@ bool Thread::TryLock()
 
 void Thread::Join()
 {
-    #ifdef __unix__
-        pthread_join(thread, NULL);
-    #elif __WIN32__ || _MSC_VER || _Windows || __NT__
-    #endif
+    if(Started)
+    {
+        #ifdef __unix__
+            pthread_join(thread, NULL);
+        #elif __WIN32__ || _MSC_VER || _Windows || __NT__
+        #endif
+    }
+    Started = false;
 }
