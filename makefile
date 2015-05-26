@@ -3,7 +3,11 @@
 # Viktor Engelmann
 #
 
-
+# required packages:
+#    flex
+#    bison
+#    libX11-dev (Ubuntu)
+#
 
 
 DEBUGPARAMS           := -O0 -g -Wall
@@ -41,7 +45,6 @@ objDebug      := $(soobjDebug) $(foreach program,$(PROGRAMS_NONQT),obj/Debug/$(p
 
 binRelease    := $(foreach program,$(PROGRAMS_ALL),bin/Release/$(program))
 binDebug      := $(foreach program,$(PROGRAMS_ALL),bin/Debug/$(program))
-
 
 
 
