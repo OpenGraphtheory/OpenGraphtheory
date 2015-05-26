@@ -105,25 +105,32 @@ namespace OpenGraphtheory
                          float edgewidth, float vertexradius)
         {
             bool mirroredYAxis = MirroredYAxis();
+            float minx = 0, maxx = 0, maxy = 0, miny = 0;
+            Coordinates coordinates;
 
             VertexIterator v1 = G.BeginVertices();
-            Coordinates coordinates = (*v1)->GetCoordinates(2);
-            float minx = coordinates[0], maxx = coordinates[1], maxy = coordinates[1], miny = coordinates[1];
-            for(v1++; v1 != G.EndVertices(); v1++)
+            if(v1 != G.EndVertices())
             {
                 coordinates = (*v1)->GetCoordinates(2);
-                float radius = vertexradius >= 0 ? vertexradius : (*v1)->GetWeight();
+                minx = coordinates[0];
+                maxx = coordinates[1];
+                maxy = coordinates[1];
+                miny = coordinates[1];
+                for(v1++; v1 != G.EndVertices(); v1++)
+                {
+                    coordinates = (*v1)->GetCoordinates(2);
+                    float radius = vertexradius >= 0 ? vertexradius : (*v1)->GetWeight();
 
-                if(coordinates[0]-radius < minx)
-                    minx = coordinates[0]-radius;
-                if(coordinates[1]-radius < miny)
-                    miny = coordinates[1]-radius;
-                if(coordinates[0]+radius > maxx)
-                    maxx = coordinates[0]+radius;
-                if(coordinates[1]+radius > maxy)
-                    maxy = coordinates[1]+radius;
+                    if(coordinates[0]-radius < minx)
+                        minx = coordinates[0]-radius;
+                    if(coordinates[1]-radius < miny)
+                        miny = coordinates[1]-radius;
+                    if(coordinates[0]+radius > maxx)
+                        maxx = coordinates[0]+radius;
+                    if(coordinates[1]+radius > maxy)
+                        maxy = coordinates[1]+radius;
+                }
             }
-
 
             this->OffsetX = minx;
             this->OffsetY = miny;
