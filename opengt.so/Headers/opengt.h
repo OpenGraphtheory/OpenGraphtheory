@@ -57,6 +57,9 @@
                 static Factory<GraphObject> GraphObjectFactory;
 
                 GraphObject();
+                #if __cplusplus >= 201103L
+                    GraphObject(GraphObject&& G); // Move Constructor (C++ 2011 Standard)
+                #endif
                 virtual ~GraphObject();
                 void Clear();
 

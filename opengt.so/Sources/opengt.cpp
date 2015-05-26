@@ -31,6 +31,15 @@ namespace OpenGraphtheory
             attributes = new AttributeCollection();
         }
 
+        #if __cplusplus >= 201103L
+        /// \brief Graph Move-Constructor
+        GraphObject::GraphObject(GraphObject&& G)
+        {
+            this->attributes = G.attributes;
+            G.attributes = NULL;
+        }
+        #endif
+
         /// \brief GraphObject Destructor
         GraphObject::~GraphObject()
         {
@@ -115,15 +124,13 @@ namespace OpenGraphtheory
         #if __cplusplus >= 201103L
         /// \brief Graph Move-Constructor
         Graph::Graph(Graph&& G)
-            : GraphObject()
+            : GraphObject(G)
         {
-            this->attributes = G.attributes;
             this->Vertices = G.Vertices;
             this->Edges = G.Edges;
             this->Vertex_ID_to_pointer = G.Vertex_ID_to_pointer;
             this->Edge_ID_to_pointer = G.Edge_ID_to_pointer;
 
-            G.attributes = NULL;
             G.Vertices = NULL;
             G.Edges = NULL;
             G.Vertex_ID_to_pointer = NULL;
@@ -170,7 +177,8 @@ namespace OpenGraphtheory
         {
             Clear();
 
-            *attributes = *(G.attributes);
+            if(G.attributes != NULL)
+                *attributes = *(G.attributes);
 
             /// copy vertices
             for(ConstVertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
