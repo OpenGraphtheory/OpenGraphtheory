@@ -75,6 +75,7 @@
 		<Unit filename="Headers/export/gastex.h" />
 		<Unit filename="Headers/export/gml.h" />
 		<Unit filename="Headers/export/graphml.h" />
+		<Unit filename="Headers/export/lgf.h" />
 		<Unit filename="Headers/export/mpost.h" />
 		<Unit filename="Headers/export/pdf.h" />
 		<Unit filename="Headers/export/postscript.h" />
@@ -105,6 +106,7 @@
 		<Unit filename="Headers/import/gml/gml_lexer.h" />
 		<Unit filename="Headers/import/graphml.h" />
 		<Unit filename="Headers/import/import.h" />
+		<Unit filename="Headers/import/lgf.h" />
 		<Unit filename="Headers/import/rgml.h" />
 		<Unit filename="Headers/import/tei.h" />
 		<Unit filename="Headers/import/tgf.h" />
@@ -176,6 +178,7 @@
 		<Unit filename="Sources/export/gastex.cpp" />
 		<Unit filename="Sources/export/gml.cpp" />
 		<Unit filename="Sources/export/graphml.cpp" />
+		<Unit filename="Sources/export/lgf.cpp" />
 		<Unit filename="Sources/export/mpost.cpp" />
 		<Unit filename="Sources/export/pdf.cpp" />
 		<Unit filename="Sources/export/postscript.cpp" />
@@ -219,6 +222,7 @@
 		<Unit filename="Sources/import/import.cpp">
 			<Option weight="48" />
 		</Unit>
+		<Unit filename="Sources/import/lgf.cpp" />
 		<Unit filename="Sources/import/rgml.cpp" />
 		<Unit filename="Sources/import/tei.cpp" />
 		<Unit filename="Sources/import/tgf.cpp" />
