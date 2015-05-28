@@ -3,11 +3,13 @@
 # Viktor Engelmann
 #
 
-# required packages:
+# required packages (Linux Mint 17.1):
+#    g++
 #    flex
 #    bison
-#    libX11-dev (Ubuntu)
+#    libX11-dev
 #    qt5-default
+#    qttools5-dev
 
 
 DEBUGPARAMS           := -O0 -g -Wall
