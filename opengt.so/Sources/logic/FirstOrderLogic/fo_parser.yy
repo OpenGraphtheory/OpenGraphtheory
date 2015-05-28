@@ -11,8 +11,8 @@
 
 %skeleton "lalr1.cc"
 %defines
-%define namespace "OpenGraphtheory::Logic"
-%define parser_class_name "FOParser"
+%define api.namespace {OpenGraphtheory::Logic}
+%define parser_class_name {FOParser}
 %parse-param { OpenGraphtheory::Logic::FOLexer &scanner }
 %parse-param { OpenGraphtheory::Logic::FOFormula** result }
 %lex-param { OpenGraphtheory::Logic::FOLexer &scanner }
@@ -90,7 +90,7 @@ PARAMS: STRING CLOSE                          { $<pval>$ = new FO_Parameter($<sv
 
 #include "../../../Headers/logic/FirstOrderLogic/fo_lexer.h"
 
-void FOParser::error(const FOParser::location_type &loc, const std::string &msg)
+void FOParser::error(const std::string &msg)
 {
     std::cerr << "Error: " << msg << std::endl;
 }

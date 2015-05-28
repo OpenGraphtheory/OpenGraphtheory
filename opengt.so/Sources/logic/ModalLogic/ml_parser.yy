@@ -12,8 +12,8 @@
 
 %skeleton "lalr1.cc"
 %defines
-%define namespace "OpenGraphtheory::Logic"
-%define parser_class_name "MLParser"
+%define api.namespace {OpenGraphtheory::Logic}
+%define parser_class_name {MLParser}
 %parse-param { OpenGraphtheory::Logic::MLLexer &scanner }
 %parse-param { OpenGraphtheory::Logic::MLFormula** result }
 %lex-param { OpenGraphtheory::Logic::MLLexer &scanner }
@@ -79,7 +79,7 @@ AMLFORMULA:
 
 #include "../../../Headers/logic/ModalLogic/ml_lexer.h"
 
-void MLParser::error(const MLParser::location_type &loc, const std::string &msg)
+void MLParser::error(const std::string &msg)
 {
     std::cerr << "Error: " << msg << std::endl;
 }

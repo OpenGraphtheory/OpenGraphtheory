@@ -12,8 +12,8 @@
 
 %skeleton "lalr1.cc"
 %defines
-%define namespace "OpenGraphtheory::Logic"
-%define parser_class_name "CTLParser"
+%define api.namespace {OpenGraphtheory::Logic}
+%define parser_class_name {CTLParser}
 %parse-param { OpenGraphtheory::Logic::CTLLexer &scanner }
 %parse-param { OpenGraphtheory::Logic::CTLFormula** result }
 %lex-param { OpenGraphtheory::Logic::CTLLexer &scanner }
@@ -84,7 +84,7 @@ ACTLFORMULA: _TRUE                            { $<fval>$ = new CTL_True(); }
 
 #include "../../../Headers/logic/ComputationTreeLogic/ctl_lexer.h"
 
-void CTLParser::error(const CTLParser::location_type &loc, const std::string &msg)
+void CTLParser::error(const std::string &msg)
 {
     std::cerr << "Error: " << msg << std::endl;
 }

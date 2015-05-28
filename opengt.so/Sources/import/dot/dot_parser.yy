@@ -11,8 +11,8 @@
 
 %skeleton "lalr1.cc"
 %defines
-%define namespace "OpenGraphtheory::Import"
-%define parser_class_name "DOTParser"
+%define api.namespace {OpenGraphtheory::Import}
+%define parser_class_name {DOTParser}
 %parse-param { OpenGraphtheory::Import::DOTLexer &scanner }
 %parse-param { OpenGraphtheory::Import::DotCode** result }
 %lex-param { OpenGraphtheory::Import::DOTLexer &scanner }
@@ -69,7 +69,7 @@ PARAMETER : STRING EQ STRING COMMA            { $<pval>$ = new DotParameter($<sv
 
 #include "../../../Headers/import/dot/dot_lexer.h"
 
-void DOTParser::error(const DOTParser::location_type &loc, const std::string &msg)
+void DOTParser::error(const std::string &msg)
 {
     std::cerr << "Error near line " << scanner.GetCurrentLineNumber() << ": " << msg << std::endl;
 }

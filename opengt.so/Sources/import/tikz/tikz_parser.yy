@@ -11,8 +11,8 @@
 
 %skeleton "lalr1.cc"
 %defines
-%define namespace "OpenGraphtheory::Import"
-%define parser_class_name "TIKZParser"
+%define api.namespace {OpenGraphtheory::Import}
+%define parser_class_name {TIKZParser}
 %parse-param { OpenGraphtheory::Import::TIKZLexer &scanner }
 %parse-param { OpenGraphtheory::Import::TikzCode** result }
 %lex-param { OpenGraphtheory::Import::TIKZLexer &scanner }
@@ -87,7 +87,7 @@ TIKZLINE:
 
 #include "../../../Headers/import/tikz/tikz_lexer.h"
 
-void TIKZParser::error(const TIKZParser::location_type &loc, const std::string &msg)
+void TIKZParser::error(const std::string &msg)
 {
     std::cerr << "Error near line " << scanner.GetCurrentLineNumber() << ": " << msg << std::endl;
 }
