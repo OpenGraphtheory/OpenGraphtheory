@@ -33,7 +33,8 @@
                     static MultiFactory<Algorithm> AlgorithmFactory;
 
                     virtual void Run(Graph &G, std::vector<std::string> parameters) = 0;
-                    void RunInThread(const Graph& G, std::vector<std::string> parameters, ConditionVariable* threadFinishedSignal=NULL);
+                    void RunInThread(Graph* G, std::vector<std::string> parameters,
+                                    ConditionVariable* threadFinishedSignal=NULL, Thread** FinishedThreadRegister=NULL);
 
                     // MaxApproximationDistance must be >= 1
                     // MinCorrectnessProbability must be <= 1   ( = 100% )

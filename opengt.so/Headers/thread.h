@@ -64,9 +64,10 @@
         protected:
             void* parameter;
             ConditionVariable* threadFinishedSignal;
+            Thread** threadFinishedRegister;
             Thread* threadObject;
         public:
-            ThreadContext(Thread* threadObject, void* parameter, ConditionVariable* threadFinishedSignal);
+            ThreadContext(Thread* threadObject, void* parameter, ConditionVariable* threadFinishedSignal, Thread** threadFinishedRegister);
             void Execute();
     };
 
@@ -89,7 +90,7 @@
             #endif
 
             virtual void RunThread(void* parameter) = 0;
-            void Start(void* parameter, ConditionVariable* threadFinishedSignal = NULL);
+            void Start(void* parameter, ConditionVariable* threadFinishedSignal = NULL, Thread** threadFinishedRegister = NULL);
         public:
             void Terminate();
             static void TestTermination();

@@ -47,6 +47,7 @@ int main(int argc, char** argv)
 
         Algorithm::RunParallel(algos, G, parameters, MinApproximationQuality);
         cout << G;
+        cout.flush();
     }
     catch(const char* s)
     {

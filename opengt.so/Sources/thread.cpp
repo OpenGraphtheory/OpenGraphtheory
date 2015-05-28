@@ -91,11 +91,12 @@ void ConditionVariable::Signal()
 // ============================================================= Thread
 
 
-ThreadContext::ThreadContext(Thread* threadObject, void* parameter, ConditionVariable* threadFinishedSignal)
+ThreadContext::ThreadContext(Thread* threadObject, void* parameter, ConditionVariable* threadFinishedSignal, Thread** threadFinishedRegister)
 {
     this->threadObject = threadObject;
     this->parameter = parameter;
     this->threadFinishedSignal = threadFinishedSignal;
+    this->threadFinishedRegister = threadFinishedRegister;
 }
 
 
@@ -112,6 +113,8 @@ void ThreadContext::Execute()
         throw;
     }
 
+    if(threadFinishedRegister != NULL)
+        *threadFinishedRegister = threadObject;
     if(threadFinishedSignal != NULL)
         threadFinishedSignal->Signal();
 
@@ -146,11 +149,11 @@ void ThreadContext::Execute()
     #endif
 }
 
-void Thread::Start(void* parameter, ConditionVariable* threadFinishedSignal)
+void Thread::Start(void* parameter, ConditionVariable* threadFinishedSignal, Thread** FinishedThreadRegister)
 {
     if(!Started)
     {
-        ThreadContext* context = new ThreadContext(this, parameter, threadFinishedSignal); // deleted in ThreadWrapper
+        ThreadContext* context = new ThreadContext(this, parameter, threadFinishedSignal, FinishedThreadRegister); // deleted in ThreadWrapper
         #ifdef __unix__
             pthread_create(&thread, NULL, &ThreadWrapper, context);
             //pthread_detach(thread);
