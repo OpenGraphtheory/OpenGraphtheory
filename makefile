@@ -7,7 +7,7 @@
 #    flex
 #    bison
 #    libX11-dev (Ubuntu)
-#
+#    qt5-default
 
 
 DEBUGPARAMS           := -O0 -g -Wall
