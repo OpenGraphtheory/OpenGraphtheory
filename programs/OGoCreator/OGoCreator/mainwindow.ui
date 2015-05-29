@@ -86,7 +86,10 @@
     <addaction name="actionMaximum_Matching"/>
     <addaction name="actionColoring"/>
     <addaction name="actionPath"/>
+    <addaction name="actionDisjoint_Paths"/>
     <addaction name="actionMinimum_Cut"/>
+    <addaction name="actionMinimum_Separator"/>
+    <addaction name="actionVertex_Cover"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -267,6 +270,21 @@
   <action name="actionGenerate">
    <property name="text">
     <string>Generate</string>
+   </property>
+  </action>
+  <action name="actionVertex_Cover">
+   <property name="text">
+    <string>Vertex Cover</string>
+   </property>
+  </action>
+  <action name="actionMinimum_Separator">
+   <property name="text">
+    <string>Minimum Separator</string>
+   </property>
+  </action>
+  <action name="actionDisjoint_Paths">
+   <property name="text">
+    <string>Disjoint Paths</string>
    </property>
   </action>
  </widget>

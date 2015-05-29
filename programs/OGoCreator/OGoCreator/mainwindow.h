@@ -20,6 +20,9 @@
 #include "../../../opengt.so/Headers/algorithms/minimumcut/minimumcut.h"
 #include "../../../opengt.so/Headers/algorithms/maximummatching/maximummatching.h"
 #include "../../../opengt.so/Headers/algorithms/path/path.h"
+#include "../../../opengt.so/Headers/algorithms/vertexcover/vertexcover.h"
+#include "../../../opengt.so/Headers/algorithms/vertexseparator/vertexseparator.h"
+#include "../../../opengt.so/Headers/algorithms/vertexdisjointpaths/vertexdisjointpaths.h"
 #include "../../../opengt.so/Headers/transform/springembedder3d.h"
 #include "../../../opengt.so/Headers/export/export.h"
 #include "../../../opengt.so/Headers/import/import.h"
@@ -82,6 +85,12 @@ private slots:
     void on_actionMaximum_Matching_triggered();
 
     void on_actionGenerate_triggered();
+
+    void on_actionVertex_Cover_triggered();
+
+    void on_actionDisjoint_Paths_triggered();
+
+    void on_actionMinimum_Separator_triggered();
 
 private:
     Ui::MainWindow *ui;

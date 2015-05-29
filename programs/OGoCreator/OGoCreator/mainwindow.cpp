@@ -18,7 +18,7 @@ using namespace std;
 
 
 
-void GeneratorEnumerator::Enumerate(std::string name, std::string description, std::string url)
+void GeneratorEnumerator::Enumerate(std::string name, std::string, std::string)
 {
     stringlist.append(QString(name.c_str()));
 }
@@ -401,6 +401,66 @@ void MainWindow::on_actionDominating_Set_triggered()
 }
 
 
+void MainWindow::on_actionVertex_Cover_triggered()
+{
+    bool ok;
+    QString text = QInputDialog::getText(this, "Vertex Cover Algorithm", "Enter a name for the Vertex Cover",
+                   QLineEdit::Normal, "VertexCover", &ok );
+    if ( !ok || text.isEmpty() )
+        return;
+
+    OGoGraphView* gv = static_cast<OGoGraphView*>(ui->tabWidget->currentWidget());
+
+    OpenGraphtheory::Algorithms::AlgorithmVERTEXCOVER algo;
+    algo.AddVertexCover(*(gv->getGraph()), text.toUtf8().constData());
+
+    gv->setVertexColoring(text.toUtf8().constData());
+    gv->resetEdgeColoring();
+}
+
+
+void DisjointPathsVertexSelectionFinished(QWidget* mainwindow, OGoGraphView* gv, vector<Vertex*>& selectedvertices, Graph* G)
+{
+    bool ok;
+    QString text = QInputDialog::getText(mainwindow, "Disjoint Paths Algorithm", "Enter a name for the Disjoint Paths",
+                   QLineEdit::Normal, "DisjointPaths", &ok );
+    if ( !ok || text.isEmpty() )
+        return;
+
+    OpenGraphtheory::Algorithms::AlgorithmVERTEXDISJOINTPATHS algo;
+    algo.AddVertexDisjointPaths(*G, selectedvertices[0], selectedvertices[1], text.toUtf8().constData());
+    gv->setEdgeColoring(text.toUtf8().constData());
+    gv->resetVertexColoring();
+    gv->repaint();
+}
+void MainWindow::on_actionDisjoint_Paths_triggered()
+{
+    OGoGraphView* gv = static_cast<OGoGraphView*>(ui->tabWidget->currentWidget());
+    gv->selectVertices(this, 2, DisjointPathsVertexSelectionFinished);
+}
+
+
+void MinimumSeparatorVertexSelectionFinished(QWidget* mainwindow, OGoGraphView* gv, vector<Vertex*>& selectedvertices, Graph* G)
+{
+    bool ok;
+    QString text = QInputDialog::getText(mainwindow, "Minimum Vertex Separator Algorithm", "Enter a name for the Vertex Separator",
+                   QLineEdit::Normal, "VertexSeparator", &ok );
+    if ( !ok || text.isEmpty() )
+        return;
+
+    OpenGraphtheory::Algorithms::AlgorithmVERTEXSEPARATOR algo;
+    algo.AddMinimumVertexSeparator(*G, selectedvertices[0], selectedvertices[1], text.toUtf8().constData());
+    gv->setVertexColoring(text.toUtf8().constData());
+    gv->resetEdgeColoring();
+    gv->repaint();
+}
+void MainWindow::on_actionMinimum_Separator_triggered()
+{
+    OGoGraphView* gv = static_cast<OGoGraphView*>(ui->tabWidget->currentWidget());
+    gv->selectVertices(this, 2, MinimumSeparatorVertexSelectionFinished);
+}
+
+
 // ===================================================================================================================================================
 
 
@@ -472,8 +532,8 @@ void MainWindow::on_actionComputation_Tree_Logic_triggered()
 void MainWindow::on_actionFirst_Order_Predicate_Logic_triggered()
 {
     bool ok;
-    QString text = QInputDialog::getText(this, "Computation-Tree Logic Model-Checker", "Enter a computation-tree-logic formula",
-                                         QLineEdit::Normal, "\\exists x. \\forall y. (x=y \\vee E(x,y))", &ok );
+    QString text = QInputDialog::getText(this, "First-Order Predicate Logic Model-Checker", "Enter a First-Order Predicate Logic formula",
+                                         QLineEdit::Normal, "\\exists x. \\forall y. (x=y \\vee E(x,y) \\vee E(y,x))", &ok );
     if ( !ok || text.isEmpty() )
         return;
 
@@ -527,3 +587,6 @@ void MainWindow::on_actionGenerate_triggered()
 {
     DoGenerate("path");
 }
+
+
+
