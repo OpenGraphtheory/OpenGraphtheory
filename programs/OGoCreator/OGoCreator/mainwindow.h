@@ -3,6 +3,7 @@
 
 #include <QtWidgets/QMainWindow>
 #include <QDragEnterEvent>
+#include <QAction>
 #include <QDragLeaveEvent>
 #include <QDragMoveEvent>
 #include <QtWidgets/QMessageBox>
@@ -22,6 +23,7 @@
 #include "../../../opengt.so/Headers/transform/springembedder3d.h"
 #include "../../../opengt.so/Headers/export/export.h"
 #include "../../../opengt.so/Headers/import/import.h"
+#include "../../../opengt.so/Headers/generate/generate.h"
 
 
 namespace Ui {
@@ -79,6 +81,8 @@ private slots:
 
     void on_actionMaximum_Matching_triggered();
 
+    void on_actionGenerate_triggered();
+
 private:
     Ui::MainWindow *ui;
 
@@ -88,6 +92,8 @@ private:
     void dropEvent(QDropEvent*);
 
     void MakeTab(OpenGraphtheory::Graph*, QString, QString);
+public:
+    void DoGenerate(QString generator);
 };
 
 class RepaintOnChange : public OpenGraphtheory::IntermediateSteps::IntermediateStepHandler
@@ -98,6 +104,28 @@ class RepaintOnChange : public OpenGraphtheory::IntermediateSteps::IntermediateS
         RepaintOnChange(OGoGraphView* target);
         void Handle(OpenGraphtheory::Graph* G);
 };
+
+class GeneratorEnumerator : public OpenGraphtheory::FactoryEnumerator
+{
+    private:
+        QStringList stringlist;
+    public:
+        void Enumerate(std::string name, std::string description, std::string url);
+        QStringList getStringList();
+};
+
+class GeneratorAction : public QAction
+{
+    Q_OBJECT
+    private:
+        QString gen;
+        MainWindow* target;
+    public:
+        GeneratorAction(MainWindow* target, QString gen);
+    public slots:
+        void on_GeneratorAction_triggered();
+};
+
 
 
 #endif // MAINWINDOW_H

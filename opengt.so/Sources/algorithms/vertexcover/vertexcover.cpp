@@ -133,7 +133,7 @@ namespace OpenGraphtheory
             if(parameters.size() <= 0)
                 return;
 
-            string VertexCoverName =  parameters[0];
+            string VertexCoverName = parameters[0];
             AddVertexCover(G, VertexCoverName);
         }
 

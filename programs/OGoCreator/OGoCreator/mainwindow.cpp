@@ -16,6 +16,33 @@
 using namespace OpenGraphtheory;
 using namespace std;
 
+
+
+void GeneratorEnumerator::Enumerate(std::string name, std::string description, std::string url)
+{
+    stringlist.append(QString(name.c_str()));
+}
+QStringList GeneratorEnumerator::getStringList()
+{
+    return stringlist;
+}
+
+
+GeneratorAction::GeneratorAction(MainWindow* target, QString gen)
+    : QAction(target)
+{
+    this->target = target;
+    this->gen = gen;
+    this->setText(gen);
+}
+void GeneratorAction::on_GeneratorAction_triggered()
+{
+    target->DoGenerate(gen);
+}
+
+
+
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -25,6 +52,21 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tabWidget->removeTab(0);
     ui->tabWidget->setAcceptDrops(true);
     this->setAcceptDrops(true);
+
+
+    QMenu* genmenu = ui->menuFile->findChild<QMenu*>(QString("menuGenerate"));
+    genmenu->clear();
+
+    GeneratorEnumerator gen;
+    Generate::Generator::GeneratorFactory.Enumerate(&gen);
+    QStringList genlist = gen.getStringList();
+    for(QStringList::iterator i = genlist.begin(); i != genlist.end(); i++)
+    {
+        GeneratorAction* action = new GeneratorAction(this, *i);
+        genmenu->addAction( action );
+        QObject::connect(action, SIGNAL(triggered()),
+                         action, SLOT(on_GeneratorAction_triggered()));
+    }
 
     QStringList cmdline_args = QCoreApplication::arguments();
     for(int i = 1; i < cmdline_args.count(); i++)
@@ -46,30 +88,34 @@ void MainWindow::MakeTab(Graph* graph, QString tabCaption, QString filelocation)
 }
 
 
-class ImportFilterEnumerator : public FactoryEnumerator
+
+
+
+
+class ImportExportFilterEnumerator : public FactoryEnumerator
 {
     private:
-        QFileDialog* filedialog;
         QStringList stringlist;
     public:
-        ImportFilterEnumerator(QFileDialog* target);
+        ImportExportFilterEnumerator();
         void Enumerate(std::string name, std::string description, std::string url);
         QStringList getStringList();
 };
-ImportFilterEnumerator::ImportFilterEnumerator(QFileDialog* target)
+ImportExportFilterEnumerator::ImportExportFilterEnumerator()
 {
     stringlist.append("Graph eXchange Language (*.gxl)");
-    filedialog = target;
 }
-QStringList ImportFilterEnumerator::getStringList()
+QStringList ImportExportFilterEnumerator::getStringList()
 {
     return stringlist;
 }
-void ImportFilterEnumerator::Enumerate(std::string name, std::string description, std::string)
+void ImportExportFilterEnumerator::Enumerate(std::string name, std::string description, std::string)
 {
     if(name != "gxl")
         stringlist.append(QString((description+" (*."+name+")").c_str()));
 }
+
+
 
 void MainWindow::OpenGraphFile(QString filename)
 {
@@ -79,13 +125,9 @@ void MainWindow::OpenGraphFile(QString filename)
 
     Graph* gr = new Graph;
     if(suffix == "gxl")
-    {
         gr->LoadFromFile(string(filename.toUtf8().constData()));
-    }
     else
-    {
         (*gr) = Import::ImportFilter::Import(filename.toUtf8().constData(), suffix.toUtf8().constData());
-    }
 
     MakeTab(gr, fileinfo.baseName(), filename);
     ui->statusBar->showMessage("");
@@ -98,7 +140,7 @@ void MainWindow::on_actionOpen_triggered()
     dlg.setDefaultSuffix("gxl");
     dlg.setFileMode(QFileDialog::ExistingFiles);
 
-    ImportFilterEnumerator impfilters(&dlg);
+    ImportExportFilterEnumerator impfilters;
     OpenGraphtheory::Import::ImportFilter::ImportFilterFactory.Enumerate(&impfilters);
     dlg.setNameFilters(impfilters.getStringList());
 
@@ -111,53 +153,23 @@ void MainWindow::on_actionOpen_triggered()
         OpenGraphFile(files[i]);
     }
 }
-
 void MainWindow::on_actionOpen_triggered(bool)
 {
 
 }
 
+
 void MainWindow::on_tabWidget_tabCloseRequested(int index)
 {
     ui->tabWidget->removeTab(index);
 }
-
 void MainWindow::on_actionNew_triggered()
 {
     MakeTab(new Graph(), "New", "");
 }
-
 void MainWindow::on_actionClose_triggered()
 {
     on_tabWidget_tabCloseRequested(ui->tabWidget->currentIndex());
-}
-
-
-
-
-class ExportFilterEnumerator : public FactoryEnumerator
-{
-    private:
-        QFileDialog* filedialog;
-        QStringList stringlist;
-    public:
-        ExportFilterEnumerator(QFileDialog* target);
-        void Enumerate(std::string name, std::string description, std::string url);
-        QStringList getStringList();
-};
-ExportFilterEnumerator::ExportFilterEnumerator(QFileDialog* target)
-{
-    stringlist.append("Graph eXchange Language (*.gxl)");
-    filedialog = target;
-}
-QStringList ExportFilterEnumerator::getStringList()
-{
-    return stringlist;
-}
-void ExportFilterEnumerator::Enumerate(std::string name, std::string description, std::string)
-{
-    if(name != "gxl")
-        stringlist.append(QString((description+" (*."+name+")").c_str()));
 }
 
 
@@ -172,7 +184,7 @@ void MainWindow::on_actionSave_as_triggered()
     dlg.selectFile(file);
     dlg.setAcceptMode(QFileDialog::AcceptSave);
     dlg.setDefaultSuffix("gxl");
-    ExportFilterEnumerator expfilters(&dlg);
+    ImportExportFilterEnumerator expfilters;
     OpenGraphtheory::Export::ExportFilter::ExportFilterFactory.Enumerate(&expfilters);
     dlg.setNameFilters(expfilters.getStringList());
 
@@ -271,9 +283,6 @@ void MainWindow::on_actionClique_triggered()
 }
 
 
-// ===================================================================================================================================================
-
-
 void MainWindow::on_actionColoring_triggered()
 {
     bool ok;
@@ -292,9 +301,6 @@ void MainWindow::on_actionColoring_triggered()
 }
 
 
-// ===================================================================================================================================================
-
-
 void PathVertexSelectionFinished(QWidget* mainwindow, OGoGraphView* gv, vector<Vertex*>& selectedvertices, Graph* G)
 {
     bool ok;
@@ -309,16 +315,12 @@ void PathVertexSelectionFinished(QWidget* mainwindow, OGoGraphView* gv, vector<V
     gv->resetVertexColoring();
     gv->repaint();
 }
-
 void MainWindow::on_actionPath_triggered()
 {
     OGoGraphView* gv = static_cast<OGoGraphView*>(ui->tabWidget->currentWidget());
 
     gv->selectVertices(this, 2, PathVertexSelectionFinished);
 }
-
-
-// ===================================================================================================================================================
 
 
 void MinCutVertexSelectionFinished(QWidget* mainwindow, OGoGraphView* gv, vector<Vertex*>& selectedvertices, Graph* G)
@@ -338,15 +340,11 @@ void MinCutVertexSelectionFinished(QWidget* mainwindow, OGoGraphView* gv, vector
     gv->resetVertexColoring();
     gv->repaint();
 }
-
 void MainWindow::on_actionMinimum_Cut_triggered()
 {
     OGoGraphView* gv = static_cast<OGoGraphView*>(ui->tabWidget->currentWidget());
     gv->selectVertices(this, 2, MinCutVertexSelectionFinished);
 }
-
-
-// ===================================================================================================================================================
 
 
 void MainWindow::on_actionIndependent_Set_triggered()
@@ -367,9 +365,6 @@ void MainWindow::on_actionIndependent_Set_triggered()
 }
 
 
-// ===================================================================================================================================================
-
-
 void MainWindow::on_actionMaximum_Matching_triggered()
 {
     bool ok;
@@ -386,9 +381,6 @@ void MainWindow::on_actionMaximum_Matching_triggered()
     gv->resetVertexColoring();
     gv->setEdgeColoring(text.toUtf8().constData());
 }
-
-
-// ===================================================================================================================================================
 
 
 void MainWindow::on_actionDominating_Set_triggered()
@@ -458,10 +450,6 @@ void MainWindow::on_actionModal_Logic_triggered()
     gv->resetEdgeColoring();
 }
 
-
-// ===================================================================================================================================================
-
-
 void MainWindow::on_actionComputation_Tree_Logic_triggered()
 {
     bool ok;
@@ -480,10 +468,6 @@ void MainWindow::on_actionComputation_Tree_Logic_triggered()
     gv->setVertexColoring("ctlmodel");
     gv->resetEdgeColoring();
 }
-
-
-// ===================================================================================================================================================
-
 
 void MainWindow::on_actionFirst_Order_Predicate_Logic_triggered()
 {
@@ -512,4 +496,34 @@ void MainWindow::on_actionFirst_Order_Predicate_Logic_triggered()
 }
 
 
+// ===================================================================================================================================================
 
+
+void MainWindow::DoGenerate(QString generator)
+{
+    bool ok;
+    QString text = QInputDialog::getText(this, "Generator "+generator, "Enter Parameters for " + generator + " generator",
+                                         QLineEdit::Normal, "5", &ok );
+    if ( !ok || text.isEmpty() )
+        return;
+    QStringList sparts = text.split(' ');
+    std::list<int> iparts;
+    for(QStringList::iterator i = sparts.begin(); i != sparts.end(); i++)
+    {
+        int ii = i->toInt(&ok);
+        if(ok)
+            iparts.push_back(ii);
+    }
+
+    Generate::Generator* gen = Generate::Generator::GeneratorFactory.Produce(generator.toStdString());
+    ui->statusBar->showMessage("Generating " + generator + " " + text + "...");
+    Graph* gr = new Graph();
+    (*gr) = gen->Generate(iparts);
+
+    MakeTab(gr, generator, "");
+    ui->statusBar->showMessage("");
+}
+void MainWindow::on_actionGenerate_triggered()
+{
+    DoGenerate("path");
+}
