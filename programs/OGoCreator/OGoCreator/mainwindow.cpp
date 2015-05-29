@@ -45,6 +45,32 @@ void MainWindow::MakeTab(Graph* graph, QString tabCaption, QString filelocation)
     ui->tabWidget->setCurrentIndex(newTabIdx);
 }
 
+
+class ImportFilterEnumerator : public FactoryEnumerator
+{
+    private:
+        QFileDialog* filedialog;
+        QStringList stringlist;
+    public:
+        ImportFilterEnumerator(QFileDialog* target);
+        void Enumerate(std::string name, std::string description, std::string url);
+        QStringList getStringList();
+};
+ImportFilterEnumerator::ImportFilterEnumerator(QFileDialog* target)
+{
+    stringlist.append("Graph eXchange Language (*.gxl)");
+    filedialog = target;
+}
+QStringList ImportFilterEnumerator::getStringList()
+{
+    return stringlist;
+}
+void ImportFilterEnumerator::Enumerate(std::string name, std::string description, std::string)
+{
+    if(name != "gxl")
+        stringlist.append(QString((description+" (*."+name+")").c_str()));
+}
+
 void MainWindow::OpenGraphFile(QString filename)
 {
     ui->statusBar->showMessage("Loading " + filename + "...");
@@ -61,18 +87,6 @@ void MainWindow::OpenGraphFile(QString filename)
         (*gr) = Import::ImportFilter::Import(filename.toUtf8().constData(), suffix.toUtf8().constData());
     }
 
-    // make sure every vertex has 2 coordinates (otherwise, the paint event would crash)
-    for(VertexIterator v = gr->BeginVertices(); v != gr->EndVertices(); v++)
-    {
-        vector<float> Coordinates = (*v)->GetCoordinates(2);
-        if(Coordinates.size() < 2)
-        {
-            while(Coordinates.size() < 2)
-                Coordinates.push_back(0);
-           (*v)->SetCoordinates(Coordinates);
-        }
-    }
-
     MakeTab(gr, fileinfo.baseName(), filename);
     ui->statusBar->showMessage("");
 }
@@ -83,6 +97,10 @@ void MainWindow::on_actionOpen_triggered()
     dlg.setAcceptMode(QFileDialog::AcceptOpen);
     dlg.setDefaultSuffix("gxl");
     dlg.setFileMode(QFileDialog::ExistingFiles);
+
+    ImportFilterEnumerator impfilters(&dlg);
+    OpenGraphtheory::Import::ImportFilter::ImportFilterFactory.Enumerate(&impfilters);
+    dlg.setNameFilters(impfilters.getStringList());
 
     if(!dlg.exec())
         return;
@@ -129,7 +147,7 @@ class ExportFilterEnumerator : public FactoryEnumerator
 };
 ExportFilterEnumerator::ExportFilterEnumerator(QFileDialog* target)
 {
-    stringlist.append("Graph eXchange Language (*.gxl) (*.gxl)");
+    stringlist.append("Graph eXchange Language (*.gxl)");
     filedialog = target;
 }
 QStringList ExportFilterEnumerator::getStringList()
@@ -138,7 +156,8 @@ QStringList ExportFilterEnumerator::getStringList()
 }
 void ExportFilterEnumerator::Enumerate(std::string name, std::string description, std::string)
 {
-    stringlist.append(QString((description+" (*." + name+") (*."+name+")").c_str()));
+    if(name != "gxl")
+        stringlist.append(QString((description+" (*."+name+")").c_str()));
 }
 
 
@@ -155,7 +174,7 @@ void MainWindow::on_actionSave_as_triggered()
     dlg.setDefaultSuffix("gxl");
     ExportFilterEnumerator expfilters(&dlg);
     OpenGraphtheory::Export::ExportFilter::ExportFilterFactory.Enumerate(&expfilters);
-    //dlg.setFilters(expfilters.getStringList());
+    dlg.setNameFilters(expfilters.getStringList());
 
     if(!dlg.exec())
         return;
@@ -192,14 +211,17 @@ void MainWindow::on_actionSave_triggered()
     gv->getGraph()->SaveToFile(string(file.toUtf8().constData()));
 }
 
+
+
+
 void MainWindow::on_actionBugtracker_triggered()
 {
-    QDesktopServices::openUrl((QUrl)("http://sourceforge.net/tracker/?group_id=340258"));
+    QDesktopServices::openUrl((QUrl)("https://github.com/OpenGraphtheory/OpenGraphtheory/issues"));
 }
 
 void MainWindow::on_actionForum_triggered()
 {
-    QDesktopServices::openUrl((QUrl)("http://sourceforge.net/projects/opengraphtheory/forums"));
+    QDesktopServices::openUrl((QUrl)("https://groups.google.com/forum/?hl=en#!forum/opengraphtheory"));
 }
 
 

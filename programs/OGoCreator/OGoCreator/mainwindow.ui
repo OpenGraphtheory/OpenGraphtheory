@@ -48,14 +48,12 @@
      <string>File</string>
     </property>
     <addaction name="actionNew"/>
+    <addaction name="actionGenerate"/>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_as"/>
     <addaction name="actionClose"/>
     <addaction name="separator"/>
-    <addaction name="actionGenerate"/>
-    <addaction name="actionImport"/>
-    <addaction name="actionExport"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -142,16 +140,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+W</string>
-   </property>
-  </action>
-  <action name="actionImport">
-   <property name="text">
-    <string>Import</string>
-   </property>
-  </action>
-  <action name="actionExport">
-   <property name="text">
-    <string>Export</string>
    </property>
   </action>
   <action name="actionQuit">
