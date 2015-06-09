@@ -1,7 +1,7 @@
 
 #include "../../../Headers/algorithms/directedtreewidth/directedtreewidth.h"
 
-#define VERBOSEOUTPUT
+//#define VERBOSEOUTPUT
 
 // see page 8 and 9 of
 // http://www.math2.rwth-aachen.de/~koster/paper/boko09a.pdf
