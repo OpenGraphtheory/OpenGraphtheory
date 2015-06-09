@@ -14,8 +14,8 @@ namespace OpenGraphtheory
             "strongcomponents", "determines the strongly connected components of the graph",
             "http://en.wikipedia.org/wiki/Strongly_connected_component"));
 
-        
-        
+
+
         void AlgorithmSTRONGCOMPONENTS::FindComponents(Graph &G, map<Vertex*, int>& ComponentOfVertex, vector<vector<Vertex*> >& VerticesInComponent,
                                                        VertexFilter *vertexfilter, EdgeFilter *edgefilter, bool StrongComponents)
         {
@@ -24,15 +24,17 @@ namespace OpenGraphtheory
             {
                 if(vertexfilter != NULL && !vertexfilter->VertexAllowed(*v))
                     continue;
-                
+
                 if(ComponentOfVertex.find(*v) != ComponentOfVertex.end()) // component already assigned
                     continue;
+cerr << "."; cerr.flush();
 
-                // v is in a new component                
+
+                // v is in a new component
                 ComponentOfVertex[*v] = MaxComponent;
                 VerticesInComponent.push_back(vector<Vertex*>(1,*v));
 
-                // find rest of the new component                
+                // find rest of the new component
                 AlgorithmPATH pathalgo;
                 VertexSet ReachPlus;
                 VertexSet ReachMinus;
@@ -46,7 +48,7 @@ namespace OpenGraphtheory
                     ReachPlus = pathalgo.WeaklyReachableVertices(G, *v, vertexfilter, edgefilter);
                     ReachMinus = ReachPlus;
                 }
-                
+
                 for(VertexIterator w = ReachPlus.begin(); w != ReachPlus.end(); w++)
                 {
                     if(ReachMinus.find(*w) != ReachMinus.end())
@@ -55,18 +57,18 @@ namespace OpenGraphtheory
                         VerticesInComponent[MaxComponent].push_back(*w);
                     }
                 }
-                
+
                 MaxComponent++;
             }
         }
-        
+
 
         void AlgorithmSTRONGCOMPONENTS::FindStrongComponents(Graph &G, map<Vertex*, int>& ComponentOfVertex, vector<vector<Vertex*> >& VerticesInComponent,
                                                              VertexFilter *vertexfilter, EdgeFilter *edgefilter)
         {
             FindComponents(G,ComponentOfVertex,VerticesInComponent,vertexfilter,edgefilter,true);
         }
-        
+
         void AlgorithmSTRONGCOMPONENTS::AddStrongComponents(Graph &G, std::string ComponentsName)
         {
             map<Vertex*, int> ComponentOfVertex;

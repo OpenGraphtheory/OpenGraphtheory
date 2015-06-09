@@ -101,6 +101,7 @@ for(VertexIterator v = W.begin(); v != W.end(); v++)
     cerr << (*v)->GetLabel() << " ";
 cerr << "}\n";
 #endif
+cerr << "A"; cerr.flush();
 
                 DirectedTreeDecomposition* result = NULL;
 
@@ -116,6 +117,8 @@ cerr << "}\n";
                 VertexSet X, S, Y;
                 if(!FindWeaklyBalancedWSeparation(G, W, W.begin(), X,S,Y,  k)) // treewidth is larger than k
                     return NULL;
+
+cerr << "B"; cerr.flush();
 
 #ifdef VERBOSEOUTPUT
 cerr << "   Weakly Balanced W Separation:   X = {"; cerr.flush();
@@ -143,6 +146,7 @@ cerr << "}\n";
                             S.insert(*v);
                             break;
                         }
+cerr << "C"; cerr.flush();
 
                 // determine the strong components of G[V]-S
                 // TODO: verify that you dont have to use all of G instead of only the local G[V]
@@ -154,6 +158,8 @@ cerr << "}\n";
                 map<Vertex*, int> ComponentOfVertex;
                 vector<vector<Vertex*> > VerticesInComponent;
                 strongcomponentalgorithm.FindStrongComponents(G, ComponentOfVertex, VerticesInComponent, &VMinusS);
+
+cerr << "D\n"; cerr.flush();
 
                 // Recurse on  V' = S union C,  W' = S union (W cap C)   for the strong components C of G[V]-S
                 result = new DirectedTreeDecomposition;

@@ -41,7 +41,7 @@
 
 
 [a-zA-Z][0-9a-zA-Z]*                          {(*yylval).sval = new(std::string)(yytext); return TIKZParser::token::STRING;}
-([0-9]*\.)?[0-9]+                             {(*yylval).fval = new(float)(atof(yytext)); return TIKZParser::token::FLOAT;}
+-?([0-9]*\.)?[0-9]+                           {(*yylval).fval = new(float)(atof(yytext)); return TIKZParser::token::FLOAT;}
 .                                             {std::cerr << "lexical error (" << yylineno << "): unexpected character " << yytext << std::endl;}
 
 %%
