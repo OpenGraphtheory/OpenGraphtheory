@@ -8,21 +8,6 @@
     namespace OpenGraphtheory
     {
 
-        class VertexFilter
-        {
-            public:
-                virtual ~VertexFilter();
-                virtual bool VertexAllowed(Vertex* v) = 0;
-        };
-
-        class EdgeFilter
-        {
-            public:
-                virtual ~EdgeFilter();
-                virtual bool EdgeAllowed(Edge* e) = 0;
-        };
-
-
         class ForbiddenVertexFilter : public VertexFilter
         {
             private:

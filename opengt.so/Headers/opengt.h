@@ -21,6 +21,7 @@
         /// \brief A class to represent graphs
 
         class Vertex;
+        class VertexFilter;
         //typedef SetHelper::VectorSet<Vertex*> VertexSet;
         typedef std::set<Vertex*> VertexSet;
         typedef VertexSet::iterator VertexIterator;
@@ -30,6 +31,7 @@
         typedef std::map<Vertex*, Visualization::Color> VertexColoring;
 
         class Edge;
+        class EdgeFilter;
         //typedef SetHelper::VectorSet<Edge*> EdgeSet;
         typedef std::set<Edge*> EdgeSet;
         typedef EdgeSet::iterator EdgeIterator;
@@ -269,7 +271,8 @@
                 VertexSet CollectNeighbors(
                     bool UndirectedToUndirected, bool UndirectedToPositive, bool UndirectedToNegative,
                     bool PositiveToUndirected,   bool PositiveToPositive,   bool PositiveToNegative,
-                    bool NegativeToUndirected,   bool NegativeToPositive,   bool NegativeToNegative);
+                    bool NegativeToUndirected,   bool NegativeToPositive,   bool NegativeToNegative,
+                    VertexFilter *vertexfilter=NULL, EdgeFilter *edgefilter=NULL);
 
                 VertexSet UnderlyingNeighborhood();
                 VertexSet Successors();
@@ -334,6 +337,22 @@
                 void WriteToXml(OpenGraphtheory::XML::XML* xml);
                 bool LoadFromXml(OpenGraphtheory::XML::XML* xml, std::map<std::string, Vertex*>& Vertex_XML_ID_to_pointer, bool DefaultDirected);
         };
+
+
+        class VertexFilter
+        {
+            public:
+                virtual ~VertexFilter();
+                virtual bool VertexAllowed(Vertex* v) = 0;
+        };
+
+        class EdgeFilter
+        {
+            public:
+                virtual ~EdgeFilter();
+                virtual bool EdgeAllowed(Edge* e) = 0;
+        };
+
 
     } // namespace OpenGraphtheory
 

@@ -299,7 +299,8 @@ namespace OpenGraphtheory
             VertexSet Vertex::CollectNeighbors(
                     bool UndirectedToUndirected, bool UndirectedToPositive, bool UndirectedToNegative,
                     bool PositiveToUndirected,   bool PositiveToPositive,   bool PositiveToNegative,
-                    bool NegativeToUndirected,   bool NegativeToPositive,   bool NegativeToNegative)
+                    bool NegativeToUndirected,   bool NegativeToPositive,   bool NegativeToNegative,
+                    VertexFilter *vertexfilter, EdgeFilter *edgefilter)
             {
                 VertexSet result;
 
@@ -313,9 +314,14 @@ namespace OpenGraphtheory
                     ))
                         continue;
                     Edge* e = (*v2e)->GetEdge();
+                    if(edgefilter != NULL && !edgefilter->EdgeAllowed(e))
+                        continue;
 
                     for(VertexEdgeConnectionIterator e2v = e->BeginConnections(); e2v != e->EndConnections(); e2v++)
                     {
+                        Vertex* v = (*e2v)->GetVertex();
+                        if(vertexfilter != NULL && !vertexfilter->VertexAllowed(v))
+                            continue;
                         VertexEdgeConnection::Direction e2vdirection = (*e2v)->GetDirection();
 
                         bool Addable = false;
@@ -352,7 +358,7 @@ namespace OpenGraphtheory
                         }
 
                         if(Addable)
-                            result.insert((*e2v)->GetVertex());
+                            result.insert(v);
                     }
                 }
 

@@ -16,6 +16,92 @@ namespace OpenGraphtheory
 
 
 
+        // Tarjans Algorithm
+        // https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm
+        void AlgorithmSTRONGCOMPONENTS::FindStrongComponents(Graph &G, map<Vertex*, int>& ComponentOfVertex,
+                                                             vector<vector<Vertex*> >& VerticesInComponent,
+                                                             VertexFilter *vertexfilter, EdgeFilter *edgefilter)
+        {
+
+            int numScc = 0;
+            int index = 0;
+            stack<Vertex*> tarStack;
+            VertexSet onStack;
+            map<Vertex*, int> dfs;
+            map<Vertex*, int> lowlink;
+            map<Vertex*, Vertex*> caller;
+            map<Vertex*, VertexSet> nodeVector;
+            map<Vertex*, VertexIterator> vindex;
+
+            for (VertexIterator i = G.BeginVertices(); i != G.EndVertices(); i++)
+            {
+                Vertex* u = *i;
+                if(vertexfilter != NULL && !vertexfilter->VertexAllowed(u))
+                    continue;
+                if (dfs.find(u) != dfs.end())
+                    continue;
+
+                dfs[u] = index;
+                lowlink[u] = index;
+                index++;
+                nodeVector[u] = u->CollectNeighbors(1,1,0,1,1,0,0,0,0,vertexfilter,edgefilter);
+                vindex[u] = nodeVector[u].begin();
+                tarStack.push(u);
+                caller[u] = NULL;
+                onStack.insert(u);
+                Vertex *last = u;
+
+                while(last != NULL)
+                {
+                    if(vindex[last] != nodeVector[last].end())
+                    {
+                        Vertex *w = *(vindex[last]);
+                        vindex[last]++;
+                        if(dfs.find(w) == dfs.end())
+                        {
+                            caller[w] = last;
+                            nodeVector[w] = w->CollectNeighbors(1,1,0,1,1,0,0,0,0,vertexfilter,edgefilter);
+                            vindex[w] = nodeVector[w].begin();
+                            dfs[w] = index;
+                            lowlink[w] = index;
+                            index++;
+                            tarStack.push(w);
+                            onStack.insert(w);
+                            last = w;
+                        }
+                        else if(onStack.find(w) != onStack.end())
+                        {
+                            lowlink[last] = min(lowlink[last], dfs[w]);
+                        }
+                    }
+                    else
+                    {
+                        if(lowlink[last] == dfs[last])
+                        {
+                            Vertex *top = NULL;
+                            vector<Vertex*> scc;
+                            while(top != last)
+                            {
+                                top = tarStack.top();
+                                tarStack.pop();
+                                onStack.erase(top);
+                                scc.push_back(top);
+                                ComponentOfVertex[top] = numScc;
+                            }
+                            VerticesInComponent.push_back(scc);
+                            numScc++;
+                        }
+
+                        Vertex *newLast = caller[last]; //Go up one recursive call
+                        if(newLast != NULL)
+                            lowlink[newLast] = min(lowlink[newLast], lowlink[last]);
+                        last = newLast;
+                    }
+                } // while(last != NULL)
+            } // for (VertexIterator i = G.BeginVertices(); i != G.EndVertices(); i++)
+        }
+
+
         void AlgorithmSTRONGCOMPONENTS::FindComponents(Graph &G, map<Vertex*, int>& ComponentOfVertex, vector<vector<Vertex*> >& VerticesInComponent,
                                                        VertexFilter *vertexfilter, EdgeFilter *edgefilter, bool StrongComponents)
         {
@@ -62,13 +148,13 @@ cerr << "."; cerr.flush();
             }
         }
 
-
+/*
         void AlgorithmSTRONGCOMPONENTS::FindStrongComponents(Graph &G, map<Vertex*, int>& ComponentOfVertex, vector<vector<Vertex*> >& VerticesInComponent,
                                                              VertexFilter *vertexfilter, EdgeFilter *edgefilter)
         {
             FindComponents(G,ComponentOfVertex,VerticesInComponent,vertexfilter,edgefilter,true);
         }
-
+*/
         void AlgorithmSTRONGCOMPONENTS::AddStrongComponents(Graph &G, std::string ComponentsName)
         {
             map<Vertex*, int> ComponentOfVertex;
