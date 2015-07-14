@@ -159,6 +159,8 @@ cerr << "C"; cerr.flush();
                 vector<vector<Vertex*> > VerticesInComponent;
                 strongcomponentalgorithm.FindStrongComponents(G, ComponentOfVertex, VerticesInComponent, &VMinusS);
 
+cerr << VerticesInComponent.size() << " strong components on " << W.size() << " vertices\n"; cerr.flush();
+cerr << (VerticesInComponent.size() == W.size() ? "acyclic" : "cyclic") << "\n"; cerr.flush();
 cerr << "D\n"; cerr.flush();
 
                 // Recurse on  V' = S union C,  W' = S union (W cap C)   for the strong components C of G[V]-S
