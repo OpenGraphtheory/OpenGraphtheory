@@ -13,8 +13,8 @@ namespace OpenGraphtheory
         {
 
             MultiFactoryRegistrator<Algorithm> AlgorithmHAMILTONIANPATH_TW::AlgorithmHamiltonianPathTWRegistrator(
-                &Algorithm::AlgorithmFactory, "hamiltonianpath", new DefaultInstantiator<Algorithm, AlgorithmHAMILTONIANPATH_TW>(
-                "hamiltonianpath", "Adds a hamiltonian path to the graph using the treewidth-based method", "https://en.wikipedia.org/wiki/Hamiltonian_path"));
+                &Algorithm::AlgorithmFactory, "hamiltonianpath_tw", new DefaultInstantiator<Algorithm, AlgorithmHAMILTONIANPATH_TW>(
+                "hamiltonianpath_tw", "Adds a hamiltonian path to the graph using the treewidth-based method", "https://en.wikipedia.org/wiki/Hamiltonian_path"));
 
             AlgorithmHAMILTONIANPATH_TW::AlgorithmHAMILTONIANPATH_TW()
                 : TreewidthBasedAlgorithm()

@@ -16,7 +16,7 @@ namespace OpenGraphtheory
 
         bool AlgorithmHAMILTONIANPATH::FindHamiltonianPath(Graph &G, EdgeSet& HamiltonianPath)
         {
-            return FindKPath(G,G.NumberOfVertices(), HamiltonianPath);
+            return FindKPath(G,G.NumberOfVertices()-1, HamiltonianPath);
         }
 
         void AlgorithmHAMILTONIANPATH::AddHamiltonianPath(Graph &G, string HamiltonianPathName)
