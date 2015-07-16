@@ -16,7 +16,7 @@
                 public:
                     void Run(Graph &G, std::vector<std::string> parameters);
                     bool FindKPath(Graph& G, int k, EdgeSet& KPath);
-                    void AddKPath(Graph &G, int k, std::string HamiltonianPathName);
+                    void AddKPath(Graph &G, int k, std::string KPathName);
 
                 protected:
                     static MultiFactoryRegistrator<Algorithm> AlgorithmKPathRegistrator;
@@ -25,7 +25,17 @@
                                    Vertex* source,
                                    Vertex* target,
                                    VertexSet& Visited,
-                                   EdgeSet& Path);
+                                   EdgeSet& Path,
+                                   bool cyclic);
+                    // source must be != NULL
+                    // target CAN be NULL if cyclic=false, but must be != NULL if cyclic=true
+                    bool DoTestKPath(Graph &G,
+                                   int k,
+                                   Vertex* source,
+                                   Vertex* target,
+                                   VertexSet& Visited,
+                                   EdgeSet& Path,
+                                   bool cyclic);
             };
         }
     }

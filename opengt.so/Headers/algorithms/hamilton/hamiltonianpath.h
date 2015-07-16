@@ -17,9 +17,6 @@
 
                 protected:
                     static MultiFactoryRegistrator<Algorithm> AlgorithmHamiltonianPathRegistrator;
-                    bool TestKPath(Graph &G, int k,
-                                   VertexSet& Visited,
-                                   EdgeSet& Path);
             };
         }
     }

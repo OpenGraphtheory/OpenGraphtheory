@@ -57,7 +57,12 @@
 		<Unit filename="Headers/algorithms/directedtreewidth/directedtreewidth.h" />
 		<Unit filename="Headers/algorithms/dominatingset/dominatingset.h" />
 		<Unit filename="Headers/algorithms/dominatingset/dominatingset_tw.h" />
+		<Unit filename="Headers/algorithms/hamilton/hamiltoniancycle.h" />
+		<Unit filename="Headers/algorithms/hamilton/hamiltonianpath.h" />
+		<Unit filename="Headers/algorithms/hamilton/hamiltonianpath_tw.h" />
 		<Unit filename="Headers/algorithms/independentset/independentset.h" />
+		<Unit filename="Headers/algorithms/kcycle/kcycle.h" />
+		<Unit filename="Headers/algorithms/kpath/kpath.h" />
 		<Unit filename="Headers/algorithms/maximumflow/maximumflow.h" />
 		<Unit filename="Headers/algorithms/maximummatching/maximalmatching.h" />
 		<Unit filename="Headers/algorithms/maximummatching/maximummatching.h" />
@@ -156,7 +161,12 @@
 		<Unit filename="Sources/algorithms/directedtreewidth/directedtreewidth.cpp" />
 		<Unit filename="Sources/algorithms/dominatingset/dominatingset.cpp" />
 		<Unit filename="Sources/algorithms/dominatingset/dominatingset_tw.cpp" />
+		<Unit filename="Sources/algorithms/hamilton/hamiltoniancycle.cpp" />
+		<Unit filename="Sources/algorithms/hamilton/hamiltonianpath.cpp" />
+		<Unit filename="Sources/algorithms/hamilton/hamiltonianpath_tw.cpp" />
 		<Unit filename="Sources/algorithms/independentset/independentset.cpp" />
+		<Unit filename="Sources/algorithms/kcycle/kcycle.cpp" />
+		<Unit filename="Sources/algorithms/kpath/kpath.cpp" />
 		<Unit filename="Sources/algorithms/maximumflow/maximumflow.cpp" />
 		<Unit filename="Sources/algorithms/maximummatching/maximalmatching.cpp" />
 		<Unit filename="Sources/algorithms/maximummatching/maximummatching.cpp" />
