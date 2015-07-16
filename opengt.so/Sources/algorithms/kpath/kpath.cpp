@@ -27,9 +27,9 @@ namespace OpenGraphtheory
                 for(VertexIterator n = neighborhood.begin(); n != neighborhood.end(); n++)
                 {
                     if(Visited.find(*n) != Visited.end()) // already visited
-                        if(!cyclic || k>1 || *n != target) // n is allowed if last step in cycle
+                        if(!(cyclic && k==1 && *n == target)) // allowed, if last step in cycle
                             continue;
-                    if(TestKPath(G, k-1, *n, target, Visited, KPath, cyclic))
+                    if(DoTestKPath(G, k-1, *n, target, Visited, KPath, cyclic))
                     {
                         KPath.insert(*e);
                         return true;
@@ -45,11 +45,14 @@ namespace OpenGraphtheory
             if(k >= G.NumberOfVertices() + cyclic)
                 return false;
 
+            if(source == NULL)
+            {
+                source = target;
+                target = NULL;
+            }
+
             if(cyclic) // cyclic cases => enforce target=source
             {
-                if(source == NULL && target != NULL)
-                    source = target;
-
                 if(source != NULL)
                     return DoTestKPath(G,k,source,source,Visited,KPath,cyclic);
 
@@ -66,7 +69,6 @@ namespace OpenGraphtheory
                     if(k+tried > G.NumberOfVertices())
                         break;
                 }
-                return false;
             }
             else
             {
@@ -76,8 +78,8 @@ namespace OpenGraphtheory
                 for(VertexIterator s = G.BeginVertices(); s != G.EndVertices(); s++)
                     if(DoTestKPath(G,k,*s,target,Visited,KPath, cyclic))
                         return true;
-                return false;
             }
+            return false;
         }
 
         bool AlgorithmKPATH::FindKPath(Graph &G, int k, EdgeSet& KPath)
