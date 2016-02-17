@@ -41,7 +41,7 @@ namespace OpenGraphtheory
         void IntermediateStepHandlerShow::Handle(Graph* G)
         {
             if(win != NULL)
-                win->Display(G);
+                win->RequestUpdate(G);
         }
     }
 }

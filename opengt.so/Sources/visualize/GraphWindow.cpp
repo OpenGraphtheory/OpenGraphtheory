@@ -17,14 +17,25 @@ namespace OpenGraphtheory
             this->edgeColoring = edgecoloring;
             this->EdgeWidth = EdgeWidth;
             this->VertexRadius = VertexRadius;
+
+            this->MustUpdate = true;
             sem_init(&GUpdateSemaphore, 0, 1);
+            sem_init(&MustUpdateSemaphore, 0, 1);
 
             Display(G);
+
+            TerminateUpdateThread = false;
+            if( pthread_create(&UpdateThread,NULL,RunUpdateThread,this) )
+                throw "error creating window updating thread\n";
+
         }
 
         GraphWindow::~GraphWindow()
         {
             sem_destroy(&GUpdateSemaphore);
+            sem_destroy(&MustUpdateSemaphore);
+            TerminateUpdateThread = true;
+            pthread_join(UpdateThread, NULL);
         }
 
         void GraphWindow::Display(Graph* G)
@@ -32,10 +43,10 @@ namespace OpenGraphtheory
             sem_wait(&GUpdateSemaphore);
             DisplayedGraph = G;
             sem_post(&GUpdateSemaphore);
-            Update();
+            UpdateGraph();
         }
 
-        void GraphWindow::Update()
+        void GraphWindow::UpdateGraph()
         {
             sem_wait(&GUpdateSemaphore);
             Clear();
@@ -60,6 +71,45 @@ namespace OpenGraphtheory
             Flush();
             sem_post(&GUpdateSemaphore);
         }
+
+
+
+        bool GraphWindow::GetAndSetMustUpdate(bool newValue)
+        {
+            bool result;
+            sem_wait(&MustUpdateSemaphore);
+            result = MustUpdate;
+            MustUpdate = newValue;
+            sem_post(&MustUpdateSemaphore);
+            return result;
+        }
+
+        void GraphWindow::RequestUpdate(Graph* G)
+        {
+            sem_wait(&MustUpdateSemaphore);
+            MustUpdate = true;
+            DisplayedGraph = G;
+            sem_post(&MustUpdateSemaphore);
+        }
+
+        void* RunUpdateThread(void* GraphWin)
+        {
+            GraphWindow* GWin = (GraphWindow*)GraphWin;
+
+            timespec SleepTime;
+            SleepTime.tv_sec = 0;
+            SleepTime.tv_nsec = 1000000 / 60;
+            while(!GWin->TerminateUpdateThread)
+            {
+                if(GWin->GetAndSetMustUpdate(false))
+                    GWin->UpdateGraph();
+                nanosleep(&SleepTime, NULL);
+            }
+
+            return NULL;
+        }
+
+
 
 
 

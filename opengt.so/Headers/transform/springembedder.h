@@ -26,15 +26,16 @@
 
 
                     std::vector<float> dimension_limits;
-                    float c_repel;  // force with which vertices push each other off
-                    float c_spring;  // force with which adjacent vertices attract each other
-                                                // must not be 0 (or division by zero error will happen)
+                    float c_repel;                  // force with which vertices push each other off
+                    float c_spring;                 // force with which adjacent vertices attract each other
+                                                    // must not be 0 (or division by zero error will happen)
                     float friction;
 
                     float unstressed_spring_length; // if distance < this, then no more force between them
-                    float delta;  // scaling factor to make the movement more smooth
-                    float movement_threshold;    // stop if no vertex moves more than this far
+                    float delta;                    // scaling factor to make the movement more smooth
+                    float movement_threshold;       // stop if no vertex moves more than this far
 
+                    int max_iterations;
                     int iteration;
                     int nextincrease;
 

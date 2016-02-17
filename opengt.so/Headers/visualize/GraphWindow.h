@@ -11,12 +11,23 @@
         namespace Visualization
         {
 
+            void* RunUpdateThread(void*);
+
             class GraphWindow : public DisplayWindow
             {
+                friend void* RunUpdateThread(void* GraphWin);
+
                 protected:
                     int gridsize;
                     Graph* DisplayedGraph;
                     sem_t GUpdateSemaphore;
+
+                    pthread_t UpdateThread;
+                    bool TerminateUpdateThread;
+
+                    sem_t MustUpdateSemaphore;
+                    bool MustUpdate;
+                    bool GetAndSetMustUpdate(bool newValue);
 
                     std::string vertexColoring;
                     std::string edgeColoring;
@@ -31,7 +42,8 @@
                     virtual ~GraphWindow();
 
                     void Display(Graph* G);
-                    void Update();
+                    void UpdateGraph();
+                    void RequestUpdate(Graph* G);
 
                     void (*OnVertexMouseDown) (VertexIterator v, MouseButton Button,   unsigned short ButtonStates);
                     void (*OnVertexMouseUp)   (VertexIterator v, MouseButton Button,   unsigned short ButtonStates);

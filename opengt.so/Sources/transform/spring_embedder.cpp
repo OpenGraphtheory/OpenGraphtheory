@@ -57,12 +57,15 @@ namespace OpenGraphtheory
             MinParamCount = 0;
             MaxParamCount = -1;
 
-            c_repel     =    25;
-            c_spring    =    20;
-            friction    =    0.5; // lower value = more friction (0 = no preservation of momentum)
-            unstressed_spring_length = 100;
-            delta = 0.4;
-            movement_threshold = 0.5;
+            c_repel                  =     3;
+            c_spring                 =     2;
+            friction                 =     0.5; // lower value = more friction (0 = no preservation of momentum)
+            unstressed_spring_length =     3;
+            delta                    =     1;
+            movement_threshold       =     0.01;
+
+            max_iterations           = 10000;
+            nextincrease             =    50;
         }
 
         void TransformerSPRINGEMBEDDER::SpringEmbed(Graph& G, vector<float> dimension_limits, IntermediateStepHandler* intermediatestephandler)
@@ -143,11 +146,14 @@ namespace OpenGraphtheory
 
                 if(++iteration > nextincrease)
                 {
-                    movement_threshold++;
-                    nextincrease *= 5;
+                    movement_threshold += 0.01f;
+                    nextincrease *= 4;
                 }
+                if(iteration > max_iterations)
+                    break;
+
             }
-            while( true);//(max_movement > movement_threshold*unstressed_spring_length));
+            while(max_movement > movement_threshold*unstressed_spring_length);
 
         }
 
