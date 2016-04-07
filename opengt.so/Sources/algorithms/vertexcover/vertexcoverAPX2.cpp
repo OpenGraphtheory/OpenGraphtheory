@@ -42,7 +42,7 @@ namespace OpenGraphtheory
 
         bool AlgorithmVERTEXCOVER_APX2::CanGuaranteeApproximationDistance(const Graph& G, float MaxApproximationDistance)
         {
-            return MaxApproximationDistance <= 2.0f;
+            return MaxApproximationDistance >= 2.0f;
         }
 
     }
