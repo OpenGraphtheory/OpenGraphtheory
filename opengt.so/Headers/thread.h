@@ -16,6 +16,9 @@
     #ifdef __unix__
         #include <pthread.h>
     #elif __WIN32__ || _MSC_VER || _Windows || __NT__
+        #ifndef __windows__
+            #define __windows__
+        #endif
         #include <windows.h>
         #include <process.h>
         #include <stdint.h>
@@ -29,7 +32,7 @@
         protected:
             #ifdef __unix__
                 pthread_mutex_t mutex;
-            #elif __WIN32__ || _MSC_VER || _Windows || __NT__
+            #elif __windows__
                 CRITICAL_SECTION mutex;
             #endif
         public:
@@ -46,15 +49,16 @@
         protected:
             #ifdef __unix__
                 pthread_cond_t cond;
-            #elif __WIN32__ || _MSC_VER || _Windows || __NT__
-                //CRITICAL_SECTION mutex;
+            #elif __windows__
+                CONDITION_VARIABLE cond;
             #endif
         public:
             ConditionVariable();
             ~ConditionVariable();
 
             bool Wait();
-            void Signal();
+            void SignalOne();
+            void SignalAll();
     };
 
 
@@ -75,7 +79,7 @@
     {
         #ifdef __unix__
             friend void* ThreadWrapper(void*);
-        #elif __WIN32__ || _MSC_VER || _Windows || __NT__
+        #elif __windows__
             friend void ThreadWrapper(void*);
         #endif
         friend class ThreadContext;
@@ -85,7 +89,7 @@
             bool Started;
             #ifdef __unix__
                 pthread_t thread;
-            #elif __WIN32__ || _MSC_VER || _Windows || __NT__
+            #elif __windows__
                 uintptr_t thread;
             #endif
 
