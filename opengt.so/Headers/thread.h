@@ -87,6 +87,7 @@
         protected:
             Mutex mutex;
             bool Started;
+            bool Termination;
             #ifdef __unix__
                 pthread_t thread;
             #elif __windows__
@@ -97,7 +98,7 @@
             void Start(void* parameter, ConditionVariable* threadFinishedSignal = NULL, Thread** threadFinishedRegister = NULL);
         public:
             void Terminate();
-            static void TestTermination();
+            bool TestTermination();
             void Join();
 
             void Lock();

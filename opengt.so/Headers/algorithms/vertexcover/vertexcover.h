@@ -17,16 +17,16 @@
             {
                 public:
                     void Run(Graph &G, std::vector<std::string> parameters);
-                    static bool FindVertexCover(Graph& G, VertexSet& VertexCover, unsigned int k);
-                    static void FindMinimumVertexCover(Graph& G, VertexSet& VertexCover);
-                    static void AddVertexCover(Graph &G, std::string VertexCoverName);
+                    bool FindVertexCover(Graph& G, VertexSet& VertexCover, unsigned int k);
+                    void FindMinimumVertexCover(Graph& G, VertexSet& VertexCover);
+                    void AddVertexCover(Graph &G, std::string VertexCoverName);
 
                 protected:
                     static MultiFactoryRegistrator<Algorithm> AlgorithmVertexCoverRegistrator;
-                    static bool TestVertexCover(Graph &G,
+                    bool TestVertexCover(Graph &G,
                                                 EdgeSet& Uncovered,
                                                 VertexSet& VertexCover,
-                                                unsigned int k);
+                                                int k);
             };
         }
     }

@@ -192,6 +192,8 @@ void Thread::Start(void* parameter, ConditionVariable* threadFinishedSignal, Thr
 
 void Thread::Terminate()
 {
+    Termination = true;
+/*
     if(Started)
     {
         #ifdef __unix__
@@ -201,19 +203,24 @@ void Thread::Terminate()
         #endif
     }
     Started = false;
+*/
 }
 
-void Thread::TestTermination()
+bool Thread::TestTermination()
 {
+    return Termination;
+/*
     #ifdef __unix__
         pthread_testcancel();
     #elif __windows__
     #endif
+*/
 }
 
 Thread::Thread()
 {
     Started = false;
+    Termination = false;
 }
 
 Thread::~Thread()

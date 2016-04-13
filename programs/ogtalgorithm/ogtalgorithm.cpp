@@ -9,6 +9,8 @@ using namespace std;
 using namespace OpenGraphtheory;
 using namespace OpenGraphtheory::Algorithms;
 
+
+
 void usage(char* argv0);
 int main(int argc, char** argv)
 {
@@ -20,16 +22,28 @@ int main(int argc, char** argv)
         vector<string> parameters;
         int argvi = 2;
         cin >> G;
-        float MinApproximationQuality = 1.0;
+        float MaxApproximationDistance = 1.0;
+        float MinCorrectnessProbablity = 1.0;
 
         for(; argvi < argc; argvi++)
         {
             if(string(argv[argvi]) == "--quality" && argc > argvi+1)
             {
                 float temp = atof(argv[++argvi]);
-                if(temp < 1.0f)
+                if(temp <= 0.0f)
                     temp = 1.0f;
-                MinApproximationQuality = 1.0f / temp;
+                if(0.0f < temp && temp < 1.0f)
+                    temp = 1.0f/temp;
+                MaxApproximationDistance = temp;
+            }
+            else if(string(argv[argvi]) == "--correctness" && argc > argvi+1)
+            {
+                float temp = atof(argv[++argvi]);
+                if(temp < 0.0f)
+                    temp = 0.0f;
+                if(100.0f < temp)
+                    temp = 100.0f;
+                MinCorrectnessProbablity = temp/100.0f;
             }
             else
             {
@@ -45,7 +59,7 @@ int main(int argc, char** argv)
         if(algos.size() < 1)
             throw "no such algorithm";
 
-        Algorithm::RunParallel(algos, G, parameters, MinApproximationQuality);
+        Algorithm::RunParallel(algos, G, parameters, MaxApproximationDistance, MinCorrectnessProbablity);
         cout << G;
         cout.flush();
     }

@@ -1360,7 +1360,7 @@ namespace OpenGraphtheory
         }
 
         /// \brief Accessor-method for writing coordinates
-        void GraphObject::SetCoordinates(Coordinates& coordinates, string name)
+        void GraphObject::SetCoordinates(const Coordinates& coordinates, string name)
         {
             RemoveAttribute(name);
             SeqAttribute* sattr = dynamic_cast<SeqAttribute*>(AddAttribute(name, "seq"));
@@ -1595,7 +1595,8 @@ namespace OpenGraphtheory
             s << IdPrefix << GetID();
             xml->AddAttribute("id", s.str());
 
-            attributes->WriteToXml(xml);
+            if(attributes != NULL)
+                attributes->WriteToXml(xml);
         }
 
         void VertexEdgeConnection::WriteToXml(OpenGraphtheory::XML::XML* relend)
@@ -1661,7 +1662,6 @@ namespace OpenGraphtheory
             gxl->AddChild(new OpenGraphtheory::XML::XML_Comment("www.Open-Graphtheory.org"));
             gxl->AddAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
 
-
             // child tag "graph"
             OpenGraphtheory::XML::XML* graph = new OpenGraphtheory::XML::XML("graph");
             graph->AddAttribute("edgeids", "true");
@@ -1686,7 +1686,6 @@ namespace OpenGraphtheory
 
             // arbitrary attributes
             attributes->WriteToXml(graph);
-
 
             gxl->AddChild(graph);
 

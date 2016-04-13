@@ -80,7 +80,7 @@
                 int GetColorClass(std::string Name="color");
                 void SetColorClass(int ColorClass, std::string Name="color");
                 Coordinates GetCoordinates(size_t minCount, std::string Name="coordinates");
-                void SetCoordinates(Coordinates& coordinates, std::string Name="coordinates");
+                void SetCoordinates(const Coordinates& coordinates, std::string Name="coordinates");
 
                 void WriteToXml(OpenGraphtheory::XML::XML* xml, std::string IdPrefix);
                 bool LoadFromXml(OpenGraphtheory::XML::XML* xml);

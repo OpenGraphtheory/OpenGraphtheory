@@ -67,7 +67,7 @@ namespace OpenGraphtheory
                 Thread* finishedAlgorithm = NULL;
                 synchronize.Lock();
 
-                cerr << "starting " << SelectedAlgorithms.size() << " of " << algos.size() << " algorithm(s)\n";
+                cerr << "starting " << SelectedAlgorithms.size() << " of " << algos.size() << " algorithms\n";
                 for(set<Algorithm*>::iterator i = SelectedAlgorithms.begin(); i != SelectedAlgorithms.end(); i++)
                     (*i)->RunInThread(GraphCopies[*i], parameters, &synchronize, &finishedAlgorithm);
 

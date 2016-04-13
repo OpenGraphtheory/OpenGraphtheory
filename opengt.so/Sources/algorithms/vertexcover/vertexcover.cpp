@@ -16,24 +16,25 @@ namespace OpenGraphtheory
         bool AlgorithmVERTEXCOVER::TestVertexCover(Graph &G,
                                                    EdgeSet& Uncovered,
                                                    VertexSet& VertexCover,
-                                                   unsigned int k)
+                                                   int k)
         {
-            TestTermination();
+            if(this->TestTermination())
+                return false;
 
 
-            if(Uncovered.size() <= 0)
+            if(Uncovered.size() <= 0 && k >= 0)
                 return true;
             if(k <= 0)
                 return false;
 
-            unsigned int MaxNewlyCoverable = 0;
+            int MaxNewlyCoverable = 0;
             Vertex* selected = *G.EndVertices();
 
             for(VertexIterator v = G.BeginVertices(); v != G.EndVertices(); v++)
             {
                 if(VertexCover.find(*v) != VertexCover.end()) // v already in VertexCover
                     continue;
-                unsigned int NewlyCoverable = SetHelper::IntersectionSize((*v)->CollectIncidentEdges(1,1,1), Uncovered);
+                int NewlyCoverable = SetHelper::IntersectionSize((*v)->CollectIncidentEdges(1,1,1), Uncovered);
 
                 if(NewlyCoverable > MaxNewlyCoverable)
                 {
@@ -53,23 +54,24 @@ namespace OpenGraphtheory
 
             if(MaxNewlyCoverable > 1 && MaxNewlyCoverable <= k)
             {
-                if(k*MaxNewlyCoverable < Uncovered.size())
+                if(k*MaxNewlyCoverable < (int)Uncovered.size())
                     return false;
             }
 
             vector<VertexSet*> candidate_sets;
+            VertexSet selected_set; // a set that will contain only the selected vertex
 
             VertexSet enforced_neighbors = SetHelper::SetMinus( selected->CollectNeighbors(1,1,1,1,1,1,1,1,1), VertexCover);
-            if(MaxNewlyCoverable == 1)
+            enforced_neighbors.erase(selected);
+            if(MaxNewlyCoverable == 1) // end-vertex => select its neighbor
             {
                 candidate_sets.push_back(&enforced_neighbors);
             }
             else
             {
-                if(MaxNewlyCoverable <= k)
+                if(MaxNewlyCoverable <= k) // degree > k => cannot choose neighbors
                     candidate_sets.push_back(&enforced_neighbors);
 
-                VertexSet selected_set;
                 selected_set.insert(selected);
                 candidate_sets.push_back(&selected_set);
             }
@@ -115,6 +117,9 @@ namespace OpenGraphtheory
 
             for(int k = MaximumMatching.size(); k<=G.NumberOfVertices(); k++)
             {
+                if(this->TestTermination())
+                    return;
+
                 if(FindVertexCover(G, VertexCover, k))
                     break;
                 VertexCover.clear();
@@ -125,6 +130,8 @@ namespace OpenGraphtheory
         {
             VertexSet VertexCover;
             FindMinimumVertexCover(G, VertexCover);
+            if(this->TestTermination())
+                return;
             G.AddVertexSet(VertexCover, VertexCoverName);
         }
 
